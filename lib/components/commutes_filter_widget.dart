@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,6 +15,7 @@ class CommutesFilterWidget extends StatefulWidget {
 }
 
 class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
+  DateTime? datePicked;
   String? dropDownValue1;
   String? dropDownValue2;
 
@@ -140,28 +142,62 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           ),
                     ),
                   ),
-                  FlutterFlowDropDown(
-                    options: ['Option 1'],
-                    onChanged: (val) => setState(() => dropDownValue2 = val),
-                    width: double.infinity,
-                    height: 50,
-                    textStyle: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Roboto',
-                          color: Colors.black,
-                        ),
-                    hintText: 'Please select...',
-                    icon: Icon(
-                      Icons.location_pin,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 24,
+                  StreamBuilder<List<SupportedLocationsRecord>>(
+                    stream: querySupportedLocationsRecord(
+                      singleRecord: true,
                     ),
-                    fillColor: Colors.white,
-                    elevation: 2,
-                    borderColor: FlutterFlowTheme.of(context).primaryBackground,
-                    borderWidth: 0,
-                    borderRadius: 8,
-                    margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                    hidesUnderline: true,
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: SpinKitChasingDots(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          ),
+                        );
+                      }
+                      List<SupportedLocationsRecord>
+                          dropDownSupportedLocationsRecordList = snapshot.data!;
+                      // Return an empty Container when the document does not exist.
+                      if (snapshot.data!.isEmpty) {
+                        return Container();
+                      }
+                      final dropDownSupportedLocationsRecord =
+                          dropDownSupportedLocationsRecordList.first;
+                      return FlutterFlowDropDown(
+                        options: dropDownSupportedLocationsRecord!
+                            .eswatiniLocations!
+                            .toList()!
+                            .toList(),
+                        onChanged: (val) =>
+                            setState(() => dropDownValue2 = val),
+                        width: double.infinity,
+                        height: 50,
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.black,
+                                ),
+                        hintText: 'Please select...',
+                        icon: Icon(
+                          Icons.location_pin,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24,
+                        ),
+                        fillColor: Colors.white,
+                        elevation: 2,
+                        borderColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        borderWidth: 0,
+                        borderRadius: 8,
+                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        hidesUnderline: true,
+                      );
+                    },
                   ),
                 ],
               ),
@@ -193,38 +229,61 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                              ),
-                              child: Text(
-                                '22 DEC 2022',
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'COMMUTES_FILTER_Container_tna3plk0_ON_TA');
+                      logFirebaseEvent('Container_Date-Time-Picker');
+                      await DatePicker.showDatePicker(
+                        context,
+                        showTitleActions: true,
+                        onConfirm: (date) {
+                          setState(() => datePicked = date);
+                        },
+                        currentTime: FFAppState().filterDate!,
+                        minTime: FFAppState().filterDate!,
+                        locale: LocaleType.values.firstWhere(
+                          (l) =>
+                              l.name ==
+                              FFLocalizations.of(context).languageCode,
+                          orElse: null,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                ),
+                                child: Text(
+                                  dateTimeFormat(
+                                      'MMMEd', FFAppState().filterDate!),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            Icons.date_range,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                        ],
+                            Icon(
+                              Icons.date_range,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
