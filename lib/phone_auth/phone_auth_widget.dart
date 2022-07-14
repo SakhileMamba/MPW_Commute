@@ -121,6 +121,9 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   filled: true,
+                  prefixIcon: Icon(
+                    Icons.phone_android_rounded,
+                  ),
                 ),
                 style: FlutterFlowTheme.of(context).bodyText1,
                 maxLines: 1,
