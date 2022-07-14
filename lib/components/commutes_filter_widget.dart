@@ -240,8 +240,8 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                         onConfirm: (date) {
                           setState(() => datePicked = date);
                         },
-                        currentTime: FFAppState().filterDate!,
-                        minTime: FFAppState().filterDate!,
+                        currentTime: getCurrentTimestamp,
+                        minTime: getCurrentTimestamp,
                         locale: LocaleType.values.firstWhere(
                           (l) =>
                               l.name ==
@@ -249,6 +249,10 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           orElse: null,
                         ),
                       );
+
+                      logFirebaseEvent('Container_Update-Local-State');
+                      setState(() =>
+                          FFAppState().filterDate = datePicked!.toString());
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -260,7 +264,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Expanded(
@@ -271,11 +275,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                       .primaryBtnText,
                                 ),
                                 child: Text(
-                                  valueOrDefault<String>(
-                                    dateTimeFormat(
-                                        'MMMEd', FFAppState().filterDate!),
-                                    'Please Select...',
-                                  ),
+                                  FFAppState().filterDate!,
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
