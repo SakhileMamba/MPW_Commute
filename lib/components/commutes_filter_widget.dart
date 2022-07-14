@@ -53,7 +53,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                     ),
                   ),
                   FlutterFlowDropDown(
-                    options: ['Option 1'],
+                    options: FFAppState().EswatiniLocations!.toList(),
                     onChanged: (val) => setState(() => dropDownValue1 = val),
                     width: double.infinity,
                     height: 50,
@@ -65,7 +65,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                     icon: Icon(
                       Icons.trip_origin_rounded,
                       color: FlutterFlowTheme.of(context).primaryText,
-                      size: 15,
+                      size: 24,
                     ),
                     fillColor: Colors.white,
                     elevation: 2,
@@ -118,7 +118,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                     icon: Icon(
                       Icons.location_pin,
                       color: FlutterFlowTheme.of(context).primaryText,
-                      size: 15,
+                      size: 24,
                     ),
                     fillColor: Colors.white,
                     elevation: 2,
