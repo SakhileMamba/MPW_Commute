@@ -18,9 +18,7 @@ class FFAppState {
 
   late SharedPreferences prefs;
 
-  DateTime? filterDate;
-
-  DateTime? SeatsFilterDate;
+  String filterDate = 'Please Select...';
 }
 
 LatLng? _latLngFromString(String? val) {
