@@ -118,6 +118,9 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     filled: true,
+                    prefixIcon: Icon(
+                      Icons.security,
+                    ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   textAlign: TextAlign.start,
