@@ -271,8 +271,11 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                       .primaryBtnText,
                                 ),
                                 child: Text(
-                                  dateTimeFormat(
-                                      'MMMEd', FFAppState().filterDate!),
+                                  valueOrDefault<String>(
+                                    dateTimeFormat(
+                                        'MMMEd', FFAppState().filterDate!),
+                                    'Please Select...',
+                                  ),
                                   style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
