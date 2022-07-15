@@ -19,6 +19,10 @@ class FFAppState {
   late SharedPreferences prefs;
 
   String filterDate = 'Please Select...';
+
+  String filterLatestDepartureTime = 'Please Select...';
+
+  int filterMinimumAvailableSeats = 1;
 }
 
 LatLng? _latLngFromString(String? val) {
