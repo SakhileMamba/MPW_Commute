@@ -234,21 +234,16 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                       logFirebaseEvent(
                           'COMMUTES_FILTER_Container_tna3plk0_ON_TA');
                       logFirebaseEvent('Container_Date-Time-Picker');
-                      await DatePicker.showDatePicker(
-                        context,
-                        showTitleActions: true,
-                        onConfirm: (date) {
-                          setState(() => datePicked = date);
-                        },
-                        currentTime: getCurrentTimestamp,
-                        minTime: getCurrentTimestamp,
-                        locale: LocaleType.values.firstWhere(
-                          (l) =>
-                              l.name ==
-                              FFLocalizations.of(context).languageCode,
-                          orElse: null,
-                        ),
-                      );
+                      final DateTime? newDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(Duration(days: 365)),
+                          helpText: 'Select a date');
+
+                      if (newDate != null) {
+                        setState(() => datePicked = newDate);
+                      }
 
                       logFirebaseEvent('Container_Update-Local-State');
                       setState(() =>
