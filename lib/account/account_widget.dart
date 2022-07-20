@@ -1,3 +1,4 @@
+import '../components/create_vehicle_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,9 @@ class _AccountWidgetState extends State<AccountWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            children: [],
+            children: [
+              CreateVehicleWidget(),
+            ],
           ),
         ),
       ),

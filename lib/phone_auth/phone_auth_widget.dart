@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../phone_confirmation/phone_confirmation_widget.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,6 +102,11 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(8, 15, 8, 8),
               child: TextFormField(
                 controller: phoneNumberTextFieldController,
+                onChanged: (_) => EasyDebounce.debounce(
+                  'phoneNumberTextFieldController',
+                  Duration(milliseconds: 2000),
+                  () => setState(() {}),
+                ),
                 autofocus: true,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -121,9 +127,23 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   filled: true,
+                  fillColor: FlutterFlowTheme.of(context).primaryBackground,
                   prefixIcon: Icon(
                     Icons.phone_android_rounded,
+                    color: FlutterFlowTheme.of(context).primaryText,
                   ),
+                  suffixIcon: phoneNumberTextFieldController!.text.isNotEmpty
+                      ? InkWell(
+                          onTap: () => setState(
+                            () => phoneNumberTextFieldController?.clear(),
+                          ),
+                          child: Icon(
+                            Icons.clear,
+                            color: Color(0xFF757575),
+                            size: 22,
+                          ),
+                        )
+                      : null,
                 ),
                 style: FlutterFlowTheme.of(context).bodyText1,
                 maxLines: 1,

@@ -1,19 +1,19 @@
-import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 
-class CommuteCardWidget extends StatefulWidget {
-  const CommuteCardWidget({Key? key}) : super(key: key);
+class CommuteManagementCardWidget extends StatefulWidget {
+  const CommuteManagementCardWidget({Key? key}) : super(key: key);
 
   @override
-  _CommuteCardWidgetState createState() => _CommuteCardWidgetState();
+  _CommuteManagementCardWidgetState createState() =>
+      _CommuteManagementCardWidgetState();
 }
 
-class _CommuteCardWidgetState extends State<CommuteCardWidget> {
+class _CommuteManagementCardWidgetState
+    extends State<CommuteManagementCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,80 +32,53 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBtnText,
                 ),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 4),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF1F4F8),
-                            shape: BoxShape.circle,
-                          ),
-                          child: InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'COMMUTE_CARD_CircleImage_zyi31c6h_ON_TAP');
-                              logFirebaseEvent('CircleImage_Expand-Image');
-                              await Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: FlutterFlowExpandedImageView(
-                                    image: Image.asset(
-                                      'assets/images/profilepicture.png',
-                                      fit: BoxFit.contain,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      child: Icon(
+                        Icons.trip_origin_rounded,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                        ),
+                        child: Wrap(
+                          spacing: 0,
+                          runSpacing: 0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                              child: Text(
+                                'Origin:',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.normal,
                                     ),
-                                    allowRotation: false,
-                                    tag: 'circleImageTag!',
-                                    useHeroAnimation: true,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Hero(
-                              tag: 'circleImageTag!',
-                              transitionOnUserGestures: true,
-                              child: Container(
-                                width: 120,
-                                height: 120,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                  'assets/images/profilepicture.png',
-                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
                             Text(
-                              'Driver',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                            Text(
-                              'Sakhile Mamba',
+                              'Manzini',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
@@ -118,78 +91,144 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                           ],
                         ),
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Rating',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                '4.5',
-                                textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                height: 8,
+                color: FlutterFlowTheme.of(context).primaryBackground,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      child: Icon(
+                        Icons.location_pin,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                        ),
+                        child: Wrap(
+                          spacing: 0,
+                          runSpacing: 0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                              child: Text(
+                                'Destinantion',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.normal,
                                     ),
                               ),
-                              Icon(
-                                Icons.star_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 18,
-                              ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            Text(
+                              'Mbabane',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              InkWell(
-                onTap: () async {
-                  logFirebaseEvent('COMMUTE_CARD_COMP_Image_yjy35p82_ON_TAP');
-                  logFirebaseEvent('Image_Expand-Image');
-                  await Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: FlutterFlowExpandedImageView(
-                        image: Image.asset(
-                          'assets/images/lamborghini-urus.jpg',
-                          fit: BoxFit.contain,
-                        ),
-                        allowRotation: false,
-                        tag: 'imageTag!',
-                        useHeroAnimation: true,
+              Divider(
+                height: 8,
+                color: FlutterFlowTheme.of(context).primaryBackground,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      child: Icon(
+                        Icons.date_range_rounded,
+                        color: Colors.black,
+                        size: 24,
                       ),
                     ),
-                  );
-                },
-                child: Hero(
-                  tag: 'imageTag!',
-                  transitionOnUserGestures: true,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/lamborghini-urus.jpg',
-                      width: 100,
-                      fit: BoxFit.cover,
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                        ),
+                        child: Wrap(
+                          spacing: 0,
+                          runSpacing: 0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                              child: Text(
+                                'Date:',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Text(
+                              'Friday 12, July',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
               Divider(
@@ -233,7 +272,7 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                               child: Text(
-                                'Departure Time:',
+                                'Time:',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -244,6 +283,74 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                             ),
                             Text(
                               '9:40am',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                height: 8,
+                color: FlutterFlowTheme.of(context).primaryBackground,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      child: Icon(
+                        Icons.directions_car_rounded,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                        ),
+                        child: Wrap(
+                          spacing: 0,
+                          runSpacing: 0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                              child: Text(
+                                'Vehicle:',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Text(
+                              'XSD635CM',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(

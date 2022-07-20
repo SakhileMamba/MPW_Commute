@@ -22,7 +22,7 @@ class FFAppState {
 
   String filterLatestDepartureTime = 'Please Select...';
 
-  int filterMinimumAvailableSeats = 1;
+  List<int> filterMinimumAvailableSeats = [1, 2, 3, 4, 5, 6, 7, 8];
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -25,6 +25,18 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'phone_number')
   String? get phoneNumber;
 
+  @BuiltValueField(wireName: 'display_surname')
+  String? get displaySurname;
+
+  @BuiltValueField(wireName: 'national_id')
+  String? get nationalId;
+
+  @BuiltValueField(wireName: 'national_id_photo_url')
+  String? get nationalIdPhotoUrl;
+
+  @BuiltValueField(wireName: 'verified_user')
+  bool? get verifiedUser;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -34,7 +46,11 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..phoneNumber = ''
+    ..displaySurname = ''
+    ..nationalId = ''
+    ..nationalIdPhotoUrl = ''
+    ..verifiedUser = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -64,6 +80,10 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  String? displaySurname,
+  String? nationalId,
+  String? nationalIdPhotoUrl,
+  bool? verifiedUser,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -73,4 +93,8 @@ Map<String, dynamic> createUsersRecordData({
           ..photoUrl = photoUrl
           ..uid = uid
           ..createdTime = createdTime
-          ..phoneNumber = phoneNumber));
+          ..phoneNumber = phoneNumber
+          ..displaySurname = displaySurname
+          ..nationalId = nationalId
+          ..nationalIdPhotoUrl = nationalIdPhotoUrl
+          ..verifiedUser = verifiedUser));
