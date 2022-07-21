@@ -80,8 +80,8 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 }
 
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
-  'Phone_Confirmation': (data) async => PhoneConfirmationWidget(),
   'Phone_Auth': (data) async => PhoneAuthWidget(),
+  'Phone_Confirmation': (data) async => PhoneConfirmationWidget(),
   'Create_Ride_Nav_Page': (data) async =>
       NavBarPage(initialPage: 'Create_Ride_Nav_Page'),
   'Account': (data) async => NavBarPage(initialPage: 'Account'),

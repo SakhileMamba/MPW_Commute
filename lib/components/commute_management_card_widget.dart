@@ -14,501 +14,205 @@ class CommuteManagementCardWidget extends StatefulWidget {
 
 class _CommuteManagementCardWidgetState
     extends State<CommuteManagementCardWidget> {
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+  TextEditingController? textController3;
+  TextEditingController? textController4;
+  TextEditingController? textController5;
+  TextEditingController? textController6;
+  TextEditingController? textController7;
+
+  @override
+  void initState() {
+    super.initState();
+    textController1 = TextEditingController(text: 'Manzini, Eswatini');
+    textController2 = TextEditingController(text: 'Mbabane, Eswatini');
+    textController3 = TextEditingController(text: 'Toyota Hilux');
+    textController4 = TextEditingController(text: 'Friday 12, July');
+    textController5 = TextEditingController(text: '9:40am');
+    textController6 = TextEditingController(text: '3');
+    textController7 = TextEditingController(text: '30.00');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: FlutterFlowTheme.of(context).primaryBtnText,
+      color: FlutterFlowTheme.of(context).primaryBackground,
       elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
         child: Container(
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
+              TextFormField(
+                controller: textController1,
+                autofocus: true,
+                readOnly: true,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'Origin',
+                  hintText: 'Manzini, Eswatini',
+                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.trip_origin_rounded,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    size: 24,
+                  ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
+                style: FlutterFlowTheme.of(context).bodyText1,
+                keyboardType: TextInputType.multiline,
+              ),
+              TextFormField(
+                controller: textController2,
+                autofocus: true,
+                readOnly: true,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'Destination',
+                  hintText: 'Mbabane, Eswatini',
+                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.location_pin,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    size: 24,
+                  ),
+                ),
+                style: FlutterFlowTheme.of(context).bodyText1,
+                keyboardType: TextInputType.multiline,
+              ),
+              TextFormField(
+                controller: textController3,
+                autofocus: true,
+                readOnly: true,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'Vehicle',
+                  hintText: 'Toyota Hilux',
+                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  prefixIcon: Icon(
+                    Icons.directions_car_rounded,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    size: 24,
+                  ),
+                ),
+                style: FlutterFlowTheme.of(context).bodyText1,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: textController4,
+                      autofocus: true,
+                      readOnly: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Date',
+                        hintText: 'Friday 12, July',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.date_range_rounded,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 24,
+                        ),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      keyboardType: TextInputType.datetime,
+                    ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: textController5,
+                      autofocus: true,
+                      readOnly: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Time',
+                        hintText: '9:40am',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.access_time_rounded,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 24,
+                        ),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.trip_origin_rounded,
-                        color: Colors.black,
-                        size: 24,
+                      child: TextFormField(
+                        controller: textController6,
+                        autofocus: true,
+                        readOnly: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Available Seat(s)',
+                          hintText: '3',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          prefixIcon: Icon(
+                            Icons.airline_seat_recline_normal_rounded,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            size: 24,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Origin:',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              'Manzini',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: textController7,
+                      autofocus: true,
+                      readOnly: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Price/Seat',
+                        hintText: '30.00',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.monetization_on_rounded,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 24,
                         ),
                       ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      keyboardType: TextInputType.number,
                     ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.location_pin,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Destinantion',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              'Mbabane',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.date_range_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Date:',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              'Friday 12, July',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.access_time_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Time:',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              '9:40am',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.directions_car_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Vehicle:',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              'XSD635CM',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.airline_seat_recline_normal_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Available Seat(s):',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              '3',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.monetization_on_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Seat Price (SZL):',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              '30.00',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 0,
-                thickness: 1,
-                color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                ],
               ),
             ],
           ),

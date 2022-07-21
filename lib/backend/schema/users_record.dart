@@ -84,17 +84,23 @@ Map<String, dynamic> createUsersRecordData({
   String? nationalId,
   String? nationalIdPhotoUrl,
   bool? verifiedUser,
-}) =>
-    serializers.toFirestore(
-        UsersRecord.serializer,
-        UsersRecord((u) => u
-          ..email = email
-          ..displayName = displayName
-          ..photoUrl = photoUrl
-          ..uid = uid
-          ..createdTime = createdTime
-          ..phoneNumber = phoneNumber
-          ..displaySurname = displaySurname
-          ..nationalId = nationalId
-          ..nationalIdPhotoUrl = nationalIdPhotoUrl
-          ..verifiedUser = verifiedUser));
+}) {
+  final firestoreData = serializers.toFirestore(
+    UsersRecord.serializer,
+    UsersRecord(
+      (u) => u
+        ..email = email
+        ..displayName = displayName
+        ..photoUrl = photoUrl
+        ..uid = uid
+        ..createdTime = createdTime
+        ..phoneNumber = phoneNumber
+        ..displaySurname = displaySurname
+        ..nationalId = nationalId
+        ..nationalIdPhotoUrl = nationalIdPhotoUrl
+        ..verifiedUser = verifiedUser,
+    ),
+  );
+
+  return firestoreData;
+}

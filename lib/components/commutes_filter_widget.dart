@@ -1,8 +1,11 @@
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
+import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/place.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,10 +20,10 @@ class CommutesFilterWidget extends StatefulWidget {
 
 class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
   DateTime? datePicked1;
-  String? dropDownValue1;
-  String? dropDownValue2;
+  var placePickerValue1 = FFPlace();
+  var placePickerValue2 = FFPlace();
   DateTime? datePicked2;
-  String? dropDownValue3;
+  String? dropDownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).primaryColor,
+          color: FlutterFlowTheme.of(context).primaryBackground,
         ),
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -42,208 +45,152 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).title3.override(
                         fontFamily: 'Roboto',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryText,
                       ),
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
                           'Origin',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
-                      StreamBuilder<List<SupportedLocationsRecord>>(
-                        stream: querySupportedLocationsRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: SpinKitChasingDots(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 50,
-                                ),
-                              ),
-                            );
-                          }
-                          List<SupportedLocationsRecord>
-                              dropDownSupportedLocationsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the document does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final dropDownSupportedLocationsRecord =
-                              dropDownSupportedLocationsRecordList.first;
-                          return FlutterFlowDropDown(
-                            options: dropDownSupportedLocationsRecord!
-                                .eswatiniLocations!
-                                .toList()!
-                                .toList(),
-                            onChanged: (val) =>
-                                setState(() => dropDownValue1 = val),
-                            width: double.infinity,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black,
-                                    ),
-                            hintText: 'Please select...',
-                            icon: Icon(
-                              Icons.trip_origin_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24,
-                            ),
-                            fillColor: Colors.white,
-                            elevation: 2,
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryBtnText,
-                            borderWidth: 0,
-                            borderRadius: 8,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          );
+                      FlutterFlowPlacePicker(
+                        iOSGoogleMapsApiKey:
+                            'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                        androidGoogleMapsApiKey:
+                            'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                        webGoogleMapsApiKey:
+                            'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                        onSelect: (place) async {
+                          setState(() => placePickerValue1 = place);
                         },
+                        defaultText: 'Please select',
+                        icon: Icon(
+                          Icons.trip_origin_rounded,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        buttonOptions: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
                           'Destination',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
-                      StreamBuilder<List<SupportedLocationsRecord>>(
-                        stream: querySupportedLocationsRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: SpinKitChasingDots(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 50,
-                                ),
-                              ),
-                            );
-                          }
-                          List<SupportedLocationsRecord>
-                              dropDownSupportedLocationsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the document does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final dropDownSupportedLocationsRecord =
-                              dropDownSupportedLocationsRecordList.first;
-                          return FlutterFlowDropDown(
-                            options: dropDownSupportedLocationsRecord!
-                                .eswatiniLocations!
-                                .toList()!
-                                .toList(),
-                            onChanged: (val) =>
-                                setState(() => dropDownValue2 = val),
-                            width: double.infinity,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black,
-                                    ),
-                            hintText: 'Please select...',
-                            icon: Icon(
-                              Icons.location_pin,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24,
-                            ),
-                            fillColor: Colors.white,
-                            elevation: 2,
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            borderWidth: 0,
-                            borderRadius: 8,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          );
+                      FlutterFlowPlacePicker(
+                        iOSGoogleMapsApiKey:
+                            'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                        androidGoogleMapsApiKey:
+                            'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                        webGoogleMapsApiKey:
+                            'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                        onSelect: (place) async {
+                          setState(() => placePickerValue2 = place);
                         },
+                        defaultText: 'Please select',
+                        icon: Icon(
+                          Icons.place,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        buttonOptions: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ],
                   ),
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
                           'Departure Date',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
                       InkWell(
@@ -263,7 +210,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                               (l) =>
                                   l.name ==
                                   FFLocalizations.of(context).languageCode,
-                              orElse: null,
+                              orElse: () => LocaleType.en,
                             ),
                           );
 
@@ -278,6 +225,9 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
                           ),
                           child: Padding(
                             padding:
@@ -315,26 +265,26 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
                           'Latest Departure Time',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
                       InkWell(
@@ -353,7 +303,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                               (l) =>
                                   l.name ==
                                   FFLocalizations.of(context).languageCode,
-                              orElse: null,
+                              orElse: () => LocaleType.en,
                             ),
                           );
 
@@ -369,6 +319,9 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
                           ),
                           child: Padding(
                             padding:
@@ -406,27 +359,27 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
                           'Minimum Available Seats',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
                         ),
                       ),
                       StreamBuilder<List<SupportedLocationsRecord>>(
@@ -458,14 +411,14 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           final dropDownSupportedLocationsRecord =
                               dropDownSupportedLocationsRecordList.first;
                           return FlutterFlowDropDown(
-                            initialOption: dropDownValue3 ??= '1',
+                            initialOption: dropDownValue ??= '1',
                             options: FFAppState()
                                 .filterMinimumAvailableSeats!
                                 .map((e) => e.toString())
                                 .toList()
                                 .toList(),
                             onChanged: (val) =>
-                                setState(() => dropDownValue3 = val),
+                                setState(() => dropDownValue = val),
                             width: double.infinity,
                             height: 50,
                             textStyle:
@@ -473,7 +426,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                       fontFamily: 'Roboto',
                                       color: Colors.black,
                                     ),
-                            hintText: 'Please select...',
+                            hintText: 'Please select',
                             icon: Icon(
                               Icons.airline_seat_recline_normal_rounded,
                               color: FlutterFlowTheme.of(context).primaryText,
@@ -482,7 +435,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                             fillColor: Colors.white,
                             elevation: 2,
                             borderColor:
-                                FlutterFlowTheme.of(context).primaryBtnText,
+                                FlutterFlowTheme.of(context).primaryText,
                             borderWidth: 0,
                             borderRadius: 8,
                             margin:
@@ -496,7 +449,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
@@ -512,20 +465,23 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           text: 'Clear',
                           icon: Icon(
                             Icons.clear_rounded,
+                            color: FlutterFlowTheme.of(context).primaryText,
                             size: 15,
                           ),
                           options: FFButtonOptions(
                             width: 130,
                             height: 50,
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.white,
-                                    ),
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
                             borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              color: FlutterFlowTheme.of(context).primaryText,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(8),
@@ -543,22 +499,22 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           text: 'Filter',
                           icon: Icon(
                             Icons.filter_list_rounded,
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
                             size: 15,
                           ),
                           options: FFButtonOptions(
                             width: 130,
                             height: 50,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle2
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                    ),
                             borderSide: BorderSide(
-                              color: Colors.transparent,
+                              color: FlutterFlowTheme.of(context).primaryColor,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(8),

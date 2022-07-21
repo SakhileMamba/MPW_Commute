@@ -75,13 +75,19 @@ Map<String, dynamic> createVehiclesRecordData({
   String? vehicleMake,
   String? vehicleModel,
   String? vehicleModelYear,
-}) =>
-    serializers.toFirestore(
-        VehiclesRecord.serializer,
-        VehiclesRecord((v) => v
-          ..vehicleRegistration = vehicleRegistration
-          ..numberOfPassengerSeats = numberOfPassengerSeats
-          ..imageUrls = null
-          ..vehicleMake = vehicleMake
-          ..vehicleModel = vehicleModel
-          ..vehicleModelYear = vehicleModelYear));
+}) {
+  final firestoreData = serializers.toFirestore(
+    VehiclesRecord.serializer,
+    VehiclesRecord(
+      (v) => v
+        ..vehicleRegistration = vehicleRegistration
+        ..numberOfPassengerSeats = numberOfPassengerSeats
+        ..imageUrls = null
+        ..vehicleMake = vehicleMake
+        ..vehicleModel = vehicleModel
+        ..vehicleModelYear = vehicleModelYear,
+    ),
+  );
+
+  return firestoreData;
+}

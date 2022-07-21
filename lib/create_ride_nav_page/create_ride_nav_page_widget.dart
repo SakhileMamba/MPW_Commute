@@ -1,3 +1,4 @@
+import '../components/commute_management_card_widget.dart';
 import '../components/create_commute_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -78,7 +79,11 @@ class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
           child: ListView(
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
-            children: [],
+            children: [
+              CommuteManagementCardWidget(),
+              CommuteManagementCardWidget(),
+              CommuteManagementCardWidget(),
+            ],
           ),
         ),
       ),

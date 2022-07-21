@@ -3,7 +3,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,11 +64,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 TextFormField(
                   controller: textController1,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController1',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
-                  ),
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
@@ -91,18 +85,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: textController1!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () => setState(
-                              () => textController1?.clear(),
-                            ),
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   maxLines: 1,
@@ -113,11 +95,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 TextFormField(
                   controller: textController2,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController2',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
-                  ),
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
@@ -139,18 +116,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: textController2!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () => setState(
-                              () => textController2?.clear(),
-                            ),
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   maxLines: 1,
@@ -161,11 +126,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 TextFormField(
                   controller: textController3,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController3',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
-                  ),
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
@@ -187,18 +147,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: textController3!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () => setState(
-                              () => textController3?.clear(),
-                            ),
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   maxLines: 1,
@@ -210,11 +158,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 TextFormField(
                   controller: textController4,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController4',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
-                  ),
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
@@ -236,18 +179,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: textController4!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () => setState(
-                              () => textController4?.clear(),
-                            ),
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   maxLines: 1,
@@ -258,11 +189,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 TextFormField(
                   controller: textController5,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController5',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
-                  ),
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
@@ -284,18 +210,6 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                     ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: textController5!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () => setState(
-                              () => textController5?.clear(),
-                            ),
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                   maxLines: 1,
