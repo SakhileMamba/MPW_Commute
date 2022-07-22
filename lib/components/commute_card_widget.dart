@@ -369,7 +369,7 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                               child: Text(
-                                'Seat Price (SZL):',
+                                'Price/Seat',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(

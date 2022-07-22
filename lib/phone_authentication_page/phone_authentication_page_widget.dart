@@ -1,26 +1,29 @@
 import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../phone_confirmation/phone_confirmation_widget.dart';
+import '../phone_confirmation_page/phone_confirmation_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PhoneAuthWidget extends StatefulWidget {
-  const PhoneAuthWidget({Key? key}) : super(key: key);
+class PhoneAuthenticationPageWidget extends StatefulWidget {
+  const PhoneAuthenticationPageWidget({Key? key}) : super(key: key);
 
   @override
-  _PhoneAuthWidgetState createState() => _PhoneAuthWidgetState();
+  _PhoneAuthenticationPageWidgetState createState() =>
+      _PhoneAuthenticationPageWidgetState();
 }
 
-class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
+class _PhoneAuthenticationPageWidgetState
+    extends State<PhoneAuthenticationPageWidget> {
   TextEditingController? phoneNumberTextFieldController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Phone_Auth'});
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'phone_authentication_page'});
     phoneNumberTextFieldController = TextEditingController();
   }
 
@@ -31,7 +34,7 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          logFirebaseEvent('PHONE_AUTH_FloatingActionButton_76jr1fdt');
+          logFirebaseEvent('PHONE_AUTHENTICATION_FloatingActionButto');
           logFirebaseEvent('FloatingActionButton_Auth');
           final phoneNumberVal = phoneNumberTextFieldController!.text;
           if (phoneNumberVal == null ||
@@ -52,7 +55,7 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
               await Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PhoneConfirmationWidget(),
+                  builder: (context) => PhoneConfirmationPageWidget(),
                 ),
                 (r) => false,
               );

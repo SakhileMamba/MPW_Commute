@@ -1,8 +1,10 @@
 // Export pages
-export 'phone_auth/phone_auth_widget.dart' show PhoneAuthWidget;
-export 'phone_confirmation/phone_confirmation_widget.dart'
-    show PhoneConfirmationWidget;
-export 'create_ride_nav_page/create_ride_nav_page_widget.dart'
-    show CreateRideNavPageWidget;
-export 'seats_nav_page/seats_nav_page_widget.dart' show SeatsNavPageWidget;
-export 'account/account_widget.dart' show AccountWidget;
+export 'phone_authentication_page/phone_authentication_page_widget.dart'
+    show PhoneAuthenticationPageWidget;
+export 'phone_confirmation_page/phone_confirmation_page_widget.dart'
+    show PhoneConfirmationPageWidget;
+export 'browse_commutes_page/browse_commutes_page_widget.dart'
+    show BrowseCommutesPageWidget;
+export 'manage_commutes_page/manage_commutes_page_widget.dart'
+    show ManageCommutesPageWidget;
+export 'account_page/account_page_widget.dart' show AccountPageWidget;

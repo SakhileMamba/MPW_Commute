@@ -1,5 +1,5 @@
-import '../components/commute_card_widget.dart';
-import '../components/commutes_filter_widget.dart';
+import '../components/commute_management_card_widget.dart';
+import '../components/create_commute_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -7,21 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SeatsNavPageWidget extends StatefulWidget {
-  const SeatsNavPageWidget({Key? key}) : super(key: key);
+class ManageCommutesPageWidget extends StatefulWidget {
+  const ManageCommutesPageWidget({Key? key}) : super(key: key);
 
   @override
-  _SeatsNavPageWidgetState createState() => _SeatsNavPageWidgetState();
+  _ManageCommutesPageWidgetState createState() =>
+      _ManageCommutesPageWidgetState();
 }
 
-class _SeatsNavPageWidgetState extends State<SeatsNavPageWidget> {
+class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Seats_Nav_Page'});
+        parameters: {'screen_name': 'manage_commutes_page'});
   }
 
   @override
@@ -32,8 +33,9 @@ class _SeatsNavPageWidgetState extends State<SeatsNavPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Browse Commutes',
-          style: FlutterFlowTheme.of(context).title1.override(
+          'Manage Commutes',
+          textAlign: TextAlign.center,
+          style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Roboto',
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 fontSize: 18,
@@ -46,12 +48,12 @@ class _SeatsNavPageWidgetState extends State<SeatsNavPageWidget> {
             borderWidth: 1,
             buttonSize: 60,
             icon: Icon(
-              Icons.filter_list_rounded,
+              Icons.add,
               color: FlutterFlowTheme.of(context).primaryBackground,
               size: 30,
             ),
             onPressed: () async {
-              logFirebaseEvent('SEATS_NAV_filter_list_rounded_ICN_ON_TAP');
+              logFirebaseEvent('MANAGE_COMMUTES_PAGE_PAGE_add_ICN_ON_TAP');
               logFirebaseEvent('IconButton_Bottom-Sheet');
               await showModalBottomSheet(
                 isScrollControlled: true,
@@ -60,10 +62,7 @@ class _SeatsNavPageWidgetState extends State<SeatsNavPageWidget> {
                 builder: (context) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      child: CommutesFilterWidget(),
-                    ),
+                    child: CreateCommuteWidget(),
                   );
                 },
               );
@@ -81,8 +80,8 @@ class _SeatsNavPageWidgetState extends State<SeatsNavPageWidget> {
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
             children: [
-              CommuteCardWidget(),
-              CommuteCardWidget(),
+              CommuteManagementCardWidget(),
+              CommuteManagementCardWidget(),
             ],
           ),
         ),

@@ -1,5 +1,5 @@
-import '../components/commute_management_card_widget.dart';
-import '../components/create_commute_widget.dart';
+import '../components/commute_card_widget.dart';
+import '../components/commutes_filter_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -7,22 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CreateRideNavPageWidget extends StatefulWidget {
-  const CreateRideNavPageWidget({Key? key}) : super(key: key);
+class BrowseCommutesPageWidget extends StatefulWidget {
+  const BrowseCommutesPageWidget({Key? key}) : super(key: key);
 
   @override
-  _CreateRideNavPageWidgetState createState() =>
-      _CreateRideNavPageWidgetState();
+  _BrowseCommutesPageWidgetState createState() =>
+      _BrowseCommutesPageWidgetState();
 }
 
-class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
+class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Create_Ride_Nav_Page'});
+        parameters: {'screen_name': 'browse_commutes_page'});
   }
 
   @override
@@ -31,11 +31,10 @@ class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         title: Text(
-          'Manage Commutes',
-          textAlign: TextAlign.center,
-          style: FlutterFlowTheme.of(context).bodyText1.override(
+          'Find Commutes',
+          style: FlutterFlowTheme.of(context).title1.override(
                 fontFamily: 'Roboto',
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 fontSize: 18,
@@ -48,12 +47,12 @@ class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
             borderWidth: 1,
             buttonSize: 60,
             icon: Icon(
-              Icons.add,
+              Icons.filter_list_rounded,
               color: FlutterFlowTheme.of(context).primaryBackground,
               size: 30,
             ),
             onPressed: () async {
-              logFirebaseEvent('CREATE_RIDE_NAV_PAGE_PAGE_add_ICN_ON_TAP');
+              logFirebaseEvent('BROWSE_COMMUTES_filter_list_rounded_ICN_');
               logFirebaseEvent('IconButton_Bottom-Sheet');
               await showModalBottomSheet(
                 isScrollControlled: true,
@@ -62,7 +61,10 @@ class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
                 builder: (context) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child: CreateCommuteWidget(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      child: CommutesFilterWidget(),
+                    ),
                   );
                 },
               );
@@ -80,9 +82,8 @@ class _CreateRideNavPageWidgetState extends State<CreateRideNavPageWidget> {
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
             children: [
-              CommuteManagementCardWidget(),
-              CommuteManagementCardWidget(),
-              CommuteManagementCardWidget(),
+              CommuteCardWidget(),
+              CommuteCardWidget(),
             ],
           ),
         ),
