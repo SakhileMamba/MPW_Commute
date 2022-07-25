@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PhoneConfirmationWidget extends StatefulWidget {
-  const PhoneConfirmationWidget({Key? key}) : super(key: key);
+class PhoneConfirmationPageWidget extends StatefulWidget {
+  const PhoneConfirmationPageWidget({Key? key}) : super(key: key);
 
   @override
-  _PhoneConfirmationWidgetState createState() =>
-      _PhoneConfirmationWidgetState();
+  _PhoneConfirmationPageWidgetState createState() =>
+      _PhoneConfirmationPageWidgetState();
 }
 
-class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
+class _PhoneConfirmationPageWidgetState
+    extends State<PhoneConfirmationPageWidget> {
   TextEditingController? securityCodeTextFieldController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -22,7 +23,7 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Phone_Confirmation'});
+        parameters: {'screen_name': 'phone_confirmation_page'});
     securityCodeTextFieldController = TextEditingController();
   }
 
@@ -55,7 +56,8 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
           await Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => NavBarPage(initialPage: 'Seats_Nav_Page'),
+              builder: (context) =>
+                  NavBarPage(initialPage: 'browse_commutes_page'),
             ),
             (r) => false,
           );
@@ -118,8 +120,11 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     filled: true,
-                    prefixIcon: Icon(
-                      Icons.security,
+                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                    suffixIcon: Icon(
+                      Icons.security_rounded,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      size: 24,
                     ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,

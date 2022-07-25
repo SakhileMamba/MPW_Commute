@@ -45,6 +45,13 @@ abstract class SupportedLocationsRecord
           {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
-Map<String, dynamic> createSupportedLocationsRecordData() =>
-    serializers.toFirestore(SupportedLocationsRecord.serializer,
-        SupportedLocationsRecord((s) => s..eswatiniLocations = null));
+Map<String, dynamic> createSupportedLocationsRecordData() {
+  final firestoreData = serializers.toFirestore(
+    SupportedLocationsRecord.serializer,
+    SupportedLocationsRecord(
+      (s) => s..eswatiniLocations = null,
+    ),
+  );
+
+  return firestoreData;
+}

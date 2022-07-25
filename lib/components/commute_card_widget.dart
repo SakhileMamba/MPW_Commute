@@ -1,8 +1,10 @@
+import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class CommuteCardWidget extends StatefulWidget {
   const CommuteCardWidget({Key? key}) : super(key: key);
@@ -49,15 +51,41 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                             color: Color(0xFFF1F4F8),
                             shape: BoxShape.circle,
                           ),
-                          child: Container(
-                            width: 120,
-                            height: 120,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Image.asset(
-                              'assets/images/profilepicture.png',
+                          child: InkWell(
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'COMMUTE_CARD_CircleImage_zyi31c6h_ON_TAP');
+                              logFirebaseEvent('CircleImage_Expand-Image');
+                              await Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: FlutterFlowExpandedImageView(
+                                    image: Image.asset(
+                                      'assets/images/profilepicture.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                    allowRotation: false,
+                                    tag: 'circleImageTag!',
+                                    useHeroAnimation: true,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Hero(
+                              tag: 'circleImageTag!',
+                              transitionOnUserGestures: true,
+                              child: Container(
+                                width: 120,
+                                height: 120,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.asset(
+                                  'assets/images/profilepicture.png',
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -131,12 +159,37 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                   ),
                 ),
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/images/lamborghini-urus.jpg',
-                  width: 100,
-                  fit: BoxFit.cover,
+              InkWell(
+                onTap: () async {
+                  logFirebaseEvent('COMMUTE_CARD_COMP_Image_yjy35p82_ON_TAP');
+                  logFirebaseEvent('Image_Expand-Image');
+                  await Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: FlutterFlowExpandedImageView(
+                        image: Image.asset(
+                          'assets/images/lamborghini-urus.jpg',
+                          fit: BoxFit.contain,
+                        ),
+                        allowRotation: false,
+                        tag: 'imageTag!',
+                        useHeroAnimation: true,
+                      ),
+                    ),
+                  );
+                },
+                child: Hero(
+                  tag: 'imageTag!',
+                  transitionOnUserGestures: true,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/lamborghini-urus.jpg',
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               Divider(
@@ -191,74 +244,6 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                             ),
                             Text(
                               '9:40am',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 8,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.speed_rounded,
-                        color: Colors.black,
-                        size: 24,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                        ),
-                        child: Wrap(
-                          spacing: 0,
-                          runSpacing: 0,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: Text(
-                                'Average Speed (km/h)',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                            Text(
-                              '100',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
@@ -359,7 +344,7 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                       child: Icon(
-                        Icons.attach_money_rounded,
+                        Icons.monetization_on_rounded,
                         color: Colors.black,
                         size: 24,
                       ),
@@ -384,7 +369,7 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                               child: Text(
-                                'Seat Price:',
+                                'Price/Seat',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -396,7 +381,7 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                               ),
                             ),
                             Text(
-                              'E30.00',
+                              '30.00',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText2
                                   .override(
