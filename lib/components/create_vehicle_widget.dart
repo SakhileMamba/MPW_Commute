@@ -91,7 +91,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 TextFormField(
                   controller: textController2,
@@ -122,7 +122,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 TextFormField(
                   controller: textController3,
@@ -154,7 +154,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 TextFormField(
                   controller: textController4,
@@ -185,7 +185,7 @@ class _CreateVehicleWidgetState extends State<CreateVehicleWidget> {
                 ),
                 Divider(
                   height: 16,
-                  color: FlutterFlowTheme.of(context).primaryColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 TextFormField(
                   controller: textController5,

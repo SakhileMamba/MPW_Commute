@@ -83,7 +83,6 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
             scrollDirection: Axis.vertical,
             children: [
               CommuteCardWidget(),
-              CommuteCardWidget(),
             ],
           ),
         ),

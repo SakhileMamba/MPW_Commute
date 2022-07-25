@@ -21,10 +21,10 @@ class _$VehiclesRecordSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.vehicleRegistration;
+    value = object.registrationNumber;
     if (value != null) {
       result
-        ..add('vehicle_registration')
+        ..add('registration_number')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -34,32 +34,31 @@ class _$VehiclesRecordSerializer
         ..add('number_of_passenger_seats')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.imageUrls;
+    value = object.imageURL;
     if (value != null) {
       result
-        ..add('image_urls')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
-    }
-    value = object.vehicleMake;
-    if (value != null) {
-      result
-        ..add('vehicle_make')
+        ..add('image_URL')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.vehicleModel;
+    value = object.make;
     if (value != null) {
       result
-        ..add('vehicle_model')
+        ..add('make')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.vehicleModelYear;
+    value = object.model;
     if (value != null) {
       result
-        ..add('vehicle_model_year')
+        ..add('model')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.year;
+    if (value != null) {
+      result
+        ..add('year')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -86,30 +85,28 @@ class _$VehiclesRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'vehicle_registration':
-          result.vehicleRegistration = serializers.deserialize(value,
+        case 'registration_number':
+          result.registrationNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'number_of_passenger_seats':
           result.numberOfPassengerSeats = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
-        case 'image_urls':
-          result.imageUrls.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
-        case 'vehicle_make':
-          result.vehicleMake = serializers.deserialize(value,
+        case 'image_URL':
+          result.imageURL = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'vehicle_model':
-          result.vehicleModel = serializers.deserialize(value,
+        case 'make':
+          result.make = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'vehicle_model_year':
-          result.vehicleModelYear = serializers.deserialize(value,
+        case 'model':
+          result.model = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'year':
+          result.year = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
@@ -127,17 +124,17 @@ class _$VehiclesRecordSerializer
 
 class _$VehiclesRecord extends VehiclesRecord {
   @override
-  final String? vehicleRegistration;
+  final String? registrationNumber;
   @override
   final int? numberOfPassengerSeats;
   @override
-  final BuiltList<String>? imageUrls;
+  final String? imageURL;
   @override
-  final String? vehicleMake;
+  final String? make;
   @override
-  final String? vehicleModel;
+  final String? model;
   @override
-  final String? vehicleModelYear;
+  final String? year;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -145,12 +142,12 @@ class _$VehiclesRecord extends VehiclesRecord {
       (new VehiclesRecordBuilder()..update(updates)).build();
 
   _$VehiclesRecord._(
-      {this.vehicleRegistration,
+      {this.registrationNumber,
       this.numberOfPassengerSeats,
-      this.imageUrls,
-      this.vehicleMake,
-      this.vehicleModel,
-      this.vehicleModelYear,
+      this.imageURL,
+      this.make,
+      this.model,
+      this.year,
       this.ffRef})
       : super._();
 
@@ -166,12 +163,12 @@ class _$VehiclesRecord extends VehiclesRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is VehiclesRecord &&
-        vehicleRegistration == other.vehicleRegistration &&
+        registrationNumber == other.registrationNumber &&
         numberOfPassengerSeats == other.numberOfPassengerSeats &&
-        imageUrls == other.imageUrls &&
-        vehicleMake == other.vehicleMake &&
-        vehicleModel == other.vehicleModel &&
-        vehicleModelYear == other.vehicleModelYear &&
+        imageURL == other.imageURL &&
+        make == other.make &&
+        model == other.model &&
+        year == other.year &&
         ffRef == other.ffRef;
   }
 
@@ -182,24 +179,24 @@ class _$VehiclesRecord extends VehiclesRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc(0, vehicleRegistration.hashCode),
+                        $jc($jc(0, registrationNumber.hashCode),
                             numberOfPassengerSeats.hashCode),
-                        imageUrls.hashCode),
-                    vehicleMake.hashCode),
-                vehicleModel.hashCode),
-            vehicleModelYear.hashCode),
+                        imageURL.hashCode),
+                    make.hashCode),
+                model.hashCode),
+            year.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('VehiclesRecord')
-          ..add('vehicleRegistration', vehicleRegistration)
+          ..add('registrationNumber', registrationNumber)
           ..add('numberOfPassengerSeats', numberOfPassengerSeats)
-          ..add('imageUrls', imageUrls)
-          ..add('vehicleMake', vehicleMake)
-          ..add('vehicleModel', vehicleModel)
-          ..add('vehicleModelYear', vehicleModelYear)
+          ..add('imageURL', imageURL)
+          ..add('make', make)
+          ..add('model', model)
+          ..add('year', year)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -209,34 +206,31 @@ class VehiclesRecordBuilder
     implements Builder<VehiclesRecord, VehiclesRecordBuilder> {
   _$VehiclesRecord? _$v;
 
-  String? _vehicleRegistration;
-  String? get vehicleRegistration => _$this._vehicleRegistration;
-  set vehicleRegistration(String? vehicleRegistration) =>
-      _$this._vehicleRegistration = vehicleRegistration;
+  String? _registrationNumber;
+  String? get registrationNumber => _$this._registrationNumber;
+  set registrationNumber(String? registrationNumber) =>
+      _$this._registrationNumber = registrationNumber;
 
   int? _numberOfPassengerSeats;
   int? get numberOfPassengerSeats => _$this._numberOfPassengerSeats;
   set numberOfPassengerSeats(int? numberOfPassengerSeats) =>
       _$this._numberOfPassengerSeats = numberOfPassengerSeats;
 
-  ListBuilder<String>? _imageUrls;
-  ListBuilder<String> get imageUrls =>
-      _$this._imageUrls ??= new ListBuilder<String>();
-  set imageUrls(ListBuilder<String>? imageUrls) =>
-      _$this._imageUrls = imageUrls;
+  String? _imageURL;
+  String? get imageURL => _$this._imageURL;
+  set imageURL(String? imageURL) => _$this._imageURL = imageURL;
 
-  String? _vehicleMake;
-  String? get vehicleMake => _$this._vehicleMake;
-  set vehicleMake(String? vehicleMake) => _$this._vehicleMake = vehicleMake;
+  String? _make;
+  String? get make => _$this._make;
+  set make(String? make) => _$this._make = make;
 
-  String? _vehicleModel;
-  String? get vehicleModel => _$this._vehicleModel;
-  set vehicleModel(String? vehicleModel) => _$this._vehicleModel = vehicleModel;
+  String? _model;
+  String? get model => _$this._model;
+  set model(String? model) => _$this._model = model;
 
-  String? _vehicleModelYear;
-  String? get vehicleModelYear => _$this._vehicleModelYear;
-  set vehicleModelYear(String? vehicleModelYear) =>
-      _$this._vehicleModelYear = vehicleModelYear;
+  String? _year;
+  String? get year => _$this._year;
+  set year(String? year) => _$this._year = year;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -249,12 +243,12 @@ class VehiclesRecordBuilder
   VehiclesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _vehicleRegistration = $v.vehicleRegistration;
+      _registrationNumber = $v.registrationNumber;
       _numberOfPassengerSeats = $v.numberOfPassengerSeats;
-      _imageUrls = $v.imageUrls?.toBuilder();
-      _vehicleMake = $v.vehicleMake;
-      _vehicleModel = $v.vehicleModel;
-      _vehicleModelYear = $v.vehicleModelYear;
+      _imageURL = $v.imageURL;
+      _make = $v.make;
+      _model = $v.model;
+      _year = $v.year;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -274,28 +268,15 @@ class VehiclesRecordBuilder
 
   @override
   _$VehiclesRecord build() {
-    _$VehiclesRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$VehiclesRecord._(
-              vehicleRegistration: vehicleRegistration,
-              numberOfPassengerSeats: numberOfPassengerSeats,
-              imageUrls: _imageUrls?.build(),
-              vehicleMake: vehicleMake,
-              vehicleModel: vehicleModel,
-              vehicleModelYear: vehicleModelYear,
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'imageUrls';
-        _imageUrls?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'VehiclesRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$VehiclesRecord._(
+            registrationNumber: registrationNumber,
+            numberOfPassengerSeats: numberOfPassengerSeats,
+            imageURL: imageURL,
+            make: make,
+            model: model,
+            year: year,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

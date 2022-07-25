@@ -8,3 +8,5 @@ export 'browse_commutes_page/browse_commutes_page_widget.dart'
 export 'manage_commutes_page/manage_commutes_page_widget.dart'
     show ManageCommutesPageWidget;
 export 'account_page/account_page_widget.dart' show AccountPageWidget;
+export 'personal_information_update_page/personal_information_update_page_widget.dart'
+    show PersonalInformationUpdatePageWidget;

@@ -11,23 +11,20 @@ abstract class VehiclesRecord
   static Serializer<VehiclesRecord> get serializer =>
       _$vehiclesRecordSerializer;
 
-  @BuiltValueField(wireName: 'vehicle_registration')
-  String? get vehicleRegistration;
+  @BuiltValueField(wireName: 'registration_number')
+  String? get registrationNumber;
 
   @BuiltValueField(wireName: 'number_of_passenger_seats')
   int? get numberOfPassengerSeats;
 
-  @BuiltValueField(wireName: 'image_urls')
-  BuiltList<String>? get imageUrls;
+  @BuiltValueField(wireName: 'image_URL')
+  String? get imageURL;
 
-  @BuiltValueField(wireName: 'vehicle_make')
-  String? get vehicleMake;
+  String? get make;
 
-  @BuiltValueField(wireName: 'vehicle_model')
-  String? get vehicleModel;
+  String? get model;
 
-  @BuiltValueField(wireName: 'vehicle_model_year')
-  String? get vehicleModelYear;
+  String? get year;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -36,12 +33,12 @@ abstract class VehiclesRecord
   DocumentReference get parentReference => reference.parent.parent!;
 
   static void _initializeBuilder(VehiclesRecordBuilder builder) => builder
-    ..vehicleRegistration = ''
+    ..registrationNumber = ''
     ..numberOfPassengerSeats = 0
-    ..imageUrls = ListBuilder()
-    ..vehicleMake = ''
-    ..vehicleModel = ''
-    ..vehicleModelYear = '';
+    ..imageURL = ''
+    ..make = ''
+    ..model = ''
+    ..year = '';
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -70,22 +67,23 @@ abstract class VehiclesRecord
 }
 
 Map<String, dynamic> createVehiclesRecordData({
-  String? vehicleRegistration,
+  String? registrationNumber,
   int? numberOfPassengerSeats,
-  String? vehicleMake,
-  String? vehicleModel,
-  String? vehicleModelYear,
+  String? imageURL,
+  String? make,
+  String? model,
+  String? year,
 }) {
   final firestoreData = serializers.toFirestore(
     VehiclesRecord.serializer,
     VehiclesRecord(
       (v) => v
-        ..vehicleRegistration = vehicleRegistration
+        ..registrationNumber = registrationNumber
         ..numberOfPassengerSeats = numberOfPassengerSeats
-        ..imageUrls = null
-        ..vehicleMake = vehicleMake
-        ..vehicleModel = vehicleModel
-        ..vehicleModelYear = vehicleModelYear,
+        ..imageURL = imageURL
+        ..make = make
+        ..model = model
+        ..year = year,
     ),
   );
 
