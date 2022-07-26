@@ -1,0 +1,95 @@
+import 'dart:async';
+
+import 'index.dart';
+import 'serializers.dart';
+import 'package:built_value/built_value.dart';
+
+part 'commutes_record.g.dart';
+
+abstract class CommutesRecord
+    implements Built<CommutesRecord, CommutesRecordBuilder> {
+  static Serializer<CommutesRecord> get serializer =>
+      _$commutesRecordSerializer;
+
+  String? get origin;
+
+  String? get destination;
+
+  @BuiltValueField(wireName: 'departure_date')
+  DateTime? get departureDate;
+
+  @BuiltValueField(wireName: 'departure_time')
+  DateTime? get departureTime;
+
+  DocumentReference? get vehicle;
+
+  @BuiltValueField(wireName: 'available_passenger_seats')
+  int? get availablePassengerSeats;
+
+  @BuiltValueField(wireName: 'price_per_seat')
+  double? get pricePerSeat;
+
+  DocumentReference? get driver;
+
+  BuiltList<DocumentReference>? get passengers;
+
+  @BuiltValueField(wireName: kDocumentReferenceField)
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
+
+  static void _initializeBuilder(CommutesRecordBuilder builder) => builder
+    ..origin = ''
+    ..destination = ''
+    ..availablePassengerSeats = 0
+    ..pricePerSeat = 0.0
+    ..passengers = ListBuilder();
+
+  static CollectionReference get collection =>
+      FirebaseFirestore.instance.collection('commutes');
+
+  static Stream<CommutesRecord> getDocument(DocumentReference ref) => ref
+      .snapshots()
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+
+  static Future<CommutesRecord> getDocumentOnce(DocumentReference ref) => ref
+      .get()
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+
+  CommutesRecord._();
+  factory CommutesRecord([void Function(CommutesRecordBuilder) updates]) =
+      _$CommutesRecord;
+
+  static CommutesRecord getDocumentFromData(
+          Map<String, dynamic> data, DocumentReference reference) =>
+      serializers.deserializeWith(serializer,
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+}
+
+Map<String, dynamic> createCommutesRecordData({
+  String? origin,
+  String? destination,
+  DateTime? departureDate,
+  DateTime? departureTime,
+  DocumentReference? vehicle,
+  int? availablePassengerSeats,
+  double? pricePerSeat,
+  DocumentReference? driver,
+}) {
+  final firestoreData = serializers.toFirestore(
+    CommutesRecord.serializer,
+    CommutesRecord(
+      (c) => c
+        ..origin = origin
+        ..destination = destination
+        ..departureDate = departureDate
+        ..departureTime = departureTime
+        ..vehicle = vehicle
+        ..availablePassengerSeats = availablePassengerSeats
+        ..pricePerSeat = pricePerSeat
+        ..driver = driver
+        ..passengers = null,
+    ),
+  );
+
+  return firestoreData;
+}

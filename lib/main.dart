@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
             )
           : currentUser!.loggedIn
               ? PushNotificationsHandler(child: NavBarPage())
-              : PhoneAuthWidget(),
+              : PhoneAuthenticationPageWidget(),
     );
   }
 }
@@ -112,7 +112,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPage = 'Seats_Nav_Page';
+  String _currentPage = 'browse_commutes_page';
 
   @override
   void initState() {
@@ -123,9 +123,9 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'Seats_Nav_Page': SeatsNavPageWidget(),
-      'Create_Ride_Nav_Page': CreateRideNavPageWidget(),
-      'Account': AccountWidget(),
+      'browse_commutes_page': BrowseCommutesPageWidget(),
+      'manage_commutes_page': ManageCommutesPageWidget(),
+      'account_page': AccountPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
     return Scaffold(

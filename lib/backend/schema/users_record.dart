@@ -25,6 +25,20 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'phone_number')
   String? get phoneNumber;
 
+  @BuiltValueField(wireName: 'display_surname')
+  String? get displaySurname;
+
+  @BuiltValueField(wireName: 'national_id')
+  String? get nationalId;
+
+  @BuiltValueField(wireName: 'national_id_photo_url')
+  String? get nationalIdPhotoUrl;
+
+  @BuiltValueField(wireName: 'verified_user')
+  bool? get verifiedUser;
+
+  String? get gender;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -34,7 +48,12 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..phoneNumber = ''
+    ..displaySurname = ''
+    ..nationalId = ''
+    ..nationalIdPhotoUrl = ''
+    ..verifiedUser = false
+    ..gender = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -64,13 +83,29 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
-}) =>
-    serializers.toFirestore(
-        UsersRecord.serializer,
-        UsersRecord((u) => u
-          ..email = email
-          ..displayName = displayName
-          ..photoUrl = photoUrl
-          ..uid = uid
-          ..createdTime = createdTime
-          ..phoneNumber = phoneNumber));
+  String? displaySurname,
+  String? nationalId,
+  String? nationalIdPhotoUrl,
+  bool? verifiedUser,
+  String? gender,
+}) {
+  final firestoreData = serializers.toFirestore(
+    UsersRecord.serializer,
+    UsersRecord(
+      (u) => u
+        ..email = email
+        ..displayName = displayName
+        ..photoUrl = photoUrl
+        ..uid = uid
+        ..createdTime = createdTime
+        ..phoneNumber = phoneNumber
+        ..displaySurname = displaySurname
+        ..nationalId = nationalId
+        ..nationalIdPhotoUrl = nationalIdPhotoUrl
+        ..verifiedUser = verifiedUser
+        ..gender = gender,
+    ),
+  );
+
+  return firestoreData;
+}

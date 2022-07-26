@@ -61,6 +61,41 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.displaySurname;
+    if (value != null) {
+      result
+        ..add('display_surname')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.nationalId;
+    if (value != null) {
+      result
+        ..add('national_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.nationalIdPhotoUrl;
+    if (value != null) {
+      result
+        ..add('national_id_photo_url')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.verifiedUser;
+    if (value != null) {
+      result
+        ..add('verified_user')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.gender;
+    if (value != null) {
+      result
+        ..add('gender')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -107,6 +142,26 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'display_surname':
+          result.displaySurname = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'national_id':
+          result.nationalId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'national_id_photo_url':
+          result.nationalIdPhotoUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'verified_user':
+          result.verifiedUser = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -134,6 +189,16 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
+  final String? displaySurname;
+  @override
+  final String? nationalId;
+  @override
+  final String? nationalIdPhotoUrl;
+  @override
+  final bool? verifiedUser;
+  @override
+  final String? gender;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -146,6 +211,11 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
+      this.displaySurname,
+      this.nationalId,
+      this.nationalIdPhotoUrl,
+      this.verifiedUser,
+      this.gender,
       this.ffRef})
       : super._();
 
@@ -166,6 +236,11 @@ class _$UsersRecord extends UsersRecord {
         uid == other.uid &&
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
+        displaySurname == other.displaySurname &&
+        nationalId == other.nationalId &&
+        nationalIdPhotoUrl == other.nationalIdPhotoUrl &&
+        verifiedUser == other.verifiedUser &&
+        gender == other.gender &&
         ffRef == other.ffRef;
   }
 
@@ -175,11 +250,23 @@ class _$UsersRecord extends UsersRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                        photoUrl.hashCode),
-                    uid.hashCode),
-                createdTime.hashCode),
-            phoneNumber.hashCode),
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, email.hashCode),
+                                                displayName.hashCode),
+                                            photoUrl.hashCode),
+                                        uid.hashCode),
+                                    createdTime.hashCode),
+                                phoneNumber.hashCode),
+                            displaySurname.hashCode),
+                        nationalId.hashCode),
+                    nationalIdPhotoUrl.hashCode),
+                verifiedUser.hashCode),
+            gender.hashCode),
         ffRef.hashCode));
   }
 
@@ -192,6 +279,11 @@ class _$UsersRecord extends UsersRecord {
           ..add('uid', uid)
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
+          ..add('displaySurname', displaySurname)
+          ..add('nationalId', nationalId)
+          ..add('nationalIdPhotoUrl', nationalIdPhotoUrl)
+          ..add('verifiedUser', verifiedUser)
+          ..add('gender', gender)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -224,6 +316,28 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  String? _displaySurname;
+  String? get displaySurname => _$this._displaySurname;
+  set displaySurname(String? displaySurname) =>
+      _$this._displaySurname = displaySurname;
+
+  String? _nationalId;
+  String? get nationalId => _$this._nationalId;
+  set nationalId(String? nationalId) => _$this._nationalId = nationalId;
+
+  String? _nationalIdPhotoUrl;
+  String? get nationalIdPhotoUrl => _$this._nationalIdPhotoUrl;
+  set nationalIdPhotoUrl(String? nationalIdPhotoUrl) =>
+      _$this._nationalIdPhotoUrl = nationalIdPhotoUrl;
+
+  bool? _verifiedUser;
+  bool? get verifiedUser => _$this._verifiedUser;
+  set verifiedUser(bool? verifiedUser) => _$this._verifiedUser = verifiedUser;
+
+  String? _gender;
+  String? get gender => _$this._gender;
+  set gender(String? gender) => _$this._gender = gender;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -241,6 +355,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _uid = $v.uid;
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
+      _displaySurname = $v.displaySurname;
+      _nationalId = $v.nationalId;
+      _nationalIdPhotoUrl = $v.nationalIdPhotoUrl;
+      _verifiedUser = $v.verifiedUser;
+      _gender = $v.gender;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -268,6 +387,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             uid: uid,
             createdTime: createdTime,
             phoneNumber: phoneNumber,
+            displaySurname: displaySurname,
+            nationalId: nationalId,
+            nationalIdPhotoUrl: nationalIdPhotoUrl,
+            verifiedUser: verifiedUser,
+            gender: gender,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
