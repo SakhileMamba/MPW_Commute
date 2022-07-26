@@ -89,6 +89,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.gender;
+    if (value != null) {
+      result
+        ..add('gender')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -151,6 +158,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.verifiedUser = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -186,6 +197,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? verifiedUser;
   @override
+  final String? gender;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -202,6 +215,7 @@ class _$UsersRecord extends UsersRecord {
       this.nationalId,
       this.nationalIdPhotoUrl,
       this.verifiedUser,
+      this.gender,
       this.ffRef})
       : super._();
 
@@ -226,6 +240,7 @@ class _$UsersRecord extends UsersRecord {
         nationalId == other.nationalId &&
         nationalIdPhotoUrl == other.nationalIdPhotoUrl &&
         verifiedUser == other.verifiedUser &&
+        gender == other.gender &&
         ffRef == other.ffRef;
   }
 
@@ -240,16 +255,18 @@ class _$UsersRecord extends UsersRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, email.hashCode),
-                                            displayName.hashCode),
-                                        photoUrl.hashCode),
-                                    uid.hashCode),
-                                createdTime.hashCode),
-                            phoneNumber.hashCode),
-                        displaySurname.hashCode),
-                    nationalId.hashCode),
-                nationalIdPhotoUrl.hashCode),
-            verifiedUser.hashCode),
+                                        $jc(
+                                            $jc($jc(0, email.hashCode),
+                                                displayName.hashCode),
+                                            photoUrl.hashCode),
+                                        uid.hashCode),
+                                    createdTime.hashCode),
+                                phoneNumber.hashCode),
+                            displaySurname.hashCode),
+                        nationalId.hashCode),
+                    nationalIdPhotoUrl.hashCode),
+                verifiedUser.hashCode),
+            gender.hashCode),
         ffRef.hashCode));
   }
 
@@ -266,6 +283,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('nationalId', nationalId)
           ..add('nationalIdPhotoUrl', nationalIdPhotoUrl)
           ..add('verifiedUser', verifiedUser)
+          ..add('gender', gender)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -316,6 +334,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   bool? get verifiedUser => _$this._verifiedUser;
   set verifiedUser(bool? verifiedUser) => _$this._verifiedUser = verifiedUser;
 
+  String? _gender;
+  String? get gender => _$this._gender;
+  set gender(String? gender) => _$this._gender = gender;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -337,6 +359,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _nationalId = $v.nationalId;
       _nationalIdPhotoUrl = $v.nationalIdPhotoUrl;
       _verifiedUser = $v.verifiedUser;
+      _gender = $v.gender;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -368,6 +391,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             nationalId: nationalId,
             nationalIdPhotoUrl: nationalIdPhotoUrl,
             verifiedUser: verifiedUser,
+            gender: gender,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
