@@ -89,7 +89,6 @@ class _GovernmentIdUpdatePageWidgetState
                       AuthUserStreamWidget(
                         child: TextFormField(
                           controller: textController,
-                          autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Government ID No',

@@ -101,7 +101,6 @@ class _PersonalInformationUpdatePageWidgetState
                         AuthUserStreamWidget(
                           child: TextFormField(
                             controller: textController1,
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Name',
@@ -133,7 +132,6 @@ class _PersonalInformationUpdatePageWidgetState
                         AuthUserStreamWidget(
                           child: TextFormField(
                             controller: textController2,
-                            autofocus: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Surname',
@@ -165,7 +163,6 @@ class _PersonalInformationUpdatePageWidgetState
                         AuthUserStreamWidget(
                           child: TextFormField(
                             controller: textController3,
-                            autofocus: true,
                             readOnly: true,
                             obscureText: false,
                             decoration: InputDecoration(
