@@ -39,6 +39,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   String? get gender;
 
+  double? get rating;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -53,7 +55,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..nationalId = ''
     ..nationalIdPhotoUrl = ''
     ..verifiedUser = false
-    ..gender = '';
+    ..gender = ''
+    ..rating = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -88,6 +91,7 @@ Map<String, dynamic> createUsersRecordData({
   String? nationalIdPhotoUrl,
   bool? verifiedUser,
   String? gender,
+  double? rating,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -103,7 +107,8 @@ Map<String, dynamic> createUsersRecordData({
         ..nationalId = nationalId
         ..nationalIdPhotoUrl = nationalIdPhotoUrl
         ..verifiedUser = verifiedUser
-        ..gender = gender,
+        ..gender = gender
+        ..rating = rating,
     ),
   );
 

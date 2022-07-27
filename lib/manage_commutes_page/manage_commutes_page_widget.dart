@@ -1,5 +1,5 @@
 import '../components/commute_management_card_widget.dart';
-import '../components/create_commute_widget.dart';
+import '../create_commute_page/create_commute_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -54,17 +54,12 @@ class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
             ),
             onPressed: () async {
               logFirebaseEvent('MANAGE_COMMUTES_add_rounded_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_Bottom-Sheet');
-              await showModalBottomSheet(
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: CreateCommuteWidget(),
-                  );
-                },
+              logFirebaseEvent('IconButton_Navigate-To');
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreateCommutePageWidget(),
+                ),
               );
             },
           ),

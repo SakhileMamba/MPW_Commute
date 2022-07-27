@@ -96,6 +96,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.rating;
+    if (value != null) {
+      result
+        ..add('rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -162,6 +169,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.gender = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -199,6 +210,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? gender;
   @override
+  final double? rating;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -216,6 +229,7 @@ class _$UsersRecord extends UsersRecord {
       this.nationalIdPhotoUrl,
       this.verifiedUser,
       this.gender,
+      this.rating,
       this.ffRef})
       : super._();
 
@@ -241,6 +255,7 @@ class _$UsersRecord extends UsersRecord {
         nationalIdPhotoUrl == other.nationalIdPhotoUrl &&
         verifiedUser == other.verifiedUser &&
         gender == other.gender &&
+        rating == other.rating &&
         ffRef == other.ffRef;
   }
 
@@ -256,17 +271,19 @@ class _$UsersRecord extends UsersRecord {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, email.hashCode),
-                                                displayName.hashCode),
-                                            photoUrl.hashCode),
-                                        uid.hashCode),
-                                    createdTime.hashCode),
-                                phoneNumber.hashCode),
-                            displaySurname.hashCode),
-                        nationalId.hashCode),
-                    nationalIdPhotoUrl.hashCode),
-                verifiedUser.hashCode),
-            gender.hashCode),
+                                            $jc(
+                                                $jc($jc(0, email.hashCode),
+                                                    displayName.hashCode),
+                                                photoUrl.hashCode),
+                                            uid.hashCode),
+                                        createdTime.hashCode),
+                                    phoneNumber.hashCode),
+                                displaySurname.hashCode),
+                            nationalId.hashCode),
+                        nationalIdPhotoUrl.hashCode),
+                    verifiedUser.hashCode),
+                gender.hashCode),
+            rating.hashCode),
         ffRef.hashCode));
   }
 
@@ -284,6 +301,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('nationalIdPhotoUrl', nationalIdPhotoUrl)
           ..add('verifiedUser', verifiedUser)
           ..add('gender', gender)
+          ..add('rating', rating)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -338,6 +356,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get gender => _$this._gender;
   set gender(String? gender) => _$this._gender = gender;
 
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -360,6 +382,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _nationalIdPhotoUrl = $v.nationalIdPhotoUrl;
       _verifiedUser = $v.verifiedUser;
       _gender = $v.gender;
+      _rating = $v.rating;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -392,6 +415,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             nationalIdPhotoUrl: nationalIdPhotoUrl,
             verifiedUser: verifiedUser,
             gender: gender,
+            rating: rating,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

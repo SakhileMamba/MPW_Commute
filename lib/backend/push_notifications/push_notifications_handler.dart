@@ -87,10 +87,10 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
-  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'profile_picture_update_Page': (data) async =>
       ProfilePictureUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
+  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'create_commute_page': (data) async => CreateCommutePageWidget(),
 };
