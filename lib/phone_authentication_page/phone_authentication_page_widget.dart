@@ -105,7 +105,6 @@ class _PhoneAuthenticationPageWidgetState
                   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                   child: TextFormField(
                     controller: phoneNumberTextFieldController,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Phone Number',
