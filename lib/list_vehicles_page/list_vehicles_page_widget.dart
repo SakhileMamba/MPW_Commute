@@ -118,7 +118,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           CachedNetworkImage(
-                            imageUrl: columnVehiclesRecord!.imageURL!,
+                            imageUrl: columnVehiclesRecord.imageURL!,
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.cover,
                           ),
@@ -126,7 +126,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                             controller: textController ??=
                                 TextEditingController(
                               text:
-                                  '${columnVehiclesRecord!.make}, ${columnVehiclesRecord!.model}, ${columnVehiclesRecord!.year}',
+                                  '${columnVehiclesRecord.make}, ${columnVehiclesRecord.model}, ${columnVehiclesRecord.year}',
                             ),
                             autofocus: true,
                             obscureText: false,

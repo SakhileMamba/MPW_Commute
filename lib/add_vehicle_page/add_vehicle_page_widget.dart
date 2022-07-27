@@ -268,8 +268,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                               .map((u) => u!)
                               .toList();
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          if (downloadUrls != null &&
-                              downloadUrls.length == selectedMedia.length) {
+                          if (downloadUrls.length == selectedMedia.length) {
                             setState(
                                 () => uploadedFileUrl = downloadUrls.first);
                             showUploadMessage(
@@ -289,7 +288,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
                           imageUrl: valueOrDefault<String>(
-                            uploadedFileUrl!,
+                            uploadedFileUrl,
                             'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                           ),
                           width: MediaQuery.of(context).size.width,

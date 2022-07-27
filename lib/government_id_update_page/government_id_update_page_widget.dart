@@ -157,9 +157,8 @@ class _GovernmentIdUpdatePageWidgetState
                                     .toList();
                                 ScaffoldMessenger.of(context)
                                     .hideCurrentSnackBar();
-                                if (downloadUrls != null &&
-                                    downloadUrls.length ==
-                                        selectedMedia.length) {
+                                if (downloadUrls.length ==
+                                    selectedMedia.length) {
                                   setState(() =>
                                       uploadedFileUrl = downloadUrls.first);
                                   showUploadMessage(

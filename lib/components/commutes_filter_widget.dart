@@ -216,7 +216,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
 
                           logFirebaseEvent('Container_Update-Local-State');
                           setState(() => FFAppState().filterDate =
-                              dateTimeFormat('MMMEd', datePicked1!));
+                              dateTimeFormat('MMMEd', datePicked1));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -244,7 +244,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                           .primaryBtnText,
                                     ),
                                     child: Text(
-                                      FFAppState().filterDate!,
+                                      FFAppState().filterDate,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
@@ -310,7 +310,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           logFirebaseEvent('Container_Update-Local-State');
                           setState(() =>
                               FFAppState().filterLatestDepartureTime =
-                                  dateTimeFormat('jm', datePicked2!));
+                                  dateTimeFormat('jm', datePicked2));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -338,7 +338,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                           .primaryBtnText,
                                     ),
                                     child: Text(
-                                      FFAppState().filterLatestDepartureTime!,
+                                      FFAppState().filterLatestDepartureTime,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
@@ -413,7 +413,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           return FlutterFlowDropDown(
                             initialOption: dropDownValue ??= '1',
                             options: FFAppState()
-                                .filterMinimumAvailableSeats!
+                                .filterMinimumAvailableSeats
                                 .map((e) => e.toString())
                                 .toList()
                                 .toList(),

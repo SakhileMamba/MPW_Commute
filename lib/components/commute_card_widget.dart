@@ -66,14 +66,14 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                                       fit: BoxFit.contain,
                                     ),
                                     allowRotation: false,
-                                    tag: 'circleImageTag!',
+                                    tag: 'circleImageTag',
                                     useHeroAnimation: true,
                                   ),
                                 ),
                               );
                             },
                             child: Hero(
-                              tag: 'circleImageTag!',
+                              tag: 'circleImageTag',
                               transitionOnUserGestures: true,
                               child: Container(
                                 width: 120,
@@ -173,14 +173,14 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                           fit: BoxFit.contain,
                         ),
                         allowRotation: false,
-                        tag: 'imageTag!',
+                        tag: 'imageTag',
                         useHeroAnimation: true,
                       ),
                     ),
                   );
                 },
                 child: Hero(
-                  tag: 'imageTag!',
+                  tag: 'imageTag',
                   transitionOnUserGestures: true,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
