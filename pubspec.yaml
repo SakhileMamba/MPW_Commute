@@ -33,7 +33,7 @@ dependencies:
   cloud_firestore_platform_interface: 5.6.0
   cloud_firestore_web: 2.6.8
   cloud_functions: 3.1.1
-  collection: 1.15.0
+  collection: 1.16.0
   file_picker: 4.5.1
   firebase_analytics: 9.1.0
   firebase_analytics_platform_interface: 3.2.0
