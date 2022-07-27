@@ -12,6 +12,11 @@ export 'personal_information_update_page/personal_information_update_page_widget
     show PersonalInformationUpdatePageWidget;
 export 'government_id_update_page/government_id_update_page_widget.dart'
     show GovernmentIdUpdatePageWidget;
-export 'vehicles_page/vehicles_page_widget.dart' show VehiclesPageWidget;
 export 'profile_picture_update_page/profile_picture_update_page_widget.dart'
     show ProfilePictureUpdatePageWidget;
+export 'list_vehicles_page/list_vehicles_page_widget.dart'
+    show ListVehiclesPageWidget;
+export 'add_vehicle_page/add_vehicle_page_widget.dart'
+    show AddVehiclePageWidget;
+export 'create_commute_page/create_commute_page_widget.dart'
+    show CreateCommutePageWidget;

@@ -48,12 +48,12 @@ class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
             borderWidth: 1,
             buttonSize: 60,
             icon: Icon(
-              Icons.add,
+              Icons.add_rounded,
               color: FlutterFlowTheme.of(context).primaryBackground,
               size: 30,
             ),
             onPressed: () async {
-              logFirebaseEvent('MANAGE_COMMUTES_PAGE_PAGE_add_ICN_ON_TAP');
+              logFirebaseEvent('MANAGE_COMMUTES_add_rounded_ICN_ON_TAP');
               logFirebaseEvent('IconButton_Bottom-Sheet');
               await showModalBottomSheet(
                 isScrollControlled: true,

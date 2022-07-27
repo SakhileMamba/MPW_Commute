@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/upload_media.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,12 +24,6 @@ class _GovernmentIdUpdatePageWidgetState
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
-      logFirebaseEvent('GOVERNMENT_ID_UPDATE_government_id_updat');
-      logFirebaseEvent('government_id_update_Page_Not-Defined');
-    });
-
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'government_id_update_Page'});
     textController = TextEditingController(
