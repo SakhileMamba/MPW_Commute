@@ -236,7 +236,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                             logFirebaseEvent('Container_Update-Local-State');
                             setState(() => FFAppState().filterDate =
-                                dateTimeFormat('MMMEd', datePicked1!));
+                                dateTimeFormat('MMMEd', datePicked1));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -264,7 +264,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                             .primaryBtnText,
                                       ),
                                       child: Text(
-                                        FFAppState().filterDate!,
+                                        FFAppState().filterDate,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1,
                                       ),
@@ -331,7 +331,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             logFirebaseEvent('Container_Update-Local-State');
                             setState(() =>
                                 FFAppState().filterLatestDepartureTime =
-                                    dateTimeFormat('jm', datePicked2!));
+                                    dateTimeFormat('jm', datePicked2));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -359,7 +359,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                             .primaryBtnText,
                                       ),
                                       child: Text(
-                                        FFAppState().filterLatestDepartureTime!,
+                                        FFAppState().filterLatestDepartureTime,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1,
                                       ),
@@ -429,7 +429,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 snapshot.data!;
                             return FlutterFlowDropDown(
                               options: dropDownVehiclesRecordList
-                                  .map((e) => e!.model!)
+                                  .map((e) => e.model!)
                                   .toList()
                                   .toList(),
                               onChanged: (val) =>
@@ -716,8 +716,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                               final commutesCreateData =
                                   createCommutesRecordData(
-                                origin: placePickerValue1!.name,
-                                destination: placePickerValue2!.name,
+                                origin: placePickerValue1.name,
+                                destination: placePickerValue2.name,
                                 departureDate: datePicked1,
                                 departureTime: datePicked2,
                                 availablePassengerSeats:
@@ -729,6 +729,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               await CommutesRecord.collection
                                   .doc()
                                   .set(commutesCreateData);
+                              logFirebaseEvent('Button_Navigate-Back');
+                              Navigator.pop(context);
                             },
                             text: 'Proceed',
                             icon: Icon(

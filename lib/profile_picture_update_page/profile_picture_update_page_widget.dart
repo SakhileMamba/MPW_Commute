@@ -120,8 +120,7 @@ class _ProfilePictureUpdatePageWidgetState
                               .map((u) => u!)
                               .toList();
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          if (downloadUrls != null &&
-                              downloadUrls.length == selectedMedia.length) {
+                          if (downloadUrls.length == selectedMedia.length) {
                             setState(
                                 () => uploadedFileUrl = downloadUrls.first);
                             showUploadMessage(
@@ -138,11 +137,8 @@ class _ProfilePictureUpdatePageWidgetState
                         }
                       },
                       child: CachedNetworkImage(
-                        imageUrl: valueOrDefault<String>(
-                          functions.imageUpdateFunction(
-                              currentUserPhoto, uploadedFileUrl),
-                          'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
-                        ),
+                        imageUrl: functions.imageUpdateFunction(
+                            currentUserPhoto, uploadedFileUrl),
                         width: MediaQuery.of(context).size.width,
                         height: 250,
                         fit: BoxFit.cover,
