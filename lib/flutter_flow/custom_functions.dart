@@ -18,3 +18,17 @@ String timeStampToTimeString(DateTime timeStamp) {
   // Add your function code here!
   return DateFormat.jm().format(timeStamp).toString();
 }
+
+String imageUpdateFunction(
+  String? databaseImagePath,
+  String? uploadedImagePath,
+) {
+  // Add your function code here!
+  if (databaseImagePath != null && uploadedImagePath != null) {
+    return uploadedImagePath;
+  } else if (databaseImagePath != null && uploadedImagePath == null) {
+    return databaseImagePath;
+  } else {
+    return "";
+  }
+}

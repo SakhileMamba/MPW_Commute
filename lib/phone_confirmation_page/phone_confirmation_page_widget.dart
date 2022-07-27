@@ -75,65 +75,65 @@ class _PhoneConfirmationPageWidgetState
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
-                child: Text(
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
                   'Phone Confirmation',
                   style: FlutterFlowTheme.of(context).title1,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
-                child: Text(
-                  'Please enter the confirmation code we just sent to your phone number. Find it in your messages.',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.normal,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8, 15, 8, 8),
-                child: TextFormField(
-                  controller: securityCodeTextFieldController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Confirmation Code',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    suffixIcon: Icon(
-                      Icons.security_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 24,
-                    ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                  child: Text(
+                    'Please enter the confirmation code we just sent to your phone number. Find it in your messages.',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  keyboardType: TextInputType.number,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                  child: TextFormField(
+                    controller: securityCodeTextFieldController,
+                    autofocus: true,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'Confirmation Code',
+                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      suffixIcon: Icon(
+                        Icons.security_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 24,
+                      ),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
