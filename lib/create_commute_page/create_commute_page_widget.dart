@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -26,7 +25,6 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
   DateTime? datePicked2;
-  String? dropDownValue;
   TextEditingController? textController1;
   TextEditingController? textController2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -394,7 +392,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                           child: Text(
-                            'Vehicle',
+                            'Vehicle (Tap to select)',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -407,8 +405,6 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         StreamBuilder<List<VehiclesRecord>>(
                           stream: queryVehiclesRecord(
                             parent: currentUserReference,
-                            queryBuilder: (vehiclesRecord) =>
-                                vehiclesRecord.orderBy('make'),
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
@@ -425,39 +421,49 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 ),
                               );
                             }
-                            List<VehiclesRecord> dropDownVehiclesRecordList =
+                            List<VehiclesRecord> rowVehiclesRecordList =
                                 snapshot.data!;
-                            return FlutterFlowDropDown(
-                              options: dropDownVehiclesRecordList
-                                  .map((e) => e.model!)
-                                  .toList()
-                                  .toList(),
-                              onChanged: (val) =>
-                                  setState(() => dropDownValue = val),
-                              width: double.infinity,
-                              height: 50,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                              hintText: 'Please select',
-                              icon: Icon(
-                                Icons.directions_car_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24,
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: List.generate(
+                                    rowVehiclesRecordList.length, (rowIndex) {
+                                  final rowVehiclesRecord =
+                                      rowVehiclesRecordList[rowIndex];
+                                  return Stack(
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            logFirebaseEvent(
+                                                'CREATE_COMMUTE_Image_xe8futrl_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Image_Update-Local-State');
+                                            setState(() => FFAppState()
+                                                    .choseVehicle =
+                                                rowVehiclesRecord.reference);
+                                          },
+                                          child: Image.network(
+                                            rowVehiclesRecord.imageURL!,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      if ((FFAppState().choseVehicle ==
+                                          rowVehiclesRecord.reference))
+                                        Icon(
+                                          Icons.check_rounded,
+                                          color: Colors.black,
+                                          size: 24,
+                                        ),
+                                    ],
+                                  );
+                                }),
                               ),
-                              fillColor: Colors.white,
-                              elevation: 2,
-                              borderColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              borderWidth: 0,
-                              borderRadius: 8,
-                              margin:
-                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                              hidesUnderline: true,
                             );
                           },
                         ),
@@ -725,6 +731,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 pricePerSeat:
                                     double.parse(textController2!.text),
                                 driver: currentUserReference,
+                                vehicle: FFAppState().choseVehicle,
                               );
                               await CommutesRecord.collection
                                   .doc()
@@ -760,69 +767,6 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         ),
                       ),
                     ],
-                  ),
-                  StreamBuilder<List<VehiclesRecord>>(
-                    stream: queryVehiclesRecord(
-                      parent: currentUserReference,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: SpinKitChasingDots(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 50,
-                            ),
-                          ),
-                        );
-                      }
-                      List<VehiclesRecord> rowVehiclesRecordList =
-                          snapshot.data!;
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: List.generate(rowVehiclesRecordList.length,
-                              (rowIndex) {
-                            final rowVehiclesRecord =
-                                rowVehiclesRecordList[rowIndex];
-                            return Stack(
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'CREATE_COMMUTE_Image_xe8futrl_ON_TAP');
-                                      logFirebaseEvent(
-                                          'Image_Update-Local-State');
-                                      setState(() => FFAppState().choseVehicle =
-                                          rowVehiclesRecord.reference);
-                                    },
-                                    child: Image.network(
-                                      rowVehiclesRecord.imageURL!,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                if ((FFAppState().choseVehicle ==
-                                    rowVehiclesRecord.reference))
-                                  Icon(
-                                    Icons.check_rounded,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                              ],
-                            );
-                          }),
-                        ),
-                      );
-                    },
                   ),
                 ],
               ),
