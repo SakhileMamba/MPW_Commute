@@ -81,7 +81,7 @@ class _$VehiclesRecordSerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
@@ -139,7 +139,7 @@ class _$VehiclesRecord extends VehiclesRecord {
   final DocumentReference<Object?>? ffRef;
 
   factory _$VehiclesRecord([void Function(VehiclesRecordBuilder)? updates]) =>
-      (new VehiclesRecordBuilder()..update(updates)).build();
+      (new VehiclesRecordBuilder()..update(updates))._build();
 
   _$VehiclesRecord._(
       {this.registrationNumber,
@@ -190,7 +190,7 @@ class _$VehiclesRecord extends VehiclesRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VehiclesRecord')
+    return (newBuiltValueToStringHelper(r'VehiclesRecord')
           ..add('registrationNumber', registrationNumber)
           ..add('numberOfPassengerSeats', numberOfPassengerSeats)
           ..add('imageURL', imageURL)
@@ -267,7 +267,9 @@ class VehiclesRecordBuilder
   }
 
   @override
-  _$VehiclesRecord build() {
+  VehiclesRecord build() => _build();
+
+  _$VehiclesRecord _build() {
     final _$result = _$v ??
         new _$VehiclesRecord._(
             registrationNumber: registrationNumber,
@@ -282,4 +284,4 @@ class VehiclesRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
