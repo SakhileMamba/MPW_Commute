@@ -128,7 +128,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                               text:
                                   '${columnVehiclesRecord.make}, ${columnVehiclesRecord.model}, ${columnVehiclesRecord.year}',
                             ),
-                            autofocus: true,
+                            readOnly: true,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Description',
