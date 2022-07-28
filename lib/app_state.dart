@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/lat_lng.dart';
 
 class FFAppState {
@@ -22,7 +24,7 @@ class FFAppState {
 
   String filterLatestDepartureTime = 'Please Select...';
 
-  List<int> filterMinimumAvailableSeats = [1, 2, 3, 4, 5, 6, 7, 8];
+  DocumentReference? choseVehicle;
 }
 
 LatLng? _latLngFromString(String? val) {

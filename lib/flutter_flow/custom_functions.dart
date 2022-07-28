@@ -29,6 +29,6 @@ String imageUpdateFunction(
   } else if (databaseImagePath != null && uploadedImagePath == null) {
     return databaseImagePath;
   } else {
-    return "";
+    return "https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3";
   }
 }

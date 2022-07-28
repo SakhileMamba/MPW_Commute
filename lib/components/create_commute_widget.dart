@@ -509,12 +509,7 @@ class _CreateCommuteWidgetState extends State<CreateCommuteWidget> {
                           final dropDownSupportedLocationsRecord =
                               dropDownSupportedLocationsRecordList.first;
                           return FlutterFlowDropDown(
-                            initialOption: dropDownValue2 ??= '1',
-                            options: FFAppState()
-                                .filterMinimumAvailableSeats
-                                .map((e) => e.toString())
-                                .toList()
-                                .toList(),
+                            options: ['1', '2', '3', '4'],
                             onChanged: (val) =>
                                 setState(() => dropDownValue2 = val),
                             width: double.infinity,

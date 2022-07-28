@@ -6,7 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '../main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -84,56 +84,66 @@ class _ProfilePictureUpdatePageWidgetState
               Stack(
                 children: [
                   AuthUserStreamWidget(
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'PROFILE_PICTURE_UPDATE_Image_6repigvx_ON');
-                        logFirebaseEvent('Image_Upload-Photo-Video');
-                        final selectedMedia =
-                            await selectMediaWithSourceBottomSheet(
-                          context: context,
-                          allowPhoto: true,
+                    child: Image.network(
+                      valueOrDefault<String>(
+                        currentUserPhoto,
+                        'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'PROFILE_PICTURE_UPDATE_Image_6repigvx_ON');
+                      logFirebaseEvent('Image_Upload-Photo-Video');
+                      final selectedMedia =
+                          await selectMediaWithSourceBottomSheet(
+                        context: context,
+                        allowPhoto: true,
+                      );
+                      if (selectedMedia != null &&
+                          selectedMedia.every((m) =>
+                              validateFileFormat(m.storagePath, context))) {
+                        showUploadMessage(
+                          context,
+                          'Uploading file...',
+                          showLoading: true,
                         );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
+                        final downloadUrls = (await Future.wait(
+                                selectedMedia.map((m) async =>
+                                    await uploadData(m.storagePath, m.bytes))))
+                            .where((u) => u != null)
+                            .map((u) => u!)
+                            .toList();
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        if (downloadUrls.length == selectedMedia.length) {
+                          setState(() => uploadedFileUrl = downloadUrls.first);
                           showUploadMessage(
                             context,
-                            'Uploading file...',
-                            showLoading: true,
+                            'Success!',
                           );
-                          final downloadUrls = (await Future.wait(selectedMedia
-                                  .map((m) async => await uploadData(
-                                      m.storagePath, m.bytes))))
-                              .where((u) => u != null)
-                              .map((u) => u!)
-                              .toList();
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          if (downloadUrls.length == selectedMedia.length) {
-                            setState(
-                                () => uploadedFileUrl = downloadUrls.first);
-                            showUploadMessage(
-                              context,
-                              'Success!',
-                            );
-                          } else {
-                            showUploadMessage(
-                              context,
-                              'Failed to upload media',
-                            );
-                            return;
-                          }
+                        } else {
+                          showUploadMessage(
+                            context,
+                            'Failed to upload media',
+                          );
+                          return;
                         }
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(0),
-                        child: CachedNetworkImage(
-                          imageUrl: functions.imageUpdateFunction(
-                              currentUserPhoto, uploadedFileUrl),
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          fit: BoxFit.cover,
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: CachedNetworkImage(
+                        imageUrl: valueOrDefault<String>(
+                          uploadedFileUrl,
+                          'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/transparent.png?alt=media&token=91614179-5e5c-403c-822e-96ab05c5557d',
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        height: 250,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -150,8 +160,15 @@ class _ProfilePictureUpdatePageWidgetState
                       photoUrl: uploadedFileUrl,
                     );
                     await currentUserReference!.update(usersUpdateData);
-                    logFirebaseEvent('Button_Navigate-Back');
-                    Navigator.pop(context);
+                    logFirebaseEvent('Button_Navigate-To');
+                    await Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NavBarPage(initialPage: 'account_page'),
+                      ),
+                      (r) => false,
+                    );
                   },
                   text: 'Save',
                   options: FFButtonOptions(
