@@ -411,12 +411,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           final dropDownSupportedLocationsRecord =
                               dropDownSupportedLocationsRecordList.first;
                           return FlutterFlowDropDown(
-                            initialOption: dropDownValue ??= '1',
-                            options: FFAppState()
-                                .filterMinimumAvailableSeats
-                                .map((e) => e.toString())
-                                .toList()
-                                .toList(),
+                            options: ['1', '2', '3', '4'],
                             onChanged: (val) =>
                                 setState(() => dropDownValue = val),
                             width: double.infinity,

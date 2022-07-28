@@ -761,6 +761,69 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                       ),
                     ],
                   ),
+                  StreamBuilder<List<VehiclesRecord>>(
+                    stream: queryVehiclesRecord(
+                      parent: currentUserReference,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: SpinKitChasingDots(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          ),
+                        );
+                      }
+                      List<VehiclesRecord> rowVehiclesRecordList =
+                          snapshot.data!;
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: List.generate(rowVehiclesRecordList.length,
+                              (rowIndex) {
+                            final rowVehiclesRecord =
+                                rowVehiclesRecordList[rowIndex];
+                            return Stack(
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'CREATE_COMMUTE_Image_xe8futrl_ON_TAP');
+                                      logFirebaseEvent(
+                                          'Image_Update-Local-State');
+                                      setState(() => FFAppState().choseVehicle =
+                                          rowVehiclesRecord.reference);
+                                    },
+                                    child: Image.network(
+                                      rowVehiclesRecord.imageURL!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                if ((FFAppState().choseVehicle ==
+                                    rowVehiclesRecord.reference))
+                                  Icon(
+                                    Icons.check_rounded,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                              ],
+                            );
+                          }),
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

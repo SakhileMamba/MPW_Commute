@@ -70,7 +70,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           child: CachedNetworkImage(
                             imageUrl: valueOrDefault<String>(
                               currentUserPhoto,
-                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image.png?alt=media&token=bfa8ad44-8478-4509-9619-fe572df973d4',
+                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                             ),
                             fit: BoxFit.cover,
                           ),
