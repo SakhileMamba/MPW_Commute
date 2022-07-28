@@ -4,6 +4,7 @@ import 'users_record.dart';
 import 'supported_locations_record.dart';
 import 'commutes_record.dart';
 import 'vehicles_record.dart';
+import 'verification_requests_record.dart';
 
 import 'index.dart';
 
@@ -18,6 +19,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   SupportedLocationsRecord,
   CommutesRecord,
   VehiclesRecord,
+  VerificationRequestsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
