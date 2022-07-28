@@ -84,21 +84,10 @@ class _ProfilePictureUpdatePageWidgetState
               Stack(
                 children: [
                   AuthUserStreamWidget(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: CachedNetworkImage(
-                        imageUrl: currentUserPhoto,
-                        width: MediaQuery.of(context).size.width,
-                        height: 250,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  AuthUserStreamWidget(
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent(
-                            'PROFILE_PICTURE_UPDATE_Image_qgs6qegq_ON');
+                            'PROFILE_PICTURE_UPDATE_Image_6repigvx_ON');
                         logFirebaseEvent('Image_Upload-Photo-Video');
                         final selectedMedia =
                             await selectMediaWithSourceBottomSheet(
@@ -136,12 +125,15 @@ class _ProfilePictureUpdatePageWidgetState
                           }
                         }
                       },
-                      child: CachedNetworkImage(
-                        imageUrl: functions.imageUpdateFunction(
-                            currentUserPhoto, uploadedFileUrl),
-                        width: MediaQuery.of(context).size.width,
-                        height: 250,
-                        fit: BoxFit.cover,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(0),
+                        child: CachedNetworkImage(
+                          imageUrl: functions.imageUpdateFunction(
+                              currentUserPhoto, uploadedFileUrl),
+                          width: MediaQuery.of(context).size.width,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
