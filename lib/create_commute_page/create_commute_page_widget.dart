@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -327,47 +328,46 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             }
                             List<VehiclesRecord> rowVehiclesRecordList =
                                 snapshot.data!;
-                            return SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: List.generate(
-                                    rowVehiclesRecordList.length, (rowIndex) {
-                                  final rowVehiclesRecord =
-                                      rowVehiclesRecordList[rowIndex];
-                                  return Stack(
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            logFirebaseEvent(
-                                                'CREATE_COMMUTE_Image_xe8futrl_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Image_Update-Local-State');
-                                            setState(() => FFAppState()
-                                                    .choseVehicle =
-                                                rowVehiclesRecord.reference);
-                                          },
-                                          child: Image.network(
-                                            rowVehiclesRecord.imageURL!,
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          ),
+                            return Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: List.generate(
+                                  rowVehiclesRecordList.length, (rowIndex) {
+                                final rowVehiclesRecord =
+                                    rowVehiclesRecordList[rowIndex];
+                                return InkWell(
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
+                                    logFirebaseEvent(
+                                        'Container_Update-Local-State');
+                                    setState(() => FFAppState().chosenVehicle =
+                                        rowVehiclesRecord.reference);
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x0B101213),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: CachedNetworkImageProvider(
+                                          rowVehiclesRecord.imageURL!,
                                         ),
                                       ),
-                                      if ((FFAppState().choseVehicle ==
-                                          rowVehiclesRecord.reference))
-                                        Icon(
-                                          Icons.check_rounded,
-                                          color: Colors.black,
-                                          size: 24,
-                                        ),
-                                    ],
-                                  );
-                                }),
-                              ),
+                                    ),
+                                    child: Visibility(
+                                      visible: (FFAppState().chosenVehicle ==
+                                          rowVehiclesRecord.reference),
+                                      child: Icon(
+                                        Icons.check_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBtnText,
+                                        size: 90,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
                             );
                           },
                         ),
@@ -633,7 +633,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 pricePerSeat:
                                     double.parse(textController2!.text),
                                 driver: currentUserReference,
-                                vehicle: FFAppState().choseVehicle,
+                                vehicle: FFAppState().chosenVehicle,
                                 departureDatetime: datePicked,
                               );
                               await CommutesRecord.collection

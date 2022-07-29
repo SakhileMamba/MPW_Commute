@@ -25,6 +25,8 @@ class FFAppState {
   String filterLatestDepartureTime = 'Please Select...';
 
   DocumentReference? choseVehicle;
+
+  DocumentReference? chosenVehicle;
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -7,9 +7,9 @@ export 'browse_commutes_page/browse_commutes_page_widget.dart'
     show BrowseCommutesPageWidget;
 export 'manage_commutes_page/manage_commutes_page_widget.dart'
     show ManageCommutesPageWidget;
-export 'account_page/account_page_widget.dart' show AccountPageWidget;
 export 'profile_picture_update_page/profile_picture_update_page_widget.dart'
     show ProfilePictureUpdatePageWidget;
+export 'account_page/account_page_widget.dart' show AccountPageWidget;
 export 'personal_information_update_page/personal_information_update_page_widget.dart'
     show PersonalInformationUpdatePageWidget;
 export 'list_vehicles_page/list_vehicles_page_widget.dart'
