@@ -44,8 +44,10 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
             color: Colors.white,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            logFirebaseEvent('LIST_VEHICLES_arrow_back_rounded_ICN_ON_');
+            logFirebaseEvent('IconButton_Navigate-Back');
+            Navigator.pop(context);
           },
         ),
         title: Text(

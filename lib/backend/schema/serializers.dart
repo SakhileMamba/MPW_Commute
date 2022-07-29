@@ -1,7 +1,6 @@
 import 'package:built_value/standard_json_plugin.dart';
 
 import 'users_record.dart';
-import 'supported_locations_record.dart';
 import 'commutes_record.dart';
 import 'vehicles_record.dart';
 import 'verification_requests_record.dart';
@@ -16,7 +15,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
-  SupportedLocationsRecord,
   CommutesRecord,
   VehiclesRecord,
   VerificationRequestsRecord,
