@@ -15,12 +15,6 @@ abstract class CommutesRecord
 
   String? get destination;
 
-  @BuiltValueField(wireName: 'departure_date')
-  DateTime? get departureDate;
-
-  @BuiltValueField(wireName: 'departure_time')
-  DateTime? get departureTime;
-
   DocumentReference? get vehicle;
 
   @BuiltValueField(wireName: 'available_passenger_seats')
@@ -32,6 +26,9 @@ abstract class CommutesRecord
   DocumentReference? get driver;
 
   BuiltList<DocumentReference>? get passengers;
+
+  @BuiltValueField(wireName: 'departure_datetime')
+  DateTime? get departureDatetime;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -68,12 +65,11 @@ abstract class CommutesRecord
 Map<String, dynamic> createCommutesRecordData({
   String? origin,
   String? destination,
-  DateTime? departureDate,
-  DateTime? departureTime,
   DocumentReference? vehicle,
   int? availablePassengerSeats,
   double? pricePerSeat,
   DocumentReference? driver,
+  DateTime? departureDatetime,
 }) {
   final firestoreData = serializers.toFirestore(
     CommutesRecord.serializer,
@@ -81,13 +77,12 @@ Map<String, dynamic> createCommutesRecordData({
       (c) => c
         ..origin = origin
         ..destination = destination
-        ..departureDate = departureDate
-        ..departureTime = departureTime
         ..vehicle = vehicle
         ..availablePassengerSeats = availablePassengerSeats
         ..pricePerSeat = pricePerSeat
         ..driver = driver
-        ..passengers = null,
+        ..passengers = null
+        ..departureDatetime = departureDatetime,
     ),
   );
 
