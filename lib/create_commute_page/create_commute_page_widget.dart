@@ -221,8 +221,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               onConfirm: (date) {
                                 setState(() => datePicked = date);
                               },
-                              currentTime: datePicked!,
-                              minTime: datePicked!,
+                              currentTime: getCurrentTimestamp,
+                              minTime: getCurrentTimestamp,
                               locale: LocaleType.values.firstWhere(
                                 (l) =>
                                     l.name ==
