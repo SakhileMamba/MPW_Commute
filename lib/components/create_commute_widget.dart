@@ -1,4 +1,3 @@
-import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -390,67 +389,31 @@ class _CreateCommuteWidgetState extends State<CreateCommuteWidget> {
                               ),
                         ),
                       ),
-                      StreamBuilder<List<SupportedLocationsRecord>>(
-                        stream: querySupportedLocationsRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: SpinKitChasingDots(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 50,
-                                ),
-                              ),
-                            );
-                          }
-                          List<SupportedLocationsRecord>
-                              dropDownSupportedLocationsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the document does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final dropDownSupportedLocationsRecord =
-                              dropDownSupportedLocationsRecordList.first;
-                          return FlutterFlowDropDown(
-                            options: dropDownSupportedLocationsRecord
-                                .eswatiniLocations!
-                                .toList()
-                                .toList(),
-                            onChanged: (val) =>
-                                setState(() => dropDownValue1 = val),
-                            width: double.infinity,
-                            height: 50,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                            hintText: 'Please select',
-                            icon: Icon(
-                              Icons.directions_car_rounded,
+                      FlutterFlowDropDown(
+                        options: ['Option 1'],
+                        onChanged: (val) =>
+                            setState(() => dropDownValue1 = val),
+                        width: double.infinity,
+                        height: 50,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText1
+                            .override(
+                              fontFamily: 'Roboto',
                               color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24,
                             ),
-                            fillColor: Colors.white,
-                            elevation: 2,
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            borderWidth: 0,
-                            borderRadius: 8,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          );
-                        },
+                        hintText: 'Please select',
+                        icon: Icon(
+                          Icons.directions_car_rounded,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24,
+                        ),
+                        fillColor: Colors.white,
+                        elevation: 2,
+                        borderColor: FlutterFlowTheme.of(context).primaryText,
+                        borderWidth: 0,
+                        borderRadius: 8,
+                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        hidesUnderline: true,
                       ),
                     ],
                   ),
@@ -480,62 +443,30 @@ class _CreateCommuteWidgetState extends State<CreateCommuteWidget> {
                               ),
                         ),
                       ),
-                      StreamBuilder<List<SupportedLocationsRecord>>(
-                        stream: querySupportedLocationsRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: SpinKitChasingDots(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 50,
+                      FlutterFlowDropDown(
+                        options: ['1', '2', '3', '4'],
+                        onChanged: (val) =>
+                            setState(() => dropDownValue2 = val),
+                        width: double.infinity,
+                        height: 50,
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.black,
                                 ),
-                              ),
-                            );
-                          }
-                          List<SupportedLocationsRecord>
-                              dropDownSupportedLocationsRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the document does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final dropDownSupportedLocationsRecord =
-                              dropDownSupportedLocationsRecordList.first;
-                          return FlutterFlowDropDown(
-                            options: ['1', '2', '3', '4'],
-                            onChanged: (val) =>
-                                setState(() => dropDownValue2 = val),
-                            width: double.infinity,
-                            height: 50,
-                            textStyle:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.black,
-                                    ),
-                            hintText: 'Please select',
-                            icon: Icon(
-                              Icons.airline_seat_recline_normal_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 24,
-                            ),
-                            fillColor: Colors.white,
-                            elevation: 2,
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            borderWidth: 0,
-                            borderRadius: 8,
-                            margin:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            hidesUnderline: true,
-                          );
-                        },
+                        hintText: 'Please select',
+                        icon: Icon(
+                          Icons.airline_seat_recline_normal_rounded,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 24,
+                        ),
+                        fillColor: Colors.white,
+                        elevation: 2,
+                        borderColor: FlutterFlowTheme.of(context).primaryText,
+                        borderWidth: 0,
+                        borderRadius: 8,
+                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        hidesUnderline: true,
                       ),
                     ],
                   ),

@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
-import 'schema/supported_locations_record.dart';
 import 'schema/commutes_record.dart';
 import 'schema/vehicles_record.dart';
 import 'schema/verification_requests_record.dart';
@@ -17,7 +16,6 @@ export 'schema/index.dart';
 export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
-export 'schema/supported_locations_record.dart';
 export 'schema/commutes_record.dart';
 export 'schema/vehicles_record.dart';
 export 'schema/verification_requests_record.dart';
@@ -63,49 +61,6 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
-
-/// Functions to query SupportedLocationsRecords (as a Stream and as a Future).
-Stream<List<SupportedLocationsRecord>> querySupportedLocationsRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      SupportedLocationsRecord.collection,
-      SupportedLocationsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<SupportedLocationsRecord>> querySupportedLocationsRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      SupportedLocationsRecord.collection,
-      SupportedLocationsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<SupportedLocationsRecord>>
-    querySupportedLocationsRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-        queryCollectionPage(
-          SupportedLocationsRecord.collection,
-          SupportedLocationsRecord.serializer,
-          queryBuilder: queryBuilder,
-          nextPageMarker: nextPageMarker,
-          pageSize: pageSize,
-          isStream: isStream,
-        );
 
 /// Functions to query CommutesRecords (as a Stream and as a Future).
 Stream<List<CommutesRecord>> queryCommutesRecord({

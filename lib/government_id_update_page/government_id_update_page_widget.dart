@@ -220,6 +220,7 @@ class _GovernmentIdUpdatePageWidgetState
 
                         final usersUpdateData = createUsersRecordData(
                           nationalIdPhotoUrl: uploadedFileUrl,
+                          nationalId: textController!.text,
                         );
                         await currentUserReference!.update(usersUpdateData);
                         logFirebaseEvent('Button_Navigate-Back');

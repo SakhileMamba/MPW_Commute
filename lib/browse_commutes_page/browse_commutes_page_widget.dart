@@ -94,8 +94,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
           child: PagedListView<DocumentSnapshot<Object?>?, CommutesRecord>(
             pagingController: () {
               final Query<Object?> Function(Query<Object?>) queryBuilder =
-                  (commutesRecord) => commutesRecord.orderBy('departure_date',
-                      descending: true);
+                  (commutesRecord) => commutesRecord;
               if (_pagingController != null) {
                 final query = queryBuilder(CommutesRecord.collection);
                 if (query != _pagingQuery) {
@@ -112,8 +111,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
               _pagingQuery = queryBuilder(CommutesRecord.collection);
               _pagingController!.addPageRequestListener((nextPageMarker) {
                 queryCommutesRecordPage(
-                  queryBuilder: (commutesRecord) => commutesRecord
-                      .orderBy('departure_date', descending: true),
+                  queryBuilder: (commutesRecord) => commutesRecord,
                   nextPageMarker: nextPageMarker,
                   pageSize: 25,
                   isStream: true,
@@ -233,19 +231,30 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   child:
                                                       FlutterFlowExpandedImageView(
                                                     image: Image.network(
-                                                      cardUsersRecord.photoUrl!,
+                                                      valueOrDefault<String>(
+                                                        cardUsersRecord
+                                                            .photoUrl,
+                                                        'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                                                      ),
                                                       fit: BoxFit.contain,
                                                     ),
                                                     allowRotation: false,
-                                                    tag: cardUsersRecord
-                                                        .photoUrl!,
+                                                    tag: valueOrDefault<String>(
+                                                      cardUsersRecord.photoUrl,
+                                                      'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3' +
+                                                          '$listViewIndex',
+                                                    ),
                                                     useHeroAnimation: true,
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: Hero(
-                                              tag: cardUsersRecord.photoUrl!,
+                                              tag: valueOrDefault<String>(
+                                                cardUsersRecord.photoUrl,
+                                                'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3' +
+                                                    '$listViewIndex',
+                                              ),
                                               transitionOnUserGestures: true,
                                               child: Container(
                                                 width: 120,
@@ -255,7 +264,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   shape: BoxShape.circle,
                                                 ),
                                                 child: Image.network(
-                                                  cardUsersRecord.photoUrl!,
+                                                  valueOrDefault<String>(
+                                                    cardUsersRecord.photoUrl,
+                                                    'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -280,7 +292,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
+                                              valueOrDefault<String>(
+                                                cardUsersRecord.displayName,
+                                                'null',
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -313,12 +328,15 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
-                                                formatNumber(
-                                                  cardUsersRecord.rating!,
-                                                  formatType:
-                                                      FormatType.decimal,
-                                                  decimalType:
-                                                      DecimalType.periodDecimal,
+                                                valueOrDefault<String>(
+                                                  formatNumber(
+                                                    cardUsersRecord.rating,
+                                                    formatType:
+                                                        FormatType.decimal,
+                                                    decimalType: DecimalType
+                                                        .periodDecimal,
+                                                  ),
+                                                  'null',
                                                 ),
                                                 textAlign: TextAlign.center,
                                                 style:
@@ -378,23 +396,37 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                           type: PageTransitionType.fade,
                                           child: FlutterFlowExpandedImageView(
                                             image: Image.network(
-                                              imageVehiclesRecord.imageURL!,
+                                              valueOrDefault<String>(
+                                                imageVehiclesRecord.imageURL,
+                                                'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                                              ),
                                               fit: BoxFit.contain,
                                             ),
                                             allowRotation: false,
-                                            tag: imageVehiclesRecord.imageURL!,
+                                            tag: valueOrDefault<String>(
+                                              imageVehiclesRecord.imageURL,
+                                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3' +
+                                                  '$listViewIndex',
+                                            ),
                                             useHeroAnimation: true,
                                           ),
                                         ),
                                       );
                                     },
                                     child: Hero(
-                                      tag: imageVehiclesRecord.imageURL!,
+                                      tag: valueOrDefault<String>(
+                                        imageVehiclesRecord.imageURL,
+                                        'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3' +
+                                            '$listViewIndex',
+                                      ),
                                       transitionOnUserGestures: true,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.network(
-                                          imageVehiclesRecord.imageURL!,
+                                          valueOrDefault<String>(
+                                            imageVehiclesRecord.imageURL,
+                                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                                          ),
                                           width: 100,
                                           fit: BoxFit.cover,
                                         ),
@@ -463,10 +495,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              dateTimeFormat(
-                                                  'jm',
-                                                  listViewCommutesRecord
-                                                      .departureTime!),
+                                              valueOrDefault<String>(
+                                                dateTimeFormat(
+                                                    'jm',
+                                                    listViewCommutesRecord
+                                                        .departureTime),
+                                                'null',
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -545,10 +580,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              dateTimeFormat(
-                                                  'MMMMEEEEd',
-                                                  listViewCommutesRecord
-                                                      .departureTime!),
+                                              valueOrDefault<String>(
+                                                dateTimeFormat(
+                                                    'MMMMEEEEd',
+                                                    listViewCommutesRecord
+                                                        .departureTime),
+                                                'null',
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -628,9 +666,12 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              listViewCommutesRecord
-                                                  .availablePassengerSeats!
-                                                  .toString(),
+                                              valueOrDefault<String>(
+                                                listViewCommutesRecord
+                                                    .availablePassengerSeats
+                                                    .toString(),
+                                                'null',
+                                              ),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -712,13 +753,17 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              formatNumber(
-                                                listViewCommutesRecord
-                                                    .pricePerSeat!,
-                                                formatType: FormatType.decimal,
-                                                decimalType:
-                                                    DecimalType.periodDecimal,
-                                                currency: '',
+                                              valueOrDefault<String>(
+                                                formatNumber(
+                                                  listViewCommutesRecord
+                                                      .pricePerSeat,
+                                                  formatType:
+                                                      FormatType.decimal,
+                                                  decimalType:
+                                                      DecimalType.periodDecimal,
+                                                  currency: '',
+                                                ),
+                                                'null',
                                               ),
                                               style: FlutterFlowTheme.of(
                                                       context)
