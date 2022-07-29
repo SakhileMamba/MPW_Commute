@@ -76,175 +76,227 @@ class _GovernmentIdUpdatePageWidgetState
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AuthUserStreamWidget(
-                        child: TextFormField(
-                          controller: textController,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Government ID No',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Divider(
-                        height: 16,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                        child: Text(
-                          'ID image',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    fontSize: 12,
-                                  ),
-                        ),
-                      ),
-                      Stack(
-                        children: [
-                          AuthUserStreamWidget(
-                            child: Image.network(
-                              valueOrDefault<String>(
-                                valueOrDefault(
-                                    currentUserDocument?.nationalIdPhotoUrl,
-                                    ''),
-                                'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              height: 250,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          if ((valueOrDefault<bool>(
-                                  currentUserDocument?.verifiedUser, false) ==
-                              false))
-                            AuthUserStreamWidget(
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'GOVERNMENT_ID_UPDATE_Image_490gvoxw_ON_T');
-                                  logFirebaseEvent('Image_Upload-Photo-Video');
-                                  final selectedMedia =
-                                      await selectMediaWithSourceBottomSheet(
-                                    context: context,
-                                    allowPhoto: true,
-                                  );
-                                  if (selectedMedia != null &&
-                                      selectedMedia.every((m) =>
-                                          validateFileFormat(
-                                              m.storagePath, context))) {
-                                    showUploadMessage(
-                                      context,
-                                      'Uploading file...',
-                                      showLoading: true,
-                                    );
-                                    final downloadUrls = (await Future.wait(
-                                            selectedMedia.map((m) async =>
-                                                await uploadData(
-                                                    m.storagePath, m.bytes))))
-                                        .where((u) => u != null)
-                                        .map((u) => u!)
-                                        .toList();
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                    if (downloadUrls.length ==
-                                        selectedMedia.length) {
-                                      setState(() =>
-                                          uploadedFileUrl = downloadUrls.first);
-                                      showUploadMessage(
-                                        context,
-                                        'Success!',
-                                      );
-                                    } else {
-                                      showUploadMessage(
-                                        context,
-                                        'Failed to upload media',
-                                      );
-                                      return;
-                                    }
-                                  }
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: valueOrDefault<String>(
-                                      uploadedFileUrl,
-                                      'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/transparent.png?alt=media&token=91614179-5e5c-403c-822e-96ab05c5557d',
-                                    ),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 250,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                if ((valueOrDefault<bool>(
-                        currentUserDocument?.verifiedUser, false) ==
-                    false))
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   AuthUserStreamWidget(
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        logFirebaseEvent(
-                            'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
-                        logFirebaseEvent('Button_Backend-Call');
-
-                        final usersUpdateData = createUsersRecordData(
-                          nationalIdPhotoUrl: uploadedFileUrl,
-                          nationalId: textController!.text,
-                        );
-                        await currentUserReference!.update(usersUpdateData);
-                        logFirebaseEvent('Button_Navigate-Back');
-                        Navigator.pop(context);
-                      },
-                      text: 'Save',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 50,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                    child: TextFormField(
+                      controller: textController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Government ID No',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ),
-              ],
+                  Divider(
+                    height: 16,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                    child: Text(
+                      'ID image',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            fontSize: 12,
+                          ),
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      AuthUserStreamWidget(
+                        child: Image.network(
+                          valueOrDefault<String>(
+                            valueOrDefault(
+                                currentUserDocument?.nationalIdPhotoUrl, ''),
+                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          height: 250,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      if ((valueOrDefault<bool>(
+                              currentUserDocument?.verifiedUser, false) ==
+                          false))
+                        AuthUserStreamWidget(
+                          child: InkWell(
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'GOVERNMENT_ID_UPDATE_Image_d03fkp9j_ON_T');
+                              logFirebaseEvent('Image_Upload-Photo-Video');
+                              final selectedMedia =
+                                  await selectMediaWithSourceBottomSheet(
+                                context: context,
+                                allowPhoto: true,
+                              );
+                              if (selectedMedia != null &&
+                                  selectedMedia.every((m) => validateFileFormat(
+                                      m.storagePath, context))) {
+                                showUploadMessage(
+                                  context,
+                                  'Uploading file...',
+                                  showLoading: true,
+                                );
+                                final downloadUrls = (await Future.wait(
+                                        selectedMedia.map((m) async =>
+                                            await uploadData(
+                                                m.storagePath, m.bytes))))
+                                    .where((u) => u != null)
+                                    .map((u) => u!)
+                                    .toList();
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                                if (downloadUrls.length ==
+                                    selectedMedia.length) {
+                                  setState(() =>
+                                      uploadedFileUrl = downloadUrls.first);
+                                  showUploadMessage(
+                                    context,
+                                    'Success!',
+                                  );
+                                } else {
+                                  showUploadMessage(
+                                    context,
+                                    'Failed to upload media',
+                                  );
+                                  return;
+                                }
+                              }
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(0),
+                              child: CachedNetworkImage(
+                                imageUrl: valueOrDefault<String>(
+                                  uploadedFileUrl,
+                                  'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/transparent.png?alt=media&token=91614179-5e5c-403c-822e-96ab05c5557d',
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                                height: 250,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'GOVERNMENT_ID_UPDATE_CANCEL_BTN_ON_TAP');
+                                logFirebaseEvent('Button_Navigate-Back');
+                                Navigator.pop(context);
+                              },
+                              text: 'Cancel',
+                              icon: Icon(
+                                Icons.cancel_rounded,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 50,
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 16,
+                                    ),
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        if ((valueOrDefault<bool>(
+                                currentUserDocument?.verifiedUser, false) ==
+                            false))
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                              child: AuthUserStreamWidget(
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
+                                    logFirebaseEvent('Button_Backend-Call');
+
+                                    final usersUpdateData =
+                                        createUsersRecordData(
+                                      nationalIdPhotoUrl: uploadedFileUrl,
+                                      nationalId: textController!.text,
+                                    );
+                                    await currentUserReference!
+                                        .update(usersUpdateData);
+                                    logFirebaseEvent('Button_Navigate-Back');
+                                    Navigator.pop(context);
+                                  },
+                                  text: 'Save',
+                                  icon: Icon(
+                                    Icons.check_circle_rounded,
+                                    size: 15,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 50,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: Colors.white,
+                                        ),
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

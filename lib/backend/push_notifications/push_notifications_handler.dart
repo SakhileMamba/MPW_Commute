@@ -84,9 +84,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
   'manage_commutes_page': (data) async =>
       NavBarPage(initialPage: 'manage_commutes_page'),
-  'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'profile_picture_update_Page': (data) async =>
       ProfilePictureUpdatePageWidget(),
+  'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),

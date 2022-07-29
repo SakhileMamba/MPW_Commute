@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -230,8 +231,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   type: PageTransitionType.fade,
                                                   child:
                                                       FlutterFlowExpandedImageView(
-                                                    image: Image.network(
-                                                      valueOrDefault<String>(
+                                                    image: CachedNetworkImage(
+                                                      imageUrl: valueOrDefault<
+                                                          String>(
                                                         cardUsersRecord
                                                             .photoUrl,
                                                         'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
@@ -263,11 +265,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
                                                 ),
-                                                child: Image.network(
-                                                  valueOrDefault<String>(
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      valueOrDefault<String>(
                                                     cardUsersRecord.photoUrl,
                                                     'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                                                   ),
+                                                  fit: BoxFit.cover,
                                                 ),
                                               ),
                                             ),
@@ -392,8 +396,8 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         PageTransition(
                                           type: PageTransitionType.fade,
                                           child: FlutterFlowExpandedImageView(
-                                            image: Image.network(
-                                              valueOrDefault<String>(
+                                            image: CachedNetworkImage(
+                                              imageUrl: valueOrDefault<String>(
                                                 imageVehiclesRecord.imageURL,
                                                 'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                                               ),
@@ -419,8 +423,8 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                       transitionOnUserGestures: true,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
-                                        child: Image.network(
-                                          valueOrDefault<String>(
+                                        child: CachedNetworkImage(
+                                          imageUrl: valueOrDefault<String>(
                                             imageVehiclesRecord.imageURL,
                                             'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                                           ),
