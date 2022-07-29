@@ -192,25 +192,31 @@ class _PersonalInformationUpdatePageWidgetState
                           height: 16,
                           color: FlutterFlowTheme.of(context).primaryBackground,
                         ),
-                        FlutterFlowDropDown(
-                          options: ['Male', 'Female'],
-                          onChanged: (val) =>
-                              setState(() => dropDownValue = val),
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.black,
-                                  ),
-                          hintText: 'Gender',
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor: FlutterFlowTheme.of(context).primaryText,
-                          borderWidth: 0,
-                          borderRadius: 8,
-                          margin: EdgeInsetsDirectional.fromSTEB(14, 4, 12, 4),
-                          hidesUnderline: true,
+                        AuthUserStreamWidget(
+                          child: FlutterFlowDropDown(
+                            initialOption: dropDownValue ??=
+                                valueOrDefault(currentUserDocument?.gender, ''),
+                            options: ['Male', 'Female'],
+                            onChanged: (val) =>
+                                setState(() => dropDownValue = val),
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            textStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Roboto',
+                                      color: Colors.black,
+                                    ),
+                            hintText: 'Gender',
+                            fillColor: Colors.white,
+                            elevation: 2,
+                            borderColor:
+                                FlutterFlowTheme.of(context).primaryText,
+                            borderWidth: 0,
+                            borderRadius: 8,
+                            margin:
+                                EdgeInsetsDirectional.fromSTEB(14, 4, 12, 4),
+                            hidesUnderline: true,
+                          ),
                         ),
                       ],
                     ),
