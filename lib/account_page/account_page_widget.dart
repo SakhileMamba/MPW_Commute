@@ -90,6 +90,37 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                         height: 50,
                         child: Stack(
                           children: [
+                            if (valueOrDefault<bool>(
+                                currentUserDocument?.verifiedUser, false))
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: AuthUserStreamWidget(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 2, 0),
+                                        child: Text(
+                                          'Verified',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color: Colors.black,
+                                              ),
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.verified_user_rounded,
+                                        color: Color(0xFF00CC00),
+                                        size: 30,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             if ((valueOrDefault<bool>(
                                     currentUserDocument?.verifiedUser, false) ==
                                 false))
@@ -168,37 +199,6 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                            if (valueOrDefault<bool>(
-                                currentUserDocument?.verifiedUser, false))
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: AuthUserStreamWidget(
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 2, 0),
-                                        child: Text(
-                                          'Verified',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color: Colors.black,
-                                              ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.verified_user_rounded,
-                                        color: Color(0xFF00CC00),
-                                        size: 30,
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ),
