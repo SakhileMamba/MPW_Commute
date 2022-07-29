@@ -201,7 +201,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                           child: Text(
-                            'Departure Date',
+                            'Departure Date remove this',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -296,7 +296,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                           child: Text(
-                            'Departure Time',
+                            'Departure Date & Time',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -311,13 +311,14 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             logFirebaseEvent(
                                 'CREATE_COMMUTE_Container_e8l72gjy_ON_TAP');
                             logFirebaseEvent('Container_Date-Time-Picker');
-                            await DatePicker.showTimePicker(
+                            await DatePicker.showDateTimePicker(
                               context,
                               showTitleActions: true,
                               onConfirm: (date) {
                                 setState(() => datePicked2 = date);
                               },
-                              currentTime: getCurrentTimestamp,
+                              currentTime: datePicked2!,
+                              minTime: datePicked2!,
                               locale: LocaleType.values.firstWhere(
                                 (l) =>
                                     l.name ==
@@ -329,7 +330,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             logFirebaseEvent('Container_Update-Local-State');
                             setState(() =>
                                 FFAppState().filterLatestDepartureTime =
-                                    dateTimeFormat('jm', datePicked2));
+                                    dateTimeFormat('d/M h:mm a', datePicked2));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
