@@ -292,10 +292,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       ),
                                             ),
                                             Text(
-                                              valueOrDefault<String>(
-                                                cardUsersRecord.displayName,
-                                                'null',
-                                              ),
+                                              '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -495,13 +492,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              valueOrDefault<String>(
-                                                dateTimeFormat(
-                                                    'jm',
-                                                    listViewCommutesRecord
-                                                        .departureTime),
-                                                'null',
-                                              ),
+                                              dateTimeFormat(
+                                                  'jm',
+                                                  listViewCommutesRecord
+                                                      .departureDatetime!),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -580,13 +574,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              valueOrDefault<String>(
-                                                dateTimeFormat(
-                                                    'MMMMEEEEd',
-                                                    listViewCommutesRecord
-                                                        .departureTime),
-                                                'null',
-                                              ),
+                                              dateTimeFormat(
+                                                  'MMMEd',
+                                                  listViewCommutesRecord
+                                                      .departureDatetime!),
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyText2
@@ -761,7 +752,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       FormatType.decimal,
                                                   decimalType:
                                                       DecimalType.periodDecimal,
-                                                  currency: '',
+                                                  currency: 'E',
                                                 ),
                                                 'null',
                                               ),

@@ -21,10 +21,9 @@ class CreateCommutePageWidget extends StatefulWidget {
 }
 
 class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
-  DateTime? datePicked1;
+  DateTime? datePicked;
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
-  DateTime? datePicked2;
   TextEditingController? textController1;
   TextEditingController? textController2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -190,102 +189,6 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                          child: Text(
-                            'Departure Date remove this',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            logFirebaseEvent(
-                                'CREATE_COMMUTE_Container_cxtc6bel_ON_TAP');
-                            logFirebaseEvent('Container_Date-Time-Picker');
-                            await DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              onConfirm: (date) {
-                                setState(() => datePicked1 = date);
-                              },
-                              currentTime: getCurrentTimestamp,
-                              minTime: getCurrentTimestamp,
-                              locale: LocaleType.values.firstWhere(
-                                (l) =>
-                                    l.name ==
-                                    FFLocalizations.of(context).languageCode,
-                                orElse: () => LocaleType.en,
-                              ),
-                            );
-
-                            logFirebaseEvent('Container_Update-Local-State');
-                            setState(() => FFAppState().filterDate =
-                                dateTimeFormat('MMMEd', datePicked1));
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBtnText,
-                                      ),
-                                      child: Text(
-                                        FFAppState().filterDate,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1,
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.date_range_rounded,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  Container(
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
@@ -315,10 +218,10 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               context,
                               showTitleActions: true,
                               onConfirm: (date) {
-                                setState(() => datePicked2 = date);
+                                setState(() => datePicked = date);
                               },
-                              currentTime: datePicked2!,
-                              minTime: datePicked2!,
+                              currentTime: datePicked!,
+                              minTime: datePicked!,
                               locale: LocaleType.values.firstWhere(
                                 (l) =>
                                     l.name ==
@@ -330,7 +233,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             logFirebaseEvent('Container_Update-Local-State');
                             setState(() =>
                                 FFAppState().filterLatestDepartureTime =
-                                    dateTimeFormat('d/M h:mm a', datePicked2));
+                                    dateTimeFormat('d/M h:mm a', datePicked));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -725,14 +628,13 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                   createCommutesRecordData(
                                 origin: placePickerValue1.name,
                                 destination: placePickerValue2.name,
-                                departureDate: datePicked1,
-                                departureTime: datePicked2,
                                 availablePassengerSeats:
                                     int.parse(textController1!.text),
                                 pricePerSeat:
                                     double.parse(textController2!.text),
                                 driver: currentUserReference,
                                 vehicle: FFAppState().choseVehicle,
+                                departureDatetime: datePicked,
                               );
                               await CommutesRecord.collection
                                   .doc()
