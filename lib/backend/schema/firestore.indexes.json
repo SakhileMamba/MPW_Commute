@@ -1,5 +1,38 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "commutes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "driver",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "commutes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "origin",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destination",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": [
     {
       "collectionGroup": "fcm_tokens",

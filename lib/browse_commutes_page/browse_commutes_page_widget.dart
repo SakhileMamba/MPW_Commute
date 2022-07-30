@@ -1,5 +1,5 @@
 import '../backend/backend.dart';
-import '../components/commutes_filter_widget.dart';
+import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -47,7 +47,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Find Commutes',
+          'Browse Commutes',
           style: FlutterFlowTheme.of(context).title1.override(
                 fontFamily: 'Roboto',
                 color: FlutterFlowTheme.of(context).primaryBackground,
@@ -67,20 +67,12 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
             ),
             onPressed: () async {
               logFirebaseEvent('BROWSE_COMMUTES_filter_list_rounded_ICN_');
-              logFirebaseEvent('IconButton_Bottom-Sheet');
-              await showModalBottomSheet(
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                context: context,
-                builder: (context) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      child: CommutesFilterWidget(),
-                    ),
-                  );
-                },
+              logFirebaseEvent('IconButton_Navigate-To');
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FilterCommutesPageWidget(),
+                ),
               );
             },
           ),
@@ -95,7 +87,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
           child: PagedListView<DocumentSnapshot<Object?>?, CommutesRecord>(
             pagingController: () {
               final Query<Object?> Function(Query<Object?>) queryBuilder =
-                  (commutesRecord) => commutesRecord;
+                  (commutesRecord) => commutesRecord
+                      .where('origin', isEqualTo: FFAppState().filterOrigin)
+                      .where('destination',
+                          isEqualTo: FFAppState().filterDestination)
+                      .where('departure_datetime',
+                          isGreaterThanOrEqualTo:
+                              FFAppState().filterDepartureDatetime)
+                      .orderBy('departure_datetime', descending: true);
               if (_pagingController != null) {
                 final query = queryBuilder(CommutesRecord.collection);
                 if (query != _pagingQuery) {
@@ -112,7 +111,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
               _pagingQuery = queryBuilder(CommutesRecord.collection);
               _pagingController!.addPageRequestListener((nextPageMarker) {
                 queryCommutesRecordPage(
-                  queryBuilder: (commutesRecord) => commutesRecord,
+                  queryBuilder: (commutesRecord) => commutesRecord
+                      .where('origin', isEqualTo: FFAppState().filterOrigin)
+                      .where('destination',
+                          isEqualTo: FFAppState().filterDestination)
+                      .where('departure_datetime',
+                          isGreaterThanOrEqualTo:
+                              FFAppState().filterDepartureDatetime)
+                      .orderBy('departure_datetime', descending: true),
                   nextPageMarker: nextPageMarker,
                   pageSize: 25,
                   isStream: true,

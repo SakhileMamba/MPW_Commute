@@ -90,9 +90,10 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'add_vehicle_page': (data) async => AddVehiclePageWidget(),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
+  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

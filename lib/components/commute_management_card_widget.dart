@@ -49,7 +49,7 @@ class _CommuteManagementCardWidgetState
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(0),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
