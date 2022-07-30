@@ -1,4 +1,3 @@
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -18,11 +17,16 @@ class CommutesFilterWidget extends StatefulWidget {
 }
 
 class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
-  DateTime? datePicked1;
+  DateTime? datePicked;
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
-  DateTime? datePicked2;
-  String? dropDownValue;
+  TextEditingController? textController;
+
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +176,6 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                   color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
@@ -183,101 +186,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                         child: Text(
-                          'Departure Date',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Roboto',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          logFirebaseEvent(
-                              'COMMUTES_FILTER_Container_48sa85mx_ON_TA');
-                          logFirebaseEvent('Container_Date-Time-Picker');
-                          await DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            onConfirm: (date) {
-                              setState(() => datePicked1 = date);
-                            },
-                            currentTime: getCurrentTimestamp,
-                            minTime: getCurrentTimestamp,
-                            locale: LocaleType.values.firstWhere(
-                              (l) =>
-                                  l.name ==
-                                  FFLocalizations.of(context).languageCode,
-                              orElse: () => LocaleType.en,
-                            ),
-                          );
-
-                          logFirebaseEvent('Container_Update-Local-State');
-                          setState(() => FFAppState().filterDate =
-                              dateTimeFormat('MMMEd', datePicked1));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            ),
-                          ),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                    ),
-                                    child: Text(
-                                      FFAppState().filterDate,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.date_range_rounded,
-                                  color: Colors.black,
-                                  size: 24,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  height: 16,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                        child: Text(
-                          'Latest Departure Time',
+                          'Departure Date & Time',
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
@@ -291,13 +200,14 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           logFirebaseEvent(
                               'COMMUTES_FILTER_Container_ver1au6f_ON_TA');
                           logFirebaseEvent('Container_Date-Time-Picker');
-                          await DatePicker.showTimePicker(
+                          await DatePicker.showDateTimePicker(
                             context,
                             showTitleActions: true,
                             onConfirm: (date) {
-                              setState(() => datePicked2 = date);
+                              setState(() => datePicked = date);
                             },
                             currentTime: getCurrentTimestamp,
+                            minTime: getCurrentTimestamp,
                             locale: LocaleType.values.firstWhere(
                               (l) =>
                                   l.name ==
@@ -305,11 +215,6 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                               orElse: () => LocaleType.en,
                             ),
                           );
-
-                          logFirebaseEvent('Container_Update-Local-State');
-                          setState(() =>
-                              FFAppState().filterLatestDepartureTime =
-                                  dateTimeFormat('jm', datePicked2));
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -337,7 +242,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                           .primaryBtnText,
                                     ),
                                     child: Text(
-                                      FFAppState().filterLatestDepartureTime,
+                                      dateTimeFormat('d/M H:mm', datePicked),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
@@ -381,29 +286,71 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                               ),
                         ),
                       ),
-                      FlutterFlowDropDown(
-                        options: ['1', '2', '3', '4'],
-                        onChanged: (val) => setState(() => dropDownValue = val),
-                        width: double.infinity,
+                      Container(
+                        width: MediaQuery.of(context).size.width,
                         height: 50,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.black,
-                                ),
-                        hintText: 'Please select',
-                        icon: Icon(
-                          Icons.airline_seat_recline_normal_rounded,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBtnText,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
                         ),
-                        fillColor: Colors.white,
-                        elevation: 2,
-                        borderColor: FlutterFlowTheme.of(context).primaryText,
-                        borderWidth: 0,
-                        borderRadius: 8,
-                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                        hidesUnderline: true,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: textController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Please input',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          12, 0, 0, 0),
+                                  suffixIcon: Icon(
+                                    Icons.airline_seat_recline_normal_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 24,
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            Container(
+                              width: 4,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -420,8 +367,11 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'COMMUTES_FILTER_COMP_CLEAR_BTN_ON_TAP');
+                            logFirebaseEvent('Button_Navigate-Back');
+                            Navigator.pop(context);
                           },
                           text: 'Clear',
                           icon: Icon(
@@ -454,8 +404,24 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'COMMUTES_FILTER_COMP_FILTER_BTN_ON_TAP');
+                            logFirebaseEvent('Button_Update-Local-State');
+                            setState(() => FFAppState().filterOrigin =
+                                placePickerValue1.address);
+                            logFirebaseEvent('Button_Update-Local-State');
+                            setState(() => FFAppState().filterDestination =
+                                placePickerValue2.address);
+                            logFirebaseEvent('Button_Update-Local-State');
+                            setState(() => FFAppState()
+                                .filterDepartureDatetime = datePicked);
+                            logFirebaseEvent('Button_Update-Local-State');
+                            setState(() =>
+                                FFAppState().filterMinimumAvailableSeats =
+                                    int.parse(textController!.text));
+                            logFirebaseEvent('Button_Bottom-Sheet');
+                            Navigator.pop(context);
                           },
                           text: 'Filter',
                           icon: Icon(

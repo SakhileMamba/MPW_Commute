@@ -224,7 +224,7 @@ class _PersonalInformationUpdatePageWidgetState
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent(
-                          'PERSONAL_INFORMATION_UPDATE_SAVE_BTN_ON_');
+                          'PERSONAL_INFORMATION_UPDATE_SAVE_EDIT_BT');
                       logFirebaseEvent('Button_Backend-Call');
 
                       final usersUpdateData = createUsersRecordData(
@@ -234,7 +234,7 @@ class _PersonalInformationUpdatePageWidgetState
                       );
                       await currentUserReference!.update(usersUpdateData);
                     },
-                    text: 'Save',
+                    text: 'Save Edit',
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 50,

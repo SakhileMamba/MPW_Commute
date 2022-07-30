@@ -222,7 +222,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 setState(() => datePicked = date);
                               },
                               currentTime: getCurrentTimestamp,
-                              minTime: getCurrentTimestamp,
+                              minTime: DateTime(0, 0, 0),
                               locale: LocaleType.values.firstWhere(
                                 (l) =>
                                     l.name ==
@@ -233,7 +233,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                             logFirebaseEvent('Container_Update-Local-State');
                             setState(() =>
-                                FFAppState().filterLatestDepartureTime =
+                                FFAppState().scheduleDepartureDatetime =
                                     dateTimeFormat('d/M h:mm a', datePicked));
                           },
                           child: Container(
@@ -262,7 +262,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                             .primaryBtnText,
                                       ),
                                       child: Text(
-                                        FFAppState().filterLatestDepartureTime,
+                                        FFAppState().scheduleDepartureDatetime,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1,
                                       ),
@@ -297,7 +297,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                           child: Text(
-                            'Vehicle (Tap to select)',
+                            'Vehicle(s)',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
                                 .override(
@@ -626,8 +626,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                               final commutesCreateData =
                                   createCommutesRecordData(
-                                origin: placePickerValue1.name,
-                                destination: placePickerValue2.name,
+                                origin: placePickerValue1.address,
+                                destination: placePickerValue2.address,
                                 availablePassengerSeats:
                                     int.parse(textController1!.text),
                                 pricePerSeat:
