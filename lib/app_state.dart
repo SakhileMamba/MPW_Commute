@@ -16,6 +16,10 @@ class FFAppState {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
+    _filterCurrentDateTime = prefs.containsKey('ff_filterCurrentDateTime')
+        ? DateTime.fromMillisecondsSinceEpoch(
+            prefs.getInt('ff_filterCurrentDateTime')!)
+        : null;
   }
 
   late SharedPreferences prefs;
@@ -31,6 +35,16 @@ class FFAppState {
   DateTime? filterDepartureDatetime;
 
   int filterMinimumAvailableSeats = 0;
+
+  DateTime? _filterCurrentDateTime;
+  DateTime? get filterCurrentDateTime => _filterCurrentDateTime;
+  set filterCurrentDateTime(DateTime? _value) {
+    if (_value == null) {
+      return;
+    }
+    _filterCurrentDateTime = _value;
+    prefs.setInt('ff_filterCurrentDateTime', _value.millisecondsSinceEpoch);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

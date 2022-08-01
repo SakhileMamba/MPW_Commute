@@ -25,8 +25,6 @@ abstract class CommutesRecord
 
   DocumentReference? get driver;
 
-  BuiltList<DocumentReference>? get passengers;
-
   @BuiltValueField(wireName: 'departure_datetime')
   DateTime? get departureDatetime;
 
@@ -38,8 +36,7 @@ abstract class CommutesRecord
     ..origin = ''
     ..destination = ''
     ..availablePassengerSeats = 0
-    ..pricePerSeat = 0.0
-    ..passengers = ListBuilder();
+    ..pricePerSeat = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('commutes');
@@ -81,7 +78,6 @@ Map<String, dynamic> createCommutesRecordData({
         ..availablePassengerSeats = availablePassengerSeats
         ..pricePerSeat = pricePerSeat
         ..driver = driver
-        ..passengers = null
         ..departureDatetime = departureDatetime,
     ),
   );
