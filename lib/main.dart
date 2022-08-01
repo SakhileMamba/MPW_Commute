@@ -150,7 +150,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.commute,
+              Icons.commute_rounded,
               size: 24,
             ),
             label: 'Commutes',

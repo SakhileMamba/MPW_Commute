@@ -5,7 +5,11 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "driver",
+          "fieldPath": "origin",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destination",
           "order": "ASCENDING"
         },
         {
@@ -19,11 +23,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "origin",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "destination",
+          "fieldPath": "driver",
           "order": "ASCENDING"
         },
         {
@@ -37,6 +37,16 @@
     {
       "collectionGroup": "fcm_tokens",
       "fieldPath": "fcm_token",
+      "indexes": [
+        {
+          "order": "ASCENDING",
+          "queryScope": "COLLECTION_GROUP"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "passengers",
+      "fieldPath": "passenger_account",
       "indexes": [
         {
           "order": "ASCENDING",

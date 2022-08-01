@@ -64,16 +64,6 @@ class _$CommutesRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
-    value = object.passengers;
-    if (value != null) {
-      result
-        ..add('passengers')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltList, const [
-              const FullType(
-                  DocumentReference, const [const FullType.nullable(Object)])
-            ])));
-    }
     value = object.departureDatetime;
     if (value != null) {
       result
@@ -132,13 +122,6 @@ class _$CommutesRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
-        case 'passengers':
-          result.passengers.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(
-                    DocumentReference, const [const FullType.nullable(Object)])
-              ]))! as BuiltList<Object?>);
-          break;
         case 'departure_datetime':
           result.departureDatetime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
@@ -170,8 +153,6 @@ class _$CommutesRecord extends CommutesRecord {
   @override
   final DocumentReference<Object?>? driver;
   @override
-  final BuiltList<DocumentReference<Object?>>? passengers;
-  @override
   final DateTime? departureDatetime;
   @override
   final DocumentReference<Object?>? ffRef;
@@ -186,7 +167,6 @@ class _$CommutesRecord extends CommutesRecord {
       this.availablePassengerSeats,
       this.pricePerSeat,
       this.driver,
-      this.passengers,
       this.departureDatetime,
       this.ffRef})
       : super._();
@@ -209,7 +189,6 @@ class _$CommutesRecord extends CommutesRecord {
         availablePassengerSeats == other.availablePassengerSeats &&
         pricePerSeat == other.pricePerSeat &&
         driver == other.driver &&
-        passengers == other.passengers &&
         departureDatetime == other.departureDatetime &&
         ffRef == other.ffRef;
   }
@@ -221,15 +200,11 @@ class _$CommutesRecord extends CommutesRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, origin.hashCode),
-                                    destination.hashCode),
-                                vehicle.hashCode),
-                            availablePassengerSeats.hashCode),
-                        pricePerSeat.hashCode),
-                    driver.hashCode),
-                passengers.hashCode),
+                        $jc($jc($jc(0, origin.hashCode), destination.hashCode),
+                            vehicle.hashCode),
+                        availablePassengerSeats.hashCode),
+                    pricePerSeat.hashCode),
+                driver.hashCode),
             departureDatetime.hashCode),
         ffRef.hashCode));
   }
@@ -243,7 +218,6 @@ class _$CommutesRecord extends CommutesRecord {
           ..add('availablePassengerSeats', availablePassengerSeats)
           ..add('pricePerSeat', pricePerSeat)
           ..add('driver', driver)
-          ..add('passengers', passengers)
           ..add('departureDatetime', departureDatetime)
           ..add('ffRef', ffRef))
         .toString();
@@ -279,12 +253,6 @@ class CommutesRecordBuilder
   DocumentReference<Object?>? get driver => _$this._driver;
   set driver(DocumentReference<Object?>? driver) => _$this._driver = driver;
 
-  ListBuilder<DocumentReference<Object?>>? _passengers;
-  ListBuilder<DocumentReference<Object?>> get passengers =>
-      _$this._passengers ??= new ListBuilder<DocumentReference<Object?>>();
-  set passengers(ListBuilder<DocumentReference<Object?>>? passengers) =>
-      _$this._passengers = passengers;
-
   DateTime? _departureDatetime;
   DateTime? get departureDatetime => _$this._departureDatetime;
   set departureDatetime(DateTime? departureDatetime) =>
@@ -307,7 +275,6 @@ class CommutesRecordBuilder
       _availablePassengerSeats = $v.availablePassengerSeats;
       _pricePerSeat = $v.pricePerSeat;
       _driver = $v.driver;
-      _passengers = $v.passengers?.toBuilder();
       _departureDatetime = $v.departureDatetime;
       _ffRef = $v.ffRef;
       _$v = null;
@@ -330,30 +297,16 @@ class CommutesRecordBuilder
   CommutesRecord build() => _build();
 
   _$CommutesRecord _build() {
-    _$CommutesRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$CommutesRecord._(
-              origin: origin,
-              destination: destination,
-              vehicle: vehicle,
-              availablePassengerSeats: availablePassengerSeats,
-              pricePerSeat: pricePerSeat,
-              driver: driver,
-              passengers: _passengers?.build(),
-              departureDatetime: departureDatetime,
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'passengers';
-        _passengers?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'CommutesRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$CommutesRecord._(
+            origin: origin,
+            destination: destination,
+            vehicle: vehicle,
+            availablePassengerSeats: availablePassengerSeats,
+            pricePerSeat: pricePerSeat,
+            driver: driver,
+            departureDatetime: departureDatetime,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

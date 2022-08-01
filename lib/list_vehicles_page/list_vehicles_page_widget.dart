@@ -128,7 +128,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                             controller: textController ??=
                                 TextEditingController(
                               text:
-                                  '${columnVehiclesRecord.make}, ${columnVehiclesRecord.model}, ${columnVehiclesRecord.year}',
+                                  '${columnVehiclesRecord.year} ${columnVehiclesRecord.make} ${columnVehiclesRecord.model}',
                             ),
                             readOnly: true,
                             obscureText: false,
