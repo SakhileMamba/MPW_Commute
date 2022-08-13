@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -12,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AccountPageWidget extends StatefulWidget {
@@ -121,9 +123,9 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                   ),
                                 ),
                               ),
-                            if ((valueOrDefault<bool>(
+                            if (valueOrDefault<bool>(
                                     currentUserDocument?.verifiedUser, false) ==
-                                false))
+                                false)
                               AuthUserStreamWidget(
                                 child: FFButtonWidget(
                                   onPressed: () async {
@@ -336,6 +338,66 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('ACCOUNT_Container_16wxq3ky_ON_TAP');
+                        logFirebaseEvent('Container_Navigate-To');
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DriversLicenseUpdatePageWidget(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.idCard,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                child: Text(
+                                  'Driver\'s License',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    height: 0,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: 50,
@@ -358,7 +420,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                               child: Text(
-                                'Subscription',
+                                'Subscriptions',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(

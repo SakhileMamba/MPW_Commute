@@ -222,7 +222,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 setState(() => datePicked = date);
                               },
                               currentTime: getCurrentTimestamp,
-                              minTime: DateTime(0, 0, 0),
+                              minTime: getCurrentTimestamp,
                               locale: LocaleType.values.firstWhere(
                                 (l) =>
                                     l.name ==
@@ -262,7 +262,11 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                             .primaryBtnText,
                                       ),
                                       child: Text(
-                                        FFAppState().scheduleDepartureDatetime,
+                                        valueOrDefault<String>(
+                                          FFAppState()
+                                              .scheduleDepartureDatetime,
+                                          'Please input date',
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1,
                                       ),
@@ -356,8 +360,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                       ),
                                     ),
                                     child: Visibility(
-                                      visible: (FFAppState().chosenVehicle ==
-                                          rowVehiclesRecord.reference),
+                                      visible: FFAppState().chosenVehicle ==
+                                          rowVehiclesRecord.reference,
                                       child: Icon(
                                         Icons.check_rounded,
                                         color: FlutterFlowTheme.of(context)
@@ -422,10 +426,9 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               Expanded(
                                 child: TextFormField(
                                   controller: textController1,
-                                  autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Please input.',
+                                    hintText: 'Please input seats',
                                     hintStyle:
                                         FlutterFlowTheme.of(context).bodyText2,
                                     enabledBorder: OutlineInputBorder(
@@ -517,10 +520,9 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               Expanded(
                                 child: TextFormField(
                                   controller: textController2,
-                                  autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Please input',
+                                    hintText: 'Please input price',
                                     hintStyle:
                                         FlutterFlowTheme.of(context).bodyText2,
                                     enabledBorder: OutlineInputBorder(
@@ -635,6 +637,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 driver: currentUserReference,
                                 vehicle: FFAppState().chosenVehicle,
                                 departureDatetime: datePicked,
+                                driversRating: valueOrDefault(
+                                    currentUserDocument?.rating, 0.0),
                               );
                               await CommutesRecord.collection
                                   .doc()

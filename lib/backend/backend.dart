@@ -9,6 +9,8 @@ import 'schema/commutes_record.dart';
 import 'schema/vehicles_record.dart';
 import 'schema/verification_requests_record.dart';
 import 'schema/passengers_record.dart';
+import 'schema/messages_record.dart';
+import 'schema/driver_verification_requests_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -21,6 +23,8 @@ export 'schema/commutes_record.dart';
 export 'schema/vehicles_record.dart';
 export 'schema/verification_requests_record.dart';
 export 'schema/passengers_record.dart';
+export 'schema/messages_record.dart';
+export 'schema/driver_verification_requests_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -238,6 +242,96 @@ Future<FFFirestorePage<PassengersRecord>> queryPassengersRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query MessagesRecords (as a Stream and as a Future).
+Stream<List<MessagesRecord>> queryMessagesRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MessagesRecord.collection(parent),
+      MessagesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MessagesRecord>> queryMessagesRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MessagesRecord.collection(parent),
+      MessagesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<MessagesRecord>> queryMessagesRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      MessagesRecord.collection(parent),
+      MessagesRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query DriverVerificationRequestsRecords (as a Stream and as a Future).
+Stream<List<DriverVerificationRequestsRecord>>
+    queryDriverVerificationRequestsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+        queryCollection(
+          DriverVerificationRequestsRecord.collection,
+          DriverVerificationRequestsRecord.serializer,
+          queryBuilder: queryBuilder,
+          limit: limit,
+          singleRecord: singleRecord,
+        );
+
+Future<List<DriverVerificationRequestsRecord>>
+    queryDriverVerificationRequestsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+        queryCollectionOnce(
+          DriverVerificationRequestsRecord.collection,
+          DriverVerificationRequestsRecord.serializer,
+          queryBuilder: queryBuilder,
+          limit: limit,
+          singleRecord: singleRecord,
+        );
+
+Future<FFFirestorePage<DriverVerificationRequestsRecord>>
+    queryDriverVerificationRequestsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          DriverVerificationRequestsRecord.collection,
+          DriverVerificationRequestsRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
 
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,

@@ -84,24 +84,27 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
   'manage_commutes_page': (data) async =>
       NavBarPage(initialPage: 'manage_commutes_page'),
-  'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
-  'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
   'profile_picture_update_Page': (data) async =>
       ProfilePictureUpdatePageWidget(),
-  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
+  'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
+  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
+  'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
   'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
+  'commutes_management_details_page': (data) async =>
+      CommutesManagementDetailsPageWidget(
+        commuteRef: getParameter(data, 'commuteRef'),
+      ),
   'browse_commutes_details_page': (data) async =>
       BrowseCommutesDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
-  'driver_commutes_manage_details': (data) async =>
-      DriverCommutesManageDetailsWidget(
-        commuteRef: getParameter(data, 'commuteRef'),
-      ),
+  'drivers_license_update_page': (data) async =>
+      DriversLicenseUpdatePageWidget(),
+  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

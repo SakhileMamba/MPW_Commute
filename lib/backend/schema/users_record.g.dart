@@ -103,6 +103,34 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
+    value = object.birthDate;
+    if (value != null) {
+      result
+        ..add('birth_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.driverLicenseNumber;
+    if (value != null) {
+      result
+        ..add('driver_license_number')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.driverLicensePhotoPath;
+    if (value != null) {
+      result
+        ..add('driver_license_photo_path')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.verifiedDriver;
+    if (value != null) {
+      result
+        ..add('verified_driver')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -173,6 +201,22 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.rating = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
+        case 'birth_date':
+          result.birthDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'driver_license_number':
+          result.driverLicenseNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'driver_license_photo_path':
+          result.driverLicensePhotoPath = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'verified_driver':
+          result.verifiedDriver = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -212,6 +256,14 @@ class _$UsersRecord extends UsersRecord {
   @override
   final double? rating;
   @override
+  final DateTime? birthDate;
+  @override
+  final String? driverLicenseNumber;
+  @override
+  final String? driverLicensePhotoPath;
+  @override
+  final bool? verifiedDriver;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -230,6 +282,10 @@ class _$UsersRecord extends UsersRecord {
       this.verifiedUser,
       this.gender,
       this.rating,
+      this.birthDate,
+      this.driverLicenseNumber,
+      this.driverLicensePhotoPath,
+      this.verifiedDriver,
       this.ffRef})
       : super._();
 
@@ -256,6 +312,10 @@ class _$UsersRecord extends UsersRecord {
         verifiedUser == other.verifiedUser &&
         gender == other.gender &&
         rating == other.rating &&
+        birthDate == other.birthDate &&
+        driverLicenseNumber == other.driverLicenseNumber &&
+        driverLicensePhotoPath == other.driverLicensePhotoPath &&
+        verifiedDriver == other.verifiedDriver &&
         ffRef == other.ffRef;
   }
 
@@ -272,18 +332,32 @@ class _$UsersRecord extends UsersRecord {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, email.hashCode),
-                                                    displayName.hashCode),
-                                                photoUrl.hashCode),
-                                            uid.hashCode),
-                                        createdTime.hashCode),
-                                    phoneNumber.hashCode),
-                                displaySurname.hashCode),
-                            nationalId.hashCode),
-                        nationalIdPhotoUrl.hashCode),
-                    verifiedUser.hashCode),
-                gender.hashCode),
-            rating.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        email
+                                                                            .hashCode),
+                                                                    displayName
+                                                                        .hashCode),
+                                                                photoUrl
+                                                                    .hashCode),
+                                                            uid.hashCode),
+                                                        createdTime.hashCode),
+                                                    phoneNumber.hashCode),
+                                                displaySurname.hashCode),
+                                            nationalId.hashCode),
+                                        nationalIdPhotoUrl.hashCode),
+                                    verifiedUser.hashCode),
+                                gender.hashCode),
+                            rating.hashCode),
+                        birthDate.hashCode),
+                    driverLicenseNumber.hashCode),
+                driverLicensePhotoPath.hashCode),
+            verifiedDriver.hashCode),
         ffRef.hashCode));
   }
 
@@ -302,6 +376,10 @@ class _$UsersRecord extends UsersRecord {
           ..add('verifiedUser', verifiedUser)
           ..add('gender', gender)
           ..add('rating', rating)
+          ..add('birthDate', birthDate)
+          ..add('driverLicenseNumber', driverLicenseNumber)
+          ..add('driverLicensePhotoPath', driverLicensePhotoPath)
+          ..add('verifiedDriver', verifiedDriver)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -360,6 +438,25 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   double? get rating => _$this._rating;
   set rating(double? rating) => _$this._rating = rating;
 
+  DateTime? _birthDate;
+  DateTime? get birthDate => _$this._birthDate;
+  set birthDate(DateTime? birthDate) => _$this._birthDate = birthDate;
+
+  String? _driverLicenseNumber;
+  String? get driverLicenseNumber => _$this._driverLicenseNumber;
+  set driverLicenseNumber(String? driverLicenseNumber) =>
+      _$this._driverLicenseNumber = driverLicenseNumber;
+
+  String? _driverLicensePhotoPath;
+  String? get driverLicensePhotoPath => _$this._driverLicensePhotoPath;
+  set driverLicensePhotoPath(String? driverLicensePhotoPath) =>
+      _$this._driverLicensePhotoPath = driverLicensePhotoPath;
+
+  bool? _verifiedDriver;
+  bool? get verifiedDriver => _$this._verifiedDriver;
+  set verifiedDriver(bool? verifiedDriver) =>
+      _$this._verifiedDriver = verifiedDriver;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -383,6 +480,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _verifiedUser = $v.verifiedUser;
       _gender = $v.gender;
       _rating = $v.rating;
+      _birthDate = $v.birthDate;
+      _driverLicenseNumber = $v.driverLicenseNumber;
+      _driverLicensePhotoPath = $v.driverLicensePhotoPath;
+      _verifiedDriver = $v.verifiedDriver;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -418,6 +519,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             verifiedUser: verifiedUser,
             gender: gender,
             rating: rating,
+            birthDate: birthDate,
+            driverLicenseNumber: driverLicenseNumber,
+            driverLicensePhotoPath: driverLicensePhotoPath,
+            verifiedDriver: verifiedDriver,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
