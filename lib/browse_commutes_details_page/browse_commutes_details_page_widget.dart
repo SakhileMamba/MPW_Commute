@@ -123,7 +123,7 @@ class _BrowseCommutesDetailsPageWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                     child: Text(
                       'Accepted Passengers',
                       style: FlutterFlowTheme.of(context).subtitle1,
@@ -249,36 +249,42 @@ class _BrowseCommutesDetailsPageWidgetState
                                         ),
                                       ),
                                       Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Name',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                            ),
-                                            Text(
-                                              '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyText2
-                                                  .override(
-                                                    fontFamily: 'Roboto',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ],
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 0, 0, 0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                              Text(
+                                                cardUsersRecord.gender!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Column(
@@ -286,15 +292,6 @@ class _BrowseCommutesDetailsPageWidgetState
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            'Rating',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -322,6 +319,15 @@ class _BrowseCommutesDetailsPageWidgetState
                                                 size: 18,
                                               ),
                                             ],
+                                          ),
+                                          Text(
+                                            '',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.normal,
+                                                ),
                                           ),
                                         ],
                                       ),

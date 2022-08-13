@@ -16,6 +16,9 @@ abstract class PassengersRecord
 
   bool? get accepted;
 
+  @BuiltValueField(wireName: 'commute_datetime')
+  DateTime? get commuteDatetime;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -54,13 +57,15 @@ abstract class PassengersRecord
 Map<String, dynamic> createPassengersRecordData({
   DocumentReference? passengerAccount,
   bool? accepted,
+  DateTime? commuteDatetime,
 }) {
   final firestoreData = serializers.toFirestore(
     PassengersRecord.serializer,
     PassengersRecord(
       (p) => p
         ..passengerAccount = passengerAccount
-        ..accepted = accepted,
+        ..accepted = accepted
+        ..commuteDatetime = commuteDatetime,
     ),
   );
 

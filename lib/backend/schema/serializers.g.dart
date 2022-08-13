@@ -8,6 +8,8 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CommutesRecord.serializer)
+      ..add(DriverVerificationRequestsRecord.serializer)
+      ..add(MessagesRecord.serializer)
       ..add(PassengersRecord.serializer)
       ..add(UsersRecord.serializer)
       ..add(VehiclesRecord.serializer)

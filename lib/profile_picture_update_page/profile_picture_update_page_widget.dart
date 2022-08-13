@@ -102,6 +102,7 @@ class _ProfilePictureUpdatePageWidgetState
                       final selectedMedia =
                           await selectMediaWithSourceBottomSheet(
                         context: context,
+                        imageQuality: 50,
                         allowPhoto: true,
                       );
                       if (selectedMedia != null &&

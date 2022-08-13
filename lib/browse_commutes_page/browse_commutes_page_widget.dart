@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -117,7 +118,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                         .where('departure_datetime',
                             isGreaterThanOrEqualTo:
                                 FFAppState().filterCurrentDateTime)
-                        .orderBy('departure_datetime', descending: true);
+                        .orderBy('departure_datetime', descending: true)
+                        .orderBy('available_passenger_seats', descending: true)
+                        .orderBy('driversRating', descending: true);
                 if (_pagingController != null) {
                   final query = queryBuilder(CommutesRecord.collection);
                   if (query != _pagingQuery) {
@@ -149,7 +152,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                         .where('departure_datetime',
                             isGreaterThanOrEqualTo:
                                 FFAppState().filterCurrentDateTime)
-                        .orderBy('departure_datetime', descending: true),
+                        .orderBy('departure_datetime', descending: true)
+                        .orderBy('available_passenger_seats', descending: true)
+                        .orderBy('driversRating', descending: true),
                     nextPageMarker: nextPageMarker,
                     pageSize: 25,
                     isStream: true,
@@ -198,8 +203,8 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                   final listViewCommutesRecord =
                       _pagingController!.itemList![listViewIndex];
                   return Visibility(
-                    visible: (listViewCommutesRecord.departureDatetime! >=
-                        getCurrentTimestamp),
+                    visible: listViewCommutesRecord.departureDatetime! >=
+                        getCurrentTimestamp,
                     child: StreamBuilder<UsersRecord>(
                       stream: UsersRecord.getDocument(
                           listViewCommutesRecord.driver!),
@@ -347,37 +352,48 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                               ),
                                             ),
                                             Expanded(
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Driver',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                  Text(
-                                                    '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                ],
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(8, 0, 0, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Driver',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                    ),
+                                                    Text(
+                                                      '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                             Column(
@@ -401,18 +417,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Text(
-                                                      valueOrDefault<String>(
-                                                        formatNumber(
+                                                      functions.twoDeci(
                                                           cardUsersRecord
-                                                              .rating,
-                                                          formatType: FormatType
-                                                              .decimal,
-                                                          decimalType:
-                                                              DecimalType
-                                                                  .periodDecimal,
-                                                        ),
-                                                        'null',
-                                                      ),
+                                                              .rating!),
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
@@ -1077,18 +1084,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    valueOrDefault<String>(
-                                                      formatNumber(
+                                                    functions.twoDeci(
                                                         listViewCommutesRecord
-                                                            .pricePerSeat,
-                                                        formatType:
-                                                            FormatType.decimal,
-                                                        decimalType: DecimalType
-                                                            .periodDecimal,
-                                                        currency: 'E',
-                                                      ),
-                                                      'null',
-                                                    ),
+                                                            .pricePerSeat!),
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyText2

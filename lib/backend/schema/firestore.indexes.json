@@ -15,6 +15,14 @@
         {
           "fieldPath": "departure_datetime",
           "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "available_passenger_seats",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "driversRating",
+          "order": "DESCENDING"
         }
       ]
     },
@@ -31,22 +39,30 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "passengers",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "passenger_account",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "accepted",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "commute_datetime",
+          "order": "DESCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": [
     {
       "collectionGroup": "fcm_tokens",
       "fieldPath": "fcm_token",
-      "indexes": [
-        {
-          "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "passengers",
-      "fieldPath": "passenger_account",
       "indexes": [
         {
           "order": "ASCENDING",

@@ -11,13 +11,18 @@ import 'flutter_flow/internationalization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'index.dart';
+import 'flutter_flow/revenue_cat_util.dart' as revenue_cat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FlutterFlowTheme.initialize();
 
   FFAppState(); // Initialize FFAppState
+  await revenue_cat.initialize(
+    "testkey",
+    "goog_pQSjrugHgHmKpVWWUVZOpkTKwVz",
+    true,
+  );
 
   runApp(MyApp());
 }
@@ -33,13 +38,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = ThemeMode.system;
 
   late Stream<MPWCommuteFirebaseUser> userStream;
   MPWCommuteFirebaseUser? initialUser;
   bool displaySplashImage = true;
 
-  final authUserSub = authenticatedUserStream.listen((_) {});
+  final authUserSub = authenticatedUserStream.listen((user) {
+    revenue_cat.login(user?.uid);
+  });
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
   @override
@@ -63,7 +70,6 @@ class _MyAppState extends State<MyApp> {
   void setLocale(Locale value) => setState(() => _locale = value);
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
       });
 
   @override
@@ -81,7 +87,6 @@ class _MyAppState extends State<MyApp> {
         Locale('en', ''),
       ],
       theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
           ? Center(
@@ -123,8 +128,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'browse_commutes_page': BrowseCommutesPageWidget(),
       'manage_commutes_page': ManageCommutesPageWidget(),
+      'browse_commutes_page': BrowseCommutesPageWidget(),
       'account_page': AccountPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
@@ -142,18 +147,18 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.airline_seat_recline_normal_rounded,
-              size: 24,
-            ),
-            label: 'Seats',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.commute_rounded,
               size: 24,
             ),
             label: 'Commutes',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.airline_seat_recline_normal_rounded,
+              size: 24,
+            ),
+            label: 'Seats',
             tooltip: '',
           ),
           BottomNavigationBarItem(

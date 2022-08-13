@@ -41,6 +41,18 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   double? get rating;
 
+  @BuiltValueField(wireName: 'birth_date')
+  DateTime? get birthDate;
+
+  @BuiltValueField(wireName: 'driver_license_number')
+  String? get driverLicenseNumber;
+
+  @BuiltValueField(wireName: 'driver_license_photo_path')
+  String? get driverLicensePhotoPath;
+
+  @BuiltValueField(wireName: 'verified_driver')
+  bool? get verifiedDriver;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -56,7 +68,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..nationalIdPhotoUrl = ''
     ..verifiedUser = false
     ..gender = ''
-    ..rating = 0.0;
+    ..rating = 0.0
+    ..driverLicenseNumber = ''
+    ..driverLicensePhotoPath = ''
+    ..verifiedDriver = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -92,6 +107,10 @@ Map<String, dynamic> createUsersRecordData({
   bool? verifiedUser,
   String? gender,
   double? rating,
+  DateTime? birthDate,
+  String? driverLicenseNumber,
+  String? driverLicensePhotoPath,
+  bool? verifiedDriver,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -108,7 +127,11 @@ Map<String, dynamic> createUsersRecordData({
         ..nationalIdPhotoUrl = nationalIdPhotoUrl
         ..verifiedUser = verifiedUser
         ..gender = gender
-        ..rating = rating,
+        ..rating = rating
+        ..birthDate = birthDate
+        ..driverLicenseNumber = driverLicenseNumber
+        ..driverLicensePhotoPath = driverLicensePhotoPath
+        ..verifiedDriver = verifiedDriver,
     ),
   );
 
