@@ -4,6 +4,7 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -46,8 +47,13 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('LIST_VEHICLES_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            logFirebaseEvent('IconButton_Navigate-To');
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavBarPage(initialPage: 'account_page'),
+              ),
+            );
           },
         ),
         title: Text(

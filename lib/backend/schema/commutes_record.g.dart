@@ -78,6 +78,13 @@ class _$CommutesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
+    value = object.currency;
+    if (value != null) {
+      result
+        ..add('currency')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -137,6 +144,10 @@ class _$CommutesRecordSerializer
           result.driversRating = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
+        case 'currency':
+          result.currency = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -168,6 +179,8 @@ class _$CommutesRecord extends CommutesRecord {
   @override
   final double? driversRating;
   @override
+  final String? currency;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$CommutesRecord([void Function(CommutesRecordBuilder)? updates]) =>
@@ -182,6 +195,7 @@ class _$CommutesRecord extends CommutesRecord {
       this.driver,
       this.departureDatetime,
       this.driversRating,
+      this.currency,
       this.ffRef})
       : super._();
 
@@ -205,6 +219,7 @@ class _$CommutesRecord extends CommutesRecord {
         driver == other.driver &&
         departureDatetime == other.departureDatetime &&
         driversRating == other.driversRating &&
+        currency == other.currency &&
         ffRef == other.ffRef;
   }
 
@@ -217,14 +232,16 @@ class _$CommutesRecord extends CommutesRecord {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, origin.hashCode),
-                                    destination.hashCode),
-                                vehicle.hashCode),
-                            availablePassengerSeats.hashCode),
-                        pricePerSeat.hashCode),
-                    driver.hashCode),
-                departureDatetime.hashCode),
-            driversRating.hashCode),
+                                $jc(
+                                    $jc($jc(0, origin.hashCode),
+                                        destination.hashCode),
+                                    vehicle.hashCode),
+                                availablePassengerSeats.hashCode),
+                            pricePerSeat.hashCode),
+                        driver.hashCode),
+                    departureDatetime.hashCode),
+                driversRating.hashCode),
+            currency.hashCode),
         ffRef.hashCode));
   }
 
@@ -239,6 +256,7 @@ class _$CommutesRecord extends CommutesRecord {
           ..add('driver', driver)
           ..add('departureDatetime', departureDatetime)
           ..add('driversRating', driversRating)
+          ..add('currency', currency)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -283,6 +301,10 @@ class CommutesRecordBuilder
   set driversRating(double? driversRating) =>
       _$this._driversRating = driversRating;
 
+  String? _currency;
+  String? get currency => _$this._currency;
+  set currency(String? currency) => _$this._currency = currency;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -302,6 +324,7 @@ class CommutesRecordBuilder
       _driver = $v.driver;
       _departureDatetime = $v.departureDatetime;
       _driversRating = $v.driversRating;
+      _currency = $v.currency;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -333,6 +356,7 @@ class CommutesRecordBuilder
             driver: driver,
             departureDatetime: departureDatetime,
             driversRating: driversRating,
+            currency: currency,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

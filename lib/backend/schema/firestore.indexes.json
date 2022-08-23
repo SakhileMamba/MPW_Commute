@@ -27,20 +27,6 @@
       ]
     },
     {
-      "collectionGroup": "commutes",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "driver",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure_datetime",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "passengers",
       "queryScope": "COLLECTION_GROUP",
       "fields": [
@@ -54,6 +40,20 @@
         },
         {
           "fieldPath": "commute_datetime",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "commutes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "driver",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
           "order": "DESCENDING"
         }
       ]

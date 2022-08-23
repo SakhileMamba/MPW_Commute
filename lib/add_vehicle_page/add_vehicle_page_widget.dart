@@ -288,113 +288,258 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'ADD_VEHICLE_PAGE_PAGE_CANCEL_BTN_ON_TAP');
-                                logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
-                              },
-                              text: 'Cancel',
-                              icon: Icon(
-                                Icons.cancel_rounded,
+                  Divider(
+                    height: 16,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'ADD_VEHICLE_PAGE_PAGE_CANCEL_BTN_ON_TAP');
+                              logFirebaseEvent('Button_Navigate-Back');
+                              Navigator.pop(context);
+                            },
+                            text: 'Cancel',
+                            icon: Icon(
+                              Icons.cancel_rounded,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 15,
+                            ),
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 50,
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                              borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                size: 15,
+                                width: 1,
                               ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'ADD_VEHICLE_PAGE_PAGE_SAVE_BTN_ON_TAP');
-                                logFirebaseEvent('Button_Backend-Call');
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'ADD_VEHICLE_PAGE_PAGE_SAVE_BTN_ON_TAP');
+                              if (textController1!.text != null &&
+                                  textController1!.text != '') {
+                                if (textController2!.text != null &&
+                                    textController2!.text != '') {
+                                  if (textController3!.text != null &&
+                                      textController3!.text != '') {
+                                    if (textController4!.text != null &&
+                                        textController4!.text != '') {
+                                      if (textController5!.text != null &&
+                                          textController5!.text != '') {
+                                        if (!(uploadedFileUrl != null &&
+                                            uploadedFileUrl != '')) {
+                                          logFirebaseEvent(
+                                              'Button_Alert-Dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Missing Vehicle Image'),
+                                                content: Text(
+                                                    'Please upload an image of your vehicle. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Continue'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
+                                      } else {
+                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  'Missing Vehicle Information'),
+                                              content: Text(
+                                                  'Please input the available number of passenger seats in your vehicle.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Continue'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      }
+                                    } else {
+                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                'Missing Vehicle Information'),
+                                            content: Text(
+                                                'Please input your vehicle\'s registration number.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Continue'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+                                  } else {
+                                    logFirebaseEvent('Button_Alert-Dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: Text(
+                                              'Missing Vehicle Information'),
+                                          content: Text(
+                                              'Please input your vehicle\'s year.'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('Continue'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  }
+                                } else {
+                                  logFirebaseEvent('Button_Alert-Dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title:
+                                            Text('Missing Vehicle Information'),
+                                        content: Text(
+                                            'Please input your vehicle\'s model.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Continue'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                              } else {
+                                logFirebaseEvent('Button_Alert-Dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title:
+                                          Text('Missing Vehicle Information'),
+                                      content: Text(
+                                          'Please input your vehicle\'s  make.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return;
+                              }
 
-                                final vehiclesCreateData =
-                                    createVehiclesRecordData(
-                                  registrationNumber: textController4!.text,
-                                  numberOfPassengerSeats:
-                                      int.parse(textController5!.text),
-                                  imageURL: uploadedFileUrl,
-                                  make: textController1!.text,
-                                  model: textController2!.text,
-                                  year: textController3!.text,
-                                );
-                                await VehiclesRecord.createDoc(
-                                        currentUserReference!)
-                                    .set(vehiclesCreateData);
-                                logFirebaseEvent('Button_Navigate-To');
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ListVehiclesPageWidget(),
+                              logFirebaseEvent('Button_Backend-Call');
+
+                              final vehiclesCreateData =
+                                  createVehiclesRecordData(
+                                registrationNumber: textController4!.text,
+                                numberOfPassengerSeats:
+                                    int.parse(textController5!.text),
+                                imageURL: uploadedFileUrl,
+                                make: textController1!.text,
+                                model: textController2!.text,
+                                year: textController3!.text,
+                              );
+                              await VehiclesRecord.createDoc(
+                                      currentUserReference!)
+                                  .set(vehiclesCreateData);
+                              logFirebaseEvent('Button_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ListVehiclesPageWidget(),
+                                ),
+                              );
+                            },
+                            text: 'Save',
+                            icon: Icon(
+                              Icons.check_circle_rounded,
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              size: 15,
+                            ),
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 50,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
                                   ),
-                                  (r) => false,
-                                );
-                              },
-                              text: 'Save',
-                              icon: Icon(
-                                Icons.check_circle_rounded,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                size: 15,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
+                              borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                    ),
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
+                                width: 1,
                               ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),

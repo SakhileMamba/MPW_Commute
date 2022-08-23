@@ -20,6 +20,7 @@ class FFAppState {
         ? DateTime.fromMillisecondsSinceEpoch(
             prefs.getInt('ff_filterCurrentDateTime')!)
         : null;
+    _pickedCurrency = prefs.getString('ff_pickedCurrency') ?? _pickedCurrency;
   }
 
   late SharedPreferences prefs;
@@ -44,6 +45,13 @@ class FFAppState {
     }
     _filterCurrentDateTime = _value;
     prefs.setInt('ff_filterCurrentDateTime', _value.millisecondsSinceEpoch);
+  }
+
+  String _pickedCurrency = 'SZL';
+  String get pickedCurrency => _pickedCurrency;
+  set pickedCurrency(String _value) {
+    _pickedCurrency = _value;
+    prefs.setString('ff_pickedCurrency', _value);
   }
 }
 
