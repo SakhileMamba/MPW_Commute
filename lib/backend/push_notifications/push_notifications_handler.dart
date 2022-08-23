@@ -66,13 +66,12 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 
   @override
   Widget build(BuildContext context) => _loading
-      ? Center(
-          child: SizedBox(
-            width: 50,
-            height: 50,
-            child: SpinKitChasingDots(
-              color: FlutterFlowTheme.of(context).primaryColor,
-              size: 50,
+      ? Container(
+          color: FlutterFlowTheme.of(context).primaryBackground,
+          child: Builder(
+            builder: (context) => Image.asset(
+              'assets/images/splash.png',
+              fit: BoxFit.cover,
             ),
           ),
         )
@@ -84,27 +83,27 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
   'manage_commutes_page': (data) async =>
       NavBarPage(initialPage: 'manage_commutes_page'),
-  'profile_picture_update_Page': (data) async =>
-      ProfilePictureUpdatePageWidget(),
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'create_commute_page': (data) async => CreateCommutePageWidget(),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
   'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
+  'profile_picture_update_Page': (data) async =>
+      ProfilePictureUpdatePageWidget(),
   'add_vehicle_page': (data) async => AddVehiclePageWidget(),
-  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
   'commutes_management_details_page': (data) async =>
       CommutesManagementDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
+  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
+  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
   'browse_commutes_details_page': (data) async =>
       BrowseCommutesDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
   'drivers_license_update_page': (data) async =>
       DriversLicenseUpdatePageWidget(),
-  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

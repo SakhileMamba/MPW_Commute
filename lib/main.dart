@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
@@ -21,7 +21,7 @@ void main() async {
   await revenue_cat.initialize(
     "testkey",
     "goog_pQSjrugHgHmKpVWWUVZOpkTKwVz",
-    true,
+    false,
   );
 
   runApp(MyApp());
@@ -40,8 +40,8 @@ class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode = ThemeMode.system;
 
-  late Stream<MPWCommuteFirebaseUser> userStream;
-  MPWCommuteFirebaseUser? initialUser;
+  late Stream<CommuteFirebaseUser> userStream;
+  CommuteFirebaseUser? initialUser;
   bool displaySplashImage = true;
 
   final authUserSub = authenticatedUserStream.listen((user) {
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    userStream = mPWCommuteFirebaseUserStream()
+    userStream = commuteFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
     Future.delayed(
       Duration(seconds: 1),
@@ -67,7 +67,8 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  void setLocale(Locale value) => setState(() => _locale = value);
+  void setLocale(String language) =>
+      setState(() => _locale = createLocale(language));
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MPW Commute',
+      title: 'Commute',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -84,18 +85,17 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       supportedLocales: const [
-        Locale('en', ''),
+        Locale('en'),
       ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
-          ? Center(
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: SpinKitChasingDots(
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  size: 50,
+          ? Container(
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              child: Builder(
+                builder: (context) => Image.asset(
+                  'assets/images/splash.png',
+                  fit: BoxFit.cover,
                 ),
               ),
             )
@@ -128,8 +128,8 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'manage_commutes_page': ManageCommutesPageWidget(),
       'browse_commutes_page': BrowseCommutesPageWidget(),
+      'manage_commutes_page': ManageCommutesPageWidget(),
       'account_page': AccountPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
@@ -147,18 +147,18 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.commute_rounded,
-              size: 24,
-            ),
-            label: 'Commutes',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.airline_seat_recline_normal_rounded,
               size: 24,
             ),
             label: 'Seats',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.commute_rounded,
+              size: 24,
+            ),
+            label: 'Commutes',
             tooltip: '',
           ),
           BottomNavigationBarItem(

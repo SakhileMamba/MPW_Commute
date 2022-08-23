@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -62,6 +61,28 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
         elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      floatingActionButton: Visibility(
+        visible: !revenue_cat.activeEntitlementIds.contains('Driver Access'),
+        child: FloatingActionButton.extended(
+          onPressed: () async {
+            logFirebaseEvent('SUBSCRIPTIONS_FloatingActionButton_fzruh');
+            logFirebaseEvent('FloatingActionButton_Revenue-Cat');
+            purchaseCompleted = await revenue_cat.purchasePackage(
+                revenue_cat.offerings!.current!.monthly!.identifier);
+
+            setState(() {});
+          },
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          elevation: 8,
+          label: Text(
+            'Subscribe',
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Roboto',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -85,13 +106,15 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                             fontSize: 22,
                           ),
                     ),
-                    Text(
-                      'Subscribed',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                    ),
+                    if (revenue_cat.activeEntitlementIds
+                        .contains('Driver Access'))
+                      Text(
+                        'Subscribed',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                      ),
                   ],
                 ),
                 Padding(
@@ -102,56 +125,6 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.normal,
                         ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 14, 0, 0),
-                  child: Text(
-                    'E100.00 per month',
-                    textAlign: TextAlign.end,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      FFButtonWidget(
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
-                          logFirebaseEvent('Button_Revenue-Cat');
-                          purchaseCompleted = await revenue_cat.purchasePackage(
-                              revenue_cat
-                                  .offerings!.current!.monthly!.identifier);
-
-                          setState(() {});
-                        },
-                        text: 'Subscribe',
-                        options: FFButtonOptions(
-                          width: 130,
-                          height: 50,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],

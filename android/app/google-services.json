@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "549233771637-gcs514than4fute6lo5po71urgpffbft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "online.mpwstore.mpwcommute",
+            "certificate_hash": "176f890b061ce3f9c473fcbaffd360de1a307cd8"
+          }
+        },
+        {
           "client_id": "549233771637-n6df62r8pof8828o7r20i0uce1so51ol.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

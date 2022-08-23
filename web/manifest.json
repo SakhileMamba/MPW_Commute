@@ -1,6 +1,6 @@
 {
-    "name": "MPW Commute",
-    "short_name": "MPW Commute",
+    "name": "Commute",
+    "short_name": "Commute",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

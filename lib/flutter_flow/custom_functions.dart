@@ -14,3 +14,31 @@ String twoDeci(double arg) {
   //Double To String In Two Decimals Places
   return arg.toStringAsFixed(2);
 }
+
+int stringNumbertoInt(String stringNumber) {
+  // Add your function code here!
+  if (int.tryParse(stringNumber) != null) {
+    return int.parse(stringNumber);
+  } else {
+    return -1;
+  }
+}
+
+double stringNumbertoDouble(String stringNumber) {
+  // Add your function code here!
+  if (double.tryParse(stringNumber) != null) {
+    return double.parse(stringNumber);
+  } else {
+    return -1;
+  }
+}
+
+bool isIntGreaterThanZero(int input) {
+  // Add your function code here!
+  return (input > 0);
+}
+
+bool isDoubleGreaterThanZero(double input) {
+  // Add your function code here!
+  return (input > 0);
+}

@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -287,52 +288,84 @@ class _CommutesManagementDetailsPageWidgetState
                                               ),
                                             ),
                                           ),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    functions.twoDeci(
-                                                        cardUsersRecord
-                                                            .rating!),
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                          if (cardUsersRecord.rating != null)
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      functions.twoDeci(
+                                                          cardUsersRecord
+                                                              .rating!),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.star_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
                                                               .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                  ),
-                                                  Icon(
-                                                    Icons.star_rounded,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryColor,
-                                                    size: 18,
-                                                  ),
-                                                ],
-                                              ),
-                                              Text(
-                                                '',
-                                                style:
+                                                      size: 18,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  '',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    4, 0, 0, 0),
+                                            child: FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderWidth: 1,
+                                              buttonSize: 40,
+                                              icon: Icon(
+                                                Icons.call_rounded,
+                                                color:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                        .primaryText,
+                                                size: 24,
                                               ),
-                                            ],
+                                              onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
+                                                logFirebaseEvent(
+                                                    'IconButton_Launch-U-R-L');
+                                                await launchURL(cardUsersRecord
+                                                    .phoneNumber!);
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -553,61 +586,65 @@ class _CommutesManagementDetailsPageWidgetState
                                                       ),
                                                     ),
                                                   ),
-                                                  Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Text(
-                                                            functions.twoDeci(
-                                                                cardUsersRecord
-                                                                    .rating!),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
-                                                          Icon(
-                                                            Icons.star_rounded,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            size: 18,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        '',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  if (cardUsersRecord.rating !=
+                                                      null)
+                                                    Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              functions.twoDeci(
+                                                                  cardUsersRecord
+                                                                      .rating!),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                            Icon(
+                                                              Icons
+                                                                  .star_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              size: 18,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          '',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                 ],
                                               ),
                                               if (currentUserReference ==
@@ -636,6 +673,47 @@ class _CommutesManagementDetailsPageWidgetState
                                                               await listViewPassengersRecord
                                                                   .reference
                                                                   .delete();
+                                                              logFirebaseEvent(
+                                                                  'Button_Trigger-Push-Notification');
+                                                              triggerPushNotification(
+                                                                notificationTitle:
+                                                                    'Seat Request Declined',
+                                                                notificationText:
+                                                                    'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been declined.',
+                                                                notificationSound:
+                                                                    'default',
+                                                                userRefs: [
+                                                                  cardUsersRecord
+                                                                      .reference
+                                                                ],
+                                                                initialPageName:
+                                                                    'manage_commutes_page',
+                                                                parameterData: {},
+                                                              );
+                                                              logFirebaseEvent(
+                                                                  'Button_Alert-Dialog');
+                                                              await showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        'Notice'),
+                                                                    content: Text(
+                                                                        'The user has been notified of your decision.'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                        child: Text(
+                                                                            'Ok'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
                                                             },
                                                             text: 'Decline',
                                                             icon: Icon(
@@ -714,6 +792,47 @@ class _CommutesManagementDetailsPageWidgetState
                                                                   .parentReference
                                                                   .update(
                                                                       commutesUpdateData);
+                                                              logFirebaseEvent(
+                                                                  'Button_Trigger-Push-Notification');
+                                                              triggerPushNotification(
+                                                                notificationTitle:
+                                                                    'Seat Request Accepted',
+                                                                notificationText:
+                                                                    'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                notificationSound:
+                                                                    'default',
+                                                                userRefs: [
+                                                                  cardUsersRecord
+                                                                      .reference
+                                                                ],
+                                                                initialPageName:
+                                                                    'manage_commutes_page',
+                                                                parameterData: {},
+                                                              );
+                                                              logFirebaseEvent(
+                                                                  'Button_Alert-Dialog');
+                                                              await showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        'Notice'),
+                                                                    content: Text(
+                                                                        'The user has been notified of your decision.'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                        child: Text(
+                                                                            'Ok'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
                                                             },
                                                             text: 'Accept',
                                                             icon: Icon(
