@@ -71,7 +71,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                 children: [
                   TextFormField(
                     controller: textController1,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Make',
@@ -102,7 +101,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                   ),
                   TextFormField(
                     controller: textController2,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Model',
@@ -133,7 +131,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                   ),
                   TextFormField(
                     controller: textController3,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Year',
@@ -165,7 +162,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                   ),
                   TextFormField(
                     controller: textController4,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Registration',
@@ -196,7 +192,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                   ),
                   TextFormField(
                     controller: textController5,
-                    autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Number of Passenger Seats',

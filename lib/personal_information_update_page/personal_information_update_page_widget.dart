@@ -186,66 +186,51 @@ class _PersonalInformationUpdatePageWidgetState
                       height: 16,
                       color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
-                    InkWell(
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'PERSONAL_INFORMATION_UPDATE_Container_sv');
-                        logFirebaseEvent('Container_Date-Time-Picker');
-                        await DatePicker.showDatePicker(
-                          context,
-                          showTitleActions: true,
-                          onConfirm: (date) {
-                            setState(() => datePicked = date);
-                          },
-                          currentTime: getCurrentTimestamp,
-                          minTime: DateTime(0, 0, 0),
-                          locale: LocaleType.values.firstWhere(
-                            (l) =>
-                                l.name ==
-                                FFLocalizations.of(context).languageCode,
-                            orElse: () => LocaleType.en,
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                      child: InkWell(
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'PERSONAL_INFORMATION_UPDATE_Container_sv');
+                          logFirebaseEvent('Container_Date-Time-Picker');
+                          await DatePicker.showDatePicker(
+                            context,
+                            showTitleActions: true,
+                            onConfirm: (date) {
+                              setState(() => datePicked = date);
+                            },
+                            currentTime: getCurrentTimestamp,
+                            minTime: DateTime(0, 0, 0),
+                            locale: LocaleType.values.firstWhere(
+                              (l) =>
+                                  l.name ==
+                                  FFLocalizations.of(context).languageCode,
+                              orElse: () => LocaleType.en,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                  ),
-                                  child: Text(
-                                    valueOrDefault<String>(
-                                      dateTimeFormat('yMMMd', datePicked),
-                                      'Birth Date',
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                  ),
-                                ),
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                            child: Text(
+                              valueOrDefault<String>(
+                                dateTimeFormat('yMMMd', datePicked),
+                                'Birth Date',
                               ),
-                              Icon(
-                                Icons.access_time_rounded,
-                                color: Colors.black,
-                                size: 24,
-                              ),
-                            ],
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
                           ),
                         ),
                       ),

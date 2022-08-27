@@ -389,8 +389,8 @@ class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
                                                             ),
                                                           ),
                                                           if (containerUsersRecord
-                                                                  .rating !=
-                                                              null)
+                                                                  .rating! >
+                                                              0.0)
                                                             Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1223,7 +1223,14 @@ class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
                                                                   .currency!,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1,
+                                                                  .bodyText1
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                  ),
                                                             ),
                                                           ],
                                                         ),
@@ -2120,7 +2127,14 @@ class _ManageCommutesPageWidgetState extends State<ManageCommutesPageWidget> {
                                                               .currency!,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1,
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                              ),
                                                         ),
                                                       ],
                                                     ),

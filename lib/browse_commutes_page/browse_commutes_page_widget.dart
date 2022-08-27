@@ -396,7 +396,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                 ),
                                               ),
                                             ),
-                                            if (cardUsersRecord.rating != null)
+                                            if (cardUsersRecord.rating! > 0.0)
                                               Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -1114,7 +1114,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                         .currency!,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1,
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                        ),
                                                   ),
                                                 ],
                                               ),

@@ -273,45 +273,49 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                       }
                       List<VehiclesRecord> rowVehiclesRecordList =
                           snapshot.data!;
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: List.generate(rowVehiclesRecordList.length,
-                            (rowIndex) {
-                          final rowVehiclesRecord =
-                              rowVehiclesRecordList[rowIndex];
-                          return InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().chosenVehicle =
-                                  rowVehiclesRecord.reference);
-                            },
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0x0B101213),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                    rowVehiclesRecord.imageURL!,
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: List.generate(rowVehiclesRecordList.length,
+                              (rowIndex) {
+                            final rowVehiclesRecord =
+                                rowVehiclesRecordList[rowIndex];
+                            return InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
+                                logFirebaseEvent(
+                                    'Container_Update-Local-State');
+                                setState(() => FFAppState().chosenVehicle =
+                                    rowVehiclesRecord.reference);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Color(0x0B101213),
+                                  image: DecorationImage(
+                                    fit: BoxFit.scaleDown,
+                                    image: CachedNetworkImageProvider(
+                                      rowVehiclesRecord.imageURL!,
+                                    ),
+                                  ),
+                                ),
+                                child: Visibility(
+                                  visible: FFAppState().chosenVehicle ==
+                                      rowVehiclesRecord.reference,
+                                  child: Icon(
+                                    Icons.check_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    size: 90,
                                   ),
                                 ),
                               ),
-                              child: Visibility(
-                                visible: FFAppState().chosenVehicle ==
-                                    rowVehiclesRecord.reference,
-                                child: Icon(
-                                  Icons.check_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  size: 90,
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+                            );
+                          }),
+                        ),
                       );
                     },
                   ),
@@ -470,6 +474,16 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                   Divider(
                     height: 16,
                     color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                    child: Text(
+                      'Currency',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
+                    ),
                   ),
                   Container(
                     width: double.infinity,

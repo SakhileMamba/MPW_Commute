@@ -117,16 +117,17 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                       ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                  child: Text(
-                    'To gain the privileges of creating, posting and managing commutes as a driver, you are required to subscibe for a driver\'s access to this app.',
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.normal,
-                        ),
+                if (revenue_cat.activeEntitlementIds.contains('Driver Access'))
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    child: Text(
+                      'To gain the privilege of scheduling and managing commutes as a driver, you are required to subscribe.',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.normal,
+                          ),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
