@@ -11,6 +11,7 @@ import 'schema/verification_requests_record.dart';
 import 'schema/passengers_record.dart';
 import 'schema/messages_record.dart';
 import 'schema/driver_verification_requests_record.dart';
+import 'schema/in_app_urls_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -25,6 +26,7 @@ export 'schema/verification_requests_record.dart';
 export 'schema/passengers_record.dart';
 export 'schema/messages_record.dart';
 export 'schema/driver_verification_requests_record.dart';
+export 'schema/in_app_urls_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -333,6 +335,48 @@ Future<FFFirestorePage<DriverVerificationRequestsRecord>>
           isStream: isStream,
         );
 
+/// Functions to query InAppUrlsRecords (as a Stream and as a Future).
+Stream<List<InAppUrlsRecord>> queryInAppUrlsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      InAppUrlsRecord.collection,
+      InAppUrlsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<InAppUrlsRecord>> queryInAppUrlsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      InAppUrlsRecord.collection,
+      InAppUrlsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<InAppUrlsRecord>> queryInAppUrlsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      InAppUrlsRecord.collection,
+      InAppUrlsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
     int limit = -1,
@@ -376,6 +420,21 @@ Future<List<T>> queryCollectionOnce<T>(
       .where((d) => d != null)
       .map((d) => d!)
       .toList());
+}
+
+extension QueryExtension on Query {
+  Query whereIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereIn: null)
+      : where(field, whereIn: list);
+
+  Query whereNotIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereNotIn: null)
+      : where(field, whereNotIn: list);
+
+  Query whereArrayContainsAny(String field, List? list) =>
+      (list?.isEmpty ?? true)
+          ? where(field, arrayContainsAny: null)
+          : where(field, arrayContainsAny: list);
 }
 
 class FFFirestorePage<T> {

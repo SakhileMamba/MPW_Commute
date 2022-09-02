@@ -5,13 +5,15 @@ export 'phone_confirmation_page/phone_confirmation_page_widget.dart'
     show PhoneConfirmationPageWidget;
 export 'browse_commutes_page/browse_commutes_page_widget.dart'
     show BrowseCommutesPageWidget;
-export 'manage_commutes_page/manage_commutes_page_widget.dart'
-    show ManageCommutesPageWidget;
+export 'manage_commutes_passenger_page/manage_commutes_passenger_page_widget.dart'
+    show ManageCommutesPassengerPageWidget;
+export 'manage_commutes_driver_page/manage_commutes_driver_page_widget.dart'
+    show ManageCommutesDriverPageWidget;
 export 'account_page/account_page_widget.dart' show AccountPageWidget;
-export 'create_commute_page/create_commute_page_widget.dart'
-    show CreateCommutePageWidget;
 export 'personal_information_update_page/personal_information_update_page_widget.dart'
     show PersonalInformationUpdatePageWidget;
+export 'create_commute_page/create_commute_page_widget.dart'
+    show CreateCommutePageWidget;
 export 'government_id_update_page/government_id_update_page_widget.dart'
     show GovernmentIdUpdatePageWidget;
 export 'list_vehicles_page/list_vehicles_page_widget.dart'
@@ -30,3 +32,5 @@ export 'browse_commutes_details_page/browse_commutes_details_page_widget.dart'
     show BrowseCommutesDetailsPageWidget;
 export 'drivers_license_update_page/drivers_license_update_page_widget.dart'
     show DriversLicenseUpdatePageWidget;
+export 'profile_picture_update_page_copy/profile_picture_update_page_copy_widget.dart'
+    show ProfilePictureUpdatePageCopyWidget;

@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -61,28 +62,6 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
         elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      floatingActionButton: Visibility(
-        visible: !revenue_cat.activeEntitlementIds.contains('Driver Access'),
-        child: FloatingActionButton.extended(
-          onPressed: () async {
-            logFirebaseEvent('SUBSCRIPTIONS_FloatingActionButton_fzruh');
-            logFirebaseEvent('FloatingActionButton_Revenue-Cat');
-            purchaseCompleted = await revenue_cat.purchasePackage(
-                revenue_cat.offerings!.current!.monthly!.identifier);
-
-            setState(() {});
-          },
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          elevation: 8,
-          label: Text(
-            'Subscribe',
-            style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Roboto',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                ),
-          ),
-        ),
-      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -90,41 +69,78 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'Driver Access',
-                      textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 22,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Driver Access',
+                          textAlign: TextAlign.start,
+                          style: FlutterFlowTheme.of(context).title2.override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 22,
+                              ),
+                        ),
+                        if (revenue_cat.activeEntitlementIds
+                            .contains('Driver Access'))
+                          Text(
+                            'Subscribed',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
                           ),
+                      ],
                     ),
-                    if (revenue_cat.activeEntitlementIds
+                    if (!revenue_cat.activeEntitlementIds
                         .contains('Driver Access'))
-                      Text(
-                        'Subscribed',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        child: Text(
+                          'To gain the privilege of scheduling and managing commutes as a driver, you are required to subscribe.',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
                       ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                  child: Text(
-                    'To gain the privileges of creating, posting and managing commutes as a driver, you are required to subscibe for a driver\'s access to this app.',
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                FFButtonWidget(
+                  onPressed: () async {
+                    logFirebaseEvent('SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
+                    logFirebaseEvent('Button_Revenue-Cat');
+                    purchaseCompleted = await revenue_cat.purchasePackage(
+                        revenue_cat.offerings!.current!.monthly!.identifier);
+
+                    setState(() {});
+                  },
+                  text: 'Subscribe',
+                  options: FFButtonOptions(
+                    width: double.infinity,
+                    height: 50,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'Roboto',
-                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
                         ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ],

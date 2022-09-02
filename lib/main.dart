@@ -129,7 +129,8 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'browse_commutes_page': BrowseCommutesPageWidget(),
-      'manage_commutes_page': ManageCommutesPageWidget(),
+      'manage_commutes_passenger_page': ManageCommutesPassengerPageWidget(),
+      'manage_commutes_driver_page': ManageCommutesDriverPageWidget(),
       'account_page': AccountPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
@@ -155,10 +156,18 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
+              Icons.hail,
+              size: 24,
+            ),
+            label: 'Ride',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
               Icons.commute_rounded,
               size: 24,
             ),
-            label: 'Commutes',
+            label: 'Drive',
             tooltip: '',
           ),
           BottomNavigationBarItem(

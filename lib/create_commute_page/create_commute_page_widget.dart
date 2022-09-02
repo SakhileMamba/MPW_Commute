@@ -80,41 +80,40 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  FlutterFlowPlacePicker(
-                    iOSGoogleMapsApiKey:
-                        'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
-                    androidGoogleMapsApiKey:
-                        'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
-                    webGoogleMapsApiKey:
-                        'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
-                    onSelect: (place) async {
-                      setState(() => placePickerValue1 = place);
-                    },
-                    defaultText: 'Please select',
-                    icon: Icon(
-                      Icons.trip_origin_rounded,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    buttonOptions: FFButtonOptions(
-                      width: double.infinity,
-                      height: 50,
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                              ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: FlutterFlowPlacePicker(
+                      iOSGoogleMapsApiKey:
+                          'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                      androidGoogleMapsApiKey:
+                          'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                      webGoogleMapsApiKey:
+                          'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                      onSelect: (place) async {
+                        setState(() => placePickerValue1 = place);
+                      },
+                      defaultText: 'Please select',
+                      icon: Icon(
+                        Icons.trip_origin_rounded,
+                        color: Colors.white,
+                        size: 24,
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      buttonOptions: FFButtonOptions(
+                        width: double.infinity,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
@@ -126,41 +125,40 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  FlutterFlowPlacePicker(
-                    iOSGoogleMapsApiKey:
-                        'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
-                    androidGoogleMapsApiKey:
-                        'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
-                    webGoogleMapsApiKey:
-                        'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
-                    onSelect: (place) async {
-                      setState(() => placePickerValue2 = place);
-                    },
-                    defaultText: 'Please select',
-                    icon: Icon(
-                      Icons.location_pin,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    buttonOptions: FFButtonOptions(
-                      width: double.infinity,
-                      height: 50,
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                              ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: FlutterFlowPlacePicker(
+                      iOSGoogleMapsApiKey:
+                          'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                      androidGoogleMapsApiKey:
+                          'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                      webGoogleMapsApiKey:
+                          'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                      onSelect: (place) async {
+                        setState(() => placePickerValue2 = place);
+                      },
+                      defaultText: 'Please select',
+                      icon: Icon(
+                        Icons.location_pin,
+                        color: Colors.white,
+                        size: 24,
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      buttonOptions: FFButtonOptions(
+                        width: double.infinity,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
@@ -172,76 +170,76 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      logFirebaseEvent(
-                          'CREATE_COMMUTE_Container_e8l72gjy_ON_TAP');
-                      logFirebaseEvent('Container_Date-Time-Picker');
-                      await DatePicker.showDateTimePicker(
-                        context,
-                        showTitleActions: true,
-                        onConfirm: (date) {
-                          setState(() => datePicked = date);
-                        },
-                        currentTime: getCurrentTimestamp,
-                        minTime: getCurrentTimestamp,
-                        locale: LocaleType.values.firstWhere(
-                          (l) =>
-                              l.name ==
-                              FFLocalizations.of(context).languageCode,
-                          orElse: () => LocaleType.en,
-                        ),
-                      );
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'CREATE_COMMUTE_Container_e8l72gjy_ON_TAP');
+                        logFirebaseEvent('Container_Date-Time-Picker');
+                        await DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          onConfirm: (date) {
+                            setState(() => datePicked = date);
+                          },
+                          currentTime: getCurrentTimestamp,
+                          minTime: getCurrentTimestamp,
+                          locale: LocaleType.values.firstWhere(
+                            (l) =>
+                                l.name ==
+                                FFLocalizations.of(context).languageCode,
+                            orElse: () => LocaleType.en,
+                          ),
+                        );
 
-                      logFirebaseEvent('Container_Update-Local-State');
-                      setState(() => FFAppState().scheduleDepartureDatetime =
-                          dateTimeFormat('d/M h:mm a', datePicked));
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: FlutterFlowTheme.of(context).primaryText,
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().scheduleDepartureDatetime =
+                            dateTimeFormat('d/M h:mm a', datePicked));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
                         ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                ),
-                                child: Text(
-                                  valueOrDefault<String>(
-                                    FFAppState().scheduleDepartureDatetime,
-                                    'Please input date',
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  child: Text(
+                                    valueOrDefault<String>(
+                                      FFAppState().scheduleDepartureDatetime,
+                                      'Please input date',
+                                    ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Icon(
-                              Icons.access_time_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                          ],
+                              Icon(
+                                Icons.access_time_rounded,
+                                color: Colors.black,
+                                size: 24,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
@@ -253,71 +251,79 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  StreamBuilder<List<VehiclesRecord>>(
-                    stream: queryVehiclesRecord(
-                      parent: currentUserReference,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: SpinKitChasingDots(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 50,
-                            ),
-                          ),
-                        );
-                      }
-                      List<VehiclesRecord> rowVehiclesRecordList =
-                          snapshot.data!;
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: List.generate(rowVehiclesRecordList.length,
-                            (rowIndex) {
-                          final rowVehiclesRecord =
-                              rowVehiclesRecordList[rowIndex];
-                          return InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
-                              logFirebaseEvent('Container_Update-Local-State');
-                              setState(() => FFAppState().chosenVehicle =
-                                  rowVehiclesRecord.reference);
-                            },
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Color(0x0B101213),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                    rowVehiclesRecord.imageURL!,
-                                  ),
-                                ),
-                              ),
-                              child: Visibility(
-                                visible: FFAppState().chosenVehicle ==
-                                    rowVehiclesRecord.reference,
-                                child: Icon(
-                                  Icons.check_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  size: 90,
-                                ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: StreamBuilder<List<VehiclesRecord>>(
+                      stream: queryVehiclesRecord(
+                        parent: currentUserReference,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: SpinKitChasingDots(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                size: 50,
                               ),
                             ),
                           );
-                        }),
-                      );
-                    },
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
+                        }
+                        List<VehiclesRecord> rowVehiclesRecordList =
+                            snapshot.data!;
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: List.generate(
+                                rowVehiclesRecordList.length, (rowIndex) {
+                              final rowVehiclesRecord =
+                                  rowVehiclesRecordList[rowIndex];
+                              return Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                                child: InkWell(
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
+                                    logFirebaseEvent(
+                                        'Container_Update-Local-State');
+                                    setState(() => FFAppState().chosenVehicle =
+                                        rowVehiclesRecord.reference);
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x0B101213),
+                                      image: DecorationImage(
+                                        fit: BoxFit.scaleDown,
+                                        image: CachedNetworkImageProvider(
+                                          rowVehiclesRecord.imageURL!,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Visibility(
+                                      visible: FFAppState().chosenVehicle ==
+                                          rowVehiclesRecord.reference,
+                                      child: Icon(
+                                        Icons.check_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBtnText,
+                                        size: 90,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
@@ -329,71 +335,72 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).primaryText,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: textController1,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Please input seats',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                suffixIcon: Icon(
+                                  Icons.airline_seat_recline_normal_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24,
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Container(
+                            width: 6,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: textController1,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Please input seats',
-                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              contentPadding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              suffixIcon: Icon(
-                                Icons.airline_seat_recline_normal_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        Container(
-                          width: 6,
-                          decoration: BoxDecoration(
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
@@ -405,83 +412,93 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                           ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).primaryText,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: textController2,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Please input price',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                contentPadding:
+                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                suffixIcon: Icon(
+                                  Icons.monetization_on_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 24,
+                                ),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Container(
+                            width: 6,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: textController2,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Please input price',
-                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              contentPadding:
-                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                              suffixIcon: Icon(
-                                Icons.monetization_on_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 24,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                            keyboardType: TextInputType.number,
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                    child: Text(
+                      'Currency',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).primaryText,
                           ),
-                        ),
-                        Container(
-                          width: 6,
-                          decoration: BoxDecoration(
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: 50,
-                    child: custom_widgets.CurrencyPickerCustom(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: Container(
                       width: double.infinity,
                       height: 50,
+                      child: custom_widgets.CurrencyPickerCustom(
+                        width: double.infinity,
+                        height: 50,
+                      ),
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,

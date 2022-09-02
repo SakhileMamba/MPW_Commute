@@ -69,162 +69,157 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  TextFormField(
-                    controller: textController1,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Make',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: textController1,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Make',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: 1,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    maxLines: 1,
                   ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  TextFormField(
-                    controller: textController2,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Model',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: textController2,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Model',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: 1,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    maxLines: 1,
                   ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  TextFormField(
-                    controller: textController3,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Year',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: textController3,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Year',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: 1,
+                      keyboardType: TextInputType.number,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
                   ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  TextFormField(
-                    controller: textController4,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Registration',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: textController4,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Registration',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: 1,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    maxLines: 1,
                   ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  TextFormField(
-                    controller: textController5,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Number of Passenger Seats',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: textController5,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Number of Passenger Seats',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          width: 1,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      filled: true,
-                      fillColor: FlutterFlowTheme.of(context).primaryBackground,
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      maxLines: 1,
+                      keyboardType: TextInputType.number,
                     ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
@@ -236,61 +231,61 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      logFirebaseEvent('ADD_VEHICLE_Image_i8s6710s_ON_TAP');
-                      logFirebaseEvent('Image_Upload-Photo-Video');
-                      final selectedMedia =
-                          await selectMediaWithSourceBottomSheet(
-                        context: context,
-                        imageQuality: 100,
-                        allowPhoto: true,
-                      );
-                      if (selectedMedia != null &&
-                          selectedMedia.every((m) =>
-                              validateFileFormat(m.storagePath, context))) {
-                        showUploadMessage(
-                          context,
-                          'Uploading file...',
-                          showLoading: true,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('ADD_VEHICLE_Image_i8s6710s_ON_TAP');
+                        logFirebaseEvent('Image_Upload-Photo-Video');
+                        final selectedMedia =
+                            await selectMediaWithSourceBottomSheet(
+                          context: context,
+                          imageQuality: 70,
+                          allowPhoto: true,
                         );
-                        final downloadUrls = (await Future.wait(
-                                selectedMedia.map((m) async =>
-                                    await uploadData(m.storagePath, m.bytes))))
-                            .where((u) => u != null)
-                            .map((u) => u!)
-                            .toList();
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        if (downloadUrls.length == selectedMedia.length) {
-                          setState(() => uploadedFileUrl = downloadUrls.first);
+                        if (selectedMedia != null &&
+                            selectedMedia.every((m) =>
+                                validateFileFormat(m.storagePath, context))) {
                           showUploadMessage(
                             context,
-                            'Success!',
+                            'Uploading file...',
+                            showLoading: true,
                           );
-                        } else {
-                          showUploadMessage(
-                            context,
-                            'Failed to upload media',
-                          );
-                          return;
+                          final downloadUrls = (await Future.wait(selectedMedia
+                                  .map((m) async => await uploadData(
+                                      m.storagePath, m.bytes))))
+                              .where((u) => u != null)
+                              .map((u) => u!)
+                              .toList();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          if (downloadUrls.length == selectedMedia.length) {
+                            setState(
+                                () => uploadedFileUrl = downloadUrls.first);
+                            showUploadMessage(
+                              context,
+                              'Success!',
+                            );
+                          } else {
+                            showUploadMessage(
+                              context,
+                              'Failed to upload media',
+                            );
+                            return;
+                          }
                         }
-                      }
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: CachedNetworkImage(
-                        imageUrl: valueOrDefault<String>(
-                          uploadedFileUrl,
-                          'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: CachedNetworkImage(
+                          imageUrl: valueOrDefault<String>(
+                            uploadedFileUrl,
+                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.fitWidth,
                         ),
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.fitWidth,
                       ),
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,

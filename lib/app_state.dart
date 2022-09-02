@@ -21,6 +21,9 @@ class FFAppState {
             prefs.getInt('ff_filterCurrentDateTime')!)
         : null;
     _pickedCurrency = prefs.getString('ff_pickedCurrency') ?? _pickedCurrency;
+    _privacyPolicyAndTermsOfServiceAgreement =
+        prefs.getBool('ff_privacyPolicyAndTermsOfServiceAgreement') ??
+            _privacyPolicyAndTermsOfServiceAgreement;
   }
 
   late SharedPreferences prefs;
@@ -53,6 +56,21 @@ class FFAppState {
     _pickedCurrency = _value;
     prefs.setString('ff_pickedCurrency', _value);
   }
+
+  bool _privacyPolicyAndTermsOfServiceAgreement = false;
+  bool get privacyPolicyAndTermsOfServiceAgreement =>
+      _privacyPolicyAndTermsOfServiceAgreement;
+  set privacyPolicyAndTermsOfServiceAgreement(bool _value) {
+    _privacyPolicyAndTermsOfServiceAgreement = _value;
+    prefs.setBool('ff_privacyPolicyAndTermsOfServiceAgreement', _value);
+  }
+
+  String oldPhotoURLTemp = '';
+
+  String newPhotoURLTemp = '';
+
+  String currentPhotoURLTemp =
+      'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3';
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -81,12 +81,14 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'phone_authentication_page': (data) async => PhoneAuthenticationPageWidget(),
   'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
-  'manage_commutes_page': (data) async =>
-      NavBarPage(initialPage: 'manage_commutes_page'),
+  'manage_commutes_passenger_page': (data) async =>
+      NavBarPage(initialPage: 'manage_commutes_passenger_page'),
+  'manage_commutes_driver_page': (data) async =>
+      NavBarPage(initialPage: 'manage_commutes_driver_page'),
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
   'profile_picture_update_Page': (data) async =>
@@ -104,6 +106,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'drivers_license_update_page': (data) async =>
       DriversLicenseUpdatePageWidget(),
+  'profile_picture_update_PageCopy': (data) async =>
+      ProfilePictureUpdatePageCopyWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

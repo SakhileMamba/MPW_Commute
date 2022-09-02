@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,27 +15,24 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class GovernmentIdUpdatePageWidget extends StatefulWidget {
-  const GovernmentIdUpdatePageWidget({Key? key}) : super(key: key);
+class ProfilePictureUpdatePageCopyWidget extends StatefulWidget {
+  const ProfilePictureUpdatePageCopyWidget({Key? key}) : super(key: key);
 
   @override
-  _GovernmentIdUpdatePageWidgetState createState() =>
-      _GovernmentIdUpdatePageWidgetState();
+  _ProfilePictureUpdatePageCopyWidgetState createState() =>
+      _ProfilePictureUpdatePageCopyWidgetState();
 }
 
-class _GovernmentIdUpdatePageWidgetState
-    extends State<GovernmentIdUpdatePageWidget> {
+class _ProfilePictureUpdatePageCopyWidgetState
+    extends State<ProfilePictureUpdatePageCopyWidget> {
   String uploadedFileUrl = '';
-  TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'government_id_update_Page'});
-    textController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.nationalId, ''));
+        parameters: {'screen_name': 'profile_picture_update_PageCopy'});
   }
 
   @override
@@ -44,59 +42,31 @@ class _GovernmentIdUpdatePageWidgetState
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: Visibility(
-          visible:
-              valueOrDefault<bool>(currentUserDocument?.verifiedUser, false) ==
-                  true,
-          child: AuthUserStreamWidget(
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 60,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () async {
-                logFirebaseEvent('GOVERNMENT_ID_UPDATE_arrow_back_rounded_');
-                logFirebaseEvent('IconButton_Navigate-Back');
-                Navigator.pop(context);
-              },
-            ),
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 30,
           ),
+          onPressed: () async {
+            logFirebaseEvent('PROFILE_PICTURE_UPDATE_COPY_arrow_back_r');
+            logFirebaseEvent('IconButton_Navigate-Back');
+            Navigator.pop(context);
+          },
         ),
         title: Text(
-          'Government ID',
+          'Profile Picture',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
                 color: Colors.white,
                 fontSize: 22,
               ),
         ),
-        actions: [
-          Visibility(
-            visible:
-                valueOrDefault<bool>(currentUserDocument?.verifiedUser, false),
-            child: AuthUserStreamWidget(
-              child: FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30,
-                borderWidth: 1,
-                buttonSize: 60,
-                icon: Icon(
-                  Icons.verified_rounded,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 30,
-                ),
-                onPressed: () {
-                  print('IconButton pressed ...');
-                },
-              ),
-            ),
-          ),
-        ],
+        actions: [],
         centerTitle: true,
         elevation: 2,
       ),
@@ -109,52 +79,15 @@ class _GovernmentIdUpdatePageWidgetState
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: AuthUserStreamWidget(
-                      child: TextFormField(
-                        controller: textController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'ID No:',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                    child: Text(
-                      'Image',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                          ),
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent(
-                            'GOVERNMENT_ID_UPDATE_Image_rmgh0g09_ON_T');
+                            'PROFILE_PICTURE_UPDATE_COPY_Image_thg3v6');
                         logFirebaseEvent('Image_Expand-Image');
                         await Navigator.push(
                           context,
@@ -202,11 +135,10 @@ class _GovernmentIdUpdatePageWidgetState
                       child: FFButtonWidget(
                         onPressed: () async {
                           logFirebaseEvent(
-                              'GOVERNMENT_ID_UPDATE_UPLOAD_NEW_BTN_ON_T');
+                              'PROFILE_PICTURE_UPDATE_COPY_UPLOAD_NEW_B');
                           logFirebaseEvent('Button_Update-Local-State');
-                          setState(() => FFAppState().oldPhotoURLTemp =
-                              valueOrDefault(
-                                  currentUserDocument?.nationalIdPhotoUrl, ''));
+                          setState(() =>
+                              FFAppState().oldPhotoURLTemp = currentUserPhoto);
                           logFirebaseEvent('Button_Upload-Photo-Video');
                           final selectedMedia =
                               await selectMediaWithSourceBottomSheet(
@@ -279,7 +211,7 @@ class _GovernmentIdUpdatePageWidgetState
                             child: FFButtonWidget(
                               onPressed: () async {
                                 logFirebaseEvent(
-                                    'GOVERNMENT_ID_UPDATE_CANCEL_BTN_ON_TAP');
+                                    'PROFILE_PICTURE_UPDATE_COPY_CANCEL_BTN_O');
                                 logFirebaseEvent('Button_Navigate-Back');
                                 Navigator.pop(context);
                               },
@@ -317,45 +249,22 @@ class _GovernmentIdUpdatePageWidgetState
                             child: FFButtonWidget(
                               onPressed: () async {
                                 logFirebaseEvent(
-                                    'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
-                                if (textController!.text != null &&
-                                    textController!.text != '') {
-                                  if (!(uploadedFileUrl != null &&
-                                      uploadedFileUrl != '')) {
-                                    logFirebaseEvent('Button_Alert-Dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Missing ID Image'),
-                                          content: Text(
-                                              'Please upload an image of your government-issued Identification. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Continue'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  }
-                                } else {
+                                    'PROFILE_PICTURE_UPDATE_COPY_SAVE_BTN_ON_');
+                                if (!(uploadedFileUrl != null &&
+                                    uploadedFileUrl != '')) {
                                   logFirebaseEvent('Button_Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
                                       return AlertDialog(
-                                        title: Text('Missing ID information'),
+                                        title: Text('Missing Profile Image'),
                                         content: Text(
-                                            'Please input your government issued ID number.'),
+                                            'Please upload an image of your profile picture. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
                                                 alertDialogContext),
-                                            child: Text('Continue'),
+                                            child: Text('Ok'),
                                           ),
                                         ],
                                       );
@@ -363,17 +272,22 @@ class _GovernmentIdUpdatePageWidgetState
                                   );
                                   return;
                                 }
-
                                 logFirebaseEvent('Button_Backend-Call');
 
                                 final usersUpdateData = createUsersRecordData(
-                                  nationalIdPhotoUrl: uploadedFileUrl,
-                                  nationalId: textController!.text,
+                                  photoUrl: uploadedFileUrl,
                                 );
                                 await currentUserReference!
                                     .update(usersUpdateData);
-                                logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
+                                logFirebaseEvent('Button_Navigate-To');
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        NavBarPage(initialPage: 'account_page'),
+                                  ),
+                                  (r) => false,
+                                );
                               },
                               text: 'Save',
                               icon: Icon(

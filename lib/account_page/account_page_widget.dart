@@ -9,6 +9,7 @@ import '../list_vehicles_page/list_vehicles_page_widget.dart';
 import '../personal_information_update_page/personal_information_update_page_widget.dart';
 import '../phone_authentication_page/phone_authentication_page_widget.dart';
 import '../profile_picture_update_page/profile_picture_update_page_widget.dart';
+import '../profile_picture_update_page_copy/profile_picture_update_page_copy_widget.dart';
 import '../subscriptions_page/subscriptions_page_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,12 +62,16 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'ACCOUNT_CircleImage_svn9yn8h_ON_TAP');
+                              logFirebaseEvent(
+                                  'CircleImage_Update-Local-State');
+                              setState(() => FFAppState().currentPhotoURLTemp =
+                                  currentUserPhoto);
                               logFirebaseEvent('CircleImage_Navigate-To');
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      ProfilePictureUpdatePageWidget(),
+                                      ProfilePictureUpdatePageCopyWidget(),
                                 ),
                               );
                             },
@@ -115,11 +120,14 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               ),
                                         ),
                                       ),
-                                      Icon(
-                                        Icons.verified_user_rounded,
-                                        color: Color(0xFF00CC00),
-                                        size: 30,
-                                      ),
+                                      if (valueOrDefault<bool>(
+                                          currentUserDocument?.verifiedUser,
+                                          false))
+                                        Icon(
+                                          Icons.verified_user_rounded,
+                                          color: Color(0xFF00CC00),
+                                          size: 30,
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -140,7 +148,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Account is verified already.',
+                                            'Account is verified.',
                                             style: TextStyle(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -154,6 +162,288 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                       );
                                       return;
                                     } else {
+                                      if (currentUserDisplayName != null &&
+                                          currentUserDisplayName != '') {
+                                        if (valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.displaySurname,
+                                                    '') !=
+                                                null &&
+                                            valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.displaySurname,
+                                                    '') !=
+                                                '') {
+                                          if (currentUserPhoto != null &&
+                                              currentUserPhoto != '') {
+                                            if (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.nationalIdPhotoUrl,
+                                                        '') !=
+                                                    null &&
+                                                valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.nationalIdPhotoUrl,
+                                                        '') !=
+                                                    '') {
+                                              if (!(valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.gender,
+                                                          '') !=
+                                                      null &&
+                                                  valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.gender,
+                                                          '') !=
+                                                      '')) {
+                                                logFirebaseEvent(
+                                                    'Button_Alert-Dialog');
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  'Missing Account Information'),
+                                                              content: Text(
+                                                                  'Please specify your gender.'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      'Cancel'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: Text(
+                                                                      'Add Gender'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (confirmDialogResponse) {
+                                                  logFirebaseEvent(
+                                                      'Button_Navigate-To');
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PersonalInformationUpdatePageWidget(),
+                                                    ),
+                                                  );
+                                                  return;
+                                                } else {
+                                                  return;
+                                                }
+                                              }
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'Button_Alert-Dialog');
+                                              var confirmDialogResponse =
+                                                  await showDialog<bool>(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: Text(
+                                                                'Missing Account Information'),
+                                                            content: Text(
+                                                                'Please add your government issued national ID picture to your account.'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        false),
+                                                                child: Text(
+                                                                    'Cancel'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        true),
+                                                                child: Text(
+                                                                    'Add ID'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ) ??
+                                                      false;
+                                              if (confirmDialogResponse) {
+                                                logFirebaseEvent(
+                                                    'Button_Navigate-To');
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        GovernmentIdUpdatePageWidget(),
+                                                  ),
+                                                );
+                                                return;
+                                              } else {
+                                                return;
+                                              }
+                                            }
+                                          } else {
+                                            logFirebaseEvent(
+                                                'Button_Alert-Dialog');
+                                            var confirmDialogResponse =
+                                                await showDialog<bool>(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              'Missing Account Information'),
+                                                          content: Text(
+                                                              'Please add a profile picture to your account.'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      false),
+                                                              child: Text(
+                                                                  'Cancel'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      true),
+                                                              child: Text(
+                                                                  'Add Picture'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ) ??
+                                                    false;
+                                            if (confirmDialogResponse) {
+                                              logFirebaseEvent(
+                                                  'Button_Navigate-To');
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProfilePictureUpdatePageWidget(),
+                                                ),
+                                              );
+                                              return;
+                                            } else {
+                                              return;
+                                            }
+                                          }
+                                        } else {
+                                          logFirebaseEvent(
+                                              'Button_Alert-Dialog');
+                                          var confirmDialogResponse =
+                                              await showDialog<bool>(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            'Missing Account Information'),
+                                                        content: Text(
+                                                            'Please add your surname to your account.'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext,
+                                                                    false),
+                                                            child:
+                                                                Text('Cancel'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext,
+                                                                    true),
+                                                            child: Text(
+                                                                'Add Surname'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  ) ??
+                                                  false;
+                                          if (confirmDialogResponse) {
+                                            logFirebaseEvent(
+                                                'Button_Navigate-To');
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PersonalInformationUpdatePageWidget(),
+                                              ),
+                                            );
+                                            return;
+                                          } else {
+                                            return;
+                                          }
+                                        }
+                                      } else {
+                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        var confirmDialogResponse =
+                                            await showDialog<bool>(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Missing Account Information'),
+                                                      content: Text(
+                                                          'Please add your name to your account.'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: Text('Cancel'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child:
+                                                              Text('Add Name'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                ) ??
+                                                false;
+                                        if (confirmDialogResponse) {
+                                          logFirebaseEvent(
+                                              'Button_Navigate-To');
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PersonalInformationUpdatePageWidget(),
+                                            ),
+                                          );
+                                          return;
+                                        } else {
+                                          return;
+                                        }
+                                      }
+
                                       logFirebaseEvent('Button_Backend-Call');
 
                                       final verificationRequestsCreateData =
@@ -524,44 +814,52 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.menu_book_rounded,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: Text(
-                                'Terms of Service',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('ACCOUNT_Container_fby6zkar_ON_TAP');
+                        logFirebaseEvent('Container_Launch-U-R-L');
+                        await launchURL(
+                            'https://commuteapp.blogspot.com/2022/09/terms-of-service.html');
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.menu_book_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                child: Text(
+                                  'Terms of Service',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                        ],
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -571,44 +869,52 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.privacy_tip_rounded,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: Text(
-                                'Privacy Policy',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
+                        logFirebaseEvent('Container_Launch-U-R-L');
+                        await launchURL(
+                            'https://commuteapp.blogspot.com/2022/09/privacy-policy.html');
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.privacy_tip_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                child: Text(
+                                  'Privacy Policy',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               ),
                             ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                        ],
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
