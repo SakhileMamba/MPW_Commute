@@ -98,96 +98,93 @@ class _PersonalInformationUpdatePageWidgetState
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    AuthUserStreamWidget(
-                      child: TextFormField(
-                        controller: textController1,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: AuthUserStreamWidget(
+                        child: TextFormField(
+                          controller: textController1,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
                           ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
-                    ),
-                    Divider(
-                      height: 16,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                    ),
-                    AuthUserStreamWidget(
-                      child: TextFormField(
-                        controller: textController2,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Surname',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ),
-                    Divider(
-                      height: 16,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                    ),
-                    AuthUserStreamWidget(
-                      child: TextFormField(
-                        controller: textController3,
-                        readOnly: true,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'Phone Number',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                    ),
-                    Divider(
-                      height: 16,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: AuthUserStreamWidget(
+                        child: TextFormField(
+                          controller: textController2,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Surname',
+                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: AuthUserStreamWidget(
+                        child: TextFormField(
+                          controller: textController3,
+                          readOnly: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Phone Number',
+                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: InkWell(
                         onTap: () async {
                           logFirebaseEvent(
@@ -235,36 +232,32 @@ class _PersonalInformationUpdatePageWidgetState
                         ),
                       ),
                     ),
-                    Divider(
-                      height: 16,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                    ),
-                    AuthUserStreamWidget(
-                      child: FlutterFlowDropDown(
-                        initialOption: dropDownValue ??=
-                            valueOrDefault(currentUserDocument?.gender, ''),
-                        options: ['Male', 'Female'],
-                        onChanged: (val) => setState(() => dropDownValue = val),
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.black,
-                                ),
-                        hintText: 'Gender',
-                        fillColor: Colors.white,
-                        elevation: 2,
-                        borderColor: FlutterFlowTheme.of(context).primaryText,
-                        borderWidth: 0,
-                        borderRadius: 8,
-                        margin: EdgeInsetsDirectional.fromSTEB(14, 4, 12, 4),
-                        hidesUnderline: true,
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: AuthUserStreamWidget(
+                        child: FlutterFlowDropDown(
+                          initialOption: dropDownValue ??=
+                              valueOrDefault(currentUserDocument?.gender, ''),
+                          options: ['Male', 'Female'],
+                          onChanged: (val) =>
+                              setState(() => dropDownValue = val),
+                          width: MediaQuery.of(context).size.width,
+                          height: 50,
+                          textStyle:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.black,
+                                  ),
+                          hintText: 'Gender',
+                          fillColor: Colors.white,
+                          elevation: 2,
+                          borderColor: FlutterFlowTheme.of(context).primaryText,
+                          borderWidth: 0,
+                          borderRadius: 8,
+                          margin: EdgeInsetsDirectional.fromSTEB(14, 4, 12, 4),
+                          hidesUnderline: true,
+                        ),
                       ),
-                    ),
-                    Divider(
-                      height: 16,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,

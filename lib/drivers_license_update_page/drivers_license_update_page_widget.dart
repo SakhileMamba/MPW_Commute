@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -11,6 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DriversLicenseUpdatePageWidget extends StatefulWidget {
   const DriversLicenseUpdatePageWidget({Key? key}) : super(key: key);
@@ -73,7 +75,28 @@ class _DriversLicenseUpdatePageWidgetState
                 fontSize: 22,
               ),
         ),
-        actions: [],
+        actions: [
+          Visibility(
+            visible: valueOrDefault<bool>(
+                currentUserDocument?.verifiedDriver, false),
+            child: AuthUserStreamWidget(
+              child: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30,
+                borderWidth: 1,
+                buttonSize: 60,
+                icon: Icon(
+                  Icons.verified_rounded,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  size: 30,
+                ),
+                onPressed: () {
+                  print('IconButton pressed ...');
+                },
+              ),
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 2,
       ),
@@ -88,53 +111,82 @@ class _DriversLicenseUpdatePageWidgetState
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AuthUserStreamWidget(
-                    child: TextFormField(
-                      controller: textController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'License No',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            width: 1,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: AuthUserStreamWidget(
+                      child: TextFormField(
+                        controller: textController,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'License No',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            width: 1,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
                     ),
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                     child: Text(
-                      'License image',
+                      'Image',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Roboto',
-                            fontSize: 12,
+                            color: FlutterFlowTheme.of(context).primaryText,
                           ),
                     ),
                   ),
-                  Stack(
-                    children: [
-                      AuthUserStreamWidget(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'DRIVERS_LICENSE_UPDATE_Image_nl2f1ihq_ON');
+                        logFirebaseEvent('Image_Expand-Image');
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: FlutterFlowExpandedImageView(
+                              image: CachedNetworkImage(
+                                imageUrl: valueOrDefault<String>(
+                                  FFAppState().currentPhotoURLTemp,
+                                  'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                                ),
+                                fit: BoxFit.contain,
+                              ),
+                              allowRotation: false,
+                              tag: valueOrDefault<String>(
+                                FFAppState().currentPhotoURLTemp,
+                                'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                              ),
+                              useHeroAnimation: true,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Hero(
+                        tag: valueOrDefault<String>(
+                          FFAppState().currentPhotoURLTemp,
+                          'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                        ),
+                        transitionOnUserGestures: true,
                         child: CachedNetworkImage(
                           imageUrl: valueOrDefault<String>(
-                            valueOrDefault(
-                                currentUserDocument?.driverLicensePhotoPath,
-                                ''),
+                            FFAppState().currentPhotoURLTemp,
                             'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                           ),
                           width: MediaQuery.of(context).size.width,
@@ -142,11 +194,21 @@ class _DriversLicenseUpdatePageWidgetState
                           fit: BoxFit.cover,
                         ),
                       ),
-                      InkWell(
-                        onTap: () async {
+                    ),
+                  ),
+                  if (uploadedFileUrl == null || uploadedFileUrl == '')
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: FFButtonWidget(
+                        onPressed: () async {
                           logFirebaseEvent(
-                              'DRIVERS_LICENSE_UPDATE_Image_sdm82cia_ON');
-                          logFirebaseEvent('Image_Upload-Photo-Video');
+                              'DRIVERS_LICENSE_UPDATE_UPLOAD_NEW_BTN_ON');
+                          logFirebaseEvent('Button_Update-Local-State');
+                          setState(() => FFAppState().oldPhotoURLTemp =
+                              valueOrDefault(
+                                  currentUserDocument?.driverLicensePhotoPath,
+                                  ''));
+                          logFirebaseEvent('Button_Upload-Photo-Video');
                           final selectedMedia =
                               await selectMediaWithSourceBottomSheet(
                             context: context,
@@ -184,121 +246,96 @@ class _DriversLicenseUpdatePageWidgetState
                               return;
                             }
                           }
+
+                          logFirebaseEvent('Button_Update-Local-State');
+                          setState(() => FFAppState().currentPhotoURLTemp =
+                              uploadedFileUrl);
                         },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(0),
-                          child: CachedNetworkImage(
-                            imageUrl: valueOrDefault<String>(
-                              uploadedFileUrl,
-                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/transparent.png?alt=media&token=91614179-5e5c-403c-822e-96ab05c5557d',
-                            ),
-                            width: MediaQuery.of(context).size.width,
-                            height: 250,
-                            fit: BoxFit.cover,
+                        text: 'Upload New',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ],
-                  ),
-                  Divider(
-                    height: 16,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  if (valueOrDefault<bool>(
-                          currentUserDocument?.verifiedDriver, false) !=
-                      true)
-                    AuthUserStreamWidget(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'DRIVERS_LICENSE_UPDATE_CANCEL_BTN_ON_TAP');
-                                  logFirebaseEvent('Button_Navigate-Back');
-                                  Navigator.pop(context);
-                                },
-                                text: 'Cancel',
-                                icon: Icon(
-                                  Icons.cancel_rounded,
-                                  size: 15,
+                    ),
+                  if (uploadedFileUrl != null && uploadedFileUrl != '')
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'DRIVERS_LICENSE_UPDATE_CANCEL_BTN_ON_TAP');
+                                logFirebaseEvent('Button_Navigate-Back');
+                                Navigator.pop(context);
+                              },
+                              text: 'Cancel',
+                              icon: Icon(
+                                Icons.cancel_rounded,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 50,
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 16,
+                                    ),
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  width: 1,
                                 ),
-                                options: FFButtonOptions(
-                                  width: 130,
-                                  height: 50,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 16,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'DRIVERS_LICENSE_UPDATE_VERIFY_BTN_ON_TAP');
-                                  if (textController!.text != null &&
-                                      textController!.text != '') {
-                                    if (!(uploadedFileUrl != null &&
-                                        uploadedFileUrl != '')) {
-                                      logFirebaseEvent('Button_Alert-Dialog');
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title:
-                                                Text('Missing Lisence Image'),
-                                            content: Text(
-                                                'Please upload an image of your government-issued driver\'s license. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Continue'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    }
-                                  } else {
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'DRIVERS_LICENSE_UPDATE_SAVE_BTN_ON_TAP');
+                                if (textController!.text != null &&
+                                    textController!.text != '') {
+                                  if (!(uploadedFileUrl != null &&
+                                      uploadedFileUrl != '')) {
                                     logFirebaseEvent('Button_Alert-Dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
-                                          title:
-                                              Text('Missing License  Number'),
+                                          title: Text('Missing Profile Image'),
                                           content: Text(
-                                              'Please input your government issued driver\'s license number.'),
+                                              'Please upload an image of your profile picture. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
                                                   alertDialogContext),
-                                              child: Text('Continue'),
+                                              child: Text('Ok'),
                                             ),
                                           ],
                                         );
@@ -306,35 +343,15 @@ class _DriversLicenseUpdatePageWidgetState
                                     );
                                     return;
                                   }
-
-                                  logFirebaseEvent('Button_Backend-Call');
-
-                                  final usersUpdateData = createUsersRecordData(
-                                    driverLicensePhotoPath: uploadedFileUrl,
-                                    driverLicenseNumber: textController!.text,
-                                  );
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
-                                  logFirebaseEvent('Button_Backend-Call');
-
-                                  final driverVerificationRequestsCreateData =
-                                      createDriverVerificationRequestsRecordData(
-                                    requestDriverRef: currentUserReference,
-                                    requestDatetime: getCurrentTimestamp,
-                                  );
-                                  await DriverVerificationRequestsRecord
-                                      .collection
-                                      .doc()
-                                      .set(
-                                          driverVerificationRequestsCreateData);
+                                } else {
                                   logFirebaseEvent('Button_Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
                                       return AlertDialog(
-                                        title: Text('Notice'),
+                                        title: Text('Missing License Number'),
                                         content: Text(
-                                            'Please note that your information has been uploaded successfully for verification. Once verified, you will receive a notification. If approved, you will have the privilege to post your commutes on this app. If you have not received a notice in 24 hours, please check this screen to see if you were approved. '),
+                                            'Please input your license number,'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
@@ -345,36 +362,75 @@ class _DriversLicenseUpdatePageWidgetState
                                       );
                                     },
                                   );
-                                  logFirebaseEvent('Button_Navigate-Back');
-                                  Navigator.pop(context);
-                                },
-                                text: ' Verify',
-                                icon: Icon(
-                                  Icons.check_circle_rounded,
-                                  size: 15,
+                                  return;
+                                }
+
+                                logFirebaseEvent('Button_Backend-Call');
+
+                                final usersUpdateData = createUsersRecordData(
+                                  driverLicensePhotoPath: uploadedFileUrl,
+                                  driverLicenseNumber: textController!.text,
+                                );
+                                await currentUserReference!
+                                    .update(usersUpdateData);
+                                logFirebaseEvent('Button_Backend-Call');
+
+                                final driverVerificationRequestsCreateData =
+                                    createDriverVerificationRequestsRecordData(
+                                  requestDriverRef: currentUserReference,
+                                  requestDatetime: getCurrentTimestamp,
+                                );
+                                await DriverVerificationRequestsRecord
+                                    .collection
+                                    .doc()
+                                    .set(driverVerificationRequestsCreateData);
+                                logFirebaseEvent('Button_Alert-Dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Notice'),
+                                      content: Text(
+                                          'Please note that your information has been uploaded successfully for verification. Once verified, you will receive a notification. If approved, you will have the privilege to post your commutes on this app. If you have not received a notice in 24 hours, please check this screen to see if you were approved. '),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                logFirebaseEvent('Button_Navigate-Back');
+                                Navigator.pop(context);
+                              },
+                              text: 'Save',
+                              icon: Icon(
+                                Icons.check_circle_rounded,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 50,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle2
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: Colors.white,
+                                    ),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
                                 ),
-                                options: FFButtonOptions(
-                                  width: double.infinity,
-                                  height: 50,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: Colors.white,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                 ],
               ),

@@ -49,3 +49,8 @@ DocumentReference returnTermsOfServiceDocRef() {
       FirebaseFirestore.instance.doc("zAsXZA4zOvXu9eYDSWaF_terms_of_service");
   return docRef;
 }
+
+String docRefToString(DocumentReference docRefArg) {
+  var theString = docRefArg.id.toString();
+  return theString;
+}

@@ -87,19 +87,46 @@ class _CommutesManagementDetailsPageWidgetState
                   ),
             ),
             actions: [
-              FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30,
-                borderWidth: 1,
-                buttonSize: 60,
-                icon: Icon(
-                  Icons.chat_rounded,
-                  color: FlutterFlowTheme.of(context).primaryBtnText,
-                  size: 30,
+              Visibility(
+                visible: currentUserReference !=
+                    commutesManagementDetailsPageCommutesRecord.driver,
+                child: FutureBuilder<UsersRecord>(
+                  future: UsersRecord.getDocumentOnce(
+                      commutesManagementDetailsPageCommutesRecord.driver!),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: SpinKitChasingDots(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            size: 50,
+                          ),
+                        ),
+                      );
+                    }
+                    final iconButtonUsersRecord = snapshot.data!;
+                    return FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      buttonSize: 60,
+                      icon: Icon(
+                        Icons.call_rounded,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        size: 30,
+                      ),
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
+                        logFirebaseEvent('IconButton_Launch-U-R-L');
+                        await launchURL(iconButtonUsersRecord.phoneNumber!);
+                      },
+                    );
+                  },
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
-                },
               ),
             ],
             centerTitle: true,
@@ -342,31 +369,34 @@ class _CommutesManagementDetailsPageWidgetState
                                                 ),
                                               ],
                                             ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                            child: FlutterFlowIconButton(
-                                              borderColor: Colors.transparent,
-                                              borderWidth: 1,
-                                              buttonSize: 40,
-                                              icon: Icon(
-                                                Icons.call_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24,
+                                          if (currentUserReference ==
+                                              commutesManagementDetailsPageCommutesRecord
+                                                  .driver)
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 0, 0, 0),
+                                              child: FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderWidth: 1,
+                                                buttonSize: 40,
+                                                icon: Icon(
+                                                  Icons.call_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 24,
+                                                ),
+                                                onPressed: () async {
+                                                  logFirebaseEvent(
+                                                      'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
+                                                  logFirebaseEvent(
+                                                      'IconButton_Launch-U-R-L');
+                                                  await launchURL(
+                                                      cardUsersRecord
+                                                          .phoneNumber!);
+                                                },
                                               ),
-                                              onPressed: () async {
-                                                logFirebaseEvent(
-                                                    'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
-                                                logFirebaseEvent(
-                                                    'IconButton_Launch-U-R-L');
-                                                await launchURL(cardUsersRecord
-                                                    .phoneNumber!);
-                                              },
                                             ),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -687,7 +717,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                       .reference
                                                                 ],
                                                                 initialPageName:
-                                                                    'manage_commutes_page',
+                                                                    'manage_commutes_passenger_page',
                                                                 parameterData: {},
                                                               );
                                                               logFirebaseEvent(
@@ -806,7 +836,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                       .reference
                                                                 ],
                                                                 initialPageName:
-                                                                    'manage_commutes_page',
+                                                                    'manage_commutes_passenger_page',
                                                                 parameterData: {},
                                                               );
                                                               logFirebaseEvent(

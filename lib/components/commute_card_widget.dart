@@ -61,8 +61,8 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                                 PageTransition(
                                   type: PageTransitionType.fade,
                                   child: FlutterFlowExpandedImageView(
-                                    image: Image.asset(
-                                      'assets/images/profilepicture.png',
+                                    image: Image.network(
+                                      '',
                                       fit: BoxFit.contain,
                                     ),
                                     allowRotation: false,
@@ -82,8 +82,8 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                 ),
-                                child: Image.asset(
-                                  'assets/images/profilepicture.png',
+                                child: Image.network(
+                                  '',
                                 ),
                               ),
                             ),
@@ -168,8 +168,8 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                     PageTransition(
                       type: PageTransitionType.fade,
                       child: FlutterFlowExpandedImageView(
-                        image: Image.asset(
-                          'assets/images/lamborghini-urus.jpg',
+                        image: Image.network(
+                          '',
                           fit: BoxFit.contain,
                         ),
                         allowRotation: false,
@@ -184,8 +184,8 @@ class _CommuteCardWidgetState extends State<CommuteCardWidget> {
                   transitionOnUserGestures: true,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/lamborghini-urus.jpg',
+                    child: Image.network(
+                      '',
                       width: 100,
                       fit: BoxFit.cover,
                     ),

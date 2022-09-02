@@ -1,9 +1,12 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -77,7 +80,7 @@ class _BrowseCommutesDetailsPageWidgetState
               },
             ),
             title: Text(
-              'Commute Details',
+              'Commute Passengers',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Roboto',
                     color: Colors.white,
@@ -89,69 +92,18 @@ class _BrowseCommutesDetailsPageWidgetState
             elevation: 2,
           ),
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          floatingActionButton: Visibility(
-            visible: browseCommutesDetailsPageCommutesRecord.driver !=
-                currentUserReference,
-            child: FloatingActionButton.extended(
-              onPressed: () async {
-                logFirebaseEvent('BROWSE_COMMUTES_DETAILS_FloatingActionBu');
-                logFirebaseEvent('FloatingActionButton_Backend-Call');
-
-                final passengersCreateData = createPassengersRecordData(
-                  passengerAccount: currentUserReference,
-                  accepted: false,
-                );
-                await PassengersRecord.createDoc(widget.commuteRef!)
-                    .set(passengersCreateData);
-                logFirebaseEvent('FloatingActionButton_Alert-Dialog');
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      title: Text('Seat Request Confirmation'),
-                      content: Text(
-                          'Your request for a seat on this commute has been sent to the driver. You will receive a notification to inform you whether your request has been accepted or rejected.'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-                logFirebaseEvent('FloatingActionButton_Navigate-Back');
-                Navigator.pop(context);
-              },
-              backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-              elevation: 8,
-              label: Text(
-                'Request Seat',
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Roboto',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                    ),
-              ),
-            ),
-          ),
           body: SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                        child: Text(
-                          'Accepted Passengers',
-                          style: FlutterFlowTheme.of(context).subtitle1,
-                        ),
-                      ),
-                      StreamBuilder<List<PassengersRecord>>(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: StreamBuilder<List<PassengersRecord>>(
                         stream: queryPassengersRecord(
                           parent: widget.commuteRef,
                           queryBuilder: (passengersRecord) => passengersRecord
@@ -317,58 +269,62 @@ class _BrowseCommutesDetailsPageWidgetState
                                             ),
                                           ),
                                           if (cardUsersRecord.rating != null)
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      functions.twoDeci(
-                                                          cardUsersRecord
-                                                              .rating!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                    ),
-                                                    Icon(
-                                                      Icons.star_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                      size: 18,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  '',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 0, 0, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        functions.twoDeci(
+                                                            cardUsersRecord
+                                                                .rating!),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
                                                       ),
-                                                ),
-                                              ],
+                                                      Icon(
+                                                        Icons.star_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        size: 18,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    '',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                         ],
                                       ),
@@ -380,8 +336,119 @@ class _BrowseCommutesDetailsPageWidgetState
                           );
                         },
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'BROWSE_COMMUTES_DETAILS_REQUEST_SEAT_BTN');
+                          if (valueOrDefault<bool>(
+                              currentUserDocument?.verifiedUser, false)) {
+                            logFirebaseEvent('Button_Backend-Call');
+
+                            final passengersCreateData =
+                                createPassengersRecordData(
+                              passengerAccount: currentUserReference,
+                              accepted: false,
+                            );
+                            await PassengersRecord.createDoc(widget.commuteRef!)
+                                .set(passengersCreateData);
+                            logFirebaseEvent(
+                                'Button_Trigger-Push-Notification');
+                            triggerPushNotification(
+                              notificationTitle: 'New Seat Request',
+                              notificationText:
+                                  'You have recieved a new seat request for your commute to ${browseCommutesDetailsPageCommutesRecord.destination} on ${dateTimeFormat('MMMMEEEEd', browseCommutesDetailsPageCommutesRecord.departureDatetime)} at ${dateTimeFormat('jm', browseCommutesDetailsPageCommutesRecord.departureDatetime)}.',
+                              notificationSound: 'default',
+                              userRefs: [
+                                browseCommutesDetailsPageCommutesRecord.driver!
+                              ],
+                              initialPageName: 'manage_commutes_driver_page',
+                              parameterData: {},
+                            );
+                            logFirebaseEvent('Button_Alert-Dialog');
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Seat Request Confirmation'),
+                                  content: Text(
+                                      'Your request for a seat on this commute has been sent to the driver. You will receive a notification to inform you whether your request has been accepted or rejected.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            logFirebaseEvent('Button_Navigate-Back');
+                            Navigator.pop(context);
+                            return;
+                          } else {
+                            logFirebaseEvent('Button_Alert-Dialog');
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Account Verification'),
+                                      content:
+                                          Text('Your account is not verified.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Verify'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              logFirebaseEvent('Button_Navigate-To');
+                              await Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NavBarPage(initialPage: 'account_page'),
+                                ),
+                                (r) => false,
+                              );
+                              return;
+                            } else {
+                              return;
+                            }
+                          }
+                        },
+                        text: 'Request Seat',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 8,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
