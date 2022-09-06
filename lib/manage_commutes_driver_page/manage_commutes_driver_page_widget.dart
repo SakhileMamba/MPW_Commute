@@ -1190,6 +1190,7 @@ class _ManageCommutesDriverPageWidgetState
                                                               .primaryText,
                                                       fontSize: 16,
                                                     ),
+                                            elevation: 8,
                                             borderSide: BorderSide(
                                               color:
                                                   FlutterFlowTheme.of(context)
@@ -1270,6 +1271,7 @@ class _ManageCommutesDriverPageWidgetState
                                                       fontFamily: 'Roboto',
                                                       color: Colors.white,
                                                     ),
+                                            elevation: 8,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,

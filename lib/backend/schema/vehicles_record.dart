@@ -26,6 +26,8 @@ abstract class VehiclesRecord
 
   String? get year;
 
+  bool? get archived;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -38,7 +40,8 @@ abstract class VehiclesRecord
     ..imageURL = ''
     ..make = ''
     ..model = ''
-    ..year = '';
+    ..year = ''
+    ..archived = false;
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -73,6 +76,7 @@ Map<String, dynamic> createVehiclesRecordData({
   String? make,
   String? model,
   String? year,
+  bool? archived,
 }) {
   final firestoreData = serializers.toFirestore(
     VehiclesRecord.serializer,
@@ -83,7 +87,8 @@ Map<String, dynamic> createVehiclesRecordData({
         ..imageURL = imageURL
         ..make = make
         ..model = model
-        ..year = year,
+        ..year = year
+        ..archived = archived,
     ),
   );
 

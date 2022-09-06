@@ -307,6 +307,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                   ),
+                              elevation: 8,
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).primaryText,
                                 width: 1,
@@ -360,6 +361,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
                                   ),
+                              elevation: 8,
                               borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,

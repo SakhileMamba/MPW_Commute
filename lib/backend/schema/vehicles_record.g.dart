@@ -62,6 +62,13 @@ class _$VehiclesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -109,6 +116,10 @@ class _$VehiclesRecordSerializer
           result.year = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -136,6 +147,8 @@ class _$VehiclesRecord extends VehiclesRecord {
   @override
   final String? year;
   @override
+  final bool? archived;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$VehiclesRecord([void Function(VehiclesRecordBuilder)? updates]) =>
@@ -148,6 +161,7 @@ class _$VehiclesRecord extends VehiclesRecord {
       this.make,
       this.model,
       this.year,
+      this.archived,
       this.ffRef})
       : super._();
 
@@ -169,6 +183,7 @@ class _$VehiclesRecord extends VehiclesRecord {
         make == other.make &&
         model == other.model &&
         year == other.year &&
+        archived == other.archived &&
         ffRef == other.ffRef;
   }
 
@@ -179,12 +194,14 @@ class _$VehiclesRecord extends VehiclesRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc(0, registrationNumber.hashCode),
-                            numberOfPassengerSeats.hashCode),
-                        imageURL.hashCode),
-                    make.hashCode),
-                model.hashCode),
-            year.hashCode),
+                        $jc(
+                            $jc($jc(0, registrationNumber.hashCode),
+                                numberOfPassengerSeats.hashCode),
+                            imageURL.hashCode),
+                        make.hashCode),
+                    model.hashCode),
+                year.hashCode),
+            archived.hashCode),
         ffRef.hashCode));
   }
 
@@ -197,6 +214,7 @@ class _$VehiclesRecord extends VehiclesRecord {
           ..add('make', make)
           ..add('model', model)
           ..add('year', year)
+          ..add('archived', archived)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -232,6 +250,10 @@ class VehiclesRecordBuilder
   String? get year => _$this._year;
   set year(String? year) => _$this._year = year;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -249,6 +271,7 @@ class VehiclesRecordBuilder
       _make = $v.make;
       _model = $v.model;
       _year = $v.year;
+      _archived = $v.archived;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -278,6 +301,7 @@ class VehiclesRecordBuilder
             make: make,
             model: model,
             year: year,
+            archived: archived,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

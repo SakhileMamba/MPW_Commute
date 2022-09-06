@@ -205,6 +205,10 @@ class _PersonalInformationUpdatePageWidgetState
                               orElse: () => LocaleType.en,
                             ),
                           );
+
+                          logFirebaseEvent('Container_Update-Local-State');
+                          setState(
+                              () => FFAppState().userBirthDate = datePicked);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -222,10 +226,8 @@ class _PersonalInformationUpdatePageWidgetState
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                             child: Text(
-                              valueOrDefault<String>(
-                                dateTimeFormat('yMMMd', datePicked),
-                                'Birth Date',
-                              ),
+                              dateTimeFormat(
+                                  'yMMMd', FFAppState().userBirthDate),
                               style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
@@ -291,6 +293,7 @@ class _PersonalInformationUpdatePageWidgetState
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                     ),
+                                elevation: 8,
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
@@ -312,7 +315,12 @@ class _PersonalInformationUpdatePageWidgetState
                                     textController1!.text != '') {
                                   if (textController2!.text != null &&
                                       textController2!.text != '') {
-                                    if (datePicked != null) {
+                                    if (dateTimeFormat('yMMMd',
+                                                FFAppState().userBirthDate) !=
+                                            null &&
+                                        dateTimeFormat('yMMMd',
+                                                FFAppState().userBirthDate) !=
+                                            '') {
                                       if (!(dropDownValue != null &&
                                           dropDownValue != '')) {
                                         logFirebaseEvent('Button_Alert-Dialog');
@@ -443,6 +451,7 @@ class _PersonalInformationUpdatePageWidgetState
                                       color: FlutterFlowTheme.of(context)
                                           .primaryBackground,
                                     ),
+                                elevation: 8,
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,

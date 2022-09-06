@@ -118,31 +118,34 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                       ),
                   ],
                 ),
-                FFButtonWidget(
-                  onPressed: () async {
-                    logFirebaseEvent('SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Revenue-Cat');
-                    purchaseCompleted = await revenue_cat.purchasePackage(
-                        revenue_cat.offerings!.current!.monthly!.identifier);
+                if (!revenue_cat.activeEntitlementIds.contains('Driver Access'))
+                  FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent('SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
+                      logFirebaseEvent('Button_Revenue-Cat');
+                      purchaseCompleted = await revenue_cat.purchasePackage(
+                          revenue_cat.offerings!.current!.monthly!.identifier);
 
-                    setState(() {});
-                  },
-                  text: 'Subscribe',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 50,
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Roboto',
-                          color: Colors.white,
-                        ),
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                      setState(() {});
+                    },
+                    text: 'Subscribe',
+                    options: FFButtonOptions(
+                      width: double.infinity,
+                      height: 50,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      textStyle:
+                          FlutterFlowTheme.of(context).subtitle2.override(
+                                fontFamily: 'Roboto',
+                                color: Colors.white,
+                              ),
+                      elevation: 8,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
               ],
             ),
           ),

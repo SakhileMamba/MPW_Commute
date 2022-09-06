@@ -1,11 +1,13 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../list_vehicles_page/list_vehicles_page_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,30 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () async {
+            logFirebaseEvent('ADD_VEHICLE_arrow_back_rounded_ICN_ON_TA');
+            if (FFAppState().backButtonFileUpload) {
+              logFirebaseEvent('IconButton_Custom-Action');
+              await actions.deleteUploadedImages(
+                uploadedFileUrl,
+              );
+            }
+            logFirebaseEvent('IconButton_Update-Local-State');
+            setState(() => FFAppState().backButtonFileUpload = false);
+            logFirebaseEvent('IconButton_Navigate-Back');
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           'Add Vehicle',
           style: FlutterFlowTheme.of(context).title2.override(
@@ -233,120 +259,141 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ADD_VEHICLE_Image_i8s6710s_ON_TAP');
-                        logFirebaseEvent('Image_Upload-Photo-Video');
-                        final selectedMedia =
-                            await selectMediaWithSourceBottomSheet(
-                          context: context,
-                          imageQuality: 70,
-                          allowPhoto: true,
-                        );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
-                          showUploadMessage(
-                            context,
-                            'Uploading file...',
-                            showLoading: true,
-                          );
-                          final downloadUrls = (await Future.wait(selectedMedia
-                                  .map((m) async => await uploadData(
-                                      m.storagePath, m.bytes))))
-                              .where((u) => u != null)
-                              .map((u) => u!)
-                              .toList();
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          if (downloadUrls.length == selectedMedia.length) {
-                            setState(
-                                () => uploadedFileUrl = downloadUrls.first);
-                            showUploadMessage(
-                              context,
-                              'Success!',
-                            );
-                          } else {
-                            showUploadMessage(
-                              context,
-                              'Failed to upload media',
-                            );
-                            return;
-                          }
-                        }
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: CachedNetworkImage(
-                          imageUrl: valueOrDefault<String>(
-                            uploadedFileUrl,
-                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.fitWidth,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CachedNetworkImage(
+                        imageUrl: valueOrDefault<String>(
+                          uploadedFileUrl,
+                          'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                         ),
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.fitWidth,
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'ADD_VEHICLE_PAGE_PAGE_CANCEL_BTN_ON_TAP');
-                              logFirebaseEvent('Button_Navigate-Back');
-                              Navigator.pop(context);
-                            },
-                            text: 'Cancel',
-                            icon: Icon(
-                              Icons.cancel_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 15,
-                            ),
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 50,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
+                  if (uploadedFileUrl != null && uploadedFileUrl != '')
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'ADD_VEHICLE_PAGE_PAGE_CANCEL_BTN_ON_TAP');
+                                  logFirebaseEvent('Button_Custom-Action');
+                                  await actions.deleteUploadedImages(
+                                    uploadedFileUrl,
+                                  );
+                                  logFirebaseEvent('Button_Update-Local-State');
+                                  setState(() => FFAppState()
+                                      .backButtonFileUpload = false);
+                                  logFirebaseEvent('Button_Navigate-Back');
+                                  Navigator.pop(context);
+                                },
+                                text: 'Cancel',
+                                icon: Icon(
+                                  Icons.cancel_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 15,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 130,
+                                  height: 50,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                  elevation: 8,
+                                  borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
+                                    width: 1,
                                   ),
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                width: 1,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'ADD_VEHICLE_PAGE_PAGE_SAVE_BTN_ON_TAP');
-                              if (textController1!.text != null &&
-                                  textController1!.text != '') {
-                                if (textController2!.text != null &&
-                                    textController2!.text != '') {
-                                  if (textController3!.text != null &&
-                                      textController3!.text != '') {
-                                    if (textController4!.text != null &&
-                                        textController4!.text != '') {
-                                      if (textController5!.text != null &&
-                                          textController5!.text != '') {
-                                        if (!(uploadedFileUrl != null &&
-                                            uploadedFileUrl != '')) {
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'ADD_VEHICLE_PAGE_PAGE_SAVE_BTN_ON_TAP');
+                                  if (textController1!.text != null &&
+                                      textController1!.text != '') {
+                                    if (textController2!.text != null &&
+                                        textController2!.text != '') {
+                                      if (textController3!.text != null &&
+                                          textController3!.text != '') {
+                                        if (textController4!.text != null &&
+                                            textController4!.text != '') {
+                                          if (textController5!.text != null &&
+                                              textController5!.text != '') {
+                                            if (!(uploadedFileUrl != null &&
+                                                uploadedFileUrl != '')) {
+                                              logFirebaseEvent(
+                                                  'Button_Alert-Dialog');
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                        'Missing Vehicle Image'),
+                                                    content: Text(
+                                                        'Please upload an image of your vehicle. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Continue'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              return;
+                                            }
+                                          } else {
+                                            logFirebaseEvent(
+                                                'Button_Alert-Dialog');
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      'Missing Vehicle Information'),
+                                                  content: Text(
+                                                      'Please input the available number of passenger seats in your vehicle.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Continue'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            return;
+                                          }
+                                        } else {
                                           logFirebaseEvent(
                                               'Button_Alert-Dialog');
                                           await showDialog(
@@ -354,9 +401,9 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
                                                 title: Text(
-                                                    'Missing Vehicle Image'),
+                                                    'Missing Vehicle Information'),
                                                 content: Text(
-                                                    'Please upload an image of your vehicle. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
+                                                    'Please input your vehicle\'s registration number.'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
@@ -379,7 +426,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                               title: Text(
                                                   'Missing Vehicle Information'),
                                               content: Text(
-                                                  'Please input the available number of passenger seats in your vehicle.'),
+                                                  'Please input your vehicle\'s year.'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -402,7 +449,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                             title: Text(
                                                 'Missing Vehicle Information'),
                                             content: Text(
-                                                'Please input your vehicle\'s registration number.'),
+                                                'Please input your vehicle\'s model.'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -424,7 +471,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                           title: Text(
                                               'Missing Vehicle Information'),
                                           content: Text(
-                                              'Please input your vehicle\'s year.'),
+                                              'Please input your vehicle\'s  make.'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -437,105 +484,142 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                     );
                                     return;
                                   }
-                                } else {
-                                  logFirebaseEvent('Button_Alert-Dialog');
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title:
-                                            Text('Missing Vehicle Information'),
-                                        content: Text(
-                                            'Please input your vehicle\'s model.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
+
+                                  logFirebaseEvent('Button_Backend-Call');
+
+                                  final vehiclesCreateData =
+                                      createVehiclesRecordData(
+                                    registrationNumber: textController4!.text,
+                                    numberOfPassengerSeats:
+                                        int.parse(textController5!.text),
+                                    imageURL: uploadedFileUrl,
+                                    make: textController1!.text,
+                                    model: textController2!.text,
+                                    year: textController3!.text,
+                                    archived: false,
                                   );
-                                  return;
-                                }
-                              } else {
-                                logFirebaseEvent('Button_Alert-Dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title:
-                                          Text('Missing Vehicle Information'),
-                                      content: Text(
-                                          'Please input your vehicle\'s  make.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Continue'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                return;
-                              }
-
-                              logFirebaseEvent('Button_Backend-Call');
-
-                              final vehiclesCreateData =
-                                  createVehiclesRecordData(
-                                registrationNumber: textController4!.text,
-                                numberOfPassengerSeats:
-                                    int.parse(textController5!.text),
-                                imageURL: uploadedFileUrl,
-                                make: textController1!.text,
-                                model: textController2!.text,
-                                year: textController3!.text,
-                              );
-                              await VehiclesRecord.createDoc(
-                                      currentUserReference!)
-                                  .set(vehiclesCreateData);
-                              logFirebaseEvent('Button_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ListVehiclesPageWidget(),
+                                  await VehiclesRecord.createDoc(
+                                          currentUserReference!)
+                                      .set(vehiclesCreateData);
+                                  logFirebaseEvent('Button_Update-Local-State');
+                                  setState(() => FFAppState().oldPhotoURLTemp =
+                                      uploadedFileUrl);
+                                  logFirebaseEvent('Button_Update-Local-State');
+                                  setState(() => FFAppState()
+                                      .backButtonFileUpload = false);
+                                  logFirebaseEvent('Button_Navigate-To');
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ListVehiclesPageWidget(),
+                                    ),
+                                  );
+                                },
+                                text: 'Save',
+                                icon: Icon(
+                                  Icons.check_circle_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  size: 15,
                                 ),
-                              );
-                            },
-                            text: 'Save',
-                            icon: Icon(
-                              Icons.check_circle_rounded,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              size: 15,
-                            ),
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 50,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
+                                options: FFButtonOptions(
+                                  width: 130,
+                                  height: 50,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                      ),
+                                  elevation: 8,
+                                  borderSide: BorderSide(
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                        .primaryColor,
+                                    width: 1,
                                   ),
-                              borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                width: 1,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                  if (uploadedFileUrl == null || uploadedFileUrl == '')
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          logFirebaseEvent('ADD_VEHICLE_UPLOAD_NEW_BTN_ON_TAP');
+                          logFirebaseEvent('Button_Update-Local-State');
+                          setState(() =>
+                              FFAppState().oldPhotoURLTemp = uploadedFileUrl);
+                          logFirebaseEvent('Button_Upload-Photo-Video');
+                          final selectedMedia =
+                              await selectMediaWithSourceBottomSheet(
+                            context: context,
+                            imageQuality: 50,
+                            allowPhoto: true,
+                          );
+                          if (selectedMedia != null &&
+                              selectedMedia.every((m) =>
+                                  validateFileFormat(m.storagePath, context))) {
+                            showUploadMessage(
+                              context,
+                              'Uploading file...',
+                              showLoading: true,
+                            );
+                            final downloadUrls = (await Future.wait(
+                                    selectedMedia.map((m) async =>
+                                        await uploadData(
+                                            m.storagePath, m.bytes))))
+                                .where((u) => u != null)
+                                .map((u) => u!)
+                                .toList();
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            if (downloadUrls.length == selectedMedia.length) {
+                              setState(
+                                  () => uploadedFileUrl = downloadUrls.first);
+                              showUploadMessage(
+                                context,
+                                'Success!',
+                              );
+                            } else {
+                              showUploadMessage(
+                                context,
+                                'Failed to upload media',
+                              );
+                              return;
+                            }
+                          }
+
+                          logFirebaseEvent('Button_Update-Local-State');
+                          setState(
+                              () => FFAppState().backButtonFileUpload = true);
+                        },
+                        text: 'Upload New',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 8,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
                 ],
               ),
             ),

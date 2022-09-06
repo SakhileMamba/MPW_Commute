@@ -88,26 +88,24 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
-  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
-  'profile_picture_update_Page': (data) async =>
-      ProfilePictureUpdatePageWidget(),
-  'add_vehicle_page': (data) async => AddVehiclePageWidget(),
+  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'commutes_management_details_page': (data) async =>
       CommutesManagementDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
-  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
+  'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
+  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
   'browse_commutes_details_page': (data) async =>
       BrowseCommutesDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
   'drivers_license_update_page': (data) async =>
       DriversLicenseUpdatePageWidget(),
-  'profile_picture_update_PageCopy': (data) async =>
-      ProfilePictureUpdatePageCopyWidget(),
+  'profile_picture_update_Page': (data) async =>
+      ProfilePictureUpdatePageWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

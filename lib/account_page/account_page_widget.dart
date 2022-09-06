@@ -9,7 +9,6 @@ import '../list_vehicles_page/list_vehicles_page_widget.dart';
 import '../personal_information_update_page/personal_information_update_page_widget.dart';
 import '../phone_authentication_page/phone_authentication_page_widget.dart';
 import '../profile_picture_update_page/profile_picture_update_page_widget.dart';
-import '../profile_picture_update_page_copy/profile_picture_update_page_copy_widget.dart';
 import '../subscriptions_page/subscriptions_page_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -71,7 +70,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      ProfilePictureUpdatePageCopyWidget(),
+                                      ProfilePictureUpdatePageWidget(),
                                 ),
                               );
                             },
@@ -487,6 +486,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                           fontFamily: 'Roboto',
                                           color: Colors.white,
                                         ),
+                                    elevation: 8,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
@@ -512,6 +512,9 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent('ACCOUNT_Container_l9apwpbl_ON_TAP');
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().userBirthDate =
+                            currentUserDocument!.birthDate);
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,
@@ -572,6 +575,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent('ACCOUNT_Container_l96ezqyu_ON_TAP');
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().currentPhotoURLTempID =
+                            valueOrDefault(
+                                currentUserDocument?.nationalIdPhotoUrl, ''));
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,
@@ -632,6 +639,11 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent('ACCOUNT_Container_16wxq3ky_ON_TAP');
+                        logFirebaseEvent('Container_Update-Local-State');
+                        setState(() => FFAppState().currentPhotoURLTempLicense =
+                            valueOrDefault(
+                                currentUserDocument?.driverLicensePhotoPath,
+                                ''));
                         logFirebaseEvent('Container_Navigate-To');
                         await Navigator.push(
                           context,
@@ -953,6 +965,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               fontFamily: 'Roboto',
                               color: FlutterFlowTheme.of(context).primaryColor,
                             ),
+                        elevation: 8,
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).primaryColor,
                           width: 1,
