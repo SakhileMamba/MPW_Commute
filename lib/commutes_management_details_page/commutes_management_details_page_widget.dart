@@ -768,6 +768,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .primaryText,
                                                                       ),
+                                                              elevation: 8,
                                                               borderSide:
                                                                   BorderSide(
                                                                 color: FlutterFlowTheme.of(
@@ -887,6 +888,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                         color: Colors
                                                                             .white,
                                                                       ),
+                                                              elevation: 8,
                                                               borderSide:
                                                                   BorderSide(
                                                                 color: Colors

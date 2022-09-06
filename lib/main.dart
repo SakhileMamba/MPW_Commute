@@ -107,9 +107,10 @@ class _MyAppState extends State<MyApp> {
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({Key? key, this.initialPage}) : super(key: key);
+  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
 
   final String? initialPage;
+  final Widget? page;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -117,12 +118,14 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPage = 'browse_commutes_page';
+  String _currentPageName = 'browse_commutes_page';
+  late Widget? _currentPage;
 
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage ?? _currentPage;
+    _currentPageName = widget.initialPage ?? _currentPageName;
+    _currentPage = widget.page;
   }
 
   @override
@@ -133,12 +136,15 @@ class _NavBarPageState extends State<NavBarPage> {
       'manage_commutes_driver_page': ManageCommutesDriverPageWidget(),
       'account_page': AccountPageWidget(),
     };
-    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
+    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
-      body: tabs[_currentPage],
+      body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
+        onTap: (i) => setState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         selectedItemColor: FlutterFlowTheme.of(context).primaryBtnText,
         unselectedItemColor: FlutterFlowTheme.of(context).primaryBtnText,

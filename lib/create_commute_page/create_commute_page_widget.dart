@@ -256,6 +256,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                     child: StreamBuilder<List<VehiclesRecord>>(
                       stream: queryVehiclesRecord(
                         parent: currentUserReference,
+                        queryBuilder: (vehiclesRecord) =>
+                            vehiclesRecord.where('archived', isEqualTo: false),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
@@ -532,6 +534,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                   ),
+                              elevation: 8,
                               borderSide: BorderSide(
                                 color: Colors.black,
                                 width: 1,
@@ -788,6 +791,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
                                   ),
+                              elevation: 8,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1,

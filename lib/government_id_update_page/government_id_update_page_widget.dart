@@ -7,6 +7,8 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../main.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +63,14 @@ class _GovernmentIdUpdatePageWidgetState
               ),
               onPressed: () async {
                 logFirebaseEvent('GOVERNMENT_ID_UPDATE_arrow_back_rounded_');
+                if (FFAppState().backButtonFileUpload) {
+                  logFirebaseEvent('IconButton_Custom-Action');
+                  await actions.deleteUploadedImages(
+                    uploadedFileUrl,
+                  );
+                }
+                logFirebaseEvent('IconButton_Update-Local-State');
+                setState(() => FFAppState().backButtonFileUpload = false);
                 logFirebaseEvent('IconButton_Navigate-Back');
                 Navigator.pop(context);
               },
@@ -154,7 +164,7 @@ class _GovernmentIdUpdatePageWidgetState
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent(
-                            'GOVERNMENT_ID_UPDATE_Image_rmgh0g09_ON_T');
+                            'GOVERNMENT_ID_UPDATE_Image_h093kkx2_ON_T');
                         logFirebaseEvent('Image_Expand-Image');
                         await Navigator.push(
                           context,
@@ -163,14 +173,14 @@ class _GovernmentIdUpdatePageWidgetState
                             child: FlutterFlowExpandedImageView(
                               image: CachedNetworkImage(
                                 imageUrl: valueOrDefault<String>(
-                                  FFAppState().currentPhotoURLTemp,
+                                  FFAppState().currentPhotoURLTempID,
                                   'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                                 ),
                                 fit: BoxFit.contain,
                               ),
                               allowRotation: false,
                               tag: valueOrDefault<String>(
-                                FFAppState().currentPhotoURLTemp,
+                                FFAppState().currentPhotoURLTempID,
                                 'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                               ),
                               useHeroAnimation: true,
@@ -180,16 +190,16 @@ class _GovernmentIdUpdatePageWidgetState
                       },
                       child: Hero(
                         tag: valueOrDefault<String>(
-                          FFAppState().currentPhotoURLTemp,
+                          FFAppState().currentPhotoURLTempID,
                           'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                         ),
                         transitionOnUserGestures: true,
                         child: CachedNetworkImage(
                           imageUrl: valueOrDefault<String>(
-                            FFAppState().currentPhotoURLTemp,
+                            FFAppState().currentPhotoURLTempID,
                             'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                           ),
-                          width: MediaQuery.of(context).size.width,
+                          width: double.infinity,
                           height: 250,
                           fit: BoxFit.cover,
                         ),
@@ -247,8 +257,11 @@ class _GovernmentIdUpdatePageWidgetState
                           }
 
                           logFirebaseEvent('Button_Update-Local-State');
-                          setState(() => FFAppState().currentPhotoURLTemp =
+                          setState(() => FFAppState().currentPhotoURLTempID =
                               uploadedFileUrl);
+                          logFirebaseEvent('Button_Update-Local-State');
+                          setState(
+                              () => FFAppState().backButtonFileUpload = true);
                         },
                         text: 'Upload New',
                         options: FFButtonOptions(
@@ -260,6 +273,7 @@ class _GovernmentIdUpdatePageWidgetState
                                     fontFamily: 'Roboto',
                                     color: Colors.white,
                                   ),
+                          elevation: 8,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -271,7 +285,6 @@ class _GovernmentIdUpdatePageWidgetState
                   if (uploadedFileUrl != null && uploadedFileUrl != '')
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Padding(
@@ -280,12 +293,20 @@ class _GovernmentIdUpdatePageWidgetState
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'GOVERNMENT_ID_UPDATE_CANCEL_BTN_ON_TAP');
+                                logFirebaseEvent('Button_Custom-Action');
+                                await actions.deleteUploadedImages(
+                                  FFAppState().currentPhotoURLTempID,
+                                );
+                                logFirebaseEvent('Button_Update-Local-State');
+                                setState(() =>
+                                    FFAppState().backButtonFileUpload = false);
                                 logFirebaseEvent('Button_Navigate-Back');
                                 Navigator.pop(context);
                               },
                               text: 'Cancel',
                               icon: Icon(
                                 Icons.cancel_rounded,
+                                color: FlutterFlowTheme.of(context).primaryText,
                                 size: 15,
                               ),
                               options: FFButtonOptions(
@@ -299,8 +320,8 @@ class _GovernmentIdUpdatePageWidgetState
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 16,
                                     ),
+                                elevation: 8,
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
@@ -318,39 +339,16 @@ class _GovernmentIdUpdatePageWidgetState
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
-                                if (textController!.text != null &&
-                                    textController!.text != '') {
-                                  if (!(uploadedFileUrl != null &&
-                                      uploadedFileUrl != '')) {
-                                    logFirebaseEvent('Button_Alert-Dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Missing ID Image'),
-                                          content: Text(
-                                              'Please upload an image of your government-issued Identification. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Continue'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  }
-                                } else {
+                                if (!(uploadedFileUrl != null &&
+                                    uploadedFileUrl != '')) {
                                   logFirebaseEvent('Button_Alert-Dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
                                       return AlertDialog(
-                                        title: Text('Missing ID information'),
+                                        title: Text('Missing ID Image'),
                                         content: Text(
-                                            'Please input your government issued ID number.'),
+                                            'Please upload an image of the front of your ID. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(
@@ -363,7 +361,6 @@ class _GovernmentIdUpdatePageWidgetState
                                   );
                                   return;
                                 }
-
                                 logFirebaseEvent('Button_Backend-Call');
 
                                 final usersUpdateData = createUsersRecordData(
@@ -372,8 +369,22 @@ class _GovernmentIdUpdatePageWidgetState
                                 );
                                 await currentUserReference!
                                     .update(usersUpdateData);
-                                logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
+                                logFirebaseEvent('Button_Custom-Action');
+                                await actions.deleteUploadedImages(
+                                  FFAppState().oldPhotoURLTemp,
+                                );
+                                logFirebaseEvent('Button_Update-Local-State');
+                                setState(() =>
+                                    FFAppState().backButtonFileUpload = false);
+                                logFirebaseEvent('Button_Navigate-To');
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        NavBarPage(initialPage: 'account_page'),
+                                  ),
+                                  (r) => false,
+                                );
                               },
                               text: 'Save',
                               icon: Icon(
@@ -381,7 +392,7 @@ class _GovernmentIdUpdatePageWidgetState
                                 size: 15,
                               ),
                               options: FFButtonOptions(
-                                width: double.infinity,
+                                width: 130,
                                 height: 50,
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
@@ -391,6 +402,7 @@ class _GovernmentIdUpdatePageWidgetState
                                       fontFamily: 'Roboto',
                                       color: Colors.white,
                                     ),
+                                elevation: 8,
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
