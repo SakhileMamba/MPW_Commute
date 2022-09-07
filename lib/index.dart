@@ -32,3 +32,7 @@ export 'drivers_license_update_page/drivers_license_update_page_widget.dart'
     show DriversLicenseUpdatePageWidget;
 export 'profile_picture_update_page/profile_picture_update_page_widget.dart'
     show ProfilePictureUpdatePageWidget;
+export 'approve_users_page/approve_users_page_widget.dart'
+    show ApproveUsersPageWidget;
+export 'approve_drivers_page/approve_drivers_page_widget.dart'
+    show ApproveDriversPageWidget;

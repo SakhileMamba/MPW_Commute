@@ -138,6 +138,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.admin;
+    if (value != null) {
+      result
+        ..add('admin')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -228,6 +235,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.nationalIDVerified = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'admin':
+          result.admin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -277,6 +288,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? nationalIDVerified;
   @override
+  final bool? admin;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -300,6 +313,7 @@ class _$UsersRecord extends UsersRecord {
       this.driverLicensePhotoPath,
       this.verifiedDriver,
       this.nationalIDVerified,
+      this.admin,
       this.ffRef})
       : super._();
 
@@ -331,6 +345,7 @@ class _$UsersRecord extends UsersRecord {
         driverLicensePhotoPath == other.driverLicensePhotoPath &&
         verifiedDriver == other.verifiedDriver &&
         nationalIDVerified == other.nationalIDVerified &&
+        admin == other.admin &&
         ffRef == other.ffRef;
   }
 
@@ -354,28 +369,33 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            email
+                                                                            $jc(
+                                                                                0,
+                                                                                email
+                                                                                    .hashCode),
+                                                                            displayName
                                                                                 .hashCode),
-                                                                        displayName
+                                                                        photoUrl
                                                                             .hashCode),
-                                                                    photoUrl
+                                                                    uid
                                                                         .hashCode),
-                                                                uid.hashCode),
-                                                            createdTime
+                                                                createdTime
+                                                                    .hashCode),
+                                                            phoneNumber
                                                                 .hashCode),
-                                                        phoneNumber.hashCode),
-                                                    displaySurname.hashCode),
-                                                nationalId.hashCode),
-                                            nationalIdPhotoUrl.hashCode),
-                                        verifiedUser.hashCode),
-                                    gender.hashCode),
-                                rating.hashCode),
-                            birthDate.hashCode),
-                        driverLicenseNumber.hashCode),
-                    driverLicensePhotoPath.hashCode),
-                verifiedDriver.hashCode),
-            nationalIDVerified.hashCode),
+                                                        displaySurname
+                                                            .hashCode),
+                                                    nationalId.hashCode),
+                                                nationalIdPhotoUrl.hashCode),
+                                            verifiedUser.hashCode),
+                                        gender.hashCode),
+                                    rating.hashCode),
+                                birthDate.hashCode),
+                            driverLicenseNumber.hashCode),
+                        driverLicensePhotoPath.hashCode),
+                    verifiedDriver.hashCode),
+                nationalIDVerified.hashCode),
+            admin.hashCode),
         ffRef.hashCode));
   }
 
@@ -399,6 +419,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('driverLicensePhotoPath', driverLicensePhotoPath)
           ..add('verifiedDriver', verifiedDriver)
           ..add('nationalIDVerified', nationalIDVerified)
+          ..add('admin', admin)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -481,6 +502,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set nationalIDVerified(bool? nationalIDVerified) =>
       _$this._nationalIDVerified = nationalIDVerified;
 
+  bool? _admin;
+  bool? get admin => _$this._admin;
+  set admin(bool? admin) => _$this._admin = admin;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -509,6 +534,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _driverLicensePhotoPath = $v.driverLicensePhotoPath;
       _verifiedDriver = $v.verifiedDriver;
       _nationalIDVerified = $v.nationalIDVerified;
+      _admin = $v.admin;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -549,6 +575,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             driverLicensePhotoPath: driverLicensePhotoPath,
             verifiedDriver: verifiedDriver,
             nationalIDVerified: nationalIDVerified,
+            admin: admin,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
