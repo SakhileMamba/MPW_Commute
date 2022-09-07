@@ -106,6 +106,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       DriversLicenseUpdatePageWidget(),
   'profile_picture_update_Page': (data) async =>
       ProfilePictureUpdatePageWidget(),
+  'approve_users_page': (data) async => ApproveUsersPageWidget(),
+  'approve_drivers_page': (data) async => ApproveDriversPageWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

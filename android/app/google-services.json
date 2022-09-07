@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "549233771637-f1r7aec781n23ljnd9t5r7s4an1gv59b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "online.mpwstore.mpwcommute",
+            "certificate_hash": "d9ce47cfc42530f5281f05f8cc54887dcedde53c"
+          }
+        },
+        {
           "client_id": "549233771637-gcs514than4fute6lo5po71urgpffbft.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -63,10 +71,10 @@
               "client_type": 3
             },
             {
-              "client_id": "549233771637-epm58puupkrgdjckfnbi1ablcj3uneeh.apps.googleusercontent.com",
+              "client_id": "549233771637-ai7v6t4eme170g8flpln1m1u644rdi2m.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "online.mpwstore.mpwcommute"
+                "bundle_id": "online.mpwstore.mpwcommuteadmin"
               }
             }
           ]

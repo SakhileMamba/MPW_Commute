@@ -1,3 +1,5 @@
+import '../approve_drivers_page/approve_drivers_page_widget.dart';
+import '../approve_users_page/approve_users_page_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
@@ -934,6 +936,147 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     height: 0,
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
+                  if (valueOrDefault<bool>(currentUserDocument?.admin, false))
+                    AuthUserStreamWidget(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                            child: Text(
+                              'Admin',
+                              style: FlutterFlowTheme.of(context).subtitle1,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'ACCOUNT_Container_7u1ncfd7_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ApproveUsersPageWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.admin_panel_settings_rounded,
+                                      color: Colors.black,
+                                      size: 24,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 0, 0),
+                                        child: Text(
+                                          'Approve Users',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 0,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'ACCOUNT_Container_7g0ib76l_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ApproveDriversPageWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.admin_panel_settings_rounded,
+                                      color: Colors.black,
+                                      size: 24,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 0, 0),
+                                        child: Text(
+                                          'Approve Drivers',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            height: 0,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                          ),
+                        ],
+                      ),
+                    ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: FFButtonWidget(
