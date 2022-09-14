@@ -1,8 +1,10 @@
-import '../backend/api_requests/api_calls.dart';
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -17,9 +19,8 @@ class SubscriptionsPageWidget extends StatefulWidget {
 }
 
 class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
-  ApiCallResponse? countryOutput;
   bool? purchaseCompleted;
-  LatLng? currentUserLocationValue;
+  bool? purchaseCompletedNonSwazi;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -122,72 +123,91 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                   ],
                 ),
                 if (!revenue_cat.activeEntitlementIds.contains('Driver Access'))
-                  FFButtonWidget(
-                    onPressed: () async {
-                      logFirebaseEvent('SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
-                      currentUserLocationValue = await getCurrentUserLocation(
-                          defaultLocation: LatLng(0.0, 0.0));
-                      var _shouldSetState = false;
-                      logFirebaseEvent('Button_Backend-Call');
-                      countryOutput = await CountryAPICall.call(
-                        latlnginput: currentUserLocationValue?.toString(),
-                      );
-                      _shouldSetState = true;
-                      logFirebaseEvent('Button_Update-Local-State');
-                      setState(() => FFAppState().country = getJsonField(
-                            (countryOutput?.jsonBody ?? ''),
-                            r'''$['results'][0]['address_components'][0]['long_name']''',
-                          ).toString());
-                      if (FFAppState().country == 'Eswatini') {
-                        logFirebaseEvent('Button_Alert-Dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Free Usage'),
-                              content:
-                                  Text('This app is free to use in Eswatini.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
+                  FutureBuilder<AppConstantsRecord>(
+                    future: AppConstantsRecord.getDocumentOnce(
+                        FFAppState().appConstantFreeApp!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: SpinKitChasingDots(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              size: 50,
+                            ),
+                          ),
                         );
-                        if (_shouldSetState) setState(() {});
-                        return;
-                      } else {
-                        logFirebaseEvent('Button_Revenue-Cat');
-                        purchaseCompleted = await revenue_cat.purchasePackage(
-                            revenue_cat
-                                .offerings!.current!.monthly!.identifier);
-                        _shouldSetState = true;
-                        if (_shouldSetState) setState(() {});
-                        return;
                       }
+                      final buttonAppConstantsRecord = snapshot.data!;
+                      return FFButtonWidget(
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
+                          var _shouldSetState = false;
+                          if (functions.swaziNumberTest(currentPhoneNumber)) {
+                            if (buttonAppConstantsRecord.freeApp!) {
+                              logFirebaseEvent('Button_Alert-Dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Free Usage'),
+                                    content: Text(
+                                        'This app is free for users in Eswatini.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            } else {
+                              logFirebaseEvent('Button_Revenue-Cat');
+                              purchaseCompleted =
+                                  await revenue_cat.purchasePackage(revenue_cat
+                                      .offerings!.current!.monthly!.identifier);
+                              _shouldSetState = true;
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            }
+                          } else {
+                            logFirebaseEvent('Button_Revenue-Cat');
+                            purchaseCompletedNonSwazi =
+                                await revenue_cat.purchasePackage(revenue_cat
+                                    .offerings!.current!.monthly!.identifier);
+                            _shouldSetState = true;
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
 
-                      if (_shouldSetState) setState(() {});
+                          if (_shouldSetState) setState(() {});
+                        },
+                        text: 'Subscribe',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 50,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 8,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      );
                     },
-                    text: 'Subscribe',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 50,
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                                fontFamily: 'Roboto',
-                                color: Colors.white,
-                              ),
-                      elevation: 8,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
                   ),
               ],
             ),

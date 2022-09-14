@@ -24,6 +24,8 @@ class FFAppState {
     _privacyPolicyAndTermsOfServiceAgreement =
         prefs.getBool('ff_privacyPolicyAndTermsOfServiceAgreement') ??
             _privacyPolicyAndTermsOfServiceAgreement;
+    _appConstantFreeApp =
+        prefs.getString('ff_appConstantFreeApp')?.ref ?? _appConstantFreeApp;
   }
 
   late SharedPreferences prefs;
@@ -78,7 +80,16 @@ class FFAppState {
 
   bool backButtonFileUpload = false;
 
-  String country = '';
+  DocumentReference? _appConstantFreeApp =
+      FirebaseFirestore.instance.doc('/app_constants/\nkOOn2yvmHgWV3k61xPRS');
+  DocumentReference? get appConstantFreeApp => _appConstantFreeApp;
+  set appConstantFreeApp(DocumentReference? _value) {
+    if (_value == null) {
+      return;
+    }
+    _appConstantFreeApp = _value;
+    prefs.setString('ff_appConstantFreeApp', _value.path);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

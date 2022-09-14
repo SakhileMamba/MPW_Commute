@@ -20,8 +20,6 @@ class ListVehiclesPageWidget extends StatefulWidget {
 }
 
 class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
-  TextEditingController? textController;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -135,29 +133,14 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                           width: MediaQuery.of(context).size.width,
                           fit: BoxFit.cover,
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                          child: TextFormField(
-                            controller: textController ??=
-                                TextEditingController(
-                              text:
-                                  '${listViewVehiclesRecord.year} ${listViewVehiclesRecord.make} ${listViewVehiclesRecord.model}',
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                            child: Text(
+                              '${listViewVehiclesRecord.year}, ${listViewVehiclesRecord.make}, ${listViewVehiclesRecord.model}',
+                              style: FlutterFlowTheme.of(context).bodyText2,
                             ),
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              focusedErrorBorder: InputBorder.none,
-                            ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w500,
-                                    ),
                           ),
                         ),
                         Padding(
