@@ -80,7 +80,7 @@ class _BrowseCommutesDetailsPageWidgetState
               },
             ),
             title: Text(
-              'Commute Passengers',
+              'Passengers',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Roboto',
                     color: Colors.white,
@@ -243,26 +243,13 @@ class _BrowseCommutesDetailsPageWidgetState
                                                     '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                   Text(
                                                     cardUsersRecord.gender!,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                 ],
                                               ),
@@ -290,17 +277,7 @@ class _BrowseCommutesDetailsPageWidgetState
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                                .bodyText1,
                                                       ),
                                                       Icon(
                                                         Icons.star_rounded,

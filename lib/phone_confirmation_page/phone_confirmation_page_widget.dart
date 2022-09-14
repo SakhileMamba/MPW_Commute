@@ -19,6 +19,7 @@ class PhoneConfirmationPageWidget extends StatefulWidget {
 class _PhoneConfirmationPageWidgetState
     extends State<PhoneConfirmationPageWidget> {
   TextEditingController? securityCodeTextFieldController;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -62,9 +63,9 @@ class _PhoneConfirmationPageWidgetState
                       padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                       child: Text(
                         'Please enter the confirmation code we just sent to your phone number. Find it in your messages.',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                        style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Roboto',
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.w500,
                             ),
                       ),
                     ),
@@ -90,6 +91,20 @@ class _PhoneConfirmationPageWidgetState
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                           filled: true,
                           fillColor:
                               FlutterFlowTheme.of(context).primaryBackground,
@@ -99,7 +114,10 @@ class _PhoneConfirmationPageWidgetState
                             size: 24,
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                            ),
                         textAlign: TextAlign.start,
                         maxLines: 1,
                         keyboardType: TextInputType.number,

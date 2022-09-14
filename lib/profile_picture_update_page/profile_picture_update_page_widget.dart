@@ -195,6 +195,10 @@ class _ProfilePictureUpdatePageWidgetState
                               () => FFAppState().backButtonFileUpload = true);
                         },
                         text: 'Upload New',
+                        icon: Icon(
+                          Icons.upload_rounded,
+                          size: 15,
+                        ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 50,

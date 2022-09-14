@@ -10,29 +10,29 @@ export 'manage_commutes_passenger_page/manage_commutes_passenger_page_widget.dar
 export 'manage_commutes_driver_page/manage_commutes_driver_page_widget.dart'
     show ManageCommutesDriverPageWidget;
 export 'account_page/account_page_widget.dart' show AccountPageWidget;
+export 'government_id_update_page/government_id_update_page_widget.dart'
+    show GovernmentIdUpdatePageWidget;
 export 'personal_information_update_page/personal_information_update_page_widget.dart'
     show PersonalInformationUpdatePageWidget;
 export 'list_vehicles_page/list_vehicles_page_widget.dart'
     show ListVehiclesPageWidget;
-export 'government_id_update_page/government_id_update_page_widget.dart'
-    show GovernmentIdUpdatePageWidget;
 export 'create_commute_page/create_commute_page_widget.dart'
     show CreateCommutePageWidget;
+export 'filter_commutes_page/filter_commutes_page_widget.dart'
+    show FilterCommutesPageWidget;
 export 'commutes_management_details_page/commutes_management_details_page_widget.dart'
     show CommutesManagementDetailsPageWidget;
 export 'add_vehicle_page/add_vehicle_page_widget.dart'
     show AddVehiclePageWidget;
-export 'filter_commutes_page/filter_commutes_page_widget.dart'
-    show FilterCommutesPageWidget;
 export 'subscriptions_page/subscriptions_page_widget.dart'
     show SubscriptionsPageWidget;
 export 'browse_commutes_details_page/browse_commutes_details_page_widget.dart'
     show BrowseCommutesDetailsPageWidget;
-export 'drivers_license_update_page/drivers_license_update_page_widget.dart'
-    show DriversLicenseUpdatePageWidget;
 export 'profile_picture_update_page/profile_picture_update_page_widget.dart'
     show ProfilePictureUpdatePageWidget;
-export 'approve_users_page/approve_users_page_widget.dart'
-    show ApproveUsersPageWidget;
+export 'drivers_license_update_page/drivers_license_update_page_widget.dart'
+    show DriversLicenseUpdatePageWidget;
 export 'approve_drivers_page/approve_drivers_page_widget.dart'
     show ApproveDriversPageWidget;
+export 'approve_users_page/approve_users_page_widget.dart'
+    show ApproveUsersPageWidget;

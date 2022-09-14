@@ -1,32 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'in_app_urls_record.dart';
+part of 'app_constants_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<InAppUrlsRecord> _$inAppUrlsRecordSerializer =
-    new _$InAppUrlsRecordSerializer();
+Serializer<AppConstantsRecord> _$appConstantsRecordSerializer =
+    new _$AppConstantsRecordSerializer();
 
-class _$InAppUrlsRecordSerializer
-    implements StructuredSerializer<InAppUrlsRecord> {
+class _$AppConstantsRecordSerializer
+    implements StructuredSerializer<AppConstantsRecord> {
   @override
-  final Iterable<Type> types = const [InAppUrlsRecord, _$InAppUrlsRecord];
+  final Iterable<Type> types = const [AppConstantsRecord, _$AppConstantsRecord];
   @override
-  final String wireName = 'InAppUrlsRecord';
+  final String wireName = 'AppConstantsRecord';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, InAppUrlsRecord object,
+  Iterable<Object?> serialize(
+      Serializers serializers, AppConstantsRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.url;
+    value = object.freeApp;
     if (value != null) {
       result
-        ..add('url')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add('free_app')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -40,10 +41,10 @@ class _$InAppUrlsRecordSerializer
   }
 
   @override
-  InAppUrlsRecord deserialize(
+  AppConstantsRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new InAppUrlsRecordBuilder();
+    final result = new AppConstantsRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -51,9 +52,9 @@ class _$InAppUrlsRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'url':
-          result.url = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'free_app':
+          result.freeApp = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -68,65 +69,69 @@ class _$InAppUrlsRecordSerializer
   }
 }
 
-class _$InAppUrlsRecord extends InAppUrlsRecord {
+class _$AppConstantsRecord extends AppConstantsRecord {
   @override
-  final String? url;
+  final bool? freeApp;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$InAppUrlsRecord([void Function(InAppUrlsRecordBuilder)? updates]) =>
-      (new InAppUrlsRecordBuilder()..update(updates))._build();
+  factory _$AppConstantsRecord(
+          [void Function(AppConstantsRecordBuilder)? updates]) =>
+      (new AppConstantsRecordBuilder()..update(updates))._build();
 
-  _$InAppUrlsRecord._({this.url, this.ffRef}) : super._();
+  _$AppConstantsRecord._({this.freeApp, this.ffRef}) : super._();
 
   @override
-  InAppUrlsRecord rebuild(void Function(InAppUrlsRecordBuilder) updates) =>
+  AppConstantsRecord rebuild(
+          void Function(AppConstantsRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  InAppUrlsRecordBuilder toBuilder() =>
-      new InAppUrlsRecordBuilder()..replace(this);
+  AppConstantsRecordBuilder toBuilder() =>
+      new AppConstantsRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is InAppUrlsRecord && url == other.url && ffRef == other.ffRef;
+    return other is AppConstantsRecord &&
+        freeApp == other.freeApp &&
+        ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, url.hashCode), ffRef.hashCode));
+    return $jf($jc($jc(0, freeApp.hashCode), ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'InAppUrlsRecord')
-          ..add('url', url)
+    return (newBuiltValueToStringHelper(r'AppConstantsRecord')
+          ..add('freeApp', freeApp)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class InAppUrlsRecordBuilder
-    implements Builder<InAppUrlsRecord, InAppUrlsRecordBuilder> {
-  _$InAppUrlsRecord? _$v;
+class AppConstantsRecordBuilder
+    implements Builder<AppConstantsRecord, AppConstantsRecordBuilder> {
+  _$AppConstantsRecord? _$v;
 
-  String? _url;
-  String? get url => _$this._url;
-  set url(String? url) => _$this._url = url;
+  bool? _freeApp;
+  bool? get freeApp => _$this._freeApp;
+  set freeApp(bool? freeApp) => _$this._freeApp = freeApp;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  InAppUrlsRecordBuilder() {
-    InAppUrlsRecord._initializeBuilder(this);
+  AppConstantsRecordBuilder() {
+    AppConstantsRecord._initializeBuilder(this);
   }
 
-  InAppUrlsRecordBuilder get _$this {
+  AppConstantsRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _url = $v.url;
+      _freeApp = $v.freeApp;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -134,21 +139,22 @@ class InAppUrlsRecordBuilder
   }
 
   @override
-  void replace(InAppUrlsRecord other) {
+  void replace(AppConstantsRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$InAppUrlsRecord;
+    _$v = other as _$AppConstantsRecord;
   }
 
   @override
-  void update(void Function(InAppUrlsRecordBuilder)? updates) {
+  void update(void Function(AppConstantsRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  InAppUrlsRecord build() => _build();
+  AppConstantsRecord build() => _build();
 
-  _$InAppUrlsRecord _build() {
-    final _$result = _$v ?? new _$InAppUrlsRecord._(url: url, ffRef: ffRef);
+  _$AppConstantsRecord _build() {
+    final _$result =
+        _$v ?? new _$AppConstantsRecord._(freeApp: freeApp, ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

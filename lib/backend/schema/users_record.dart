@@ -58,6 +58,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   bool? get admin;
 
+  @BuiltValueField(wireName: 'referrers_code')
+  String? get referrersCode;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -78,7 +81,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..driverLicensePhotoPath = ''
     ..verifiedDriver = false
     ..nationalIDVerified = false
-    ..admin = false;
+    ..admin = false
+    ..referrersCode = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -120,6 +124,7 @@ Map<String, dynamic> createUsersRecordData({
   bool? verifiedDriver,
   bool? nationalIDVerified,
   bool? admin,
+  String? referrersCode,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -142,7 +147,8 @@ Map<String, dynamic> createUsersRecordData({
         ..driverLicensePhotoPath = driverLicensePhotoPath
         ..verifiedDriver = verifiedDriver
         ..nationalIDVerified = nationalIDVerified
-        ..admin = admin,
+        ..admin = admin
+        ..referrersCode = referrersCode,
     ),
   );
 

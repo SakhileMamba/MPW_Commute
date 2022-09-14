@@ -25,8 +25,9 @@ class DriversLicenseUpdatePageWidget extends StatefulWidget {
 
 class _DriversLicenseUpdatePageWidgetState
     extends State<DriversLicenseUpdatePageWidget> {
-  String uploadedFileUrl = '';
   TextEditingController? textController;
+
+  String uploadedFileUrl = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -45,36 +46,29 @@ class _DriversLicenseUpdatePageWidgetState
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: Visibility(
-          visible: valueOrDefault<bool>(
-                  currentUserDocument?.verifiedDriver, false) ==
-              true,
-          child: AuthUserStreamWidget(
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 60,
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-                size: 30,
-              ),
-              onPressed: () async {
-                logFirebaseEvent('DRIVERS_LICENSE_UPDATE_arrow_back_rounde');
-                if (FFAppState().backButtonFileUpload) {
-                  logFirebaseEvent('IconButton_Custom-Action');
-                  await actions.deleteUploadedImages(
-                    uploadedFileUrl,
-                  );
-                }
-                logFirebaseEvent('IconButton_Update-Local-State');
-                setState(() => FFAppState().backButtonFileUpload = false);
-                logFirebaseEvent('IconButton_Navigate-Back');
-                Navigator.pop(context);
-              },
-            ),
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 30,
           ),
+          onPressed: () async {
+            logFirebaseEvent('DRIVERS_LICENSE_UPDATE_arrow_back_rounde');
+            if (FFAppState().backButtonFileUpload) {
+              logFirebaseEvent('IconButton_Custom-Action');
+              await actions.deleteUploadedImages(
+                uploadedFileUrl,
+              );
+            }
+            logFirebaseEvent('IconButton_Update-Local-State');
+            setState(() => FFAppState().backButtonFileUpload = false);
+            logFirebaseEvent('IconButton_Navigate-Back');
+            Navigator.pop(context);
+          },
         ),
         title: Text(
           'Driver\'s License',
@@ -143,8 +137,25 @@ class _DriversLicenseUpdatePageWidgetState
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
                     ),
                   ),
@@ -152,10 +163,7 @@ class _DriversLicenseUpdatePageWidgetState
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                     child: Text(
                       'Image',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryText,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                   ),
                   Padding(
@@ -264,6 +272,10 @@ class _DriversLicenseUpdatePageWidgetState
                               () => FFAppState().backButtonFileUpload = true);
                         },
                         text: 'Upload New',
+                        icon: Icon(
+                          Icons.upload_rounded,
+                          size: 15,
+                        ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 50,
