@@ -47,3 +47,11 @@ String docRefToString(DocumentReference docRefArg) {
   var theString = docRefArg.id.toString();
   return theString;
 }
+
+bool swaziNumberTest(String? phoneNumber) {
+  // Add your function code here!
+  if (phoneNumber?.substring(0, 4) == "+268")
+    return true;
+  else
+    return false;
+}
