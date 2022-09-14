@@ -11,7 +11,7 @@ import 'schema/verification_requests_record.dart';
 import 'schema/passengers_record.dart';
 import 'schema/messages_record.dart';
 import 'schema/driver_verification_requests_record.dart';
-import 'schema/in_app_urls_record.dart';
+import 'schema/app_constants_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -26,7 +26,7 @@ export 'schema/verification_requests_record.dart';
 export 'schema/passengers_record.dart';
 export 'schema/messages_record.dart';
 export 'schema/driver_verification_requests_record.dart';
-export 'schema/in_app_urls_record.dart';
+export 'schema/app_constants_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -335,42 +335,42 @@ Future<FFFirestorePage<DriverVerificationRequestsRecord>>
           isStream: isStream,
         );
 
-/// Functions to query InAppUrlsRecords (as a Stream and as a Future).
-Stream<List<InAppUrlsRecord>> queryInAppUrlsRecord({
+/// Functions to query AppConstantsRecords (as a Stream and as a Future).
+Stream<List<AppConstantsRecord>> queryAppConstantsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      InAppUrlsRecord.collection,
-      InAppUrlsRecord.serializer,
+      AppConstantsRecord.collection,
+      AppConstantsRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<InAppUrlsRecord>> queryInAppUrlsRecordOnce({
+Future<List<AppConstantsRecord>> queryAppConstantsRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      InAppUrlsRecord.collection,
-      InAppUrlsRecord.serializer,
+      AppConstantsRecord.collection,
+      AppConstantsRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<FFFirestorePage<InAppUrlsRecord>> queryInAppUrlsRecordPage({
+Future<FFFirestorePage<AppConstantsRecord>> queryAppConstantsRecordPage({
   Query Function(Query)? queryBuilder,
   DocumentSnapshot? nextPageMarker,
   required int pageSize,
   required bool isStream,
 }) =>
     queryCollectionPage(
-      InAppUrlsRecord.collection,
-      InAppUrlsRecord.serializer,
+      AppConstantsRecord.collection,
+      AppConstantsRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

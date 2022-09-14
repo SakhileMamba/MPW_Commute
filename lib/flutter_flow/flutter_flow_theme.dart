@@ -112,8 +112,8 @@ class ThemeTypography extends Typography {
   String get bodyText1Family => 'Roboto';
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Roboto',
-        color: Colors.black,
-        fontWeight: FontWeight.w600,
+        color: theme.primaryColor,
+        fontWeight: FontWeight.w500,
         fontSize: 14,
       );
   String get bodyText2Family => 'Roboto';

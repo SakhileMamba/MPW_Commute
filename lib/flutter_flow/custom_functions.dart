@@ -43,13 +43,6 @@ bool isDoubleGreaterThanZero(double input) {
   return (input > 0);
 }
 
-DocumentReference returnTermsOfServiceDocRef() {
-  // Add your function code here!
-  DocumentReference docRef =
-      FirebaseFirestore.instance.doc("zAsXZA4zOvXu9eYDSWaF_terms_of_service");
-  return docRef;
-}
-
 String docRefToString(DocumentReference docRefArg) {
   var theString = docRefArg.id.toString();
   return theString;

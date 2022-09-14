@@ -1,6 +1,7 @@
 import '../approve_drivers_page/approve_drivers_page_widget.dart';
 import '../approve_users_page/approve_users_page_widget.dart';
 import '../auth/auth_util.dart';
+import '../backend/api_requests/api_calls.dart';
 import '../backend/backend.dart';
 import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AccountPageWidget extends StatefulWidget {
   const AccountPageWidget({Key? key}) : super(key: key);
@@ -27,6 +29,8 @@ class AccountPageWidget extends StatefulWidget {
 }
 
 class _AccountPageWidgetState extends State<AccountPageWidget> {
+  ApiCallResponse? countryOutput;
+  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -549,12 +553,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Personal Infomation',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -613,12 +612,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Government Identification',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -678,12 +672,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Driver\'s License',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -737,12 +726,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Subscriptions',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -796,12 +780,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Vehicles',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -820,10 +799,118 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                   Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent('ACCOUNT_Container_swt8pa0e_ON_TAP');
+                        logFirebaseEvent('Container_Alert-Dialog');
+                        var confirmDialogResponse = await showDialog<bool>(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Referral Code'),
+                                  content: Text(
+                                      'Share your referral code to get attributed for referring new users to this application?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, false),
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, true),
+                                      child: Text('Confirm'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ) ??
+                            false;
+                        if (confirmDialogResponse) {
+                          logFirebaseEvent('Container_Share');
+                          await Share.share(
+                              '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following referral code with you. Add it to your profile so that he/she is attributed and recieves rewards: ${currentUserUid}');
+                          return;
+                        } else {
+                          return;
+                        }
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.attribution_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                child: Text(
+                                  'Attribution',
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                ),
+                              ),
+                            ),
+                            Icon(
+                              Icons.share_rounded,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    height: 0,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                  ),
+                  Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
-                    child: Text(
-                      'Legal',
-                      style: FlutterFlowTheme.of(context).subtitle1,
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'ACCOUNT_PAGE_PAGE_Text_2cbfru1e_ON_TAP');
+                        currentUserLocationValue = await getCurrentUserLocation(
+                            defaultLocation: LatLng(0.0, 0.0));
+                        logFirebaseEvent('Text_Backend-Call');
+                        countryOutput = await CountryAPICall.call(
+                          latlnginput: currentUserLocationValue?.toString(),
+                        );
+                        logFirebaseEvent('Text_Show-Snack-Bar');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              CountryAPICall.countryPath(
+                                (countryOutput?.jsonBody ?? ''),
+                              ).toString(),
+                              style: TextStyle(
+                                color: FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor: Color(0x00000000),
+                          ),
+                        );
+
+                        setState(() {});
+                      },
+                      child: Text(
+                        'Legal',
+                        style: FlutterFlowTheme.of(context).subtitle1,
+                      ),
                     ),
                   ),
                   Padding(
@@ -858,12 +945,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Terms of Service',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -882,7 +964,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 16),
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
@@ -913,12 +995,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                                 child: Text(
                                   'Privacy Policy',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -933,8 +1010,12 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     ),
                   ),
                   Divider(
-                    height: 0,
                     color: FlutterFlowTheme.of(context).secondaryText,
+                  ),
+                  Divider(
+                    height: 16,
+                    thickness: 0,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   if (valueOrDefault<bool>(currentUserDocument?.admin, false))
                     AuthUserStreamWidget(
@@ -944,7 +1025,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: Text(
                               'Admin',
                               style: FlutterFlowTheme.of(context).subtitle1,
@@ -990,11 +1071,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                         child: Text(
                                           'Approve Users',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),
@@ -1052,11 +1129,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                         child: Text(
                                           'Approve Drivers',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.normal,
-                                              ),
+                                              .bodyText1,
                                         ),
                                       ),
                                     ),

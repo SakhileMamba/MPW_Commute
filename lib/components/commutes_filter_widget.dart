@@ -17,10 +17,11 @@ class CommutesFilterWidget extends StatefulWidget {
 }
 
 class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
+  TextEditingController? textController;
+
   DateTime? datePicked;
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
-  TextEditingController? textController;
 
   @override
   void initState() {
@@ -319,6 +320,26 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                     ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,

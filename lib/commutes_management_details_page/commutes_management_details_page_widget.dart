@@ -1,12 +1,17 @@
 import '../auth/auth_util.dart';
+import '../backend/api_requests/api_calls.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
+import '../subscriptions_page/subscriptions_page_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +34,8 @@ class CommutesManagementDetailsPageWidget extends StatefulWidget {
 
 class _CommutesManagementDetailsPageWidgetState
     extends State<CommutesManagementDetailsPageWidget> {
+  ApiCallResponse? countryOutput;
+  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -79,7 +86,7 @@ class _CommutesManagementDetailsPageWidgetState
               },
             ),
             title: Text(
-              'Commute Details',
+              'Details',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Roboto',
                     color: Colors.white,
@@ -290,26 +297,13 @@ class _CommutesManagementDetailsPageWidgetState
                                                     '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText2
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                   Text(
                                                     cardUsersRecord.gender!,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                 ],
                                               ),
@@ -334,17 +328,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                     Icon(
                                                       Icons.star_rounded,
@@ -586,31 +570,14 @@ class _CommutesManagementDetailsPageWidgetState
                                                             '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                                .bodyText1,
                                                           ),
                                                           Text(
                                                             cardUsersRecord
                                                                 .gender!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
+                                                                .bodyText1,
                                                           ),
                                                         ],
                                                       ),
@@ -638,17 +605,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                       .center,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryColor,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
+                                                                  .bodyText1,
                                                             ),
                                                             Icon(
                                                               Icons
@@ -795,75 +752,446 @@ class _CommutesManagementDetailsPageWidgetState
                                                                 () async {
                                                               logFirebaseEvent(
                                                                   'COMMUTES_MANAGEMENT_DETAILS_ACCEPT_BTN_O');
+                                                              currentUserLocationValue =
+                                                                  await getCurrentUserLocation(
+                                                                      defaultLocation:
+                                                                          LatLng(
+                                                                              0.0,
+                                                                              0.0));
+                                                              var _shouldSetState =
+                                                                  false;
                                                               logFirebaseEvent(
                                                                   'Button_Backend-Call');
-
-                                                              final passengersUpdateData =
-                                                                  createPassengersRecordData(
-                                                                accepted: true,
-                                                                commuteDatetime:
-                                                                    commutesManagementDetailsPageCommutesRecord
-                                                                        .departureDatetime,
+                                                              countryOutput =
+                                                                  await CountryAPICall
+                                                                      .call(
+                                                                latlnginput:
+                                                                    currentUserLocationValue
+                                                                        ?.toString(),
                                                               );
-                                                              await listViewPassengersRecord
-                                                                  .reference
-                                                                  .update(
-                                                                      passengersUpdateData);
+                                                              _shouldSetState =
+                                                                  true;
                                                               logFirebaseEvent(
-                                                                  'Button_Backend-Call');
+                                                                  'Button_Update-Local-State');
+                                                              setState(() =>
+                                                                  FFAppState()
+                                                                          .country =
+                                                                      getJsonField(
+                                                                    (countryOutput
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$['results'][0]['address_components'][0]['long_name']''',
+                                                                  ).toString());
+                                                              if (FFAppState()
+                                                                      .country ==
+                                                                  'Eswatini') {
+                                                                if (cardUsersRecord
+                                                                    .verifiedUser!) {
+                                                                  if (cardUsersRecord
+                                                                      .verifiedDriver!) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_Backend-Call');
 
-                                                              final commutesUpdateData =
-                                                                  {
-                                                                'available_passenger_seats':
-                                                                    FieldValue
-                                                                        .increment(
-                                                                            -(1)),
-                                                              };
-                                                              await listViewPassengersRecord
-                                                                  .parentReference
-                                                                  .update(
-                                                                      commutesUpdateData);
-                                                              logFirebaseEvent(
-                                                                  'Button_Trigger-Push-Notification');
-                                                              triggerPushNotification(
-                                                                notificationTitle:
-                                                                    'Seat Request Accepted',
-                                                                notificationText:
-                                                                    'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
-                                                                notificationSound:
-                                                                    'default',
-                                                                userRefs: [
-                                                                  cardUsersRecord
-                                                                      .reference
-                                                                ],
-                                                                initialPageName:
-                                                                    'manage_commutes_passenger_page',
-                                                                parameterData: {},
-                                                              );
-                                                              logFirebaseEvent(
-                                                                  'Button_Alert-Dialog');
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    title: Text(
-                                                                        'Notice'),
-                                                                    content: Text(
-                                                                        'The user has been notified of your decision.'),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            'Ok'),
+                                                                    final passengersUpdateData =
+                                                                        createPassengersRecordData(
+                                                                      accepted:
+                                                                          true,
+                                                                      commuteDatetime:
+                                                                          commutesManagementDetailsPageCommutesRecord
+                                                                              .departureDatetime,
+                                                                    );
+                                                                    await listViewPassengersRecord
+                                                                        .reference
+                                                                        .update(
+                                                                            passengersUpdateData);
+                                                                    logFirebaseEvent(
+                                                                        'Button_Backend-Call');
+
+                                                                    final commutesUpdateData =
+                                                                        {
+                                                                      'available_passenger_seats':
+                                                                          FieldValue.increment(
+                                                                              -(1)),
+                                                                    };
+                                                                    await listViewPassengersRecord
+                                                                        .parentReference
+                                                                        .update(
+                                                                            commutesUpdateData);
+                                                                    logFirebaseEvent(
+                                                                        'Button_Trigger-Push-Notification');
+                                                                    triggerPushNotification(
+                                                                      notificationTitle:
+                                                                          'Seat Request Accepted',
+                                                                      notificationText:
+                                                                          'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                      notificationSound:
+                                                                          'default',
+                                                                      userRefs: [
+                                                                        cardUsersRecord
+                                                                            .reference
+                                                                      ],
+                                                                      initialPageName:
+                                                                          'manage_commutes_passenger_page',
+                                                                      parameterData: {},
+                                                                    );
+                                                                    logFirebaseEvent(
+                                                                        'Button_Alert-Dialog');
+                                                                    await showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (alertDialogContext) {
+                                                                        return AlertDialog(
+                                                                          title:
+                                                                              Text('Notice'),
+                                                                          content:
+                                                                              Text('The user has been notified of your decision.'),
+                                                                          actions: [
+                                                                            TextButton(
+                                                                              onPressed: () => Navigator.pop(alertDialogContext),
+                                                                              child: Text('Ok'),
+                                                                            ),
+                                                                          ],
+                                                                        );
+                                                                      },
+                                                                    );
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                    return;
+                                                                  } else {
+                                                                    logFirebaseEvent(
+                                                                        'Button_Alert-Dialog');
+                                                                    var confirmDialogResponse =
+                                                                        await showDialog<bool>(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Driver\'s License Verification'),
+                                                                                  content: Text('Please upload your driver\'s license and send a request to verify it.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                      child: Text('Cancel'),
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                      child: Text('Verify'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            ) ??
+                                                                            false;
+                                                                    if (confirmDialogResponse) {
+                                                                      logFirebaseEvent(
+                                                                          'Button_Navigate-To');
+                                                                      await Navigator
+                                                                          .push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              DriversLicenseUpdatePageWidget(),
+                                                                        ),
+                                                                      );
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    } else {
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                  }
+                                                                } else {
+                                                                  logFirebaseEvent(
+                                                                      'Button_Alert-Dialog');
+                                                                  var confirmDialogResponse =
+                                                                      await showDialog<
+                                                                              bool>(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Account Verification'),
+                                                                                content: Text('Your account is not verified.'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                    child: Text('Cancel'),
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                    child: Text('Verify'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          ) ??
+                                                                          false;
+                                                                  if (confirmDialogResponse) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_Navigate-To');
+                                                                    await Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                NavBarPage(initialPage: 'account_page'),
                                                                       ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
+                                                                    );
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                    return;
+                                                                  } else {
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                }
+                                                              } else {
+                                                                logFirebaseEvent(
+                                                                    'Button_Revenue-Cat');
+                                                                final isEntitled =
+                                                                    await revenue_cat
+                                                                        .isEntitled(
+                                                                            'Driver Access');
+                                                                if (isEntitled ==
+                                                                    null) {
+                                                                  return;
+                                                                } else if (!isEntitled) {
+                                                                  await revenue_cat
+                                                                      .loadOfferings();
+                                                                }
+
+                                                                if (isEntitled) {
+                                                                  if (cardUsersRecord
+                                                                      .verifiedUser!) {
+                                                                    if (cardUsersRecord
+                                                                        .verifiedDriver!) {
+                                                                      logFirebaseEvent(
+                                                                          'Button_Backend-Call');
+
+                                                                      final passengersUpdateData =
+                                                                          createPassengersRecordData(
+                                                                        accepted:
+                                                                            true,
+                                                                        commuteDatetime:
+                                                                            commutesManagementDetailsPageCommutesRecord.departureDatetime,
+                                                                      );
+                                                                      await listViewPassengersRecord
+                                                                          .reference
+                                                                          .update(
+                                                                              passengersUpdateData);
+                                                                      logFirebaseEvent(
+                                                                          'Button_Backend-Call');
+
+                                                                      final commutesUpdateData =
+                                                                          {
+                                                                        'available_passenger_seats':
+                                                                            FieldValue.increment(-(1)),
+                                                                      };
+                                                                      await listViewPassengersRecord
+                                                                          .parentReference
+                                                                          .update(
+                                                                              commutesUpdateData);
+                                                                      logFirebaseEvent(
+                                                                          'Button_Trigger-Push-Notification');
+                                                                      triggerPushNotification(
+                                                                        notificationTitle:
+                                                                            'Seat Request Accepted',
+                                                                        notificationText:
+                                                                            'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                        notificationSound:
+                                                                            'default',
+                                                                        userRefs: [
+                                                                          cardUsersRecord
+                                                                              .reference
+                                                                        ],
+                                                                        initialPageName:
+                                                                            'manage_commutes_passenger_page',
+                                                                        parameterData: {},
+                                                                      );
+                                                                      logFirebaseEvent(
+                                                                          'Button_Alert-Dialog');
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text('Notice'),
+                                                                            content:
+                                                                                Text('The user has been notified of your decision.'),
+                                                                            actions: [
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                child: Text('Ok'),
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        },
+                                                                      );
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    } else {
+                                                                      logFirebaseEvent(
+                                                                          'Button_Alert-Dialog');
+                                                                      var confirmDialogResponse = await showDialog<
+                                                                              bool>(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Driver\'s License Verification'),
+                                                                                content: Text('Please upload your driver\'s license and send a request to verify it.'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                    child: Text('Cancel'),
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                    child: Text('Verify'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          ) ??
+                                                                          false;
+                                                                      if (confirmDialogResponse) {
+                                                                        logFirebaseEvent(
+                                                                            'Button_Navigate-To');
+                                                                        await Navigator
+                                                                            .push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                DriversLicenseUpdatePageWidget(),
+                                                                          ),
+                                                                        );
+                                                                        if (_shouldSetState)
+                                                                          setState(
+                                                                              () {});
+                                                                        return;
+                                                                      } else {
+                                                                        if (_shouldSetState)
+                                                                          setState(
+                                                                              () {});
+                                                                        return;
+                                                                      }
+                                                                    }
+                                                                  } else {
+                                                                    logFirebaseEvent(
+                                                                        'Button_Alert-Dialog');
+                                                                    var confirmDialogResponse =
+                                                                        await showDialog<bool>(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Account Verification'),
+                                                                                  content: Text('Your account is not verified.'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                      child: Text('Cancel'),
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                      child: Text('Verify'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            ) ??
+                                                                            false;
+                                                                    if (confirmDialogResponse) {
+                                                                      logFirebaseEvent(
+                                                                          'Button_Navigate-To');
+                                                                      await Navigator
+                                                                          .push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              NavBarPage(initialPage: 'account_page'),
+                                                                        ),
+                                                                      );
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    } else {
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                  }
+                                                                } else {
+                                                                  logFirebaseEvent(
+                                                                      'Button_Alert-Dialog');
+                                                                  var confirmDialogResponse =
+                                                                      await showDialog<
+                                                                              bool>(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Driver Subscription'),
+                                                                                content: Text('To accept passengers into your commute, please subscribe.'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                    child: Text('Cancel'),
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                    child: Text('Subscribe'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          ) ??
+                                                                          false;
+                                                                  if (confirmDialogResponse) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_Navigate-To');
+                                                                    await Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                SubscriptionsPageWidget(),
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+
+                                                                  if (_shouldSetState)
+                                                                    setState(
+                                                                        () {});
+                                                                  return;
+                                                                }
+                                                              }
+
+                                                              if (_shouldSetState)
+                                                                setState(() {});
                                                             },
                                                             text: 'Accept',
                                                             icon: Icon(

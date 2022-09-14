@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import '../list_vehicles_page/list_vehicles_page_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,12 +21,17 @@ class AddVehiclePageWidget extends StatefulWidget {
 }
 
 class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
-  String uploadedFileUrl = '';
   TextEditingController? textController1;
+
   TextEditingController? textController2;
+
   TextEditingController? textController3;
+
   TextEditingController? textController4;
+
   TextEditingController? textController5;
+
+  String uploadedFileUrl = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -117,11 +121,28 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                          ),
                       maxLines: 1,
                     ),
                   ),
@@ -147,11 +168,28 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                          ),
                       maxLines: 1,
                     ),
                   ),
@@ -177,11 +215,28 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                          ),
                       maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
@@ -208,11 +263,28 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                          ),
                       maxLines: 1,
                     ),
                   ),
@@ -238,11 +310,28 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
+                      style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                          ),
                       maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
@@ -253,7 +342,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Text(
                         'Image',
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
                   ),
@@ -507,14 +596,8 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                   logFirebaseEvent('Button_Update-Local-State');
                                   setState(() => FFAppState()
                                       .backButtonFileUpload = false);
-                                  logFirebaseEvent('Button_Navigate-To');
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ListVehiclesPageWidget(),
-                                    ),
-                                  );
+                                  logFirebaseEvent('Button_Navigate-Back');
+                                  Navigator.pop(context);
                                 },
                                 text: 'Save',
                                 icon: Icon(
@@ -602,6 +685,10 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                               () => FFAppState().backButtonFileUpload = true);
                         },
                         text: 'Upload New',
+                        icon: Icon(
+                          Icons.upload_rounded,
+                          size: 15,
+                        ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 50,

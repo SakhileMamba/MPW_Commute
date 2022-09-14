@@ -21,6 +21,7 @@ class ListVehiclesPageWidget extends StatefulWidget {
 
 class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
   TextEditingController? textController;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -116,120 +117,122 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                   ),
                 );
               }
-              List<VehiclesRecord> columnVehiclesRecordList = snapshot.data!;
-              return SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: List.generate(columnVehiclesRecordList.length,
-                      (columnIndex) {
-                    final columnVehiclesRecord =
-                        columnVehiclesRecordList[columnIndex];
-                    return Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: columnVehiclesRecord.imageURL!,
-                            width: MediaQuery.of(context).size.width,
-                            fit: BoxFit.cover,
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: TextFormField(
-                              controller: textController ??=
-                                  TextEditingController(
-                                text:
-                                    '${columnVehiclesRecord.year} ${columnVehiclesRecord.make} ${columnVehiclesRecord.model}',
-                              ),
-                              readOnly: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Description',
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+              List<VehiclesRecord> listViewVehiclesRecordList = snapshot.data!;
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.vertical,
+                itemCount: listViewVehiclesRecordList.length,
+                itemBuilder: (context, listViewIndex) {
+                  final listViewVehiclesRecord =
+                      listViewVehiclesRecordList[listViewIndex];
+                  return Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: listViewVehiclesRecord.imageURL!,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                          child: TextFormField(
+                            controller: textController ??=
+                                TextEditingController(
+                              text:
+                                  '${listViewVehiclesRecord.year} ${listViewVehiclesRecord.make} ${listViewVehiclesRecord.model}',
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'LIST_VEHICLES_ARCHIVE_VEHICLE_BTN_ON_TAP');
-                                logFirebaseEvent('Button_Alert-Dialog');
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text('Confirmation'),
-                                              content: Text(
-                                                  'Are you sure you want to archive this vehicle? You will not be able to access it again.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('Confirm'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                if (confirmDialogResponse) {
-                                  logFirebaseEvent('Button_Backend-Call');
-
-                                  final vehiclesUpdateData =
-                                      createVehiclesRecordData(
-                                    archived: true,
-                                  );
-                                  await columnVehiclesRecord.reference
-                                      .update(vehiclesUpdateData);
-                                  return;
-                                } else {
-                                  return;
-                                }
-                              },
-                              text: 'Archive Vehicle',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
+                            readOnly: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Description',
+                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              focusedErrorBorder: InputBorder.none,
+                            ),
+                            style:
+                                FlutterFlowTheme.of(context).bodyText2.override(
                                       fontFamily: 'Roboto',
-                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                elevation: 8,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'LIST_VEHICLES_ARCHIVE_BTN_ON_TAP');
+                              logFirebaseEvent('Button_Alert-Dialog');
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Confirmation'),
+                                            content: Text(
+                                                'Are you sure you want to archive this vehicle? You will not be able to access it again.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Confirm'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              if (confirmDialogResponse) {
+                                logFirebaseEvent('Button_Backend-Call');
+
+                                final vehiclesUpdateData =
+                                    createVehiclesRecordData(
+                                  archived: true,
+                                );
+                                await listViewVehiclesRecord.reference
+                                    .update(vehiclesUpdateData);
+                                return;
+                              } else {
+                                return;
+                              }
+                            },
+                            text: 'Archive',
+                            icon: Icon(
+                              Icons.archive_rounded,
+                              size: 15,
+                            ),
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 50,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 8,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
                               ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               );
             },
           ),

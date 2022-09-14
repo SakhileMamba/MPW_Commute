@@ -1,3 +1,4 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -16,7 +17,9 @@ class SubscriptionsPageWidget extends StatefulWidget {
 }
 
 class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
+  ApiCallResponse? countryOutput;
   bool? purchaseCompleted;
+  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -50,7 +53,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
           },
         ),
         title: Text(
-          'Subscriptions',
+          'Subscription',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Roboto',
                 color: FlutterFlowTheme.of(context).primaryBackground,
@@ -110,9 +113,9 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                         child: Text(
                           'To gain the privilege of scheduling and managing commutes as a driver, you are required to subscribe.',
                           style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
+                              FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.w500,
                                   ),
                         ),
                       ),
@@ -122,11 +125,51 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('SUBSCRIPTIONS_SUBSCRIBE_BTN_ON_TAP');
-                      logFirebaseEvent('Button_Revenue-Cat');
-                      purchaseCompleted = await revenue_cat.purchasePackage(
-                          revenue_cat.offerings!.current!.monthly!.identifier);
+                      currentUserLocationValue = await getCurrentUserLocation(
+                          defaultLocation: LatLng(0.0, 0.0));
+                      var _shouldSetState = false;
+                      logFirebaseEvent('Button_Backend-Call');
+                      countryOutput = await CountryAPICall.call(
+                        latlnginput: currentUserLocationValue?.toString(),
+                      );
+                      _shouldSetState = true;
+                      logFirebaseEvent('Button_Update-Local-State');
+                      setState(() => FFAppState().country = getJsonField(
+                            (countryOutput?.jsonBody ?? ''),
+                            r'''$['results'][0]['address_components'][0]['long_name']''',
+                          ).toString());
+                      if (FFAppState().country == 'Eswatini') {
+                        logFirebaseEvent('Button_Alert-Dialog');
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Free Usage'),
+                              content:
+                                  Text('This app is free to use in Eswatini.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        if (_shouldSetState) setState(() {});
+                        return;
+                      } else {
+                        logFirebaseEvent('Button_Revenue-Cat');
+                        purchaseCompleted = await revenue_cat.purchasePackage(
+                            revenue_cat
+                                .offerings!.current!.monthly!.identifier);
+                        _shouldSetState = true;
+                        if (_shouldSetState) setState(() {});
+                        return;
+                      }
 
-                      setState(() {});
+                      if (_shouldSetState) setState(() {});
                     },
                     text: 'Subscribe',
                     options: FFButtonOptions(

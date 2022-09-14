@@ -1,3 +1,4 @@
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -38,8 +39,24 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () async {
+            logFirebaseEvent('FILTER_COMMUTES_arrow_back_rounded_ICN_O');
+            logFirebaseEvent('IconButton_Navigate-Back');
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
-          'Filter Commutes',
+          'Filters',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
                 color: Colors.white,
@@ -60,218 +77,171 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                            child: Text(
-                              'Origin',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                            ),
-                          ),
-                          FlutterFlowPlacePicker(
-                            iOSGoogleMapsApiKey:
-                                'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
-                            androidGoogleMapsApiKey:
-                                'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
-                            webGoogleMapsApiKey:
-                                'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
-                            onSelect: (place) async {
-                              setState(() => placePickerValue1 = place);
-                            },
-                            defaultText: 'Please select',
-                            icon: Icon(
-                              Icons.trip_origin_rounded,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            buttonOptions: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ],
+                  Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                      child: Text(
+                        'Origin',
+                        style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                    child: FlutterFlowPlacePicker(
+                      iOSGoogleMapsApiKey:
+                          'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                      androidGoogleMapsApiKey:
+                          'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                      webGoogleMapsApiKey:
+                          'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                      onSelect: (place) async {
+                        setState(() => placePickerValue1 = place);
+                      },
+                      defaultText: 'Please select',
+                      icon: Icon(
+                        Icons.trip_origin_rounded,
+                        color: Colors.white,
+                        size: 24,
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                            child: Text(
-                              'Destination',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
-                            ),
-                          ),
-                          FlutterFlowPlacePicker(
-                            iOSGoogleMapsApiKey:
-                                'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
-                            androidGoogleMapsApiKey:
-                                'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
-                            webGoogleMapsApiKey:
-                                'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
-                            onSelect: (place) async {
-                              setState(() => placePickerValue2 = place);
-                            },
-                            defaultText: 'Please select',
-                            icon: Icon(
-                              Icons.place,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            buttonOptions: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ],
+                      buttonOptions: FFButtonOptions(
+                        width: double.infinity,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                      child: Text(
+                        'Destination',
+                        style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                    child: FlutterFlowPlacePicker(
+                      iOSGoogleMapsApiKey:
+                          'AIzaSyBv2c71scP8DWTtc-zAmpCniS3HgVP8vFM',
+                      androidGoogleMapsApiKey:
+                          'AIzaSyCDdREB-y1l84iC_QLbgPNlVDPeK7euRsg',
+                      webGoogleMapsApiKey:
+                          'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
+                      onSelect: (place) async {
+                        setState(() => placePickerValue2 = place);
+                      },
+                      defaultText: 'Please select',
+                      icon: Icon(
+                        Icons.location_pin,
+                        color: Colors.white,
+                        size: 24,
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                            child: Text(
-                              'Departure Date & Time',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Roboto',
+                      buttonOptions: FFButtonOptions(
+                        width: double.infinity,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                ),
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                      child: Text(
+                        'Departure Date & Time',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'FILTER_COMMUTES_Container_xdlj66wk_ON_TA');
+                        logFirebaseEvent('Container_Date-Time-Picker');
+                        await DatePicker.showDateTimePicker(
+                          context,
+                          showTitleActions: true,
+                          onConfirm: (date) {
+                            setState(() => datePicked = date);
+                          },
+                          currentTime: getCurrentTimestamp,
+                          minTime: getCurrentTimestamp,
+                          locale: LocaleType.values.firstWhere(
+                            (l) =>
+                                l.name ==
+                                FFLocalizations.of(context).languageCode,
+                            orElse: () => LocaleType.en,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primaryText,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .primaryBtnText,
                                   ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'FILTER_COMMUTES_Container_xdlj66wk_ON_TA');
-                              logFirebaseEvent('Container_Date-Time-Picker');
-                              await DatePicker.showDateTimePicker(
-                                context,
-                                showTitleActions: true,
-                                onConfirm: (date) {
-                                  setState(() => datePicked = date);
-                                },
-                                currentTime: getCurrentTimestamp,
-                                minTime: getCurrentTimestamp,
-                                locale: LocaleType.values.firstWhere(
-                                  (l) =>
-                                      l.name ==
-                                      FFLocalizations.of(context).languageCode,
-                                  orElse: () => LocaleType.en,
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  child: Text(
+                                    dateTimeFormat('d/M H:mm', datePicked),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBtnText,
-                                        ),
-                                        child: Text(
-                                          dateTimeFormat(
-                                              'd/M H:mm', datePicked),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
-                                        ),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.access_time_rounded,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
-                                  ],
-                                ),
+                              Icon(
+                                Icons.access_time_rounded,
+                                color: Colors.black,
+                                size: 24,
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -285,13 +255,28 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'FILTER_COMMUTES_CANCEL_BTN_ON_TAP');
-                              logFirebaseEvent('Button_Navigate-Back');
-                              Navigator.pop(context);
+                                  'FILTER_COMMUTES_CLEAR_BTN_ON_TAP');
+                              logFirebaseEvent('Button_Update-Local-State');
+                              setState(() => FFAppState().filterOrigin = '');
+                              logFirebaseEvent('Button_Update-Local-State');
+                              setState(
+                                  () => FFAppState().filterDestination = '');
+                              logFirebaseEvent('Button_Update-Local-State');
+                              setState(() =>
+                                  FFAppState().filterDepartureDatetime = null);
+                              logFirebaseEvent('Button_Navigate-To');
+                              await Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavBarPage(
+                                      initialPage: 'browse_commutes_page'),
+                                ),
+                                (r) => false,
+                              );
                             },
-                            text: 'Cancel',
+                            text: 'Clear',
                             icon: Icon(
-                              Icons.cancel_rounded,
+                              Icons.clear_rounded,
                               color: FlutterFlowTheme.of(context).primaryText,
                               size: 15,
                             ),
@@ -326,10 +311,10 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                   'FILTER_COMMUTES_FILTER_BTN_ON_TAP');
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState().filterOrigin =
-                                  placePickerValue1.address);
+                                  '${placePickerValue1.name}, ${placePickerValue1.address}');
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState().filterDestination =
-                                  placePickerValue2.address);
+                                  '${placePickerValue2.name}, ${placePickerValue2.address}');
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState()
                                   .filterDepartureDatetime = datePicked);
@@ -374,6 +359,138 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                       ),
                     ],
                   ),
+                  Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 8),
+                      child: Text(
+                        'Filter Summary',
+                        style: FlutterFlowTheme.of(context).title3,
+                      ),
+                    ),
+                  ),
+                  if (FFAppState().filterOrigin != null &&
+                      FFAppState().filterOrigin != '')
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                            child: Icon(
+                              Icons.trip_origin_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  FFAppState().filterOrigin,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (FFAppState().filterDestination != null &&
+                      FFAppState().filterDestination != '')
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                            child: Icon(
+                              Icons.location_pin,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  FFAppState().filterDestination,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (FFAppState().filterDepartureDatetime != null)
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                            child: Icon(
+                              Icons.access_time_rounded,
+                              color: Colors.black,
+                              size: 24,
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  '${dateTimeFormat('jm', FFAppState().filterDepartureDatetime)} ${dateTimeFormat('MMMEd', FFAppState().filterDepartureDatetime)}',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),

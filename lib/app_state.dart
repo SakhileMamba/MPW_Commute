@@ -77,6 +77,8 @@ class FFAppState {
   DateTime? userBirthDate;
 
   bool backButtonFileUpload = false;
+
+  String country = '';
 }
 
 LatLng? _latLngFromString(String? val) {

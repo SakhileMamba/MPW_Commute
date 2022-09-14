@@ -7,7 +7,7 @@ import 'verification_requests_record.dart';
 import 'passengers_record.dart';
 import 'messages_record.dart';
 import 'driver_verification_requests_record.dart';
-import 'in_app_urls_record.dart';
+import 'app_constants_record.dart';
 
 import 'index.dart';
 
@@ -25,7 +25,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   PassengersRecord,
   MessagesRecord,
   DriverVerificationRequestsRecord,
-  InAppUrlsRecord,
+  AppConstantsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

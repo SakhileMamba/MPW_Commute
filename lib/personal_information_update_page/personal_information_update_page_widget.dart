@@ -22,10 +22,15 @@ class PersonalInformationUpdatePageWidget extends StatefulWidget {
 
 class _PersonalInformationUpdatePageWidgetState
     extends State<PersonalInformationUpdatePageWidget> {
-  DateTime? datePicked;
   TextEditingController? textController1;
+
   TextEditingController? textController2;
+
   TextEditingController? textController3;
+
+  TextEditingController? textController4;
+
+  DateTime? datePicked;
   String? dropDownValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -38,6 +43,8 @@ class _PersonalInformationUpdatePageWidgetState
     textController2 = TextEditingController(
         text: valueOrDefault(currentUserDocument?.displaySurname, ''));
     textController3 = TextEditingController(text: currentPhoneNumber);
+    textController4 = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.referrersCode, ''));
   }
 
   @override
@@ -121,8 +128,26 @@ class _PersonalInformationUpdatePageWidgetState
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                          style:
+                              FlutterFlowTheme.of(context).bodyText2.override(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                       ),
                     ),
@@ -149,8 +174,26 @@ class _PersonalInformationUpdatePageWidgetState
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                          style:
+                              FlutterFlowTheme.of(context).bodyText2.override(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                         ),
                       ),
                     ),
@@ -178,8 +221,90 @@ class _PersonalInformationUpdatePageWidgetState
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                          style:
+                              FlutterFlowTheme.of(context).bodyText2.override(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                        ),
+                      ),
+                    ),
+                    if (valueOrDefault(
+                                currentUserDocument?.referrersCode, '') ==
+                            null ||
+                        valueOrDefault(
+                                currentUserDocument?.referrersCode, '') ==
+                            '')
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        child: AuthUserStreamWidget(
+                          child: TextFormField(
+                            controller: textController4,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'Referrer\'s Code',
+                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            style:
+                                FlutterFlowTheme.of(context).bodyText2.override(
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                          ),
+                        ),
+                      ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                        child: Text(
+                          'Birth Date',
+                          style: FlutterFlowTheme.of(context).bodyText2,
                         ),
                       ),
                     ),
@@ -226,11 +351,29 @@ class _PersonalInformationUpdatePageWidgetState
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
                             child: Text(
-                              dateTimeFormat(
-                                  'yMMMd', FFAppState().userBirthDate),
-                              style: FlutterFlowTheme.of(context).bodyText1,
+                              valueOrDefault<String>(
+                                dateTimeFormat(
+                                    'yMMMd', FFAppState().userBirthDate),
+                                'Select date',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             ),
                           ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                        child: Text(
+                          'Gender',
+                          style: FlutterFlowTheme.of(context).bodyText2,
                         ),
                       ),
                     ),
@@ -246,11 +389,11 @@ class _PersonalInformationUpdatePageWidgetState
                           width: MediaQuery.of(context).size.width,
                           height: 50,
                           textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
+                              FlutterFlowTheme.of(context).bodyText2.override(
                                     fontFamily: 'Roboto',
-                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                          hintText: 'Gender',
+                          hintText: 'Select gender',
                           fillColor: Colors.white,
                           elevation: 2,
                           borderColor: FlutterFlowTheme.of(context).primaryText,
@@ -261,68 +404,126 @@ class _PersonalInformationUpdatePageWidgetState
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'PERSONAL_INFORMATION_UPDATE_CANCEL_BTN_O');
-                                logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
-                              },
-                              text: 'Cancel',
-                              icon: Icon(
-                                Icons.cancel_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 15,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
+                    if (!valueOrDefault<bool>(
+                        currentUserDocument?.verifiedUser, false))
+                      AuthUserStreamWidget(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'PERSONAL_INFORMATION_UPDATE_CANCEL_BTN_O');
+                                    logFirebaseEvent('Button_Navigate-Back');
+                                    Navigator.pop(context);
+                                  },
+                                  text: 'Cancel',
+                                  icon: Icon(
+                                    Icons.cancel_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 15,
+                                  ),
+                                  options: FFButtonOptions(
+                                    width: 130,
+                                    height: 50,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                    elevation: 8,
+                                    borderSide: BorderSide(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
+                                      width: 1,
                                     ),
-                                elevation: 8,
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  width: 1,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'PERSONAL_INFORMATION_UPDATE_SAVE_BTN_ON_');
-                                if (textController1!.text != null &&
-                                    textController1!.text != '') {
-                                  if (textController2!.text != null &&
-                                      textController2!.text != '') {
-                                    if (dateTimeFormat('yMMMd',
-                                                FFAppState().userBirthDate) !=
-                                            null &&
-                                        dateTimeFormat('yMMMd',
-                                                FFAppState().userBirthDate) !=
-                                            '') {
-                                      if (!(dropDownValue != null &&
-                                          dropDownValue != '')) {
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'PERSONAL_INFORMATION_UPDATE_SAVE_BTN_ON_');
+                                    if (textController1!.text != null &&
+                                        textController1!.text != '') {
+                                      if (textController2!.text != null &&
+                                          textController2!.text != '') {
+                                        if (dateTimeFormat(
+                                                    'yMMMd',
+                                                    FFAppState()
+                                                        .userBirthDate) !=
+                                                null &&
+                                            dateTimeFormat(
+                                                    'yMMMd',
+                                                    FFAppState()
+                                                        .userBirthDate) !=
+                                                '') {
+                                          if (!(dropDownValue != null &&
+                                              dropDownValue != '')) {
+                                            logFirebaseEvent(
+                                                'Button_Alert-Dialog');
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      'Missing Profile Information'),
+                                                  content: Text(
+                                                      'Please choose your gender.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Continue'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            return;
+                                          }
+                                        } else {
+                                          logFirebaseEvent(
+                                              'Button_Alert-Dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Missing Profile Information'),
+                                                content: Text(
+                                                    'Please choose your date of birth.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Continue'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
+                                      } else {
                                         logFirebaseEvent('Button_Alert-Dialog');
                                         await showDialog(
                                           context: context,
@@ -331,7 +532,7 @@ class _PersonalInformationUpdatePageWidgetState
                                               title: Text(
                                                   'Missing Profile Information'),
                                               content: Text(
-                                                  'Please choose your gender.'),
+                                                  'Please input your surname.'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -354,7 +555,7 @@ class _PersonalInformationUpdatePageWidgetState
                                             title: Text(
                                                 'Missing Profile Information'),
                                             content: Text(
-                                                'Please choose your date of birth.'),
+                                                'Please input your name. '),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -367,103 +568,62 @@ class _PersonalInformationUpdatePageWidgetState
                                       );
                                       return;
                                     }
-                                  } else {
-                                    logFirebaseEvent('Button_Alert-Dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text(
-                                              'Missing Profile Information'),
-                                          content: Text(
-                                              'Please input your surname.'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Continue'),
-                                            ),
-                                          ],
-                                        );
-                                      },
+
+                                    logFirebaseEvent('Button_Backend-Call');
+
+                                    final usersUpdateData =
+                                        createUsersRecordData(
+                                      displayName: textController1!.text,
+                                      displaySurname: textController2!.text,
+                                      gender: dropDownValue,
+                                      birthDate: datePicked,
+                                      referrersCode: textController4!.text,
                                     );
-                                    return;
-                                  }
-                                } else {
-                                  logFirebaseEvent('Button_Alert-Dialog');
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title:
-                                            Text('Missing Profile Information'),
-                                        content:
-                                            Text('Please input your name. '),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                }
-
-                                logFirebaseEvent('Button_Backend-Call');
-
-                                final usersUpdateData = createUsersRecordData(
-                                  displayName: textController1!.text,
-                                  displaySurname: textController2!.text,
-                                  gender: dropDownValue,
-                                  birthDate: datePicked,
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                                logFirebaseEvent('Button_Navigate-To');
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        NavBarPage(initialPage: 'account_page'),
+                                    await currentUserReference!
+                                        .update(usersUpdateData);
+                                    logFirebaseEvent('Button_Navigate-To');
+                                    await Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NavBarPage(
+                                            initialPage: 'account_page'),
+                                      ),
+                                      (r) => false,
+                                    );
+                                  },
+                                  text: 'Save',
+                                  icon: Icon(
+                                    Icons.check_circle_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    size: 15,
                                   ),
-                                  (r) => false,
-                                );
-                              },
-                              text: 'Save',
-                              icon: Icon(
-                                Icons.check_circle_rounded,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                size: 15,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
+                                  options: FFButtonOptions(
+                                    width: 130,
+                                    height: 50,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBackground,
+                                        ),
+                                    elevation: 8,
+                                    borderSide: BorderSide(
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
+                                          .primaryColor,
+                                      width: 1,
                                     ),
-                                elevation: 8,
-                                borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  width: 1,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
                   ],
                 ),
               ),
