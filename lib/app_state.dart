@@ -81,7 +81,7 @@ class FFAppState {
   bool backButtonFileUpload = false;
 
   DocumentReference? _appConstantFreeApp =
-      FirebaseFirestore.instance.doc('/app_constants/\nkOOn2yvmHgWV3k61xPRS');
+      FirebaseFirestore.instance.doc('/app_constants/kOOn2yvmHgWV3k61xPRS');
   DocumentReference? get appConstantFreeApp => _appConstantFreeApp;
   set appConstantFreeApp(DocumentReference? _value) {
     if (_value == null) {

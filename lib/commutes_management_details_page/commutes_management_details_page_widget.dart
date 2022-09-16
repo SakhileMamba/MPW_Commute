@@ -217,7 +217,7 @@ class _CommutesManagementDetailsPageWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding:
@@ -264,8 +264,8 @@ class _CommutesManagementDetailsPageWidgetState
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: Container(
-                                                    width: 120,
-                                                    height: 120,
+                                                    width: 50,
+                                                    height: 50,
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(
@@ -284,7 +284,7 @@ class _CommutesManagementDetailsPageWidgetState
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -307,55 +307,59 @@ class _CommutesManagementDetailsPageWidgetState
                                             ),
                                           ),
                                           if (cardUsersRecord.rating != null)
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      functions.twoDeci(
-                                                          cardUsersRecord
-                                                              .rating!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                      size: 18,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  '',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.normal,
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 10, 0, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Text(
+                                                        functions.twoDeci(
+                                                            cardUsersRecord
+                                                                .rating!),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1,
                                                       ),
-                                                ),
-                                              ],
+                                                      Icon(
+                                                        Icons.star_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        size: 18,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    '',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           if (currentUserReference ==
                                               commutesManagementDetailsPageCommutesRecord
                                                   .driver)
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(4, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
                                                 borderWidth: 1,
@@ -476,7 +480,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
@@ -529,8 +533,8 @@ class _CommutesManagementDetailsPageWidgetState
                                                           transitionOnUserGestures:
                                                               true,
                                                           child: Container(
-                                                            width: 120,
-                                                            height: 120,
+                                                            width: 50,
+                                                            height: 50,
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
@@ -555,7 +559,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8, 0, 0, 0),
+                                                                  4, 10, 0, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -582,52 +586,59 @@ class _CommutesManagementDetailsPageWidgetState
                                                   ),
                                                   if (cardUsersRecord.rating !=
                                                       null)
-                                                    Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Text(
-                                                              functions.twoDeci(
-                                                                  cardUsersRecord
-                                                                      .rating!),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .star_rounded,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryColor,
-                                                              size: 18,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Text(
-                                                          '',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 10, 0, 0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Text(
+                                                                functions.twoDeci(
+                                                                    cardUsersRecord
+                                                                        .rating!),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1,
                                                               ),
-                                                        ),
-                                                      ],
+                                                              Icon(
+                                                                Icons
+                                                                    .star_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 18,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Text(
+                                                            '',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                 ],
                                               ),

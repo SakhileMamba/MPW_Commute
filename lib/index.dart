@@ -16,14 +16,14 @@ export 'personal_information_update_page/personal_information_update_page_widget
     show PersonalInformationUpdatePageWidget;
 export 'list_vehicles_page/list_vehicles_page_widget.dart'
     show ListVehiclesPageWidget;
-export 'create_commute_page/create_commute_page_widget.dart'
-    show CreateCommutePageWidget;
 export 'filter_commutes_page/filter_commutes_page_widget.dart'
     show FilterCommutesPageWidget;
-export 'commutes_management_details_page/commutes_management_details_page_widget.dart'
-    show CommutesManagementDetailsPageWidget;
+export 'create_commute_page/create_commute_page_widget.dart'
+    show CreateCommutePageWidget;
 export 'add_vehicle_page/add_vehicle_page_widget.dart'
     show AddVehiclePageWidget;
+export 'commutes_management_details_page/commutes_management_details_page_widget.dart'
+    show CommutesManagementDetailsPageWidget;
 export 'subscriptions_page/subscriptions_page_widget.dart'
     show SubscriptionsPageWidget;
 export 'browse_commutes_details_page/browse_commutes_details_page_widget.dart'

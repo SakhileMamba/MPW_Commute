@@ -126,14 +126,17 @@ class _ProfilePictureUpdatePageWidgetState
                           'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                         ),
                         transitionOnUserGestures: true,
-                        child: CachedNetworkImage(
-                          imageUrl: valueOrDefault<String>(
-                            FFAppState().currentPhotoURLTemp,
-                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl: valueOrDefault<String>(
+                              FFAppState().currentPhotoURLTemp,
+                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 250,
+                            fit: BoxFit.cover,
                           ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

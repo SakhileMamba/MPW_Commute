@@ -808,10 +808,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                               final commutesCreateData =
                                   createCommutesRecordData(
-                                origin:
-                                    '${placePickerValue1.name}, ${placePickerValue1.city}, ${placePickerValue1.state}, ${placePickerValue1.country}',
-                                destination:
-                                    '${placePickerValue2.name}, ${placePickerValue2.city}, ${placePickerValue2.state}, ${placePickerValue2.country}',
+                                origin: placePickerValue1.name,
+                                destination: placePickerValue2.name,
                                 availablePassengerSeats:
                                     int.parse(textController1!.text),
                                 pricePerSeat:
@@ -822,6 +820,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 driversRating: valueOrDefault(
                                     currentUserDocument?.rating, 0.0),
                                 currency: FFAppState().pickedCurrency,
+                                originAddress: placePickerValue1.address,
+                                destinationAddress: placePickerValue2.address,
                               );
                               await CommutesRecord.collection
                                   .doc()

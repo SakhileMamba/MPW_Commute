@@ -166,7 +166,7 @@ class _BrowseCommutesDetailsPageWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding:
@@ -213,8 +213,8 @@ class _BrowseCommutesDetailsPageWidgetState
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: Container(
-                                                    width: 120,
-                                                    height: 120,
+                                                    width: 50,
+                                                    height: 50,
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(
@@ -233,7 +233,7 @@ class _BrowseCommutesDetailsPageWidgetState
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -258,7 +258,7 @@ class _BrowseCommutesDetailsPageWidgetState
                                           if (cardUsersRecord.rating != null)
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:

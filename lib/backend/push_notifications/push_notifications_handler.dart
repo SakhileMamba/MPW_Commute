@@ -90,13 +90,13 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
   'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
+  'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'commutes_management_details_page': (data) async =>
       CommutesManagementDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
-  'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'subscriptions_page': (data) async => SubscriptionsPageWidget(),
   'browse_commutes_details_page': (data) async =>
       BrowseCommutesDetailsPageWidget(
