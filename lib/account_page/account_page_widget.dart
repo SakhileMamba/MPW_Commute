@@ -45,14 +45,14 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                  child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -503,666 +503,618 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                    child: Text(
-                      'Account Settings',
-                      style: FlutterFlowTheme.of(context).title3,
-                    ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                  child: Text(
+                    'Account Settings',
+                    style: FlutterFlowTheme.of(context).title3,
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_l9apwpbl_ON_TAP');
-                        logFirebaseEvent('Container_Update-Local-State');
-                        setState(() => FFAppState().userBirthDate =
-                            currentUserDocument!.birthDate);
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                PersonalInformationUpdatePageWidget(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_l9apwpbl_ON_TAP');
+                      logFirebaseEvent('Container_Update-Local-State');
+                      setState(() => FFAppState().userBirthDate =
+                          currentUserDocument!.birthDate);
+                      logFirebaseEvent('Container_Navigate-To');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PersonalInformationUpdatePageWidget(),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.person_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Personal Infomation',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_l96ezqyu_ON_TAP');
-                        logFirebaseEvent('Container_Update-Local-State');
-                        setState(() => FFAppState().currentPhotoURLTempID =
-                            valueOrDefault(
-                                currentUserDocument?.nationalIdPhotoUrl, ''));
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                GovernmentIdUpdatePageWidget(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.fingerprint_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Government Identification',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_16wxq3ky_ON_TAP');
-                        logFirebaseEvent('Container_Update-Local-State');
-                        setState(() => FFAppState().currentPhotoURLTempLicense =
-                            valueOrDefault(
-                                currentUserDocument?.driverLicensePhotoPath,
-                                ''));
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DriversLicenseUpdatePageWidget(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.idCard,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Driver\'s License',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_o7uudooc_ON_TAP');
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SubscriptionsPageWidget(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.monetization_on_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Subscriptions',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_yvgctdvf_ON_TAP');
-                        logFirebaseEvent('Container_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ListVehiclesPageWidget(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.directions_car_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Vehicles',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_swt8pa0e_ON_TAP');
-                        logFirebaseEvent('Container_Alert-Dialog');
-                        var confirmDialogResponse = await showDialog<bool>(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Referral Code'),
-                                  content: Text(
-                                      'Share your referral code to get attributed for referring new users to this application?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, true),
-                                      child: Text('Confirm'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ) ??
-                            false;
-                        if (confirmDialogResponse) {
-                          logFirebaseEvent('Container_Share');
-                          await Share.share(
-                              '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following referral code with you. Add it to your profile so that he/she is attributed and recieves rewards: ${currentUserUid}');
-                          return;
-                        } else {
-                          return;
-                        }
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.attribution_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Attribution',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.share_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                    child: Text(
-                      'Legal',
-                      style: FlutterFlowTheme.of(context).title3,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_fby6zkar_ON_TAP');
-                        logFirebaseEvent('Container_Launch-U-R-L');
-                        await launchURL(
-                            'https://commuteapp.blogspot.com/2022/09/terms-of-service.html');
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.menu_book_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Terms of Service',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 0,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
-                        logFirebaseEvent('Container_Launch-U-R-L');
-                        await launchURL(
-                            'https://commuteapp.blogspot.com/2022/09/privacy-policy.html');
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.privacy_tip_rounded,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Privacy Policy',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                              ),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                  ),
-                  if (valueOrDefault<bool>(currentUserDocument?.admin, false))
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                      child: AuthUserStreamWidget(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Text(
-                                'Admin',
-                                style: FlutterFlowTheme.of(context).title3,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'ACCOUNT_Container_7u1ncfd7_ON_TAP');
-                                  logFirebaseEvent('Container_Navigate-To');
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ApproveUsersPageWidget(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.admin_panel_settings_rounded,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            'Approve Users',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
-                                          ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: Colors.black,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'ACCOUNT_Container_7g0ib76l_ON_TAP');
-                                  logFirebaseEvent('Container_Navigate-To');
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ApproveDriversPageWidget(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.admin_panel_settings_rounded,
-                                        color: Colors.black,
-                                        size: 24,
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 0, 0),
-                                          child: Text(
-                                            'Approve Drivers',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1,
-                                          ),
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: Colors.black,
-                                        size: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Divider(
-                              height: 0,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
-                        logFirebaseEvent('Button_Auth');
-                        await signOut();
-                        await Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                PhoneAuthenticationPageWidget(),
-                          ),
-                          (r) => false,
-                        );
-                      },
-                      text: 'Logout',
-                      icon: Icon(
-                        Icons.logout,
-                        size: 24,
-                      ),
-                      options: FFButtonOptions(
-                        width: 130,
-                        height: 50,
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .bodyText2
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                            ),
-                        elevation: 8,
-                        borderSide: BorderSide(
-                          width: 1,
-                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Personal Infomation',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_l96ezqyu_ON_TAP');
+                      logFirebaseEvent('Container_Update-Local-State');
+                      setState(() => FFAppState().currentPhotoURLTempID =
+                          valueOrDefault(
+                              currentUserDocument?.nationalIdPhotoUrl, ''));
+                      logFirebaseEvent('Container_Navigate-To');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GovernmentIdUpdatePageWidget(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.fingerprint_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Government Identification',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_16wxq3ky_ON_TAP');
+                      logFirebaseEvent('Container_Update-Local-State');
+                      setState(() => FFAppState().currentPhotoURLTempLicense =
+                          valueOrDefault(
+                              currentUserDocument?.driverLicensePhotoPath, ''));
+                      logFirebaseEvent('Container_Navigate-To');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DriversLicenseUpdatePageWidget(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.idCard,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Driver\'s License',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_o7uudooc_ON_TAP');
+                      logFirebaseEvent('Container_Navigate-To');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SubscriptionsPageWidget(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.monetization_on_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Subscriptions',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_yvgctdvf_ON_TAP');
+                      logFirebaseEvent('Container_Navigate-To');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ListVehiclesPageWidget(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.directions_car_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Vehicles',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_swt8pa0e_ON_TAP');
+                      logFirebaseEvent('Container_Alert-Dialog');
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Referral Code'),
+                                content: Text(
+                                    'Share your referral code to get attributed for referring new users to this application?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirm'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      if (confirmDialogResponse) {
+                        logFirebaseEvent('Container_Share');
+                        await Share.share(
+                            '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following referral code with you. Add it to your profile so that he/she is attributed and recieves rewards: ${currentUserUid}');
+                        return;
+                      } else {
+                        return;
+                      }
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.attribution_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Attribution',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.share_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                  child: Text(
+                    'Legal',
+                    style: FlutterFlowTheme.of(context).title3,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_fby6zkar_ON_TAP');
+                      logFirebaseEvent('Container_Launch-U-R-L');
+                      await launchURL(
+                          'https://commuteapp.blogspot.com/2022/09/terms-of-service.html');
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.menu_book_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Terms of Service',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
+                      logFirebaseEvent('Container_Launch-U-R-L');
+                      await launchURL(
+                          'https://commuteapp.blogspot.com/2022/09/privacy-policy.html');
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.privacy_tip_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              child: Text(
+                                'Privacy Policy',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                if (valueOrDefault<bool>(currentUserDocument?.admin, false))
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    child: AuthUserStreamWidget(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            child: Text(
+                              'Admin',
+                              style: FlutterFlowTheme.of(context).title3,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'ACCOUNT_Container_7u1ncfd7_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ApproveUsersPageWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.admin_panel_settings_rounded,
+                                      color: Colors.black,
+                                      size: 24,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 0, 0),
+                                        child: Text(
+                                          'Approve Users',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'ACCOUNT_Container_7g0ib76l_ON_TAP');
+                                logFirebaseEvent('Container_Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ApproveDriversPageWidget(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.admin_panel_settings_rounded,
+                                      color: Colors.black,
+                                      size: 24,
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 0, 0),
+                                        child: Text(
+                                          'Approve Drivers',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1,
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
+                      logFirebaseEvent('Button_Auth');
+                      await signOut();
+                      await Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PhoneAuthenticationPageWidget(),
+                        ),
+                        (r) => false,
+                      );
+                    },
+                    text: 'Logout',
+                    icon: Icon(
+                      Icons.logout,
+                      size: 24,
+                    ),
+                    options: FFButtonOptions(
+                      width: 130,
+                      height: 50,
+                      color: FlutterFlowTheme.of(context).secondaryColor,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .bodyText2
+                          .override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                          ),
+                      elevation: 8,
+                      borderSide: BorderSide(
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

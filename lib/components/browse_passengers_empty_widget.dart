@@ -33,7 +33,7 @@ class _BrowsePassengersEmptyWidgetState
             ),
           ),
           Text(
-            'There are no passengers looking for drivers at the moment. Change your filters or try again later\n',
+            'There are no passengers looking for drivers at the moment. Change your filters or try again later.',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),

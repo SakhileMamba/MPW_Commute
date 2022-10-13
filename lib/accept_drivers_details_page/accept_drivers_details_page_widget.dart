@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/no_driver_requesting_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -88,7 +89,7 @@ class _AcceptDriversDetailsPageWidgetState
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                   child: Text(
-                    'New Requests',
+                    'Requests',
                     style: FlutterFlowTheme.of(context).title3.override(
                           fontFamily: 'Roboto',
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -116,6 +117,11 @@ class _AcceptDriversDetailsPageWidgetState
                       }
                       List<PickupRequestsRecord>
                           listViewPickupRequestsRecordList = snapshot.data!;
+                      if (listViewPickupRequestsRecordList.isEmpty) {
+                        return Center(
+                          child: NoDriverRequestingWidget(),
+                        );
+                      }
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,

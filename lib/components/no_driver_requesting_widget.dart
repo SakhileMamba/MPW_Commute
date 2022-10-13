@@ -5,15 +5,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BrowseDriversEmptyWidget extends StatefulWidget {
-  const BrowseDriversEmptyWidget({Key? key}) : super(key: key);
+class NoDriverRequestingWidget extends StatefulWidget {
+  const NoDriverRequestingWidget({Key? key}) : super(key: key);
 
   @override
-  _BrowseDriversEmptyWidgetState createState() =>
-      _BrowseDriversEmptyWidgetState();
+  _NoDriverRequestingWidgetState createState() =>
+      _NoDriverRequestingWidgetState();
 }
 
-class _BrowseDriversEmptyWidgetState extends State<BrowseDriversEmptyWidget> {
+class _NoDriverRequestingWidgetState extends State<NoDriverRequestingWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,7 +32,7 @@ class _BrowseDriversEmptyWidgetState extends State<BrowseDriversEmptyWidget> {
             ),
           ),
           Text(
-            'There are no drivers scheduled to commute at the moment. Change your filters or try again later.',
+            'There are no drivers requesting to pick you up at the moment.',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),

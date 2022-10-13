@@ -3,6 +3,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../commutes_management_details_page/commutes_management_details_page_widget.dart';
+import '../components/accept_driver_empty_widget.dart';
 import '../components/seats_empty_widget.dart';
 import '../create_passenger_seat_hail_page/create_passenger_seat_hail_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -46,20 +47,6 @@ class _ManageCommutesPassengerPageWidgetState
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            print('IconButton pressed ...');
-          },
-        ),
         title: Text(
           'Manange Seats',
           style: FlutterFlowTheme.of(context).title2.override(
@@ -1112,6 +1099,11 @@ class _ManageCommutesPassengerPageWidgetState
                           List<PassengersHailingRecord>
                               listViewPassengersHailingRecordList =
                               snapshot.data!;
+                          if (listViewPassengersHailingRecordList.isEmpty) {
+                            return Center(
+                              child: AcceptDriverEmptyWidget(),
+                            );
+                          }
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
