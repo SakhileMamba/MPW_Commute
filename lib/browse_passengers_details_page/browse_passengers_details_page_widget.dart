@@ -1,6 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/no_passengers_widget.dart';
+import '../components/no_drivers_widget.dart';
 import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -76,63 +76,108 @@ class _BrowsePassengersDetailsPageWidgetState
               ),
         ),
         actions: [
-          FutureBuilder<AppConstantsRecord>(
-            future: AppConstantsRecord.getDocumentOnce(
-                FFAppState().appConstantFreeApp!),
-            builder: (context, snapshot) {
-              // Customize what your widget looks like when it's loading.
-              if (!snapshot.hasData) {
-                return Center(
-                  child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: SpinKitChasingDots(
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      size: 50,
+          Visibility(
+            visible:
+                currentUserReference != widget.hailingDoc!.hailingPassenger,
+            child: FutureBuilder<AppConstantsRecord>(
+              future: AppConstantsRecord.getDocumentOnce(
+                  FFAppState().appConstantFreeApp!),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: SpinKitChasingDots(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        size: 50,
+                      ),
                     ),
+                  );
+                }
+                final sendSeatRequestIconAppConstantsRecord = snapshot.data!;
+                return FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  buttonSize: 60,
+                  icon: Icon(
+                    Icons.send_rounded,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 30,
                   ),
-                );
-              }
-              final sendSeatRequestIconAppConstantsRecord = snapshot.data!;
-              return FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30,
-                borderWidth: 1,
-                buttonSize: 60,
-                icon: Icon(
-                  Icons.send_rounded,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 30,
-                ),
-                onPressed: () async {
-                  logFirebaseEvent('BROWSE_PASSENGERS_DETAILS_sendSeatReques');
-                  if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
-                    if (functions.swaziNumberTest(currentPhoneNumber)) {
-                      if (valueOrDefault<bool>(
-                          currentUserDocument?.verifiedUser, false)) {
+                  onPressed: () async {
+                    logFirebaseEvent(
+                        'BROWSE_PASSENGERS_DETAILS_sendSeatReques');
+                    if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
+                      if (functions.swaziNumberTest(currentPhoneNumber)) {
                         if (valueOrDefault<bool>(
-                            currentUserDocument?.verifiedDriver, false)) {
-                          logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProposePassengerPickupPageWidget(
-                                passengerHail: widget.hailingDoc,
+                            currentUserDocument?.verifiedUser, false)) {
+                          if (valueOrDefault<bool>(
+                              currentUserDocument?.verifiedDriver, false)) {
+                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProposePassengerPickupPageWidget(
+                                  passengerHail: widget.hailingDoc,
+                                ),
                               ),
-                            ),
-                          );
-                          return;
+                            );
+                            return;
+                          } else {
+                            logFirebaseEvent(
+                                'sendSeatRequestIcon_Alert-Dialog');
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text(
+                                          'Driver\'s License Verification'),
+                                      content: Text(
+                                          'Please upload your driver\'s license and send a request to verify it.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Verify'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      DriversLicenseUpdatePageWidget(),
+                                ),
+                              );
+                              return;
+                            } else {
+                              return;
+                            }
+                          }
                         } else {
                           logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title:
-                                        Text('Driver\'s License Verification'),
-                                    content: Text(
-                                        'Please upload your driver\'s license and send a request to verify it.'),
+                                    title: Text('Account Verification'),
+                                    content:
+                                        Text('Your account is not verified.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(
@@ -155,7 +200,7 @@ class _BrowsePassengersDetailsPageWidgetState
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    DriversLicenseUpdatePageWidget(),
+                                    NavBarPage(initialPage: 'account_page'),
                               ),
                             );
                             return;
@@ -164,41 +209,153 @@ class _BrowsePassengersDetailsPageWidgetState
                           }
                         }
                       } else {
-                        logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                        var confirmDialogResponse = await showDialog<bool>(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Account Verification'),
-                                  content:
-                                      Text('Your account is not verified.'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, true),
-                                      child: Text('Verify'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ) ??
-                            false;
-                        if (confirmDialogResponse) {
-                          logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  NavBarPage(initialPage: 'account_page'),
-                            ),
-                          );
+                        logFirebaseEvent('sendSeatRequestIcon_Revenue-Cat');
+                        final isEntitled =
+                            await revenue_cat.isEntitled('Driver Access');
+                        if (isEntitled == null) {
                           return;
+                        } else if (!isEntitled) {
+                          await revenue_cat.loadOfferings();
+                        }
+
+                        if (isEntitled) {
+                          if (valueOrDefault<bool>(
+                              currentUserDocument?.verifiedUser, false)) {
+                            if (valueOrDefault<bool>(
+                                currentUserDocument?.verifiedDriver, false)) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProposePassengerPickupPageWidget(
+                                    passengerHail: widget.hailingDoc,
+                                  ),
+                                ),
+                              );
+                              return;
+                            } else {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_Alert-Dialog');
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                'Driver\'s License Verification'),
+                                            content: Text(
+                                                'Please upload your driver\'s license and send a request to verify it.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Verify'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              if (confirmDialogResponse) {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_Navigate-To');
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DriversLicenseUpdatePageWidget(),
+                                  ),
+                                );
+                                return;
+                              } else {
+                                return;
+                              }
+                            }
+                          } else {
+                            logFirebaseEvent(
+                                'sendSeatRequestIcon_Alert-Dialog');
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Account Verification'),
+                                      content:
+                                          Text('Your account is not verified.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Verify'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_Navigate-To');
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      NavBarPage(initialPage: 'account_page'),
+                                ),
+                              );
+                              return;
+                            } else {
+                              return;
+                            }
+                          }
                         } else {
+                          logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Driver Subscription'),
+                                    content: Text(
+                                        'To accept passengers into your commute, please subscribe.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('Subscribe'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubscriptionsPageWidget(),
+                              ),
+                            );
+                          } else {
+                            return;
+                          }
+
                           return;
                         }
                       }
@@ -349,154 +506,10 @@ class _BrowsePassengersDetailsPageWidgetState
                         return;
                       }
                     }
-                  } else {
-                    logFirebaseEvent('sendSeatRequestIcon_Revenue-Cat');
-                    final isEntitled =
-                        await revenue_cat.isEntitled('Driver Access');
-                    if (isEntitled == null) {
-                      return;
-                    } else if (!isEntitled) {
-                      await revenue_cat.loadOfferings();
-                    }
-
-                    if (isEntitled) {
-                      if (valueOrDefault<bool>(
-                          currentUserDocument?.verifiedUser, false)) {
-                        if (valueOrDefault<bool>(
-                            currentUserDocument?.verifiedDriver, false)) {
-                          logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProposePassengerPickupPageWidget(
-                                passengerHail: widget.hailingDoc,
-                              ),
-                            ),
-                          );
-                          return;
-                        } else {
-                          logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                          var confirmDialogResponse = await showDialog<bool>(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title:
-                                        Text('Driver\'s License Verification'),
-                                    content: Text(
-                                        'Please upload your driver\'s license and send a request to verify it.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: Text('Verify'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ) ??
-                              false;
-                          if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DriversLicenseUpdatePageWidget(),
-                              ),
-                            );
-                            return;
-                          } else {
-                            return;
-                          }
-                        }
-                      } else {
-                        logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                        var confirmDialogResponse = await showDialog<bool>(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Account Verification'),
-                                  content:
-                                      Text('Your account is not verified.'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, true),
-                                      child: Text('Verify'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ) ??
-                            false;
-                        if (confirmDialogResponse) {
-                          logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  NavBarPage(initialPage: 'account_page'),
-                            ),
-                          );
-                          return;
-                        } else {
-                          return;
-                        }
-                      }
-                    } else {
-                      logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                      var confirmDialogResponse = await showDialog<bool>(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('Driver Subscription'),
-                                content: Text(
-                                    'To accept passengers into your commute, please subscribe.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(
-                                        alertDialogContext, false),
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext, true),
-                                    child: Text('Subscribe'),
-                                  ),
-                                ],
-                              );
-                            },
-                          ) ??
-                          false;
-                      if (confirmDialogResponse) {
-                        logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SubscriptionsPageWidget(),
-                          ),
-                        );
-                      } else {
-                        return;
-                      }
-
-                      return;
-                    }
-                  }
-                },
-              );
-            },
+                  },
+                );
+              },
+            ),
           ),
         ],
         centerTitle: true,
@@ -860,7 +873,7 @@ class _BrowsePassengersDetailsPageWidgetState
                       List<PickupRequestsRecord>
                           listViewPickupRequestsRecordList = snapshot.data!;
                       if (listViewPickupRequestsRecordList.isEmpty) {
-                        return NoPassengersWidget();
+                        return NoDriversWidget();
                       }
                       return ListView.builder(
                         padding: EdgeInsets.zero,
