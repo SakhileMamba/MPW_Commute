@@ -18,7 +18,6 @@ class PhoneAuthenticationPageWidget extends StatefulWidget {
 class _PhoneAuthenticationPageWidgetState
     extends State<PhoneAuthenticationPageWidget> {
   TextEditingController? phoneNumberTextFieldController;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,6 +26,12 @@ class _PhoneAuthenticationPageWidgetState
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phone_authentication_page'});
     phoneNumberTextFieldController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    phoneNumberTextFieldController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,11 +57,7 @@ class _PhoneAuthenticationPageWidgetState
                     Text(
                       'Authentication',
                       textAlign: TextAlign.start,
-                      style: FlutterFlowTheme.of(context).title1.override(
-                            fontFamily: 'Roboto',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      style: FlutterFlowTheme.of(context).title3,
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
@@ -64,7 +65,7 @@ class _PhoneAuthenticationPageWidgetState
                         'Please enter your phone number below. Include your country\'s dialing code.',
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                             ),
                       ),
                     ),
@@ -115,7 +116,7 @@ class _PhoneAuthenticationPageWidgetState
                         ),
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                             ),
                         textAlign: TextAlign.start,
                         maxLines: 1,
@@ -159,10 +160,10 @@ class _PhoneAuthenticationPageWidgetState
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 50,
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                    color: Color(0xFF011638),
+                    textStyle: FlutterFlowTheme.of(context).bodyText2.override(
                           fontFamily: 'Roboto',
-                          color: Colors.white,
+                          color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                     elevation: 8,
                     borderSide: BorderSide(

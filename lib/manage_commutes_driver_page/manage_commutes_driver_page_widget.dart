@@ -40,6 +40,7 @@ class _ManageCommutesDriverPageWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -47,8 +48,7 @@ class _ManageCommutesDriverPageWidgetState
           'Commutes',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [
@@ -212,7 +212,6 @@ class _ManageCommutesDriverPageWidgetState
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -299,7 +298,7 @@ class _ManageCommutesDriverPageWidgetState
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 4),
+                                      0, 0, 0, 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -327,15 +326,10 @@ class _ManageCommutesDriverPageWidgetState
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Name: ${listViewCommutesRecord.origin}',
+                                                'Origin: ${listViewCommutesRecord.origin}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                        .bodyText1,
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -344,12 +338,7 @@ class _ManageCommutesDriverPageWidgetState
                                                   'Address: ${listViewCommutesRecord.originAddress}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                               ),
                                             ],
@@ -361,7 +350,7 @@ class _ManageCommutesDriverPageWidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 4),
+                                      0, 0, 0, 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -389,15 +378,10 @@ class _ManageCommutesDriverPageWidgetState
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Name: ${listViewCommutesRecord.destination}',
+                                                'Destination: ${listViewCommutesRecord.destination}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                        .bodyText1,
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -406,12 +390,7 @@ class _ManageCommutesDriverPageWidgetState
                                                   'Address: ${listViewCommutesRecord.destinationAddress}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                               ),
                                             ],
@@ -423,7 +402,7 @@ class _ManageCommutesDriverPageWidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 4),
+                                      0, 0, 0, 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -465,20 +444,18 @@ class _ManageCommutesDriverPageWidgetState
                                                     ),
                                                     child: Text(
                                                       dateTimeFormat(
-                                                          'jm',
-                                                          listViewCommutesRecord
-                                                              .departureDatetime!),
+                                                        'jm',
+                                                        listViewCommutesRecord
+                                                            .departureDatetime!,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      ),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -523,20 +500,18 @@ class _ManageCommutesDriverPageWidgetState
                                                     ),
                                                     child: Text(
                                                       dateTimeFormat(
-                                                          'MMMEd',
-                                                          listViewCommutesRecord
-                                                              .departureDatetime!),
+                                                        'MMMEd',
+                                                        listViewCommutesRecord
+                                                            .departureDatetime!,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      ),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -550,7 +525,7 @@ class _ManageCommutesDriverPageWidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 4),
+                                      0, 0, 0, 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -598,14 +573,7 @@ class _ManageCommutesDriverPageWidgetState
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -654,14 +622,7 @@ class _ManageCommutesDriverPageWidgetState
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -725,7 +686,21 @@ class _ManageCommutesDriverPageWidgetState
                                                 notificationTitle:
                                                     'Cancellation Notice',
                                                 notificationText:
-                                                    'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat('MMMMEEEEd', listViewCommutesRecord.departureDatetime)} at ${dateTimeFormat('jm', listViewCommutesRecord.departureDatetime)} has cancelled. Please find a different commute.',
+                                                    'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat(
+                                                  'MMMMEEEEd',
+                                                  listViewCommutesRecord
+                                                      .departureDatetime,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )} at ${dateTimeFormat(
+                                                  'jm',
+                                                  listViewCommutesRecord
+                                                      .departureDatetime,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )} has cancelled. Please find a different commute.',
                                                 notificationSound: 'default',
                                                 userRefs:
                                                     cardPassengersRecordList
@@ -755,23 +730,19 @@ class _ManageCommutesDriverPageWidgetState
                                             width: 130,
                                             height: 50,
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
+                                                .secondaryColor,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2
+                                                    .bodyText2
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
-                                                      fontSize: 16,
+                                                              .secondaryText,
                                                     ),
                                             elevation: 8,
                                             borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
                                               width: 1,
                                             ),
                                             borderRadius:
@@ -843,14 +814,16 @@ class _ManageCommutesDriverPageWidgetState
                                                 .primaryColor,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle2
+                                                    .bodyText2
                                                     .override(
                                                       fontFamily: 'Roboto',
-                                                      color: Colors.white,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
                                                     ),
                                             elevation: 8,
                                             borderSide: BorderSide(
-                                              color: Colors.transparent,
                                               width: 1,
                                             ),
                                             borderRadius:

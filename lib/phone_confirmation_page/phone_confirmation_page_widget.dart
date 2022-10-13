@@ -19,7 +19,6 @@ class PhoneConfirmationPageWidget extends StatefulWidget {
 class _PhoneConfirmationPageWidgetState
     extends State<PhoneConfirmationPageWidget> {
   TextEditingController? securityCodeTextFieldController;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,6 +34,12 @@ class _PhoneConfirmationPageWidgetState
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phone_confirmation_page'});
     securityCodeTextFieldController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    securityCodeTextFieldController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,16 +61,16 @@ class _PhoneConfirmationPageWidgetState
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Phone Confirmation',
-                      style: FlutterFlowTheme.of(context).title1,
+                      'Verification',
+                      style: FlutterFlowTheme.of(context).title3,
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                       child: Text(
-                        'Please enter the confirmation code we just sent to your phone number. Find it in your messages.',
+                        'Please enter the confirmation code we just sent to your phone number. Find it in your text messages.',
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                             ),
                       ),
                     ),
@@ -116,7 +121,7 @@ class _PhoneConfirmationPageWidgetState
                         ),
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.normal,
                             ),
                         textAlign: TextAlign.start,
                         maxLines: 1,
@@ -150,7 +155,7 @@ class _PhoneConfirmationPageWidgetState
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            NavBarPage(initialPage: 'browse_commutes_page'),
+                            NavBarPage(initialPage: 'browse_drivers_page'),
                       ),
                       (r) => false,
                     );
@@ -160,9 +165,9 @@ class _PhoneConfirmationPageWidgetState
                     width: double.infinity,
                     height: 50,
                     color: FlutterFlowTheme.of(context).primaryColor,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                    textStyle: FlutterFlowTheme.of(context).bodyText2.override(
                           fontFamily: 'Roboto',
-                          color: Colors.white,
+                          color: FlutterFlowTheme.of(context).secondaryText,
                         ),
                     elevation: 8,
                     borderSide: BorderSide(

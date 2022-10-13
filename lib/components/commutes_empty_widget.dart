@@ -36,17 +36,14 @@ class _CommutesEmptyWidgetState extends State<CommutesEmptyWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
               child: FaIcon(
                 FontAwesomeIcons.solidSadTear,
-                color: FlutterFlowTheme.of(context).primaryColor,
-                size: 150,
+                color: FlutterFlowTheme.of(context).secondaryColor,
+                size: 100,
               ),
             ),
             Text(
-              'You currently do not have any upcoming commutes scheduled. Press the \"add\" icon button in the appbar above to schedule one.',
+              'You currently do not have any upcoming commutes scheduled. Try scheduling a commute.',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyText2.override(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ],
         ),

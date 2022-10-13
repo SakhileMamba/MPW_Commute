@@ -36,17 +36,14 @@ class _SeatsEmptyWidgetState extends State<SeatsEmptyWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
               child: FaIcon(
                 FontAwesomeIcons.solidSadTear,
-                color: FlutterFlowTheme.of(context).primaryColor,
-                size: 150,
+                color: FlutterFlowTheme.of(context).secondaryColor,
+                size: 100,
               ),
             ),
             Text(
-              'You currently do not have a seat on any commute. Try sending a seat request in commutes listed in the seats tab from the bottom navigation bar below.',
+              'You currently do not have a seat on any commute. Try sending a seat request.',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyText2.override(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ],
         ),

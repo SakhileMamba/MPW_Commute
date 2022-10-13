@@ -1,5 +1,5 @@
 import '../backend/backend.dart';
-import '../browse_commutes_details_page/browse_commutes_details_page_widget.dart';
+import '../browse_drivers_details_page/browse_drivers_details_page_widget.dart';
 import '../components/browse_empty_widget.dart';
 import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -16,15 +16,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:page_transition/page_transition.dart';
 
-class BrowseCommutesPageWidget extends StatefulWidget {
-  const BrowseCommutesPageWidget({Key? key}) : super(key: key);
+class BrowseDriversPageWidget extends StatefulWidget {
+  const BrowseDriversPageWidget({Key? key}) : super(key: key);
 
   @override
-  _BrowseCommutesPageWidgetState createState() =>
-      _BrowseCommutesPageWidgetState();
+  _BrowseDriversPageWidgetState createState() =>
+      _BrowseDriversPageWidgetState();
 }
 
-class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
+class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
   PagingController<DocumentSnapshot?, CommutesRecord>? _pagingController;
   Query? _pagingQuery;
   List<StreamSubscription?> _streamSubscriptions = [];
@@ -36,14 +36,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('BROWSE_COMMUTES_browse_commutes_page_ON_');
-      logFirebaseEvent('browse_commutes_page_Update-Local-State');
+      logFirebaseEvent('BROWSE_DRIVERS_browse_drivers_page_ON_LO');
+      logFirebaseEvent('browse_drivers_page_Update-Local-State');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
       if (FFAppState().privacyPolicyAndTermsOfServiceAgreement) {
         return;
       }
 
-      logFirebaseEvent('browse_commutes_page_Alert-Dialog');
+      logFirebaseEvent('browse_drivers_page_Alert-Dialog');
       await showDialog(
         context: context,
         builder: (alertDialogContext) {
@@ -60,14 +60,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
           );
         },
       );
-      logFirebaseEvent('browse_commutes_page_Update-Local-State');
+      logFirebaseEvent('browse_drivers_page_Update-Local-State');
       setState(
           () => FFAppState().privacyPolicyAndTermsOfServiceAgreement = true);
       return;
     });
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'browse_commutes_page'});
+        parameters: {'screen_name': 'browse_drivers_page'});
   }
 
   @override
@@ -80,15 +80,15 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Browse',
+          'Browse Drivers',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [
@@ -103,7 +103,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
               size: 30,
             ),
             onPressed: () async {
-              logFirebaseEvent('BROWSE_COMMUTES_filter_list_rounded_ICN_');
+              logFirebaseEvent('BROWSE_DRIVERS_filter_list_rounded_ICN_O');
               logFirebaseEvent('IconButton_Navigate-To');
               await Navigator.push(
                 context,
@@ -117,13 +117,12 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: RefreshIndicator(
             onRefresh: () async {
-              logFirebaseEvent('BROWSE_COMMUTES_Column_rh28ie7s_ON_PULL_');
+              logFirebaseEvent('BROWSE_DRIVERS_Column_rh28ie7s_ON_PULL_T');
               logFirebaseEvent('ListView_Update-Local-State');
               setState(() =>
                   FFAppState().filterCurrentDateTime = getCurrentTimestamp);
@@ -257,13 +256,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                         return InkWell(
                           onTap: () async {
                             logFirebaseEvent(
-                                'BROWSE_COMMUTES_Card_64cz7cnr_ON_TAP');
+                                'BROWSE_DRIVERS_Card_64cz7cnr_ON_TAP');
                             logFirebaseEvent('Card_Navigate-To');
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    BrowseCommutesDetailsPageWidget(
+                                    BrowseDriversDetailsPageWidget(
                                   commuteRef: listViewCommutesRecord.reference,
                                 ),
                               ),
@@ -282,7 +281,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 4),
+                                        0, 0, 0, 8),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -293,7 +292,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'BROWSE_COMMUTES_CircleImage_lyk7aa0f_ON_');
+                                                'BROWSE_DRIVERS_CircleImage_lyk7aa0f_ON_T');
                                             logFirebaseEvent(
                                                 'CircleImage_Expand-Image');
                                             await Navigator.push(
@@ -360,12 +359,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                                 Text(
                                                   cardUsersRecord.gender!,
@@ -391,16 +385,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                                 Icon(
                                                   Icons.star_rounded,
@@ -417,7 +402,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 4),
+                                        0, 0, 0, 8),
                                     child: FutureBuilder<VehiclesRecord>(
                                       future: VehiclesRecord.getDocumentOnce(
                                           listViewCommutesRecord.vehicle!),
@@ -442,7 +427,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         return InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'BROWSE_COMMUTES_Image_cckz8ort_ON_TAP');
+                                                'BROWSE_DRIVERS_Image_cckz8ort_ON_TAP');
                                             logFirebaseEvent(
                                                 'Image_Expand-Image');
                                             await Navigator.push(
@@ -501,7 +486,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 4),
+                                        0, 0, 0, 8),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -531,15 +516,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Name: ${listViewCommutesRecord.origin}',
+                                                  'Origin: ${listViewCommutesRecord.origin}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
@@ -548,12 +528,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                     'Address: ${listViewCommutesRecord.originAddress}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                 ),
                                               ],
@@ -565,7 +540,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 4),
+                                        0, 0, 0, 8),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -595,15 +570,10 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Name: ${listViewCommutesRecord.destination}',
+                                                  'Destination: ${listViewCommutesRecord.destination}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
@@ -612,12 +582,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                     'Address: ${listViewCommutesRecord.destinationAddress}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
+                                                        .bodyText1,
                                                   ),
                                                 ),
                                               ],
@@ -629,7 +594,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 4),
+                                        0, 0, 0, 8),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
@@ -673,20 +638,18 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       ),
                                                       child: Text(
                                                         dateTimeFormat(
-                                                            'jm',
-                                                            listViewCommutesRecord
-                                                                .departureDatetime!),
+                                                          'jm',
+                                                          listViewCommutesRecord
+                                                              .departureDatetime!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
+                                                                .bodyText1,
                                                       ),
                                                     ),
                                                   ),
@@ -733,20 +696,18 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       ),
                                                       child: Text(
                                                         dateTimeFormat(
-                                                            'MMMEd',
-                                                            listViewCommutesRecord
-                                                                .departureDatetime!),
+                                                          'MMMEd',
+                                                          listViewCommutesRecord
+                                                              .departureDatetime!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
+                                                                .bodyText1,
                                                       ),
                                                     ),
                                                   ),
@@ -805,14 +766,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -861,14 +815,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                              ),
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),

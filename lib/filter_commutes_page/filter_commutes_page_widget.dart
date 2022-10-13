@@ -36,6 +36,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -59,15 +60,13 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
           'Filters',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -102,18 +101,19 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                       defaultText: 'Please select',
                       icon: Icon(
                         Icons.trip_origin_rounded,
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         size: 24,
                       ),
                       buttonOptions: FFButtonOptions(
                         width: double.infinity,
                         height: 50,
                         color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.white,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
@@ -147,18 +147,19 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                       defaultText: 'Please select',
                       icon: Icon(
                         Icons.location_pin,
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         size: 24,
                       ),
                       buttonOptions: FFButtonOptions(
                         width: double.infinity,
                         height: 50,
                         color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.white,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
@@ -224,7 +225,12 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                         .primaryBtnText,
                                   ),
                                   child: Text(
-                                    dateTimeFormat('d/M H:mm', datePicked),
+                                    dateTimeFormat(
+                                      'd/M H:mm',
+                                      datePicked,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText2
                                         .override(
@@ -269,7 +275,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => NavBarPage(
-                                      initialPage: 'browse_commutes_page'),
+                                      initialPage: 'browse_drivers_page'),
                                 ),
                                 (r) => false,
                               );
@@ -277,24 +283,23 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                             text: 'Clear',
                             icon: Icon(
                               Icons.clear_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
+                              color: FlutterFlowTheme.of(context).secondaryText,
                               size: 15,
                             ),
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'Roboto',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .secondaryText,
                                   ),
                               elevation: 8,
                               borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).primaryText,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
@@ -311,10 +316,10 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                   'FILTER_COMMUTES_FILTER_BTN_ON_TAP');
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState().filterOrigin =
-                                  '${placePickerValue1.name}, ${placePickerValue1.address}');
+                                  placePickerValue1.name);
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState().filterDestination =
-                                  '${placePickerValue2.name}, ${placePickerValue2.address}');
+                                  placePickerValue2.name);
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState()
                                   .filterDepartureDatetime = datePicked);
@@ -323,7 +328,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => NavBarPage(
-                                      initialPage: 'browse_commutes_page'),
+                                      initialPage: 'browse_drivers_page'),
                                 ),
                                 (r) => false,
                               );
@@ -340,16 +345,14 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                               height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'Roboto',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                        .secondaryText,
                                   ),
                               elevation: 8,
                               borderSide: BorderSide(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
@@ -359,16 +362,21 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                       ),
                     ],
                   ),
-                  Align(
-                    alignment: AlignmentDirectional(-1, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 8),
-                      child: Text(
-                        'Filter Summary',
-                        style: FlutterFlowTheme.of(context).title3,
+                  if ((FFAppState().filterOrigin != null &&
+                          FFAppState().filterOrigin != '') ||
+                      (FFAppState().filterDestination != null &&
+                          FFAppState().filterDestination != '') ||
+                      (FFAppState().filterDepartureDatetime != null))
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 8),
+                        child: Text(
+                          'Filter Summary',
+                          style: FlutterFlowTheme.of(context).subtitle1,
+                        ),
                       ),
                     ),
-                  ),
                   if (FFAppState().filterOrigin != null &&
                       FFAppState().filterOrigin != '')
                     Padding(
@@ -397,12 +405,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
                                   FFAppState().filterOrigin,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -438,12 +441,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
                                   FFAppState().filterDestination,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
@@ -477,13 +475,18 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  '${dateTimeFormat('jm', FFAppState().filterDepartureDatetime)} ${dateTimeFormat('MMMEd', FFAppState().filterDepartureDatetime)}',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  '${dateTimeFormat(
+                                    'jm',
+                                    FFAppState().filterDepartureDatetime,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  )} ${dateTimeFormat(
+                                    'MMMEd',
+                                    FFAppState().filterDepartureDatetime,
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  )}',
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
                             ),
