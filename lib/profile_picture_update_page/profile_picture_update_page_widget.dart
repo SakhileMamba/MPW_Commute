@@ -26,7 +26,9 @@ class ProfilePictureUpdatePageWidget extends StatefulWidget {
 
 class _ProfilePictureUpdatePageWidgetState
     extends State<ProfilePictureUpdatePageWidget> {
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -40,6 +42,7 @@ class _ProfilePictureUpdatePageWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -71,15 +74,13 @@ class _ProfilePictureUpdatePageWidgetState
           'Profile Picture',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -126,14 +127,17 @@ class _ProfilePictureUpdatePageWidgetState
                           'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                         ),
                         transitionOnUserGestures: true,
-                        child: CachedNetworkImage(
-                          imageUrl: valueOrDefault<String>(
-                            FFAppState().currentPhotoURLTemp,
-                            'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: CachedNetworkImage(
+                            imageUrl: valueOrDefault<String>(
+                              FFAppState().currentPhotoURLTemp,
+                              'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 250,
+                            fit: BoxFit.cover,
                           ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 250,
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -158,31 +162,36 @@ class _ProfilePictureUpdatePageWidgetState
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            showUploadMessage(
-                              context,
-                              'Uploading file...',
-                              showLoading: true,
-                            );
-                            final downloadUrls = (await Future.wait(
-                                    selectedMedia.map((m) async =>
-                                        await uploadData(
-                                            m.storagePath, m.bytes))))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            setState(() => isMediaUploading = true);
+                            var downloadUrls = <String>[];
+                            try {
+                              showUploadMessage(
+                                context,
+                                'Uploading file...',
+                                showLoading: true,
+                              );
+                              downloadUrls = (await Future.wait(
+                                selectedMedia.map(
+                                  (m) async =>
+                                      await uploadData(m.storagePath, m.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                            } finally {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              isMediaUploading = false;
+                            }
                             if (downloadUrls.length == selectedMedia.length) {
                               setState(
                                   () => uploadedFileUrl = downloadUrls.first);
-                              showUploadMessage(
-                                context,
-                                'Success!',
-                              );
+                              showUploadMessage(context, 'Success!');
                             } else {
+                              setState(() {});
                               showUploadMessage(
-                                context,
-                                'Failed to upload media',
-                              );
+                                  context, 'Failed to upload media');
                               return;
                             }
                           }
@@ -203,14 +212,15 @@ class _ProfilePictureUpdatePageWidgetState
                           width: double.infinity,
                           height: 50,
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyText2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
                           elevation: 8,
                           borderSide: BorderSide(
-                            color: Colors.transparent,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -247,20 +257,17 @@ class _ProfilePictureUpdatePageWidgetState
                               options: FFButtonOptions(
                                 width: 130,
                                 height: 50,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .bodyText2
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 16,
+                                          .secondaryText,
                                     ),
                                 elevation: 8,
                                 borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -332,14 +339,14 @@ class _ProfilePictureUpdatePageWidgetState
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .bodyText2
                                     .override(
                                       fontFamily: 'Roboto',
-                                      color: Colors.white,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
                                 elevation: 8,
                                 borderSide: BorderSide(
-                                  color: Colors.transparent,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

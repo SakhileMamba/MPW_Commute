@@ -67,12 +67,10 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
   @override
   Widget build(BuildContext context) => _loading
       ? Container(
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          child: Builder(
-            builder: (context) => Image.asset(
-              'assets/images/splash.png',
-              fit: BoxFit.cover,
-            ),
+          color: FlutterFlowTheme.of(context).primaryColor,
+          child: Image.asset(
+            'assets/images/Commute_2160px_logo.png',
+            fit: BoxFit.scaleDown,
           ),
         )
       : widget.child;
@@ -81,33 +79,55 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'phone_authentication_page': (data) async => PhoneAuthenticationPageWidget(),
   'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
-  'manage_commutes_passenger_page': (data) async =>
-      NavBarPage(initialPage: 'manage_commutes_passenger_page'),
+  'browse_passengers_page': (data) async =>
+      NavBarPage(initialPage: 'browse_passengers_page'),
   'manage_commutes_driver_page': (data) async =>
       NavBarPage(initialPage: 'manage_commutes_driver_page'),
+  'manage_commutes_passenger_page': (data) async =>
+      NavBarPage(initialPage: 'manage_commutes_passenger_page'),
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
-  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
-  'personal_information_update_page': (data) async =>
-      PersonalInformationUpdatePageWidget(),
-  'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
-  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
+  'browse_drivers_details_page': (data) async => BrowseDriversDetailsPageWidget(
+        commuteRef: getParameter(data, 'commuteRef'),
+      ),
   'commutes_management_details_page': (data) async =>
       CommutesManagementDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
+  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
+  'personal_information_update_page': (data) async =>
+      PersonalInformationUpdatePageWidget(),
+  'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
+  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
+  'create_commute_page': (data) async => CreateCommutePageWidget(),
   'add_vehicle_page': (data) async => AddVehiclePageWidget(),
   'subscriptions_page': (data) async => SubscriptionsPageWidget(),
-  'browse_commutes_details_page': (data) async =>
-      BrowseCommutesDetailsPageWidget(
-        commuteRef: getParameter(data, 'commuteRef'),
-      ),
   'profile_picture_update_Page': (data) async =>
       ProfilePictureUpdatePageWidget(),
   'drivers_license_update_page': (data) async =>
       DriversLicenseUpdatePageWidget(),
   'approve_drivers_page': (data) async => ApproveDriversPageWidget(),
   'approve_users_page': (data) async => ApproveUsersPageWidget(),
+  'update_user_first_name': (data) async => UpdateUserFirstNameWidget(),
+  'update_user_surname': (data) async => UpdateUserSurnameWidget(),
+  'success_lottie': (data) async => SuccessLottieWidget(),
+  'propose_passenger_pickup_page': (data) async =>
+      ProposePassengerPickupPageWidget(
+        passengerHail: await getDocumentParameter(
+            data, 'passengerHail', PassengersHailingRecord.serializer),
+      ),
+  'create_passenger_seat_hail_page': (data) async =>
+      CreatePassengerSeatHailPageWidget(),
+  'browse_passengers_details_page': (data) async =>
+      BrowsePassengersDetailsPageWidget(
+        hailingDoc: await getDocumentParameter(
+            data, 'hailingDoc', PassengersHailingRecord.serializer),
+        passenger: await getDocumentParameter(
+            data, 'passenger', UsersRecord.serializer),
+      ),
+  'accept_drivers_details_page': (data) async => AcceptDriversDetailsPageWidget(
+        hailDoc: await getDocumentParameter(
+            data, 'hailDoc', PassengersHailingRecord.serializer),
+      ),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

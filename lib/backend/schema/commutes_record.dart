@@ -32,6 +32,12 @@ abstract class CommutesRecord
 
   String? get currency;
 
+  @BuiltValueField(wireName: 'origin_address')
+  String? get originAddress;
+
+  @BuiltValueField(wireName: 'destination_address')
+  String? get destinationAddress;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -42,7 +48,9 @@ abstract class CommutesRecord
     ..availablePassengerSeats = 0
     ..pricePerSeat = 0.0
     ..driversRating = 0.0
-    ..currency = '';
+    ..currency = ''
+    ..originAddress = ''
+    ..destinationAddress = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('commutes');
@@ -75,6 +83,8 @@ Map<String, dynamic> createCommutesRecordData({
   DateTime? departureDatetime,
   double? driversRating,
   String? currency,
+  String? originAddress,
+  String? destinationAddress,
 }) {
   final firestoreData = serializers.toFirestore(
     CommutesRecord.serializer,
@@ -88,7 +98,9 @@ Map<String, dynamic> createCommutesRecordData({
         ..driver = driver
         ..departureDatetime = departureDatetime
         ..driversRating = driversRating
-        ..currency = currency,
+        ..currency = currency
+        ..originAddress = originAddress
+        ..destinationAddress = destinationAddress,
     ),
   );
 

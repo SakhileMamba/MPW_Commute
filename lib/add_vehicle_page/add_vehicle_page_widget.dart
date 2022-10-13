@@ -21,17 +21,14 @@ class AddVehiclePageWidget extends StatefulWidget {
 }
 
 class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
-  TextEditingController? textController1;
-
-  TextEditingController? textController2;
-
-  TextEditingController? textController3;
-
-  TextEditingController? textController4;
-
-  TextEditingController? textController5;
-
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+  TextEditingController? textController3;
+  TextEditingController? textController4;
+  TextEditingController? textController5;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -47,9 +44,20 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
   }
 
   @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    textController3?.dispose();
+    textController4?.dispose();
+    textController5?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -81,15 +89,13 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
           'Add Vehicle',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -139,10 +145,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: 1,
                     ),
                   ),
@@ -186,10 +189,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: 1,
                     ),
                   ),
@@ -233,10 +233,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
@@ -281,10 +278,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: 1,
                     ),
                   ),
@@ -328,10 +322,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                         fillColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w500,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
@@ -388,26 +379,24 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                 text: 'Cancel',
                                 icon: Icon(
                                   Icons.cancel_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
                                   size: 15,
                                 ),
                                 options: FFButtonOptions(
                                   width: 130,
                                   height: 50,
                                   color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                      .secondaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .bodyText2
                                       .override(
                                         fontFamily: 'Roboto',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                                            .secondaryText,
                                       ),
                                   elevation: 8,
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -612,16 +601,14 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
+                                      .bodyText2
                                       .override(
                                         fontFamily: 'Roboto',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
+                                            .secondaryText,
                                       ),
                                   elevation: 8,
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -651,31 +638,36 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            showUploadMessage(
-                              context,
-                              'Uploading file...',
-                              showLoading: true,
-                            );
-                            final downloadUrls = (await Future.wait(
-                                    selectedMedia.map((m) async =>
-                                        await uploadData(
-                                            m.storagePath, m.bytes))))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            setState(() => isMediaUploading = true);
+                            var downloadUrls = <String>[];
+                            try {
+                              showUploadMessage(
+                                context,
+                                'Uploading file...',
+                                showLoading: true,
+                              );
+                              downloadUrls = (await Future.wait(
+                                selectedMedia.map(
+                                  (m) async =>
+                                      await uploadData(m.storagePath, m.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                            } finally {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              isMediaUploading = false;
+                            }
                             if (downloadUrls.length == selectedMedia.length) {
                               setState(
                                   () => uploadedFileUrl = downloadUrls.first);
-                              showUploadMessage(
-                                context,
-                                'Success!',
-                              );
+                              showUploadMessage(context, 'Success!');
                             } else {
+                              setState(() {});
                               showUploadMessage(
-                                context,
-                                'Failed to upload media',
-                              );
+                                  context, 'Failed to upload media');
                               return;
                             }
                           }
@@ -693,14 +685,15 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                           width: double.infinity,
                           height: 50,
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyText2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
                           elevation: 8,
                           borderSide: BorderSide(
-                            color: Colors.transparent,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),

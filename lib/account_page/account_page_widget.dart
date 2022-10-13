@@ -484,14 +484,14 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .bodyText2
                                         .override(
                                           fontFamily: 'Roboto',
-                                          color: Colors.white,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
                                         ),
                                     elevation: 8,
                                     borderSide: BorderSide(
-                                      color: Colors.transparent,
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
@@ -504,10 +504,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: Text(
                       'Account Settings',
-                      style: FlutterFlowTheme.of(context).subtitle1,
+                      style: FlutterFlowTheme.of(context).title3,
                     ),
                   ),
                   Padding(
@@ -875,10 +875,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: Text(
                       'Legal',
-                      style: FlutterFlowTheme.of(context).subtitle1,
+                      style: FlutterFlowTheme.of(context).title3,
                     ),
                   ),
                   Padding(
@@ -932,7 +932,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                     child: InkWell(
                       onTap: () async {
                         logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
@@ -980,11 +980,6 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   Divider(
                     color: FlutterFlowTheme.of(context).secondaryText,
                   ),
-                  Divider(
-                    height: 16,
-                    thickness: 0,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
                   if (valueOrDefault<bool>(currentUserDocument?.admin, false))
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
@@ -998,7 +993,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: Text(
                                 'Admin',
-                                style: FlutterFlowTheme.of(context).subtitle1,
+                                style: FlutterFlowTheme.of(context).title3,
                               ),
                             ),
                             Padding(
@@ -1127,40 +1122,43 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                         ),
                       ),
                     ),
-                  FFButtonWidget(
-                    onPressed: () async {
-                      logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
-                      logFirebaseEvent('Button_Auth');
-                      await signOut();
-                      await Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PhoneAuthenticationPageWidget(),
-                        ),
-                        (r) => false,
-                      );
-                    },
-                    text: 'Logout',
-                    icon: Icon(
-                      Icons.logout,
-                      size: 24,
-                    ),
-                    options: FFButtonOptions(
-                      width: 130,
-                      height: 50,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      textStyle: FlutterFlowTheme.of(context)
-                          .subtitle2
-                          .override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
+                        logFirebaseEvent('Button_Auth');
+                        await signOut();
+                        await Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PhoneAuthenticationPageWidget(),
                           ),
-                      elevation: 8,
-                      borderSide: BorderSide(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        width: 1,
+                          (r) => false,
+                        );
+                      },
+                      text: 'Logout',
+                      icon: Icon(
+                        Icons.logout,
+                        size: 24,
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      options: FFButtonOptions(
+                        width: 130,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                        elevation: 8,
+                        borderSide: BorderSide(
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
                   ),
                 ],

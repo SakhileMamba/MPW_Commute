@@ -17,16 +17,21 @@ class CommutesFilterWidget extends StatefulWidget {
 }
 
 class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
-  TextEditingController? textController;
-
   DateTime? datePicked;
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
+  TextEditingController? textController;
 
   @override
   void initState() {
     super.initState();
     textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -243,7 +248,12 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                                           .primaryBtnText,
                                     ),
                                     child: Text(
-                                      dateTimeFormat('d/M H:mm', datePicked),
+                                      dateTimeFormat(
+                                        'd/M H:mm',
+                                        datePicked,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),

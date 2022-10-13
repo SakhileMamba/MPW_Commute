@@ -25,9 +25,10 @@ class DriversLicenseUpdatePageWidget extends StatefulWidget {
 
 class _DriversLicenseUpdatePageWidgetState
     extends State<DriversLicenseUpdatePageWidget> {
-  TextEditingController? textController;
-
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
+  TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -40,9 +41,16 @@ class _DriversLicenseUpdatePageWidgetState
   }
 
   @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -74,8 +82,7 @@ class _DriversLicenseUpdatePageWidgetState
           'Driver\'s License',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [
@@ -103,7 +110,6 @@ class _DriversLicenseUpdatePageWidgetState
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -152,10 +158,7 @@ class _DriversLicenseUpdatePageWidgetState
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500,
-                            ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                     ),
                   ),
@@ -235,31 +238,36 @@ class _DriversLicenseUpdatePageWidgetState
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            showUploadMessage(
-                              context,
-                              'Uploading file...',
-                              showLoading: true,
-                            );
-                            final downloadUrls = (await Future.wait(
-                                    selectedMedia.map((m) async =>
-                                        await uploadData(
-                                            m.storagePath, m.bytes))))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            setState(() => isMediaUploading = true);
+                            var downloadUrls = <String>[];
+                            try {
+                              showUploadMessage(
+                                context,
+                                'Uploading file...',
+                                showLoading: true,
+                              );
+                              downloadUrls = (await Future.wait(
+                                selectedMedia.map(
+                                  (m) async =>
+                                      await uploadData(m.storagePath, m.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                            } finally {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              isMediaUploading = false;
+                            }
                             if (downloadUrls.length == selectedMedia.length) {
                               setState(
                                   () => uploadedFileUrl = downloadUrls.first);
-                              showUploadMessage(
-                                context,
-                                'Success!',
-                              );
+                              showUploadMessage(context, 'Success!');
                             } else {
+                              setState(() {});
                               showUploadMessage(
-                                context,
-                                'Failed to upload media',
-                              );
+                                  context, 'Failed to upload media');
                               return;
                             }
                           }
@@ -280,14 +288,15 @@ class _DriversLicenseUpdatePageWidgetState
                           width: double.infinity,
                           height: 50,
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context)
+                              .bodyText2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
                           elevation: 8,
                           borderSide: BorderSide(
-                            color: Colors.transparent,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -324,20 +333,17 @@ class _DriversLicenseUpdatePageWidgetState
                               options: FFButtonOptions(
                                 width: 130,
                                 height: 50,
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .bodyText2
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 16,
+                                          .secondaryText,
                                     ),
                                 elevation: 8,
                                 borderSide: BorderSide(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -456,14 +462,14 @@ class _DriversLicenseUpdatePageWidgetState
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .bodyText2
                                     .override(
                                       fontFamily: 'Roboto',
-                                      color: Colors.white,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
                                 elevation: 8,
                                 borderSide: BorderSide(
-                                  color: Colors.transparent,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

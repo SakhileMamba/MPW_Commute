@@ -5,32 +5,6 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "origin",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "destination",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure_datetime",
-          "order": "DESCENDING"
-        },
-        {
-          "fieldPath": "available_passenger_seats",
-          "order": "DESCENDING"
-        },
-        {
-          "fieldPath": "driversRating",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "commutes",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
           "fieldPath": "driver",
           "order": "ASCENDING"
         },
@@ -54,6 +28,64 @@
         },
         {
           "fieldPath": "commute_datetime",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "passengers_hailing",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "hailingPassenger",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "commutes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "origin",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destination",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "available_passenger_seats",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "driversRating",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "passengers_hailing",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "origin",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destination",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure_datetime",
           "order": "DESCENDING"
         }
       ]

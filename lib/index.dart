@@ -3,31 +3,33 @@ export 'phone_authentication_page/phone_authentication_page_widget.dart'
     show PhoneAuthenticationPageWidget;
 export 'phone_confirmation_page/phone_confirmation_page_widget.dart'
     show PhoneConfirmationPageWidget;
-export 'browse_commutes_page/browse_commutes_page_widget.dart'
-    show BrowseCommutesPageWidget;
-export 'manage_commutes_passenger_page/manage_commutes_passenger_page_widget.dart'
-    show ManageCommutesPassengerPageWidget;
+export 'browse_drivers_page/browse_drivers_page_widget.dart'
+    show BrowseDriversPageWidget;
+export 'browse_passengers_page/browse_passengers_page_widget.dart'
+    show BrowsePassengersPageWidget;
 export 'manage_commutes_driver_page/manage_commutes_driver_page_widget.dart'
     show ManageCommutesDriverPageWidget;
+export 'manage_commutes_passenger_page/manage_commutes_passenger_page_widget.dart'
+    show ManageCommutesPassengerPageWidget;
 export 'account_page/account_page_widget.dart' show AccountPageWidget;
+export 'browse_drivers_details_page/browse_drivers_details_page_widget.dart'
+    show BrowseDriversDetailsPageWidget;
+export 'commutes_management_details_page/commutes_management_details_page_widget.dart'
+    show CommutesManagementDetailsPageWidget;
 export 'government_id_update_page/government_id_update_page_widget.dart'
     show GovernmentIdUpdatePageWidget;
 export 'personal_information_update_page/personal_information_update_page_widget.dart'
     show PersonalInformationUpdatePageWidget;
 export 'list_vehicles_page/list_vehicles_page_widget.dart'
     show ListVehiclesPageWidget;
-export 'create_commute_page/create_commute_page_widget.dart'
-    show CreateCommutePageWidget;
 export 'filter_commutes_page/filter_commutes_page_widget.dart'
     show FilterCommutesPageWidget;
-export 'commutes_management_details_page/commutes_management_details_page_widget.dart'
-    show CommutesManagementDetailsPageWidget;
+export 'create_commute_page/create_commute_page_widget.dart'
+    show CreateCommutePageWidget;
 export 'add_vehicle_page/add_vehicle_page_widget.dart'
     show AddVehiclePageWidget;
 export 'subscriptions_page/subscriptions_page_widget.dart'
     show SubscriptionsPageWidget;
-export 'browse_commutes_details_page/browse_commutes_details_page_widget.dart'
-    show BrowseCommutesDetailsPageWidget;
 export 'profile_picture_update_page/profile_picture_update_page_widget.dart'
     show ProfilePictureUpdatePageWidget;
 export 'drivers_license_update_page/drivers_license_update_page_widget.dart'
@@ -36,3 +38,16 @@ export 'approve_drivers_page/approve_drivers_page_widget.dart'
     show ApproveDriversPageWidget;
 export 'approve_users_page/approve_users_page_widget.dart'
     show ApproveUsersPageWidget;
+export 'update_user_first_name/update_user_first_name_widget.dart'
+    show UpdateUserFirstNameWidget;
+export 'update_user_surname/update_user_surname_widget.dart'
+    show UpdateUserSurnameWidget;
+export 'success_lottie/success_lottie_widget.dart' show SuccessLottieWidget;
+export 'propose_passenger_pickup_page/propose_passenger_pickup_page_widget.dart'
+    show ProposePassengerPickupPageWidget;
+export 'create_passenger_seat_hail_page/create_passenger_seat_hail_page_widget.dart'
+    show CreatePassengerSeatHailPageWidget;
+export 'browse_passengers_details_page/browse_passengers_details_page_widget.dart'
+    show BrowsePassengersDetailsPageWidget;
+export 'accept_drivers_details_page/accept_drivers_details_page_widget.dart'
+    show AcceptDriversDetailsPageWidget;

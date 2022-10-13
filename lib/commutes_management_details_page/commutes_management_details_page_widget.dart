@@ -63,6 +63,7 @@ class _CommutesManagementDetailsPageWidgetState
         final commutesManagementDetailsPageCommutesRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primaryColor,
             automaticallyImplyLeading: false,
@@ -86,8 +87,7 @@ class _CommutesManagementDetailsPageWidgetState
               'Details',
               style: FlutterFlowTheme.of(context).title2.override(
                     fontFamily: 'Roboto',
-                    color: Colors.white,
-                    fontSize: 22,
+                    color: FlutterFlowTheme.of(context).secondaryText,
                   ),
             ),
             actions: [
@@ -126,7 +126,8 @@ class _CommutesManagementDetailsPageWidgetState
                         logFirebaseEvent(
                             'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
                         logFirebaseEvent('IconButton_Launch-U-R-L');
-                        await launchURL(iconButtonUsersRecord.phoneNumber!);
+                        await launchURL(
+                            'tel:${iconButtonUsersRecord.phoneNumber}');
                       },
                     );
                   },
@@ -136,7 +137,6 @@ class _CommutesManagementDetailsPageWidgetState
             centerTitle: true,
             elevation: 2,
           ),
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           body: SafeArea(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
@@ -150,7 +150,7 @@ class _CommutesManagementDetailsPageWidgetState
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Text(
                         'Accepted Passengers',
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).title3,
                       ),
                     ),
                     Expanded(
@@ -217,7 +217,7 @@ class _CommutesManagementDetailsPageWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
                                             padding:
@@ -264,8 +264,8 @@ class _CommutesManagementDetailsPageWidgetState
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: Container(
-                                                    width: 120,
-                                                    height: 120,
+                                                    width: 50,
+                                                    height: 50,
                                                     clipBehavior:
                                                         Clip.antiAlias,
                                                     decoration: BoxDecoration(
@@ -284,7 +284,7 @@ class _CommutesManagementDetailsPageWidgetState
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 crossAxisAlignment:
@@ -306,56 +306,12 @@ class _CommutesManagementDetailsPageWidgetState
                                               ),
                                             ),
                                           ),
-                                          if (cardUsersRecord.rating != null)
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      functions.twoDeci(
-                                                          cardUsersRecord
-                                                              .rating!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                    ),
-                                                    Icon(
-                                                      Icons.star_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                      size: 18,
-                                                    ),
-                                                  ],
-                                                ),
-                                                Text(
-                                                  '',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
                                           if (currentUserReference ==
                                               commutesManagementDetailsPageCommutesRecord
                                                   .driver)
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(4, 0, 0, 0),
+                                                  .fromSTEB(4, 10, 0, 0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
                                                 borderWidth: 1,
@@ -373,8 +329,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                   logFirebaseEvent(
                                                       'IconButton_Launch-U-R-L');
                                                   await launchURL(
-                                                      cardUsersRecord
-                                                          .phoneNumber!);
+                                                      'tel:${cardUsersRecord.phoneNumber}');
                                                 },
                                               ),
                                             ),
@@ -398,7 +353,10 @@ class _CommutesManagementDetailsPageWidgetState
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Text(
                         'New Requests',
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).title3.override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
                       ),
                     ),
                     Expanded(
@@ -476,7 +434,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
@@ -529,8 +487,8 @@ class _CommutesManagementDetailsPageWidgetState
                                                           transitionOnUserGestures:
                                                               true,
                                                           child: Container(
-                                                            width: 120,
-                                                            height: 120,
+                                                            width: 50,
+                                                            height: 50,
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
@@ -555,7 +513,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8, 0, 0, 0),
+                                                                  4, 10, 0, 0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -582,52 +540,46 @@ class _CommutesManagementDetailsPageWidgetState
                                                   ),
                                                   if (cardUsersRecord.rating !=
                                                       null)
-                                                    Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Text(
-                                                              functions.twoDeci(
-                                                                  cardUsersRecord
-                                                                      .rating!),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .star_rounded,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryColor,
-                                                              size: 18,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Text(
-                                                          '',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 10, 0, 0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Text(
+                                                                functions.twoDeci(
+                                                                    cardUsersRecord
+                                                                        .rating!),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1,
                                                               ),
-                                                        ),
-                                                      ],
+                                                              Icon(
+                                                                Icons
+                                                                    .star_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 18,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                 ],
                                               ),
@@ -711,23 +663,20 @@ class _CommutesManagementDetailsPageWidgetState
                                                               height: 50,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primaryBackground,
+                                                                  .secondaryColor,
                                                               textStyle:
                                                                   FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2
+                                                                      .bodyText2
                                                                       .override(
                                                                         fontFamily:
                                                                             'Roboto',
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryText,
+                                                                            .secondaryText,
                                                                       ),
                                                               elevation: 8,
                                                               borderSide:
                                                                   BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
                                                                 width: 1,
                                                               ),
                                                               borderRadius:
@@ -1307,18 +1256,16 @@ class _CommutesManagementDetailsPageWidgetState
                                                                       .primaryColor,
                                                                   textStyle: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle2
+                                                                      .bodyText2
                                                                       .override(
                                                                         fontFamily:
                                                                             'Roboto',
-                                                                        color: Colors
-                                                                            .white,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
                                                                       ),
                                                                   elevation: 8,
                                                                   borderSide:
                                                                       BorderSide(
-                                                                    color: Colors
-                                                                        .transparent,
                                                                     width: 1,
                                                                   ),
                                                                   borderRadius:

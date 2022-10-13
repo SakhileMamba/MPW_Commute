@@ -26,14 +26,11 @@ class CreateCommutePageWidget extends StatefulWidget {
 }
 
 class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
-  TextEditingController? textController1;
-
   DateTime? datePicked;
   var placePickerValue1 = FFPlace();
   var placePickerValue2 = FFPlace();
-
+  TextEditingController? textController1;
   TextEditingController? textController2;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -46,9 +43,17 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
   }
 
   @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -72,15 +77,13 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
           'Schedule',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -120,11 +123,12 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         width: double.infinity,
                         height: 50,
                         color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.white,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
@@ -162,11 +166,12 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                         width: double.infinity,
                         height: 50,
                         color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Roboto',
-                                  color: Colors.white,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
@@ -207,7 +212,11 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                         logFirebaseEvent('Container_Update-Local-State');
                         setState(() => FFAppState().scheduleDepartureDatetime =
-                            dateTimeFormat('d/M h:mm a', datePicked));
+                                dateTimeFormat(
+                              'd/M h:mm a',
+                              datePicked,
+                              locale: FFLocalizations.of(context).languageCode,
+                            ));
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -237,12 +246,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                       FFAppState().scheduleDepartureDatetime,
                                       'Please input date',
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
                                   ),
                                 ),
                               ),
@@ -419,12 +424,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                   size: 24,
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
                               keyboardType: TextInputType.number,
                             ),
                           ),
@@ -518,12 +518,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                   size: 24,
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
                               keyboardType: TextInputType.number,
                             ),
                           ),
@@ -573,24 +568,23 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             text: 'Cancel',
                             icon: Icon(
                               Icons.cancel_rounded,
-                              color: FlutterFlowTheme.of(context).primaryText,
+                              color: FlutterFlowTheme.of(context).secondaryText,
                               size: 15,
                             ),
                             options: FFButtonOptions(
                               width: 130,
                               height: 50,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'Roboto',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .secondaryText,
                                   ),
                               elevation: 8,
                               borderSide: BorderSide(
-                                color: Colors.black,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),
@@ -808,10 +802,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
 
                               final commutesCreateData =
                                   createCommutesRecordData(
-                                origin:
-                                    '${placePickerValue1.name}, ${placePickerValue1.city}, ${placePickerValue1.state}, ${placePickerValue1.country}',
-                                destination:
-                                    '${placePickerValue2.name}, ${placePickerValue2.city}, ${placePickerValue2.state}, ${placePickerValue2.country}',
+                                origin: placePickerValue1.name,
+                                destination: placePickerValue2.name,
                                 availablePassengerSeats:
                                     int.parse(textController1!.text),
                                 pricePerSeat:
@@ -822,6 +814,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 driversRating: valueOrDefault(
                                     currentUserDocument?.rating, 0.0),
                                 currency: FFAppState().pickedCurrency,
+                                originAddress: placePickerValue1.address,
+                                destinationAddress: placePickerValue2.address,
                               );
                               await CommutesRecord.collection
                                   .doc()
@@ -851,15 +845,14 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'Roboto',
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                        .secondaryText,
                                   ),
                               elevation: 8,
                               borderSide: BorderSide(
-                                color: Colors.transparent,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),

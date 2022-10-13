@@ -90,12 +90,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
-          ? Container(
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              child: Builder(
-                builder: (context) => Image.asset(
-                  'assets/images/splash.png',
-                  fit: BoxFit.cover,
+          ? Builder(
+              builder: (context) => Container(
+                color: FlutterFlowTheme.of(context).primaryColor,
+                child: Image.asset(
+                  'assets/images/Commute_2160px_logo.png',
+                  fit: BoxFit.scaleDown,
                 ),
               ),
             )
@@ -118,7 +118,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'browse_commutes_page';
+  String _currentPageName = 'browse_drivers_page';
   late Widget? _currentPage;
 
   @override
@@ -131,9 +131,10 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'browse_commutes_page': BrowseCommutesPageWidget(),
-      'manage_commutes_passenger_page': ManageCommutesPassengerPageWidget(),
+      'browse_drivers_page': BrowseDriversPageWidget(),
+      'browse_passengers_page': BrowsePassengersPageWidget(),
       'manage_commutes_driver_page': ManageCommutesDriverPageWidget(),
+      'manage_commutes_passenger_page': ManageCommutesPassengerPageWidget(),
       'account_page': AccountPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -154,10 +155,10 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.airline_seat_recline_normal_rounded,
+              Icons.commute_sharp,
               size: 24,
             ),
-            label: 'Seats',
+            label: 'Drivers',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -165,15 +166,23 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.hail,
               size: 24,
             ),
-            label: 'Ride',
+            label: 'Passengers',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.commute_rounded,
+              Icons.drive_eta_rounded,
               size: 24,
             ),
-            label: 'Drive',
+            label: 'Commutes',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.airline_seat_recline_normal_rounded,
+              size: 24,
+            ),
+            label: 'Seats',
             tooltip: '',
           ),
           BottomNavigationBarItem(

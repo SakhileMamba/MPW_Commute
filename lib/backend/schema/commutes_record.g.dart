@@ -85,6 +85,20 @@ class _$CommutesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.originAddress;
+    if (value != null) {
+      result
+        ..add('origin_address')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.destinationAddress;
+    if (value != null) {
+      result
+        ..add('destination_address')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -148,6 +162,14 @@ class _$CommutesRecordSerializer
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'origin_address':
+          result.originAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'destination_address':
+          result.destinationAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -181,6 +203,10 @@ class _$CommutesRecord extends CommutesRecord {
   @override
   final String? currency;
   @override
+  final String? originAddress;
+  @override
+  final String? destinationAddress;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$CommutesRecord([void Function(CommutesRecordBuilder)? updates]) =>
@@ -196,6 +222,8 @@ class _$CommutesRecord extends CommutesRecord {
       this.departureDatetime,
       this.driversRating,
       this.currency,
+      this.originAddress,
+      this.destinationAddress,
       this.ffRef})
       : super._();
 
@@ -220,6 +248,8 @@ class _$CommutesRecord extends CommutesRecord {
         departureDatetime == other.departureDatetime &&
         driversRating == other.driversRating &&
         currency == other.currency &&
+        originAddress == other.originAddress &&
+        destinationAddress == other.destinationAddress &&
         ffRef == other.ffRef;
   }
 
@@ -233,15 +263,19 @@ class _$CommutesRecord extends CommutesRecord {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, origin.hashCode),
-                                        destination.hashCode),
-                                    vehicle.hashCode),
-                                availablePassengerSeats.hashCode),
-                            pricePerSeat.hashCode),
-                        driver.hashCode),
-                    departureDatetime.hashCode),
-                driversRating.hashCode),
-            currency.hashCode),
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, origin.hashCode),
+                                                destination.hashCode),
+                                            vehicle.hashCode),
+                                        availablePassengerSeats.hashCode),
+                                    pricePerSeat.hashCode),
+                                driver.hashCode),
+                            departureDatetime.hashCode),
+                        driversRating.hashCode),
+                    currency.hashCode),
+                originAddress.hashCode),
+            destinationAddress.hashCode),
         ffRef.hashCode));
   }
 
@@ -257,6 +291,8 @@ class _$CommutesRecord extends CommutesRecord {
           ..add('departureDatetime', departureDatetime)
           ..add('driversRating', driversRating)
           ..add('currency', currency)
+          ..add('originAddress', originAddress)
+          ..add('destinationAddress', destinationAddress)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -305,6 +341,16 @@ class CommutesRecordBuilder
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
+  String? _originAddress;
+  String? get originAddress => _$this._originAddress;
+  set originAddress(String? originAddress) =>
+      _$this._originAddress = originAddress;
+
+  String? _destinationAddress;
+  String? get destinationAddress => _$this._destinationAddress;
+  set destinationAddress(String? destinationAddress) =>
+      _$this._destinationAddress = destinationAddress;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -325,6 +371,8 @@ class CommutesRecordBuilder
       _departureDatetime = $v.departureDatetime;
       _driversRating = $v.driversRating;
       _currency = $v.currency;
+      _originAddress = $v.originAddress;
+      _destinationAddress = $v.destinationAddress;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -357,6 +405,8 @@ class CommutesRecordBuilder
             departureDatetime: departureDatetime,
             driversRating: driversRating,
             currency: currency,
+            originAddress: originAddress,
+            destinationAddress: destinationAddress,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

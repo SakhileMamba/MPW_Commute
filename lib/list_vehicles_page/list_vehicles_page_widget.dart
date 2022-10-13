@@ -33,6 +33,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -61,8 +62,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
           'Vehicles',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [
@@ -91,7 +91,6 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -139,7 +138,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
                             child: Text(
                               '${listViewVehiclesRecord.year}, ${listViewVehiclesRecord.make}, ${listViewVehiclesRecord.model}',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+                              style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
                         ),
@@ -198,14 +197,14 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                               height: 50,
                               color: FlutterFlowTheme.of(context).primaryColor,
                               textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .bodyText2
                                   .override(
                                     fontFamily: 'Roboto',
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
                                   ),
                               elevation: 8,
                               borderSide: BorderSide(
-                                color: Colors.transparent,
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),

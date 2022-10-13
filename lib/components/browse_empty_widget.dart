@@ -36,17 +36,14 @@ class _BrowseEmptyWidgetState extends State<BrowseEmptyWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
               child: FaIcon(
                 FontAwesomeIcons.solidSadTear,
-                color: FlutterFlowTheme.of(context).primaryColor,
-                size: 150,
+                color: FlutterFlowTheme.of(context).secondaryColor,
+                size: 100,
               ),
             ),
             Text(
-              'There are no commutes available at the moment. Please change your filters or try again later\n',
+              'There are no commutes available at the moment. Change your filters or try again later\n',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyText2.override(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ],
         ),

@@ -46,6 +46,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -77,7 +78,6 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -352,7 +352,11 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                     ),
                                     Text(
                                       dateTimeFormat(
-                                          'yMMMd', cardUsersRecord.birthDate!),
+                                        'yMMMd',
+                                        cardUsersRecord.birthDate!,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),

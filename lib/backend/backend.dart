@@ -12,6 +12,8 @@ import 'schema/passengers_record.dart';
 import 'schema/messages_record.dart';
 import 'schema/driver_verification_requests_record.dart';
 import 'schema/app_constants_record.dart';
+import 'schema/passengers_hailing_record.dart';
+import 'schema/pickup_requests_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -27,6 +29,8 @@ export 'schema/passengers_record.dart';
 export 'schema/messages_record.dart';
 export 'schema/driver_verification_requests_record.dart';
 export 'schema/app_constants_record.dart';
+export 'schema/passengers_hailing_record.dart';
+export 'schema/pickup_requests_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -371,6 +375,94 @@ Future<FFFirestorePage<AppConstantsRecord>> queryAppConstantsRecordPage({
     queryCollectionPage(
       AppConstantsRecord.collection,
       AppConstantsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query PassengersHailingRecords (as a Stream and as a Future).
+Stream<List<PassengersHailingRecord>> queryPassengersHailingRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PassengersHailingRecord.collection,
+      PassengersHailingRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PassengersHailingRecord>> queryPassengersHailingRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PassengersHailingRecord.collection,
+      PassengersHailingRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<PassengersHailingRecord>>
+    queryPassengersHailingRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          PassengersHailingRecord.collection,
+          PassengersHailingRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query PickupRequestsRecords (as a Stream and as a Future).
+Stream<List<PickupRequestsRecord>> queryPickupRequestsRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PickupRequestsRecord.collection(parent),
+      PickupRequestsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PickupRequestsRecord>> queryPickupRequestsRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PickupRequestsRecord.collection(parent),
+      PickupRequestsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<PickupRequestsRecord>> queryPickupRequestsRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      PickupRequestsRecord.collection(parent),
+      PickupRequestsRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

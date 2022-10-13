@@ -22,15 +22,11 @@ class PersonalInformationUpdatePageWidget extends StatefulWidget {
 
 class _PersonalInformationUpdatePageWidgetState
     extends State<PersonalInformationUpdatePageWidget> {
-  TextEditingController? textController1;
-
-  TextEditingController? textController2;
-
-  TextEditingController? textController3;
-
-  TextEditingController? textController4;
-
   DateTime? datePicked;
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+  TextEditingController? textController3;
+  TextEditingController? textController4;
   String? dropDownValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -48,9 +44,19 @@ class _PersonalInformationUpdatePageWidgetState
   }
 
   @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    textController3?.dispose();
+    textController4?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -71,18 +77,16 @@ class _PersonalInformationUpdatePageWidgetState
           },
         ),
         title: Text(
-          'Personal Information',
+          'Personal Info',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -143,11 +147,7 @@ class _PersonalInformationUpdatePageWidgetState
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                     ),
@@ -189,11 +189,7 @@ class _PersonalInformationUpdatePageWidgetState
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                     ),
@@ -236,11 +232,7 @@ class _PersonalInformationUpdatePageWidgetState
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                     ),
@@ -290,11 +282,7 @@ class _PersonalInformationUpdatePageWidgetState
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
                         ),
                       ),
@@ -353,15 +341,14 @@ class _PersonalInformationUpdatePageWidgetState
                             child: Text(
                               valueOrDefault<String>(
                                 dateTimeFormat(
-                                    'yMMMd', FFAppState().userBirthDate),
+                                  'yMMMd',
+                                  FFAppState().userBirthDate,
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
+                                ),
                                 'Select date',
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
                         ),
@@ -388,11 +375,7 @@ class _PersonalInformationUpdatePageWidgetState
                               setState(() => dropDownValue = val),
                           width: MediaQuery.of(context).size.width,
                           height: 50,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText2.override(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          textStyle: FlutterFlowTheme.of(context).bodyText1,
                           hintText: 'Select gender',
                           fillColor: Colors.white,
                           elevation: 2,
@@ -426,25 +409,23 @@ class _PersonalInformationUpdatePageWidgetState
                                   icon: Icon(
                                     Icons.cancel_rounded,
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                        .secondaryText,
                                     size: 15,
                                   ),
                                   options: FFButtonOptions(
                                     width: 130,
                                     height: 50,
                                     color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
+                                        .secondaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .bodyText2
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
+                                              .secondaryText,
                                         ),
                                     elevation: 8,
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
@@ -465,14 +446,20 @@ class _PersonalInformationUpdatePageWidgetState
                                       if (textController2!.text != null &&
                                           textController2!.text != '') {
                                         if (dateTimeFormat(
-                                                    'yMMMd',
-                                                    FFAppState()
-                                                        .userBirthDate) !=
+                                                  'yMMMd',
+                                                  FFAppState().userBirthDate,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                ) !=
                                                 null &&
                                             dateTimeFormat(
-                                                    'yMMMd',
-                                                    FFAppState()
-                                                        .userBirthDate) !=
+                                                  'yMMMd',
+                                                  FFAppState().userBirthDate,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                ) !=
                                                 '') {
                                           if (!(dropDownValue != null &&
                                               dropDownValue != '')) {
@@ -604,16 +591,14 @@ class _PersonalInformationUpdatePageWidgetState
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .bodyText2
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
+                                              .secondaryText,
                                         ),
                                     elevation: 8,
                                     borderSide: BorderSide(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(8),

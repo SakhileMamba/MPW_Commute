@@ -1,5 +1,5 @@
 import '../backend/backend.dart';
-import '../browse_commutes_details_page/browse_commutes_details_page_widget.dart';
+import '../browse_drivers_details_page/browse_drivers_details_page_widget.dart';
 import '../components/browse_empty_widget.dart';
 import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -16,15 +16,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:page_transition/page_transition.dart';
 
-class BrowseCommutesPageWidget extends StatefulWidget {
-  const BrowseCommutesPageWidget({Key? key}) : super(key: key);
+class BrowseDriversPageWidget extends StatefulWidget {
+  const BrowseDriversPageWidget({Key? key}) : super(key: key);
 
   @override
-  _BrowseCommutesPageWidgetState createState() =>
-      _BrowseCommutesPageWidgetState();
+  _BrowseDriversPageWidgetState createState() =>
+      _BrowseDriversPageWidgetState();
 }
 
-class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
+class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
   PagingController<DocumentSnapshot?, CommutesRecord>? _pagingController;
   Query? _pagingQuery;
   List<StreamSubscription?> _streamSubscriptions = [];
@@ -36,14 +36,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('BROWSE_COMMUTES_browse_commutes_page_ON_');
-      logFirebaseEvent('browse_commutes_page_Update-Local-State');
+      logFirebaseEvent('BROWSE_DRIVERS_browse_drivers_page_ON_LO');
+      logFirebaseEvent('browse_drivers_page_Update-Local-State');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
       if (FFAppState().privacyPolicyAndTermsOfServiceAgreement) {
         return;
       }
 
-      logFirebaseEvent('browse_commutes_page_Alert-Dialog');
+      logFirebaseEvent('browse_drivers_page_Alert-Dialog');
       await showDialog(
         context: context,
         builder: (alertDialogContext) {
@@ -60,14 +60,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
           );
         },
       );
-      logFirebaseEvent('browse_commutes_page_Update-Local-State');
+      logFirebaseEvent('browse_drivers_page_Update-Local-State');
       setState(
           () => FFAppState().privacyPolicyAndTermsOfServiceAgreement = true);
       return;
     });
 
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'browse_commutes_page'});
+        parameters: {'screen_name': 'browse_drivers_page'});
   }
 
   @override
@@ -80,15 +80,15 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Browse',
+          'Browse Drivers',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryText,
               ),
         ),
         actions: [
@@ -103,7 +103,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
               size: 30,
             ),
             onPressed: () async {
-              logFirebaseEvent('BROWSE_COMMUTES_filter_list_rounded_ICN_');
+              logFirebaseEvent('BROWSE_DRIVERS_filter_list_rounded_ICN_O');
               logFirebaseEvent('IconButton_Navigate-To');
               await Navigator.push(
                 context,
@@ -117,13 +117,12 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
         centerTitle: true,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: RefreshIndicator(
             onRefresh: () async {
-              logFirebaseEvent('BROWSE_COMMUTES_Column_rh28ie7s_ON_PULL_');
+              logFirebaseEvent('BROWSE_DRIVERS_Column_rh28ie7s_ON_PULL_T');
               logFirebaseEvent('ListView_Update-Local-State');
               setState(() =>
                   FFAppState().filterCurrentDateTime = getCurrentTimestamp);
@@ -257,13 +256,13 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                         return InkWell(
                           onTap: () async {
                             logFirebaseEvent(
-                                'BROWSE_COMMUTES_Card_64cz7cnr_ON_TAP');
+                                'BROWSE_DRIVERS_Card_64cz7cnr_ON_TAP');
                             logFirebaseEvent('Card_Navigate-To');
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    BrowseCommutesDetailsPageWidget(
+                                    BrowseDriversDetailsPageWidget(
                                   commuteRef: listViewCommutesRecord.reference,
                                 ),
                               ),
@@ -282,7 +281,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 4, 0, 4),
+                                        0, 0, 0, 8),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -293,7 +292,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'BROWSE_COMMUTES_CircleImage_lyk7aa0f_ON_');
+                                                'BROWSE_DRIVERS_CircleImage_lyk7aa0f_ON_T');
                                             logFirebaseEvent(
                                                 'CircleImage_Expand-Image');
                                             await Navigator.push(
@@ -350,28 +349,23 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    8, 10, 8, 0),
+                                                    4, 10, 0, 0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Driver',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2,
-                                                ),
-                                                Text(
                                                   '${cardUsersRecord.displayName} ${cardUsersRecord.displaySurname}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
+                                                      .bodyText1,
+                                                ),
+                                                Text(
+                                                  cardUsersRecord.gender!,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1,
                                                 ),
                                               ],
                                             ),
@@ -381,52 +375,24 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 10, 0, 0),
-                                            child: Column(
+                                                    4, 10, 0, 0),
+                                            child: Row(
                                               mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  'Rating',
+                                                  functions.twoDeci(
+                                                      cardUsersRecord.rating!),
+                                                  textAlign: TextAlign.center,
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText2,
+                                                      .bodyText1,
                                                 ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      functions.twoDeci(
-                                                          cardUsersRecord
-                                                              .rating!),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                    ),
-                                                    Icon(
-                                                      Icons.star_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                      size: 18,
-                                                    ),
-                                                  ],
+                                                Icon(
+                                                  Icons.star_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 18,
                                                 ),
                                               ],
                                             ),
@@ -461,7 +427,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         return InkWell(
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'BROWSE_COMMUTES_Image_cckz8ort_ON_TAP');
+                                                'BROWSE_DRIVERS_Image_cckz8ort_ON_TAP');
                                             logFirebaseEvent(
                                                 'Image_Expand-Image');
                                             await Navigator.push(
@@ -507,7 +473,9 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   imageVehiclesRecord.imageURL,
                                                   'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                                                 ),
-                                                width: 100,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -527,7 +495,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 8, 0),
+                                                  0, 0, 4, 0),
                                           child: Icon(
                                             Icons.trip_origin_rounded,
                                             color: Colors.black,
@@ -542,20 +510,28 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 4, 0, 0),
-                                              child: Text(
-                                                listViewCommutesRecord.origin!,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                              ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Origin: ${listViewCommutesRecord.origin}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 4, 0, 0),
+                                                  child: Text(
+                                                    'Address: ${listViewCommutesRecord.originAddress}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -573,7 +549,7 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 8, 0),
+                                                  0, 0, 4, 0),
                                           child: Icon(
                                             Icons.location_pin,
                                             color: Colors.black,
@@ -588,20 +564,154 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primaryBackground,
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 4, 0, 0),
-                                              child: Text(
-                                                listViewCommutesRecord
-                                                    .destination!,
-                                                style:
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Destination: ${listViewCommutesRecord.destination}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 4, 0, 0),
+                                                  child: Text(
+                                                    'Address: ${listViewCommutesRecord.destinationAddress}',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyText1,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 4, 0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.w500,
+                                                        .primaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 4, 0),
+                                                    child: Icon(
+                                                      Icons.access_time_rounded,
+                                                      color: Colors.black,
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryBackground,
+                                                      ),
+                                                      child: Text(
+                                                        dateTimeFormat(
+                                                          'jm',
+                                                          listViewCommutesRecord
+                                                              .departureDatetime!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
                                                         ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    4, 0, 0, 0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 4, 0),
+                                                    child: Icon(
+                                                      Icons.date_range_rounded,
+                                                      color: Colors.black,
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primaryBackground,
+                                                      ),
+                                                      child: Text(
+                                                        dateTimeFormat(
+                                                          'MMMEd',
+                                                          listViewCommutesRecord
+                                                              .departureDatetime!,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
@@ -612,160 +722,28 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 8, 0),
-                                                  child: Icon(
-                                                    Icons.access_time_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .primaryBackground,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                      child: Text(
-                                                        dateTimeFormat(
-                                                            'jm',
-                                                            listViewCommutesRecord
-                                                                .departureDatetime!),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 8),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 8, 0),
-                                                  child: Icon(
-                                                    Icons.date_range_rounded,
-                                                    color: Colors.black,
-                                                    size: 24,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .primaryBackground,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                      child: Text(
-                                                        dateTimeFormat(
-                                                            'MMMEd',
-                                                            listViewCommutesRecord
-                                                                .departureDatetime!),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 8, 0),
+                                                      .fromSTEB(0, 0, 4, 0),
                                                   child: Icon(
                                                     Icons
                                                         .airline_seat_recline_normal_rounded,
@@ -781,27 +759,14 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                               .of(context)
                                                           .primaryBackground,
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                      child: Text(
-                                                        listViewCommutesRecord
-                                                            .availablePassengerSeats!
-                                                            .toString(),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                      ),
+                                                    child: Text(
+                                                      listViewCommutesRecord
+                                                          .availablePassengerSeats!
+                                                          .toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),
@@ -811,24 +776,25 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 8),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  4, 0, 0, 0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                            ),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 8, 0),
+                                                      .fromSTEB(0, 0, 4, 0),
                                                   child: FaIcon(
                                                     FontAwesomeIcons
                                                         .moneyBillWaveAlt,
@@ -844,25 +810,12 @@ class _BrowseCommutesPageWidgetState extends State<BrowseCommutesPageWidget> {
                                                               .of(context)
                                                           .primaryBackground,
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 4, 0, 0),
-                                                      child: Text(
-                                                        '${functions.twoDeci(listViewCommutesRecord.pricePerSeat!)} ${listViewCommutesRecord.currency}',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                      ),
+                                                    child: Text(
+                                                      '${functions.twoDeci(listViewCommutesRecord.pricePerSeat!)} ${listViewCommutesRecord.currency}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1,
                                                     ),
                                                   ),
                                                 ),

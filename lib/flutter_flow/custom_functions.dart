@@ -55,3 +55,12 @@ bool swaziNumberTest(String? phoneNumber) {
   else
     return false;
 }
+
+int availableSeatsMinusOne(int availableSeats) {
+  // minus one from input
+  if (availableSeats == 0) {
+    return 0;
+  }
+
+  return (availableSeats - 1);
+}
