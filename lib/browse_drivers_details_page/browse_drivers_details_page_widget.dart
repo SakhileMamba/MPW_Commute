@@ -89,112 +89,117 @@ class _BrowseDriversDetailsPageWidgetState
                   ),
             ),
             actions: [
-              FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30,
-                borderWidth: 1,
-                buttonSize: 60,
-                icon: Icon(
-                  Icons.send_rounded,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 30,
-                ),
-                onPressed: () async {
-                  logFirebaseEvent('BROWSE_DRIVERS_DETAILS_sendSeatRequestIc');
-                  if (valueOrDefault<bool>(
-                      currentUserDocument?.verifiedUser, false)) {
-                    logFirebaseEvent('sendSeatRequestIcon_Backend-Call');
-
-                    final passengersCreateData = createPassengersRecordData(
-                      passengerAccount: currentUserReference,
-                      accepted: false,
-                    );
-                    await PassengersRecord.createDoc(widget.commuteRef!)
-                        .set(passengersCreateData);
+              Visibility(
+                visible: currentUserReference !=
+                    browseDriversDetailsPageCommutesRecord.driver,
+                child: FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  buttonSize: 60,
+                  icon: Icon(
+                    Icons.send_rounded,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 30,
+                  ),
+                  onPressed: () async {
                     logFirebaseEvent(
-                        'sendSeatRequestIcon_Trigger-Push-Notific');
-                    triggerPushNotification(
-                      notificationTitle: 'New Seat Request',
-                      notificationText:
-                          'You have recieved a new seat request for your commute to ${browseDriversDetailsPageCommutesRecord.destination} on ${dateTimeFormat(
-                        'MMMMEEEEd',
-                        browseDriversDetailsPageCommutesRecord
-                            .departureDatetime,
-                        locale: FFLocalizations.of(context).languageCode,
-                      )} at ${dateTimeFormat(
-                        'jm',
-                        browseDriversDetailsPageCommutesRecord
-                            .departureDatetime,
-                        locale: FFLocalizations.of(context).languageCode,
-                      )}.',
-                      notificationSound: 'default',
-                      userRefs: [
-                        browseDriversDetailsPageCommutesRecord.driver!
-                      ],
-                      initialPageName: 'manage_commutes_driver_page',
-                      parameterData: {},
-                    );
-                    logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                    await showDialog(
-                      context: context,
-                      builder: (alertDialogContext) {
-                        return AlertDialog(
-                          title: Text('Seat Request Confirmation'),
-                          content: Text(
-                              'Your request for a seat on this commute has been sent to the driver. You will receive a notification to inform you whether your request has been accepted or rejected.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () =>
-                                  Navigator.pop(alertDialogContext),
-                              child: Text('Ok'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    logFirebaseEvent('sendSeatRequestIcon_Navigate-Back');
-                    Navigator.pop(context);
-                    return;
-                  } else {
-                    logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
-                    var confirmDialogResponse = await showDialog<bool>(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Account Verification'),
-                              content: Text('Your account is not verified.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, false),
-                                  child: Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext, true),
-                                  child: Text('Verify'),
-                                ),
-                              ],
-                            );
-                          },
-                        ) ??
-                        false;
-                    if (confirmDialogResponse) {
-                      logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
-                      await Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NavBarPage(initialPage: 'account_page'),
-                        ),
-                        (r) => false,
+                        'BROWSE_DRIVERS_DETAILS_sendSeatRequestIc');
+                    if (valueOrDefault<bool>(
+                        currentUserDocument?.verifiedUser, false)) {
+                      logFirebaseEvent('sendSeatRequestIcon_Backend-Call');
+
+                      final passengersCreateData = createPassengersRecordData(
+                        passengerAccount: currentUserReference,
+                        accepted: false,
                       );
+                      await PassengersRecord.createDoc(widget.commuteRef!)
+                          .set(passengersCreateData);
+                      logFirebaseEvent(
+                          'sendSeatRequestIcon_Trigger-Push-Notific');
+                      triggerPushNotification(
+                        notificationTitle: 'New Seat Request',
+                        notificationText:
+                            'You have recieved a new seat request for your commute to ${browseDriversDetailsPageCommutesRecord.destination} on ${dateTimeFormat(
+                          'MMMMEEEEd',
+                          browseDriversDetailsPageCommutesRecord
+                              .departureDatetime,
+                          locale: FFLocalizations.of(context).languageCode,
+                        )} at ${dateTimeFormat(
+                          'jm',
+                          browseDriversDetailsPageCommutesRecord
+                              .departureDatetime,
+                          locale: FFLocalizations.of(context).languageCode,
+                        )}.',
+                        notificationSound: 'default',
+                        userRefs: [
+                          browseDriversDetailsPageCommutesRecord.driver!
+                        ],
+                        initialPageName: 'manage_commutes_driver_page',
+                        parameterData: {},
+                      );
+                      logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Seat Request Confirmation'),
+                            content: Text(
+                                'Your request for a seat on this commute has been sent to the driver. You will receive a notification to inform you whether your request has been accepted or rejected.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: Text('Ok'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      logFirebaseEvent('sendSeatRequestIcon_Navigate-Back');
+                      Navigator.pop(context);
                       return;
                     } else {
-                      return;
+                      logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Account Verification'),
+                                content: Text('Your account is not verified.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Verify'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      if (confirmDialogResponse) {
+                        logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                        await Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NavBarPage(initialPage: 'account_page'),
+                          ),
+                          (r) => false,
+                        );
+                        return;
+                      } else {
+                        return;
+                      }
                     }
-                  }
-                },
+                  },
+                ),
               ),
             ],
             centerTitle: true,

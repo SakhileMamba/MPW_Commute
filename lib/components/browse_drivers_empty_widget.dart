@@ -5,14 +5,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CommutesEmptyWidget extends StatefulWidget {
-  const CommutesEmptyWidget({Key? key}) : super(key: key);
+class BrowseDriversEmptyWidget extends StatefulWidget {
+  const BrowseDriversEmptyWidget({Key? key}) : super(key: key);
 
   @override
-  _CommutesEmptyWidgetState createState() => _CommutesEmptyWidgetState();
+  _BrowseDriversEmptyWidgetState createState() =>
+      _BrowseDriversEmptyWidgetState();
 }
 
-class _CommutesEmptyWidgetState extends State<CommutesEmptyWidget> {
+class _BrowseDriversEmptyWidgetState extends State<BrowseDriversEmptyWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +32,7 @@ class _CommutesEmptyWidgetState extends State<CommutesEmptyWidget> {
             ),
           ),
           Text(
-            'You do not have any commutes scheduled. Schedule a commute to start selling seats to passengers.',
+            'There are no drivers scheduled to commute at the moment. Change your filters or try again later.',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),

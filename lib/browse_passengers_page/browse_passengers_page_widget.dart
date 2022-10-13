@@ -1,6 +1,6 @@
 import '../backend/backend.dart';
 import '../browse_passengers_details_page/browse_passengers_details_page_widget.dart';
-import '../components/browse_empty_widget.dart';
+import '../components/browse_passengers_empty_widget.dart';
 import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -227,7 +227,7 @@ class _BrowsePassengersPageWidgetState
                   ),
                 ),
                 noItemsFoundIndicatorBuilder: (_) => Center(
-                  child: BrowseEmptyWidget(),
+                  child: BrowsePassengersEmptyWidget(),
                 ),
                 itemBuilder: (context, _, listViewIndex) {
                   final listViewPassengersHailingRecord =
