@@ -75,7 +75,7 @@ class _DriversLicenseUpdatePageWidgetState
             logFirebaseEvent('IconButton_Update-Local-State');
             setState(() => FFAppState().backButtonFileUpload = false);
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -323,7 +323,7 @@ class _DriversLicenseUpdatePageWidgetState
                                 setState(() =>
                                     FFAppState().backButtonFileUpload = false);
                                 logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
+                                context.pop();
                               },
                               text: 'Cancel',
                               icon: Icon(
@@ -449,7 +449,7 @@ class _DriversLicenseUpdatePageWidgetState
                                 setState(() =>
                                     FFAppState().backButtonFileUpload = false);
                                 logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
+                                context.pop();
                               },
                               text: 'Save',
                               icon: Icon(

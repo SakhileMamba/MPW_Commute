@@ -1,11 +1,8 @@
-import '../accept_drivers_details_page/accept_drivers_details_page_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
-import '../commutes_management_details_page/commutes_management_details_page_widget.dart';
 import '../components/accept_driver_empty_widget.dart';
 import '../components/seats_empty_widget.dart';
-import '../create_passenger_seat_hail_page/create_passenger_seat_hail_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -69,12 +66,8 @@ class _ManageCommutesPassengerPageWidgetState
             onPressed: () async {
               logFirebaseEvent('MANAGE_COMMUTES_PASSENGER_add_ICN_ON_TAP');
               logFirebaseEvent('IconButton_Navigate-To');
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreatePassengerSeatHailPageWidget(),
-                ),
-              );
+
+              context.pushNamed('create_passenger_seat_hail_page');
             },
           ),
         ],
@@ -98,7 +91,7 @@ class _ManageCommutesPassengerPageWidgetState
                       text: 'My Seats',
                     ),
                     Tab(
-                      text: 'Accept Drivers',
+                      text: 'Find Drivers',
                     ),
                   ],
                 ),
@@ -169,15 +162,16 @@ class _ManageCommutesPassengerPageWidgetState
                                       logFirebaseEvent(
                                           'MANAGE_COMMUTES_PASSENGER_Card_63fif4w3_');
                                       logFirebaseEvent('Card_Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              CommutesManagementDetailsPageWidget(
-                                            commuteRef: listViewPassengersRecord
+
+                                      context.pushNamed(
+                                        'delete_commutes_management_details_page',
+                                        queryParams: {
+                                          'commuteRef': serializeParam(
+                                            listViewPassengersRecord
                                                 .parentReference,
+                                            ParamType.DocumentReference,
                                           ),
-                                        ),
+                                        }.withoutNulls,
                                       );
                                     },
                                     child: Card(
@@ -1138,15 +1132,24 @@ class _ManageCommutesPassengerPageWidgetState
                                       logFirebaseEvent(
                                           'MANAGE_COMMUTES_PASSENGER_Card_aqiey5u2_');
                                       logFirebaseEvent('Card_Navigate-To');
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              AcceptDriversDetailsPageWidget(
-                                            hailDoc:
-                                                listViewPassengersHailingRecord,
+
+                                      context.pushNamed(
+                                        'browse_passengers_details_page',
+                                        queryParams: {
+                                          'hailingDoc': serializeParam(
+                                            listViewPassengersHailingRecord,
+                                            ParamType.Document,
                                           ),
-                                        ),
+                                          'passenger': serializeParam(
+                                            cardUsersRecord,
+                                            ParamType.Document,
+                                          ),
+                                        }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'hailingDoc':
+                                              listViewPassengersHailingRecord,
+                                          'passenger': cardUsersRecord,
+                                        },
                                       );
                                     },
                                     child: Card(
@@ -1428,6 +1431,102 @@ class _ManageCommutesPassengerPageWidgetState
                                                   ),
                                                 ],
                                               ),
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 4, 0),
+                                                    child: FFButtonWidget(
+                                                      onPressed: () async {
+                                                        logFirebaseEvent(
+                                                            'MANAGE_COMMUTES_PASSENGER_CANCEL_BTN_ON_');
+                                                        logFirebaseEvent(
+                                                            'Button_Alert-Dialog');
+                                                        var confirmDialogResponse =
+                                                            await showDialog<
+                                                                    bool>(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: Text(
+                                                                          'Cancel Driver Request'),
+                                                                      content: Text(
+                                                                          'Are you sure you want to cancel this request for a driver?'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              false),
+                                                                          child:
+                                                                              Text('No'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              true),
+                                                                          child:
+                                                                              Text('Yes'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                ) ??
+                                                                false;
+                                                        if (confirmDialogResponse) {
+                                                          logFirebaseEvent(
+                                                              'Button_Backend-Call');
+                                                          await listViewPassengersHailingRecord
+                                                              .reference
+                                                              .delete();
+                                                          return;
+                                                        } else {
+                                                          return;
+                                                        }
+                                                      },
+                                                      text: 'Cancel',
+                                                      icon: Icon(
+                                                        Icons.cancel_rounded,
+                                                        size: 15,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        width: double.infinity,
+                                                        height: 50,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryColor,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                ),
+                                                        elevation: 8,
+                                                        borderSide: BorderSide(
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

@@ -1,14 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
-import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
-import '../subscriptions_page/subscriptions_page_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,8 +15,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class CommutesManagementDetailsPageWidget extends StatefulWidget {
-  const CommutesManagementDetailsPageWidget({
+class DeleteCommutesManagementDetailsPageWidget extends StatefulWidget {
+  const DeleteCommutesManagementDetailsPageWidget({
     Key? key,
     this.commuteRef,
   }) : super(key: key);
@@ -27,19 +24,19 @@ class CommutesManagementDetailsPageWidget extends StatefulWidget {
   final DocumentReference? commuteRef;
 
   @override
-  _CommutesManagementDetailsPageWidgetState createState() =>
-      _CommutesManagementDetailsPageWidgetState();
+  _DeleteCommutesManagementDetailsPageWidgetState createState() =>
+      _DeleteCommutesManagementDetailsPageWidgetState();
 }
 
-class _CommutesManagementDetailsPageWidgetState
-    extends State<CommutesManagementDetailsPageWidget> {
+class _DeleteCommutesManagementDetailsPageWidgetState
+    extends State<DeleteCommutesManagementDetailsPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'commutes_management_details_page'});
+        parameters: {'screen_name': 'delete_commutes_management_details_page'});
   }
 
   @override
@@ -60,7 +57,8 @@ class _CommutesManagementDetailsPageWidgetState
             ),
           );
         }
-        final commutesManagementDetailsPageCommutesRecord = snapshot.data!;
+        final deleteCommutesManagementDetailsPageCommutesRecord =
+            snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -78,9 +76,9 @@ class _CommutesManagementDetailsPageWidgetState
                 size: 30,
               ),
               onPressed: () async {
-                logFirebaseEvent('COMMUTES_MANAGEMENT_DETAILS_arrow_back_r');
+                logFirebaseEvent('DELETE_COMMUTES_MANAGEMENT_DETAILS_arrow');
                 logFirebaseEvent('IconButton_Navigate-Back');
-                Navigator.pop(context);
+                context.pop();
               },
             ),
             title: Text(
@@ -93,10 +91,11 @@ class _CommutesManagementDetailsPageWidgetState
             actions: [
               Visibility(
                 visible: currentUserReference !=
-                    commutesManagementDetailsPageCommutesRecord.driver,
+                    deleteCommutesManagementDetailsPageCommutesRecord.driver,
                 child: FutureBuilder<UsersRecord>(
                   future: UsersRecord.getDocumentOnce(
-                      commutesManagementDetailsPageCommutesRecord.driver!),
+                      deleteCommutesManagementDetailsPageCommutesRecord
+                          .driver!),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -124,7 +123,7 @@ class _CommutesManagementDetailsPageWidgetState
                       ),
                       onPressed: () async {
                         logFirebaseEvent(
-                            'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
+                            'DELETE_COMMUTES_MANAGEMENT_DETAILS_call_');
                         logFirebaseEvent('IconButton_Launch-U-R-L');
                         await launchURL(
                             'tel:${iconButtonUsersRecord.phoneNumber}');
@@ -233,7 +232,7 @@ class _CommutesManagementDetailsPageWidgetState
                                               child: InkWell(
                                                 onTap: () async {
                                                   logFirebaseEvent(
-                                                      'COMMUTES_MANAGEMENT_DETAILS_CircleImage_');
+                                                      'DELETE_COMMUTES_MANAGEMENT_DETAILS_Circl');
                                                   logFirebaseEvent(
                                                       'CircleImage_Expand-Image');
                                                   await Navigator.push(
@@ -307,11 +306,11 @@ class _CommutesManagementDetailsPageWidgetState
                                             ),
                                           ),
                                           if (currentUserReference ==
-                                              commutesManagementDetailsPageCommutesRecord
+                                              deleteCommutesManagementDetailsPageCommutesRecord
                                                   .driver)
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(4, 10, 0, 0),
+                                                  .fromSTEB(4, 0, 0, 0),
                                               child: FlutterFlowIconButton(
                                                 borderColor: Colors.transparent,
                                                 borderWidth: 1,
@@ -325,7 +324,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                 ),
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'COMMUTES_MANAGEMENT_DETAILS_call_rounded');
+                                                      'DELETE_COMMUTES_MANAGEMENT_DETAILS_call_');
                                                   logFirebaseEvent(
                                                       'IconButton_Launch-U-R-L');
                                                   await launchURL(
@@ -452,7 +451,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                       child: InkWell(
                                                         onTap: () async {
                                                           logFirebaseEvent(
-                                                              'COMMUTES_MANAGEMENT_DETAILS_CircleImage_');
+                                                              'DELETE_COMMUTES_MANAGEMENT_DETAILS_Circl');
                                                           logFirebaseEvent(
                                                               'CircleImage_Expand-Image');
                                                           await Navigator.push(
@@ -584,7 +583,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                 ],
                                               ),
                                               if (currentUserReference ==
-                                                  commutesManagementDetailsPageCommutesRecord
+                                                  deleteCommutesManagementDetailsPageCommutesRecord
                                                       .driver)
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
@@ -603,7 +602,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                             onPressed:
                                                                 () async {
                                                               logFirebaseEvent(
-                                                                  'COMMUTES_MANAGEMENT_DETAILS_DECLINE_BTN_');
+                                                                  'DELETE_COMMUTES_MANAGEMENT_DETAILS_DECLI');
                                                               logFirebaseEvent(
                                                                   'Button_Backend-Call');
                                                               await listViewPassengersRecord
@@ -615,7 +614,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                 notificationTitle:
                                                                     'Seat Request Declined',
                                                                 notificationText:
-                                                                    'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been declined.',
+                                                                    'Your request for a seat on the commute from ${deleteCommutesManagementDetailsPageCommutesRecord.origin} to ${deleteCommutesManagementDetailsPageCommutesRecord.destination} has been declined.',
                                                                 notificationSound:
                                                                     'default',
                                                                 userRefs: [
@@ -726,7 +725,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                 onPressed:
                                                                     () async {
                                                                   logFirebaseEvent(
-                                                                      'COMMUTES_MANAGEMENT_DETAILS_ACCEPT_BTN_O');
+                                                                      'DELETE_COMMUTES_MANAGEMENT_DETAILS_ACCEP');
                                                                   if (buttonAppConstantsRecord
                                                                       .freeApp!) {
                                                                     if (functions
@@ -744,7 +743,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             accepted:
                                                                                 true,
                                                                             commuteDatetime:
-                                                                                commutesManagementDetailsPageCommutesRecord.departureDatetime,
+                                                                                deleteCommutesManagementDetailsPageCommutesRecord.departureDatetime,
                                                                           );
                                                                           await listViewPassengersRecord
                                                                               .reference
@@ -766,7 +765,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             notificationTitle:
                                                                                 'Seat Request Accepted',
                                                                             notificationText:
-                                                                                'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                                'Your request for a seat on the commute from ${deleteCommutesManagementDetailsPageCommutesRecord.origin} to ${deleteCommutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
                                                                             notificationSound:
                                                                                 'default',
                                                                             userRefs: [
@@ -821,12 +820,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                               false;
                                                                           if (confirmDialogResponse) {
                                                                             logFirebaseEvent('Button_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => DriversLicenseUpdatePageWidget(),
-                                                                              ),
-                                                                            );
+
+                                                                            context.pushNamed('drivers_license_update_page');
+
                                                                             return;
                                                                           } else {
                                                                             return;
@@ -858,13 +854,10 @@ class _CommutesManagementDetailsPageWidgetState
                                                                         if (confirmDialogResponse) {
                                                                           logFirebaseEvent(
                                                                               'Button_Navigate-To');
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => NavBarPage(initialPage: 'account_page'),
-                                                                            ),
-                                                                          );
+
+                                                                          context
+                                                                              .pushNamed('account_page');
+
                                                                           return;
                                                                         } else {
                                                                           return;
@@ -894,7 +887,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             final passengersUpdateData =
                                                                                 createPassengersRecordData(
                                                                               accepted: true,
-                                                                              commuteDatetime: commutesManagementDetailsPageCommutesRecord.departureDatetime,
+                                                                              commuteDatetime: deleteCommutesManagementDetailsPageCommutesRecord.departureDatetime,
                                                                             );
                                                                             await listViewPassengersRecord.reference.update(passengersUpdateData);
                                                                             logFirebaseEvent('Button_Backend-Call');
@@ -907,7 +900,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             logFirebaseEvent('Button_Trigger-Push-Notification');
                                                                             triggerPushNotification(
                                                                               notificationTitle: 'Seat Request Accepted',
-                                                                              notificationText: 'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                              notificationText: 'Your request for a seat on the commute from ${deleteCommutesManagementDetailsPageCommutesRecord.origin} to ${deleteCommutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
                                                                               notificationSound: 'default',
                                                                               userRefs: [
                                                                                 cardUsersRecord.reference
@@ -956,12 +949,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                                 false;
                                                                             if (confirmDialogResponse) {
                                                                               logFirebaseEvent('Button_Navigate-To');
-                                                                              await Navigator.push(
-                                                                                context,
-                                                                                MaterialPageRoute(
-                                                                                  builder: (context) => DriversLicenseUpdatePageWidget(),
-                                                                                ),
-                                                                              );
+
+                                                                              context.pushNamed('drivers_license_update_page');
+
                                                                               return;
                                                                             } else {
                                                                               return;
@@ -992,12 +982,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                               false;
                                                                           if (confirmDialogResponse) {
                                                                             logFirebaseEvent('Button_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => NavBarPage(initialPage: 'account_page'),
-                                                                              ),
-                                                                            );
+
+                                                                            context.pushNamed('account_page');
+
                                                                             return;
                                                                           } else {
                                                                             return;
@@ -1029,13 +1016,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                         if (confirmDialogResponse) {
                                                                           logFirebaseEvent(
                                                                               'Button_Navigate-To');
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => SubscriptionsPageWidget(),
-                                                                            ),
-                                                                          );
+
+                                                                          context
+                                                                              .pushNamed('subscriptions_page');
                                                                         } else {
                                                                           return;
                                                                         }
@@ -1070,7 +1053,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             accepted:
                                                                                 true,
                                                                             commuteDatetime:
-                                                                                commutesManagementDetailsPageCommutesRecord.departureDatetime,
+                                                                                deleteCommutesManagementDetailsPageCommutesRecord.departureDatetime,
                                                                           );
                                                                           await listViewPassengersRecord
                                                                               .reference
@@ -1092,7 +1075,7 @@ class _CommutesManagementDetailsPageWidgetState
                                                                             notificationTitle:
                                                                                 'Seat Request Accepted',
                                                                             notificationText:
-                                                                                'Your request for a seat on the commute from ${commutesManagementDetailsPageCommutesRecord.origin} to ${commutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
+                                                                                'Your request for a seat on the commute from ${deleteCommutesManagementDetailsPageCommutesRecord.origin} to ${deleteCommutesManagementDetailsPageCommutesRecord.destination} has been accepted.',
                                                                             notificationSound:
                                                                                 'default',
                                                                             userRefs: [
@@ -1147,12 +1130,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                               false;
                                                                           if (confirmDialogResponse) {
                                                                             logFirebaseEvent('Button_Navigate-To');
-                                                                            await Navigator.push(
-                                                                              context,
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => DriversLicenseUpdatePageWidget(),
-                                                                              ),
-                                                                            );
+
+                                                                            context.pushNamed('drivers_license_update_page');
+
                                                                             return;
                                                                           } else {
                                                                             return;
@@ -1184,13 +1164,10 @@ class _CommutesManagementDetailsPageWidgetState
                                                                         if (confirmDialogResponse) {
                                                                           logFirebaseEvent(
                                                                               'Button_Navigate-To');
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => NavBarPage(initialPage: 'account_page'),
-                                                                            ),
-                                                                          );
+
+                                                                          context
+                                                                              .pushNamed('account_page');
+
                                                                           return;
                                                                         } else {
                                                                           return;
@@ -1225,14 +1202,9 @@ class _CommutesManagementDetailsPageWidgetState
                                                                       if (confirmDialogResponse) {
                                                                         logFirebaseEvent(
                                                                             'Button_Navigate-To');
-                                                                        await Navigator
-                                                                            .push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                SubscriptionsPageWidget(),
-                                                                          ),
-                                                                        );
+
+                                                                        context.pushNamed(
+                                                                            'subscriptions_page');
                                                                       } else {
                                                                         return;
                                                                       }

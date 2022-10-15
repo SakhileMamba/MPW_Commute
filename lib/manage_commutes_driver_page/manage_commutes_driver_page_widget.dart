@@ -1,15 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
-import '../commutes_management_details_page/commutes_management_details_page_widget.dart';
 import '../components/commutes_empty_widget.dart';
-import '../create_commute_page/create_commute_page_widget.dart';
-import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -98,12 +94,9 @@ class _ManageCommutesDriverPageWidgetState
                         currentUserDocument?.verifiedDriver, false)) {
                       if (iconButtonAppConstantsRecord!.freeApp!) {
                         logFirebaseEvent('IconButton_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateCommutePageWidget(),
-                          ),
-                        );
+
+                        context.pushNamed('create_commute_page');
+
                         return;
                       } else {
                         logFirebaseEvent('IconButton_Alert-Dialog');
@@ -154,13 +147,9 @@ class _ManageCommutesDriverPageWidgetState
                           false;
                       if (confirmDialogResponse) {
                         logFirebaseEvent('IconButton_Navigate-To');
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DriversLicenseUpdatePageWidget(),
-                          ),
-                        );
+
+                        context.pushNamed('drivers_license_update_page');
+
                         return;
                       } else {
                         return;
@@ -192,13 +181,9 @@ class _ManageCommutesDriverPageWidgetState
                         false;
                     if (confirmDialogResponse) {
                       logFirebaseEvent('IconButton_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NavBarPage(initialPage: 'account_page'),
-                        ),
-                      );
+
+                      context.pushNamed('account_page');
+
                       return;
                     } else {
                       return;
@@ -251,10 +236,9 @@ class _ManageCommutesDriverPageWidgetState
                 itemBuilder: (context, listViewIndex) {
                   final listViewCommutesRecord =
                       listViewCommutesRecordList[listViewIndex];
-                  return FutureBuilder<List<PassengersRecord>>(
-                    future: queryPassengersRecordOnce(
-                      parent: listViewCommutesRecord.reference,
-                    ),
+                  return StreamBuilder<UsersRecord>(
+                    stream:
+                        UsersRecord.getDocument(listViewCommutesRecord.driver!),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
@@ -269,21 +253,29 @@ class _ManageCommutesDriverPageWidgetState
                           ),
                         );
                       }
-                      List<PassengersRecord> cardPassengersRecordList =
-                          snapshot.data!;
+                      final cardUsersRecord = snapshot.data!;
                       return InkWell(
                         onTap: () async {
                           logFirebaseEvent(
                               'MANAGE_COMMUTES_DRIVER_Card_8fa1qyo0_ON_');
                           logFirebaseEvent('Card_Navigate-To');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  CommutesManagementDetailsPageWidget(
-                                commuteRef: listViewCommutesRecord.reference,
+
+                          context.pushNamed(
+                            'browse_drivers_details_page',
+                            queryParams: {
+                              'commuteDoc': serializeParam(
+                                listViewCommutesRecord,
+                                ParamType.Document,
                               ),
-                            ),
+                              'driverDoc': serializeParam(
+                                cardUsersRecord,
+                                ParamType.Document,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              'commuteDoc': listViewCommutesRecord,
+                              'driverDoc': cardUsersRecord,
+                            },
                           );
                         },
                         child: Card(
@@ -642,112 +634,143 @@ class _ManageCommutesDriverPageWidgetState
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 4, 0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            logFirebaseEvent(
-                                                'MANAGE_COMMUTES_DRIVER_CANCEL_BTN_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Button_Alert-Dialog');
-                                            var confirmDialogResponse =
-                                                await showDialog<bool>(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text(
-                                                              'Cancel Commute'),
-                                                          content: Text(
-                                                              'Are you sure you want to cancel this commute?'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      false),
-                                                              child: Text('No'),
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      true),
-                                                              child:
-                                                                  Text('Yes'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    ) ??
-                                                    false;
-                                            if (confirmDialogResponse) {
-                                              logFirebaseEvent(
-                                                  'Button_Trigger-Push-Notification');
-                                              triggerPushNotification(
-                                                notificationTitle:
-                                                    'Cancellation Notice',
-                                                notificationText:
-                                                    'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat(
-                                                  'MMMMEEEEd',
-                                                  listViewCommutesRecord
-                                                      .departureDatetime,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                )} at ${dateTimeFormat(
-                                                  'jm',
-                                                  listViewCommutesRecord
-                                                      .departureDatetime,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                )} has cancelled. Please find a different commute.',
-                                                notificationSound: 'default',
-                                                userRefs:
-                                                    cardPassengersRecordList
-                                                        .map((e) =>
-                                                            e.passengerAccount!)
-                                                        .toList(),
-                                                initialPageName:
-                                                    'manage_commutes_passenger_page',
-                                                parameterData: {},
+                                        child: StreamBuilder<
+                                            List<PassengersRecord>>(
+                                          stream: queryPassengersRecord(
+                                            parent: listViewCommutesRecord
+                                                .reference,
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50,
+                                                  height: 50,
+                                                  child: SpinKitChasingDots(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                    size: 50,
+                                                  ),
+                                                ),
                                               );
-                                              logFirebaseEvent(
-                                                  'Button_Backend-Call');
-                                              await listViewCommutesRecord
-                                                  .reference
-                                                  .delete();
-                                              return;
-                                            } else {
-                                              return;
                                             }
-                                          },
-                                          text: 'Cancel',
-                                          icon: Icon(
-                                            Icons.cancel_rounded,
-                                            size: 15,
-                                          ),
-                                          options: FFButtonOptions(
-                                            width: 130,
-                                            height: 50,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Roboto',
-                                                      color:
-                                                          FlutterFlowTheme.of(
+                                            List<PassengersRecord>
+                                                buttonPassengersRecordList =
+                                                snapshot.data!;
+                                            return FFButtonWidget(
+                                              onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'MANAGE_COMMUTES_DRIVER_CANCEL_BTN_ON_TAP');
+                                                logFirebaseEvent(
+                                                    'Button_Alert-Dialog');
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  'Cancel Commute'),
+                                                              content: Text(
+                                                                  'Are you sure you want to cancel this commute?'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      'No'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: Text(
+                                                                      'Yes'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (confirmDialogResponse) {
+                                                  logFirebaseEvent(
+                                                      'Button_Trigger-Push-Notification');
+                                                  triggerPushNotification(
+                                                    notificationTitle:
+                                                        'Commute Cancelled',
+                                                    notificationText:
+                                                        'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat(
+                                                      'MMMMEEEEd',
+                                                      listViewCommutesRecord
+                                                          .departureDatetime,
+                                                      locale:
+                                                          FFLocalizations.of(
                                                                   context)
+                                                              .languageCode,
+                                                    )} at ${dateTimeFormat(
+                                                      'jm',
+                                                      listViewCommutesRecord
+                                                          .departureDatetime,
+                                                      locale:
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .languageCode,
+                                                    )} has cancelled. Please find a different commute.',
+                                                    notificationSound:
+                                                        'default',
+                                                    userRefs:
+                                                        buttonPassengersRecordList
+                                                            .map((e) => e
+                                                                .passengerAccount!)
+                                                            .toList(),
+                                                    initialPageName:
+                                                        'manage_commutes_passenger_page',
+                                                    parameterData: {},
+                                                  );
+                                                  logFirebaseEvent(
+                                                      'Button_Backend-Call');
+                                                  await listViewCommutesRecord
+                                                      .reference
+                                                      .delete();
+                                                  return;
+                                                } else {
+                                                  return;
+                                                }
+                                              },
+                                              text: 'Cancel',
+                                              icon: Icon(
+                                                Icons.cancel_rounded,
+                                                size: 15,
+                                              ),
+                                              options: FFButtonOptions(
+                                                width: 130,
+                                                height: 50,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryColor,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
                                                               .secondaryText,
-                                                    ),
-                                            elevation: 8,
-                                            borderSide: BorderSide(
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
+                                                        ),
+                                                elevation: 8,
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),

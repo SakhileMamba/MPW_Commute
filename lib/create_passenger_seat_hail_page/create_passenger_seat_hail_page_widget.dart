@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
-import '../main.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +56,7 @@ class _CreatePassengerSeatHailPageWidgetState
           onPressed: () async {
             logFirebaseEvent('CREATE_PASSENGER_SEAT_HAIL_arrow_back_ro');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -261,7 +260,7 @@ class _CreatePassengerSeatHailPageWidgetState
                               logFirebaseEvent(
                                   'CREATE_PASSENGER_SEAT_HAIL_CANCEL_BTN_ON');
                               logFirebaseEvent('Button_Navigate-Back');
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             text: 'Cancel',
                             icon: Icon(
@@ -319,7 +318,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                           .doc()
                                           .set(passengersHailingCreateData);
                                       logFirebaseEvent('Button_Navigate-Back');
-                                      Navigator.pop(context);
+                                      context.pop();
                                       return;
                                     } else {
                                       logFirebaseEvent('Button_Alert-Dialog');
@@ -414,13 +413,9 @@ class _CreatePassengerSeatHailPageWidgetState
                                     false;
                                 if (confirmDialogResponse) {
                                   logFirebaseEvent('Button_Navigate-To');
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => NavBarPage(
-                                          initialPage: 'account_page'),
-                                    ),
-                                  );
+
+                                  context.pushNamed('account_page');
+
                                   return;
                                 } else {
                                   return;

@@ -1,17 +1,8 @@
-import '../approve_drivers_page/approve_drivers_page_widget.dart';
-import '../approve_users_page/approve_users_page_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../drivers_license_update_page/drivers_license_update_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../government_id_update_page/government_id_update_page_widget.dart';
-import '../list_vehicles_page/list_vehicles_page_widget.dart';
-import '../personal_information_update_page/personal_information_update_page_widget.dart';
-import '../phone_authentication_page/phone_authentication_page_widget.dart';
-import '../profile_picture_update_page/profile_picture_update_page_widget.dart';
-import '../subscriptions_page/subscriptions_page_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -69,13 +60,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               setState(() => FFAppState().currentPhotoURLTemp =
                                   currentUserPhoto);
                               logFirebaseEvent('CircleImage_Navigate-To');
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProfilePictureUpdatePageWidget(),
-                                ),
-                              );
+
+                              context.pushNamed('profile_picture_update_Page');
                             },
                             child: Container(
                               width: 100,
@@ -235,13 +221,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                 if (confirmDialogResponse) {
                                                   logFirebaseEvent(
                                                       'Button_Navigate-To');
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          PersonalInformationUpdatePageWidget(),
-                                                    ),
-                                                  );
+
+                                                  context.pushNamed(
+                                                      'personal_information_update_page');
+
                                                   return;
                                                 } else {
                                                   return;
@@ -285,13 +268,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               if (confirmDialogResponse) {
                                                 logFirebaseEvent(
                                                     'Button_Navigate-To');
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        GovernmentIdUpdatePageWidget(),
-                                                  ),
-                                                );
+
+                                                context.pushNamed(
+                                                    'government_id_update_Page');
+
                                                 return;
                                               } else {
                                                 return;
@@ -335,13 +315,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             if (confirmDialogResponse) {
                                               logFirebaseEvent(
                                                   'Button_Navigate-To');
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfilePictureUpdatePageWidget(),
-                                                ),
-                                              );
+
+                                              context.pushNamed(
+                                                  'profile_picture_update_Page');
+
                                               return;
                                             } else {
                                               return;
@@ -385,13 +362,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                           if (confirmDialogResponse) {
                                             logFirebaseEvent(
                                                 'Button_Navigate-To');
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PersonalInformationUpdatePageWidget(),
-                                              ),
-                                            );
+
+                                            context.pushNamed(
+                                                'personal_information_update_page');
+
                                             return;
                                           } else {
                                             return;
@@ -433,13 +407,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
                                               'Button_Navigate-To');
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PersonalInformationUpdatePageWidget(),
-                                            ),
-                                          );
+
+                                          context.pushNamed(
+                                              'personal_information_update_page');
+
                                           return;
                                         } else {
                                           return;
@@ -520,13 +491,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                       setState(() => FFAppState().userBirthDate =
                           currentUserDocument!.birthDate);
                       logFirebaseEvent('Container_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PersonalInformationUpdatePageWidget(),
-                        ),
-                      );
+
+                      context.pushNamed('personal_information_update_page');
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -575,12 +541,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           valueOrDefault(
                               currentUserDocument?.nationalIdPhotoUrl, ''));
                       logFirebaseEvent('Container_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GovernmentIdUpdatePageWidget(),
-                        ),
-                      );
+
+                      context.pushNamed('government_id_update_Page');
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -629,13 +591,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           valueOrDefault(
                               currentUserDocument?.driverLicensePhotoPath, ''));
                       logFirebaseEvent('Container_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DriversLicenseUpdatePageWidget(),
-                        ),
-                      );
+
+                      context.pushNamed('drivers_license_update_page');
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -680,12 +637,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_o7uudooc_ON_TAP');
                       logFirebaseEvent('Container_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SubscriptionsPageWidget(),
-                        ),
-                      );
+
+                      context.pushNamed('subscriptions_page');
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -730,12 +683,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_yvgctdvf_ON_TAP');
                       logFirebaseEvent('Container_Navigate-To');
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListVehiclesPageWidget(),
-                        ),
-                      );
+
+                      context.pushNamed('list_vehicles_page');
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
@@ -971,13 +920,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                 logFirebaseEvent(
                                     'ACCOUNT_Container_7u1ncfd7_ON_TAP');
                                 logFirebaseEvent('Container_Navigate-To');
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ApproveUsersPageWidget(),
-                                  ),
-                                );
+
+                                context.pushNamed('approve_users_page');
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1025,13 +969,8 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                 logFirebaseEvent(
                                     'ACCOUNT_Container_7g0ib76l_ON_TAP');
                                 logFirebaseEvent('Container_Navigate-To');
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ApproveDriversPageWidget(),
-                                  ),
-                                );
+
+                                context.pushNamed('approve_drivers_page');
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1082,14 +1021,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                     onPressed: () async {
                       logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
                       logFirebaseEvent('Button_Auth');
+                      GoRouter.of(context).prepareAuthEvent();
                       await signOut();
-                      await Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PhoneAuthenticationPageWidget(),
-                        ),
-                        (r) => false,
-                      );
+
+                      context.goNamedAuth('phone_authentication_page', mounted);
                     },
                     text: 'Logout',
                     icon: Icon(

@@ -402,7 +402,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                             logFirebaseEvent(
                                 'COMMUTES_FILTER_COMP_CLEAR_BTN_ON_TAP');
                             logFirebaseEvent('Button_Navigate-Back');
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Clear',
                           icon: Icon(

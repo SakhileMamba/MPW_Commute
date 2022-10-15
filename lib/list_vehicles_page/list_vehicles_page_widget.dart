@@ -1,11 +1,9 @@
-import '../add_vehicle_page/add_vehicle_page_widget.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -50,12 +48,8 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
           onPressed: () async {
             logFirebaseEvent('LIST_VEHICLES_arrow_back_rounded_ICN_ON_');
             logFirebaseEvent('IconButton_Navigate-To');
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavBarPage(initialPage: 'account_page'),
-              ),
-            );
+
+            context.pushNamed('account_page');
           },
         ),
         title: Text(
@@ -79,12 +73,8 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
             onPressed: () async {
               logFirebaseEvent('LIST_VEHICLES_add_rounded_ICN_ON_TAP');
               logFirebaseEvent('IconButton_Navigate-To');
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddVehiclePageWidget(),
-                ),
-              );
+
+              context.pushNamed('add_vehicle_page');
             },
           ),
         ],

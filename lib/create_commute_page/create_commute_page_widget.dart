@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
-import '../main.dart';
 import 'dart:io';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -70,7 +69,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
           onPressed: () async {
             logFirebaseEvent('CREATE_COMMUTE_arrow_back_rounded_ICN_ON');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -563,7 +562,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               logFirebaseEvent(
                                   'CREATE_COMMUTE_CANCEL_BTN_ON_TAP');
                               logFirebaseEvent('Button_Navigate-Back');
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             text: 'Cancel',
                             icon: Icon(
@@ -823,15 +822,8 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                               logFirebaseEvent('Button_Update-Local-State');
                               setState(() => FFAppState().chosenVehicle = null);
                               logFirebaseEvent('Button_Navigate-To');
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavBarPage(
-                                      initialPage:
-                                          'manage_commutes_driver_page'),
-                                ),
-                                (r) => false,
-                              );
+
+                              context.goNamed('manage_commutes_driver_page');
                             },
                             text: 'Proceed',
                             icon: Icon(

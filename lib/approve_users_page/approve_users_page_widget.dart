@@ -63,7 +63,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
           onPressed: () async {
             logFirebaseEvent('APPROVE_USERS_arrow_back_rounded_ICN_ON_');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

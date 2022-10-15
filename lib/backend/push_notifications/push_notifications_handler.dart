@@ -87,10 +87,13 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       NavBarPage(initialPage: 'manage_commutes_passenger_page'),
   'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
   'browse_drivers_details_page': (data) async => BrowseDriversDetailsPageWidget(
-        commuteRef: getParameter(data, 'commuteRef'),
+        commuteDoc: await getDocumentParameter(
+            data, 'commuteDoc', CommutesRecord.serializer),
+        driverDoc: await getDocumentParameter(
+            data, 'driverDoc', UsersRecord.serializer),
       ),
-  'commutes_management_details_page': (data) async =>
-      CommutesManagementDetailsPageWidget(
+  'delete_commutes_management_details_page': (data) async =>
+      DeleteCommutesManagementDetailsPageWidget(
         commuteRef: getParameter(data, 'commuteRef'),
       ),
   'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
@@ -124,7 +127,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         passenger: await getDocumentParameter(
             data, 'passenger', UsersRecord.serializer),
       ),
-  'accept_drivers_details_page': (data) async => AcceptDriversDetailsPageWidget(
+  'delete_accept_drivers_details_page': (data) async =>
+      DeleteAcceptDriversDetailsPageWidget(
         hailDoc: await getDocumentParameter(
             data, 'hailDoc', PassengersHailingRecord.serializer),
       ),

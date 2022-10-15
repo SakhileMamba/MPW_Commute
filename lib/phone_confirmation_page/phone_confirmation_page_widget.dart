@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -134,6 +133,7 @@ class _PhoneConfirmationPageWidgetState
                   onPressed: () async {
                     logFirebaseEvent('PHONE_CONFIRMATION_VERIFY_BTN_ON_TAP');
                     logFirebaseEvent('Button_Auth');
+                    GoRouter.of(context).prepareAuthEvent();
                     final smsCodeVal = securityCodeTextFieldController!.text;
                     if (smsCodeVal == null || smsCodeVal.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -151,14 +151,7 @@ class _PhoneConfirmationPageWidgetState
                       return;
                     }
 
-                    await Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            NavBarPage(initialPage: 'browse_drivers_page'),
-                      ),
-                      (r) => false,
-                    );
+                    context.goNamedAuth('browse_drivers_page', mounted);
                   },
                   text: 'Verify',
                   options: FFButtonOptions(
