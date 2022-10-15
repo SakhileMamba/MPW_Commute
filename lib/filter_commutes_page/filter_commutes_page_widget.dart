@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
-import '../main.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -53,7 +52,7 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
           onPressed: () async {
             logFirebaseEvent('FILTER_COMMUTES_arrow_back_rounded_ICN_O');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -271,14 +270,8 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                               setState(() =>
                                   FFAppState().filterDepartureDatetime = null);
                               logFirebaseEvent('Button_Navigate-To');
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavBarPage(
-                                      initialPage: 'browse_drivers_page'),
-                                ),
-                                (r) => false,
-                              );
+
+                              context.goNamed('browse_drivers_page');
                             },
                             text: 'Clear',
                             icon: Icon(
@@ -324,14 +317,8 @@ class _FilterCommutesPageWidgetState extends State<FilterCommutesPageWidget> {
                               setState(() => FFAppState()
                                   .filterDepartureDatetime = datePicked);
                               logFirebaseEvent('Button_Navigate-To');
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavBarPage(
-                                      initialPage: 'browse_drivers_page'),
-                                ),
-                                (r) => false,
-                              );
+
+                              context.goNamed('browse_drivers_page');
                             },
                             text: 'Filter',
                             icon: Icon(

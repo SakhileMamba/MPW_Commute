@@ -5,7 +5,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -73,7 +72,7 @@ class _PersonalInformationUpdatePageWidgetState
           onPressed: () async {
             logFirebaseEvent('PERSONAL_INFORMATION_UPDATE_arrow_back_r');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -403,7 +402,7 @@ class _PersonalInformationUpdatePageWidgetState
                                     logFirebaseEvent(
                                         'PERSONAL_INFORMATION_UPDATE_CANCEL_BTN_O');
                                     logFirebaseEvent('Button_Navigate-Back');
-                                    Navigator.pop(context);
+                                    context.pop();
                                   },
                                   text: 'Cancel',
                                   icon: Icon(
@@ -569,14 +568,8 @@ class _PersonalInformationUpdatePageWidgetState
                                     await currentUserReference!
                                         .update(usersUpdateData);
                                     logFirebaseEvent('Button_Navigate-To');
-                                    await Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => NavBarPage(
-                                            initialPage: 'account_page'),
-                                      ),
-                                      (r) => false,
-                                    );
+
+                                    context.goNamed('account_page');
                                   },
                                   text: 'Save',
                                   icon: Icon(

@@ -7,7 +7,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,7 +66,7 @@ class _ProfilePictureUpdatePageWidgetState
             logFirebaseEvent('IconButton_Update-Local-State');
             setState(() => FFAppState().backButtonFileUpload = false);
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -247,7 +246,7 @@ class _ProfilePictureUpdatePageWidgetState
                                 setState(() =>
                                     FFAppState().backButtonFileUpload = false);
                                 logFirebaseEvent('Button_Navigate-Back');
-                                Navigator.pop(context);
+                                context.pop();
                               },
                               text: 'Cancel',
                               icon: Icon(
@@ -319,14 +318,8 @@ class _ProfilePictureUpdatePageWidgetState
                                 setState(() =>
                                     FFAppState().backButtonFileUpload = false);
                                 logFirebaseEvent('Button_Navigate-To');
-                                await Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        NavBarPage(initialPage: 'account_page'),
-                                  ),
-                                  (r) => false,
-                                );
+
+                                context.goNamed('account_page');
                               },
                               text: 'Save',
                               icon: Icon(

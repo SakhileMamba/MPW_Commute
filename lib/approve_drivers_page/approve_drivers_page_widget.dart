@@ -64,7 +64,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
           onPressed: () async {
             logFirebaseEvent('APPROVE_DRIVERS_arrow_back_rounded_ICN_O');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

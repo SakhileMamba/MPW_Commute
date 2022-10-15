@@ -1,7 +1,5 @@
 import '../backend/backend.dart';
-import '../browse_passengers_details_page/browse_passengers_details_page_widget.dart';
 import '../components/browse_passengers_empty_widget.dart';
-import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -106,12 +104,8 @@ class _BrowsePassengersPageWidgetState
             onPressed: () async {
               logFirebaseEvent('BROWSE_PASSENGERS_filter_list_rounded_IC');
               logFirebaseEvent('IconButton_Navigate-To');
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FilterCommutesPageWidget(),
-                ),
-              );
+
+              context.pushNamed('filter_commutes_page');
             },
           ),
         ],
@@ -260,15 +254,23 @@ class _BrowsePassengersPageWidgetState
                             logFirebaseEvent(
                                 'BROWSE_PASSENGERS_Card_olygjjj3_ON_TAP');
                             logFirebaseEvent('Card_Navigate-To');
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    BrowsePassengersDetailsPageWidget(
-                                  hailingDoc: listViewPassengersHailingRecord,
-                                  passenger: cardUsersRecord,
+
+                            context.pushNamed(
+                              'browse_passengers_details_page',
+                              queryParams: {
+                                'hailingDoc': serializeParam(
+                                  listViewPassengersHailingRecord,
+                                  ParamType.Document,
                                 ),
-                              ),
+                                'passenger': serializeParam(
+                                  cardUsersRecord,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'hailingDoc': listViewPassengersHailingRecord,
+                                'passenger': cardUsersRecord,
+                              },
                             );
                           },
                           child: Card(

@@ -1,7 +1,5 @@
 import '../backend/backend.dart';
-import '../browse_drivers_details_page/browse_drivers_details_page_widget.dart';
 import '../components/browse_drivers_empty_widget.dart';
-import '../filter_commutes_page/filter_commutes_page_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -105,12 +103,8 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
             onPressed: () async {
               logFirebaseEvent('BROWSE_DRIVERS_filter_list_rounded_ICN_O');
               logFirebaseEvent('IconButton_Navigate-To');
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FilterCommutesPageWidget(),
-                ),
-              );
+
+              context.pushNamed('filter_commutes_page');
             },
           ),
         ],
@@ -258,14 +252,23 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                             logFirebaseEvent(
                                 'BROWSE_DRIVERS_Card_64cz7cnr_ON_TAP');
                             logFirebaseEvent('Card_Navigate-To');
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    BrowseDriversDetailsPageWidget(
-                                  commuteRef: listViewCommutesRecord.reference,
+
+                            context.pushNamed(
+                              'browse_drivers_details_page',
+                              queryParams: {
+                                'commuteDoc': serializeParam(
+                                  listViewCommutesRecord,
+                                  ParamType.Document,
                                 ),
-                              ),
+                                'driverDoc': serializeParam(
+                                  cardUsersRecord,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'commuteDoc': listViewCommutesRecord,
+                                'driverDoc': cardUsersRecord,
+                              },
                             );
                           },
                           child: Card(

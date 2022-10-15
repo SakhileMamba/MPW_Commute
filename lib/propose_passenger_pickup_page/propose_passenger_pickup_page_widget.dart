@@ -69,7 +69,7 @@ class _ProposePassengerPickupPageWidgetState
           onPressed: () async {
             logFirebaseEvent('PROPOSE_PASSENGER_PICKUP_arrow_back_roun');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -394,7 +394,7 @@ class _ProposePassengerPickupPageWidgetState
                               logFirebaseEvent(
                                   'PROPOSE_PASSENGER_PICKUP_CANCEL_BTN_ON_T');
                               logFirebaseEvent('Button_Navigate-Back');
-                              Navigator.pop(context);
+                              context.pop();
                             },
                             text: 'Cancel',
                             icon: Icon(
@@ -481,7 +481,7 @@ class _ProposePassengerPickupPageWidgetState
                                                 .hailingPassenger!
                                           ],
                                           initialPageName:
-                                              'accept_drivers_details_page',
+                                              'delete_accept_drivers_details_page',
                                           parameterData: {
                                             'hailDoc': widget.passengerHail,
                                           },
@@ -507,7 +507,7 @@ class _ProposePassengerPickupPageWidgetState
                                         );
                                         logFirebaseEvent(
                                             'Button_Navigate-Back');
-                                        Navigator.pop(context);
+                                        context.pop();
                                         return;
                                       } else {
                                         logFirebaseEvent('Button_Alert-Dialog');

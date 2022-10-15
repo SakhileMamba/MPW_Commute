@@ -51,7 +51,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
           onPressed: () async {
             logFirebaseEvent('SUBSCRIPTIONS_arrow_back_rounded_ICN_ON_');
             logFirebaseEvent('IconButton_Navigate-Back');
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
