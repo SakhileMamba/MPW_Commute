@@ -167,7 +167,7 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.drive_eta_rounded,
               size: 24,
             ),
-            label: 'Commutes',
+            label: 'Drive',
             tooltip: '',
           ),
           BottomNavigationBarItem(

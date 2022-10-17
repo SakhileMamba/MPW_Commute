@@ -1,1 +1,1 @@
-export 'currency_picker_custom.dart' show CurrencyPickerCustom;
+export 'currency.dart' show Currency;

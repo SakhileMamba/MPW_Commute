@@ -52,7 +52,7 @@ class FFAppState {
     prefs.setInt('ff_filterCurrentDateTime', _value.millisecondsSinceEpoch);
   }
 
-  String _pickedCurrency = 'SZL';
+  String _pickedCurrency = '';
   String get pickedCurrency => _pickedCurrency;
   set pickedCurrency(String _value) {
     _pickedCurrency = _value;
