@@ -45,7 +45,7 @@ class _ManageCommutesPassengerPageWidgetState
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Manange Seats',
+          'Passenger Seats',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
                 color: Colors.white,
@@ -88,10 +88,10 @@ class _ManageCommutesPassengerPageWidgetState
                   indicatorColor: FlutterFlowTheme.of(context).secondaryColor,
                   tabs: [
                     Tab(
-                      text: 'My Seats',
+                      text: 'Confirmed',
                     ),
                     Tab(
-                      text: 'Find Drivers',
+                      text: 'Requested',
                     ),
                   ],
                 ),
