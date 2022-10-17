@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/no_passengers_widget.dart';
+import '../components/no_seat_requests_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -803,6 +804,9 @@ class _BrowseDriversDetailsPageWidgetState
                       }
                       List<PassengersRecord> listViewPassengersRecordList =
                           snapshot.data!;
+                      if (listViewPassengersRecordList.isEmpty) {
+                        return NoSeatRequestsWidget();
+                      }
                       return ListView.builder(
                         padding: EdgeInsets.zero,
                         primary: false,
