@@ -376,7 +376,7 @@ class _ProposePassengerPickupPageWidgetState
                     child: Container(
                       width: double.infinity,
                       height: 50,
-                      child: custom_widgets.CurrencyPickerCustom(
+                      child: custom_widgets.Currency(
                         width: double.infinity,
                         height: 50,
                       ),

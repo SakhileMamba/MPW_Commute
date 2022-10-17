@@ -1075,9 +1075,11 @@ class _BrowsePassengersDetailsPageWidgetState
                                                       ),
                                                     ],
                                                   ),
-                                                if (currentUserReference ==
-                                                    widget.hailingDoc!
-                                                        .hailingPassenger)
+                                                if ((currentUserReference ==
+                                                        widget.hailingDoc!
+                                                            .hailingPassenger) &&
+                                                    (cardUsersRecord.rating! >
+                                                        0.0))
                                                   Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
