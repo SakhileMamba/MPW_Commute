@@ -41,6 +41,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
     textController3 = TextEditingController();
     textController4 = TextEditingController();
     textController5 = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -74,14 +75,14 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
           onPressed: () async {
             logFirebaseEvent('ADD_VEHICLE_arrow_back_rounded_ICN_ON_TA');
             if (FFAppState().backButtonFileUpload) {
-              logFirebaseEvent('IconButton_Custom-Action');
+              logFirebaseEvent('IconButton_custom_action');
               await actions.deleteUploadedImages(
                 uploadedFileUrl,
               );
             }
-            logFirebaseEvent('IconButton_Update-Local-State');
+            logFirebaseEvent('IconButton_update_local_state');
             setState(() => FFAppState().backButtonFileUpload = false);
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -366,14 +367,14 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'ADD_VEHICLE_PAGE_PAGE_CANCEL_BTN_ON_TAP');
-                                  logFirebaseEvent('Button_Custom-Action');
+                                  logFirebaseEvent('Button_custom_action');
                                   await actions.deleteUploadedImages(
                                     uploadedFileUrl,
                                   );
-                                  logFirebaseEvent('Button_Update-Local-State');
+                                  logFirebaseEvent('Button_update_local_state');
                                   setState(() => FFAppState()
                                       .backButtonFileUpload = false);
-                                  logFirebaseEvent('Button_Navigate-Back');
+                                  logFirebaseEvent('Button_navigate_back');
                                   context.pop();
                                 },
                                 text: 'Cancel',
@@ -425,7 +426,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                             if (!(uploadedFileUrl != null &&
                                                 uploadedFileUrl != '')) {
                                               logFirebaseEvent(
-                                                  'Button_Alert-Dialog');
+                                                  'Button_alert_dialog');
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {
@@ -449,7 +450,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                             }
                                           } else {
                                             logFirebaseEvent(
-                                                'Button_Alert-Dialog');
+                                                'Button_alert_dialog');
                                             await showDialog(
                                               context: context,
                                               builder: (alertDialogContext) {
@@ -473,7 +474,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                           }
                                         } else {
                                           logFirebaseEvent(
-                                              'Button_Alert-Dialog');
+                                              'Button_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -496,7 +497,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                           return;
                                         }
                                       } else {
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
@@ -519,7 +520,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                         return;
                                       }
                                     } else {
-                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
@@ -541,7 +542,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                       return;
                                     }
                                   } else {
-                                    logFirebaseEvent('Button_Alert-Dialog');
+                                    logFirebaseEvent('Button_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -563,7 +564,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                     return;
                                   }
 
-                                  logFirebaseEvent('Button_Backend-Call');
+                                  logFirebaseEvent('Button_backend_call');
 
                                   final vehiclesCreateData =
                                       createVehiclesRecordData(
@@ -579,13 +580,13 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                                   await VehiclesRecord.createDoc(
                                           currentUserReference!)
                                       .set(vehiclesCreateData);
-                                  logFirebaseEvent('Button_Update-Local-State');
+                                  logFirebaseEvent('Button_update_local_state');
                                   setState(() => FFAppState().oldPhotoURLTemp =
                                       uploadedFileUrl);
-                                  logFirebaseEvent('Button_Update-Local-State');
+                                  logFirebaseEvent('Button_update_local_state');
                                   setState(() => FFAppState()
                                       .backButtonFileUpload = false);
-                                  logFirebaseEvent('Button_Navigate-Back');
+                                  logFirebaseEvent('Button_navigate_back');
                                   context.pop();
                                 },
                                 text: 'Save',
@@ -625,10 +626,10 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           logFirebaseEvent('ADD_VEHICLE_UPLOAD_NEW_BTN_ON_TAP');
-                          logFirebaseEvent('Button_Update-Local-State');
+                          logFirebaseEvent('Button_update_local_state');
                           setState(() =>
                               FFAppState().oldPhotoURLTemp = uploadedFileUrl);
-                          logFirebaseEvent('Button_Upload-Photo-Video');
+                          logFirebaseEvent('Button_upload_photo_video');
                           final selectedMedia =
                               await selectMediaWithSourceBottomSheet(
                             context: context,
@@ -672,7 +673,7 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             }
                           }
 
-                          logFirebaseEvent('Button_Update-Local-State');
+                          logFirebaseEvent('Button_update_local_state');
                           setState(
                               () => FFAppState().backButtonFileUpload = true);
                         },

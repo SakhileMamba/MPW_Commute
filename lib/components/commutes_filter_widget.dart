@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -26,6 +27,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
   void initState() {
     super.initState();
     textController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -205,22 +207,53 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                         onTap: () async {
                           logFirebaseEvent(
                               'COMMUTES_FILTER_Container_ver1au6f_ON_TA');
-                          logFirebaseEvent('Container_Date-Time-Picker');
-                          await DatePicker.showDateTimePicker(
-                            context,
-                            showTitleActions: true,
-                            onConfirm: (date) {
-                              setState(() => datePicked = date);
-                            },
-                            currentTime: getCurrentTimestamp,
-                            minTime: getCurrentTimestamp,
-                            locale: LocaleType.values.firstWhere(
-                              (l) =>
-                                  l.name ==
-                                  FFLocalizations.of(context).languageCode,
-                              orElse: () => LocaleType.en,
-                            ),
-                          );
+                          logFirebaseEvent('Container_date_time_picker');
+                          if (kIsWeb) {
+                            final _datePickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: getCurrentTimestamp,
+                              firstDate: getCurrentTimestamp,
+                              lastDate: DateTime(2050),
+                            );
+
+                            TimeOfDay? _datePickedTime;
+                            if (_datePickedDate != null) {
+                              _datePickedTime = await showTimePicker(
+                                context: context,
+                                initialTime:
+                                    TimeOfDay.fromDateTime(getCurrentTimestamp),
+                              );
+                            }
+
+                            if (_datePickedDate != null &&
+                                _datePickedTime != null) {
+                              setState(
+                                () => datePicked = DateTime(
+                                  _datePickedDate.year,
+                                  _datePickedDate.month,
+                                  _datePickedDate.day,
+                                  _datePickedTime!.hour,
+                                  _datePickedTime.minute,
+                                ),
+                              );
+                            }
+                          } else {
+                            await DatePicker.showDateTimePicker(
+                              context,
+                              showTitleActions: true,
+                              onConfirm: (date) {
+                                setState(() => datePicked = date);
+                              },
+                              currentTime: getCurrentTimestamp,
+                              minTime: getCurrentTimestamp,
+                              locale: LocaleType.values.firstWhere(
+                                (l) =>
+                                    l.name ==
+                                    FFLocalizations.of(context).languageCode,
+                                orElse: () => LocaleType.en,
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -401,7 +434,7 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           onPressed: () async {
                             logFirebaseEvent(
                                 'COMMUTES_FILTER_COMP_CLEAR_BTN_ON_TAP');
-                            logFirebaseEvent('Button_Navigate-Back');
+                            logFirebaseEvent('Button_navigate_back');
                             context.pop();
                           },
                           text: 'Clear',
@@ -438,20 +471,20 @@ class _CommutesFilterWidgetState extends State<CommutesFilterWidget> {
                           onPressed: () async {
                             logFirebaseEvent(
                                 'COMMUTES_FILTER_COMP_FILTER_BTN_ON_TAP');
-                            logFirebaseEvent('Button_Update-Local-State');
+                            logFirebaseEvent('Button_update_local_state');
                             setState(() => FFAppState().filterOrigin =
                                 placePickerValue1.address);
-                            logFirebaseEvent('Button_Update-Local-State');
+                            logFirebaseEvent('Button_update_local_state');
                             setState(() => FFAppState().filterDestination =
                                 placePickerValue2.address);
-                            logFirebaseEvent('Button_Update-Local-State');
+                            logFirebaseEvent('Button_update_local_state');
                             setState(() => FFAppState()
                                 .filterDepartureDatetime = datePicked);
-                            logFirebaseEvent('Button_Update-Local-State');
+                            logFirebaseEvent('Button_update_local_state');
                             setState(() =>
                                 FFAppState().filterMinimumAvailableSeats =
                                     int.parse(textController!.text));
-                            logFirebaseEvent('Button_Bottom-Sheet');
+                            logFirebaseEvent('Button_bottom_sheet');
                             Navigator.pop(context);
                           },
                           text: 'Filter',

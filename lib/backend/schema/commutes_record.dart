@@ -38,6 +38,11 @@ abstract class CommutesRecord
   @BuiltValueField(wireName: 'destination_address')
   String? get destinationAddress;
 
+  bool? get archived;
+
+  @BuiltValueField(wireName: 'applicant_list')
+  BuiltList<DocumentReference>? get applicantList;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -50,7 +55,9 @@ abstract class CommutesRecord
     ..driversRating = 0.0
     ..currency = ''
     ..originAddress = ''
-    ..destinationAddress = '';
+    ..destinationAddress = ''
+    ..archived = false
+    ..applicantList = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('commutes');
@@ -85,6 +92,7 @@ Map<String, dynamic> createCommutesRecordData({
   String? currency,
   String? originAddress,
   String? destinationAddress,
+  bool? archived,
 }) {
   final firestoreData = serializers.toFirestore(
     CommutesRecord.serializer,
@@ -100,7 +108,9 @@ Map<String, dynamic> createCommutesRecordData({
         ..driversRating = driversRating
         ..currency = currency
         ..originAddress = originAddress
-        ..destinationAddress = destinationAddress,
+        ..destinationAddress = destinationAddress
+        ..archived = archived
+        ..applicantList = null,
     ),
   );
 

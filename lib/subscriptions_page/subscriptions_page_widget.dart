@@ -28,6 +28,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'subscriptions_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -50,7 +51,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('SUBSCRIPTIONS_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -139,7 +140,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                           var _shouldSetState = false;
                           if (functions.swaziNumberTest(currentPhoneNumber)) {
                             if (buttonAppConstantsRecord.freeApp!) {
-                              logFirebaseEvent('Button_Alert-Dialog');
+                              logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -160,7 +161,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                               if (_shouldSetState) setState(() {});
                               return;
                             } else {
-                              logFirebaseEvent('Button_Revenue-Cat');
+                              logFirebaseEvent('Button_revenue_cat');
                               purchaseCompleted =
                                   await revenue_cat.purchasePackage(revenue_cat
                                       .offerings!.current!.monthly!.identifier);
@@ -169,7 +170,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                               return;
                             }
                           } else {
-                            logFirebaseEvent('Button_Revenue-Cat');
+                            logFirebaseEvent('Button_revenue_cat');
                             purchaseCompletedNonSwazi =
                                 await revenue_cat.purchasePackage(revenue_cat
                                     .offerings!.current!.monthly!.identifier);

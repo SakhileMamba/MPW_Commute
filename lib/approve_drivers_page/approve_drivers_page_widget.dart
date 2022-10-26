@@ -35,6 +35,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'approve_drivers_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -63,7 +64,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('APPROVE_DRIVERS_arrow_back_rounded_ICN_O');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -193,7 +194,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'APPROVE_DRIVERS_Image_ebj0folu_ON_TAP');
-                                  logFirebaseEvent('Image_Expand-Image');
+                                  logFirebaseEvent('Image_expand_image');
                                   await Navigator.push(
                                     context,
                                     PageTransition(
@@ -229,7 +230,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'APPROVE_DRIVERS_Image_4dfn5h1u_ON_TAP');
-                                  logFirebaseEvent('Image_Expand-Image');
+                                  logFirebaseEvent('Image_expand_image');
                                   await Navigator.push(
                                     context,
                                     PageTransition(
@@ -482,7 +483,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                       onPressed: () async {
                                         logFirebaseEvent(
                                             'APPROVE_DRIVERS_CANCEL_BTN_ON_TAP');
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         var confirmDialogResponse =
                                             await showDialog<bool>(
                                                   context: context,
@@ -515,7 +516,16 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                                 false;
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
-                                              'Button_Trigger-Push-Notification');
+                                              'Button_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            licenseVerificationSent: false,
+                                          );
+                                          await cardUsersRecord.reference
+                                              .update(usersUpdateData);
+                                          logFirebaseEvent(
+                                              'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
                                                 'Driving Verification: Declined',
@@ -530,7 +540,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                             parameterData: {},
                                           );
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
                                           await listViewDriverVerificationRequestsRecord
                                               .reference
                                               .delete();
@@ -577,7 +587,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                       onPressed: () async {
                                         logFirebaseEvent(
                                             'APPROVE_DRIVERS_VERIFY_BTN_ON_TAP');
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         var confirmDialogResponse =
                                             await showDialog<bool>(
                                                   context: context,
@@ -611,16 +621,17 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                                 false;
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
 
                                           final usersUpdateData =
                                               createUsersRecordData(
                                             verifiedDriver: true,
+                                            licenseVerificationSent: false,
                                           );
                                           await cardUsersRecord.reference
                                               .update(usersUpdateData);
                                           logFirebaseEvent(
-                                              'Button_Trigger-Push-Notification');
+                                              'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
                                                 'Driving Verification: Accepted',
@@ -635,7 +646,7 @@ class _ApproveDriversPageWidgetState extends State<ApproveDriversPageWidget> {
                                             parameterData: {},
                                           );
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
                                           await listViewDriverVerificationRequestsRecord
                                               .reference
                                               .delete();

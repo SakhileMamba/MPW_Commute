@@ -10,6 +10,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,6 +35,7 @@ class _ManageCommutesPassengerPageWidgetState
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'manage_commutes_passenger_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -65,7 +67,7 @@ class _ManageCommutesPassengerPageWidgetState
             ),
             onPressed: () async {
               logFirebaseEvent('MANAGE_COMMUTES_PASSENGER_add_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_Navigate-To');
+              logFirebaseEvent('IconButton_navigate_to');
 
               context.pushNamed('create_passenger_seat_hail_page');
             },
@@ -161,17 +163,19 @@ class _ManageCommutesPassengerPageWidgetState
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'MANAGE_COMMUTES_PASSENGER_Card_63fif4w3_');
-                                      logFirebaseEvent('Card_Navigate-To');
+                                      logFirebaseEvent('Card_navigate_to');
 
                                       context.pushNamed(
-                                        'delete_commutes_management_details_page',
+                                        'browse_drivers_details_page',
                                         queryParams: {
-                                          'commuteRef': serializeParam(
-                                            listViewPassengersRecord
-                                                .parentReference,
-                                            ParamType.DocumentReference,
+                                          'commuteDoc': serializeParam(
+                                            cardCommutesRecord,
+                                            ParamType.Document,
                                           ),
                                         }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'commuteDoc': cardCommutesRecord,
+                                        },
                                       );
                                     },
                                     child: Card(
@@ -227,7 +231,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                           logFirebaseEvent(
                                                               'MANAGE_COMMUTES_PASSENGER_CircleImage_2a');
                                                           logFirebaseEvent(
-                                                              'CircleImage_Expand-Image');
+                                                              'CircleImage_expand_image');
                                                           await Navigator.push(
                                                             context,
                                                             PageTransition(
@@ -384,7 +388,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                       logFirebaseEvent(
                                                           'MANAGE_COMMUTES_PASSENGER_Image_vw8ooa2q');
                                                       logFirebaseEvent(
-                                                          'Image_Expand-Image');
+                                                          'Image_expand_image');
                                                       await Navigator.push(
                                                         context,
                                                         PageTransition(
@@ -852,86 +856,107 @@ class _ManageCommutesPassengerPageWidgetState
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         logFirebaseEvent(
-                                                            'MANAGE_COMMUTES_PASSENGER_CANCEL_BTN_ON_');
-                                                        logFirebaseEvent(
-                                                            'Button_Alert-Dialog');
-                                                        var confirmDialogResponse =
-                                                            await showDialog<
-                                                                    bool>(
-                                                                  context:
-                                                                      context,
-                                                                  builder:
-                                                                      (alertDialogContext) {
-                                                                    return AlertDialog(
-                                                                      title: Text(
-                                                                          'Cancel Commute'),
-                                                                      content: Text(
-                                                                          'Are you sure you want to give up your seat in this commute?'),
-                                                                      actions: [
-                                                                        TextButton(
-                                                                          onPressed: () => Navigator.pop(
-                                                                              alertDialogContext,
-                                                                              false),
-                                                                          child:
-                                                                              Text('No'),
-                                                                        ),
-                                                                        TextButton(
-                                                                          onPressed: () => Navigator.pop(
-                                                                              alertDialogContext,
-                                                                              true),
-                                                                          child:
-                                                                              Text('Yes'),
-                                                                        ),
-                                                                      ],
-                                                                    );
-                                                                  },
-                                                                ) ??
-                                                                false;
-                                                        if (confirmDialogResponse) {
+                                                            'MANAGE_COMMUTES_PASSENGER_ARCHIVE_BTN_ON');
+                                                        if (getCurrentTimestamp <
+                                                            cardCommutesRecord
+                                                                .departureDatetime!) {
                                                           logFirebaseEvent(
-                                                              'Button_Trigger-Push-Notification');
-                                                          triggerPushNotification(
-                                                            notificationTitle:
-                                                                'Cancellation Notice',
-                                                            notificationText:
-                                                                'A passenger on your commute to ${cardCommutesRecord.destination} on ${dateTimeFormat(
-                                                              'MMMMEEEEd',
-                                                              cardCommutesRecord
-                                                                  .departureDatetime,
-                                                              locale: FFLocalizations
-                                                                      .of(context)
-                                                                  .languageCode,
-                                                            )} at ${dateTimeFormat(
-                                                              'jm',
-                                                              cardCommutesRecord
-                                                                  .departureDatetime,
-                                                              locale: FFLocalizations
-                                                                      .of(context)
-                                                                  .languageCode,
-                                                            )} has cancelled. The seat is now available for others to request.',
-                                                            notificationSound:
-                                                                'default',
-                                                            userRefs: [
-                                                              cardCommutesRecord
-                                                                  .driver!
-                                                            ],
-                                                            initialPageName:
-                                                                'manage_commutes_driver_page',
-                                                            parameterData: {},
+                                                              'Button_alert_dialog');
+                                                          var confirmDialogResponse =
+                                                              await showDialog<
+                                                                      bool>(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (alertDialogContext) {
+                                                                      return AlertDialog(
+                                                                        title: Text(
+                                                                            'Cancel Commute'),
+                                                                        content:
+                                                                            Text('Are you sure you want to give up this seat?'),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext, false),
+                                                                            child:
+                                                                                Text('No'),
+                                                                          ),
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext, true),
+                                                                            child:
+                                                                                Text('Yes'),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  ) ??
+                                                                  false;
+                                                          if (confirmDialogResponse) {
+                                                            logFirebaseEvent(
+                                                                'Button_trigger_push_notification');
+                                                            triggerPushNotification(
+                                                              notificationTitle:
+                                                                  'Cancellation Notice',
+                                                              notificationText:
+                                                                  '${currentUserDisplayName}, a passenger on your commute to ${cardCommutesRecord.destination} on ${dateTimeFormat(
+                                                                'MMMMEEEEd',
+                                                                cardCommutesRecord
+                                                                    .departureDatetime,
+                                                                locale: FFLocalizations.of(
+                                                                        context)
+                                                                    .languageCode,
+                                                              )} at ${dateTimeFormat(
+                                                                'jm',
+                                                                cardCommutesRecord
+                                                                    .departureDatetime,
+                                                                locale: FFLocalizations.of(
+                                                                        context)
+                                                                    .languageCode,
+                                                              )} has cancelled. The seat is now available for others to request.',
+                                                              notificationSound:
+                                                                  'default',
+                                                              userRefs: [
+                                                                cardCommutesRecord
+                                                                    .driver!
+                                                              ],
+                                                              initialPageName:
+                                                                  'manage_commutes_driver_page',
+                                                              parameterData: {},
+                                                            );
+                                                            logFirebaseEvent(
+                                                                'Button_backend_call');
+
+                                                            final passengersUpdateData =
+                                                                createPassengersRecordData(
+                                                              archived: true,
+                                                            );
+                                                            await listViewPassengersRecord
+                                                                .reference
+                                                                .update(
+                                                                    passengersUpdateData);
+                                                            return;
+                                                          } else {
+                                                            return;
+                                                          }
+                                                        } else {
+                                                          logFirebaseEvent(
+                                                              'Button_backend_call');
+
+                                                          final passengersUpdateData =
+                                                              createPassengersRecordData(
+                                                            archived: true,
                                                           );
-                                                          logFirebaseEvent(
-                                                              'Button_Backend-Call');
                                                           await listViewPassengersRecord
                                                               .reference
-                                                              .delete();
-                                                          return;
-                                                        } else {
+                                                              .update(
+                                                                  passengersUpdateData);
                                                           return;
                                                         }
                                                       },
-                                                      text: 'Cancel',
+                                                      text: 'Archive',
                                                       icon: Icon(
-                                                        Icons.cancel_rounded,
+                                                        Icons.archive_rounded,
                                                         size: 15,
                                                       ),
                                                       options: FFButtonOptions(
@@ -972,9 +997,9 @@ class _ManageCommutesPassengerPageWidgetState
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
                                                         logFirebaseEvent(
-                                                            'MANAGE_COMMUTES_PASSENGER_SHARE_BTN_ON_T');
+                                                            'MANAGE_COMMUTES_PASSENGER_SECURE_BTN_ON_');
                                                         logFirebaseEvent(
-                                                            'Button_Alert-Dialog');
+                                                            'Button_alert_dialog');
                                                         var confirmDialogResponse =
                                                             await showDialog<
                                                                     bool>(
@@ -986,7 +1011,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                                       title: Text(
                                                                           'Share Commute Details'),
                                                                       content: Text(
-                                                                          'Are you sure you want to share this commute\'s identifier? It can be used by authorities to request the commute\'s details in the case of an emergency.'),
+                                                                          'Are you sure you want to share this commute\'s identifier? It can be used by authorities to request this commute\'s data in the case of an emergency.'),
                                                                       actions: [
                                                                         TextButton(
                                                                           onPressed: () => Navigator.pop(
@@ -1009,17 +1034,17 @@ class _ManageCommutesPassengerPageWidgetState
                                                                 false;
                                                         if (confirmDialogResponse) {
                                                           logFirebaseEvent(
-                                                              'Button_Share');
+                                                              'Button_share');
                                                           await Share.share(
-                                                              '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following commute identifier with you: ${functions.docRefToString(cardCommutesRecord.reference)}.');
+                                                              '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')}is a Commute passenger and has shared the commute identifier. . In the case of an emergency, share it with the police: ${functions.docRefToString(cardCommutesRecord.reference)}');
                                                           return;
                                                         } else {
                                                           return;
                                                         }
                                                       },
-                                                      text: 'Share',
+                                                      text: 'Secure',
                                                       icon: Icon(
-                                                        Icons.share_rounded,
+                                                        Icons.security_rounded,
                                                         size: 15,
                                                       ),
                                                       options: FFButtonOptions(
@@ -1131,7 +1156,7 @@ class _ManageCommutesPassengerPageWidgetState
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'MANAGE_COMMUTES_PASSENGER_Card_aqiey5u2_');
-                                      logFirebaseEvent('Card_Navigate-To');
+                                      logFirebaseEvent('Card_navigate_to');
 
                                       context.pushNamed(
                                         'browse_passengers_details_page',
@@ -1448,7 +1473,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                         logFirebaseEvent(
                                                             'MANAGE_COMMUTES_PASSENGER_CANCEL_BTN_ON_');
                                                         logFirebaseEvent(
-                                                            'Button_Alert-Dialog');
+                                                            'Button_alert_dialog');
                                                         var confirmDialogResponse =
                                                             await showDialog<
                                                                     bool>(
@@ -1483,7 +1508,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                                 false;
                                                         if (confirmDialogResponse) {
                                                           logFirebaseEvent(
-                                                              'Button_Backend-Call');
+                                                              'Button_backend_call');
                                                           await listViewPassengersHailingRecord
                                                               .reference
                                                               .delete();

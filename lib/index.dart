@@ -14,8 +14,6 @@ export 'manage_commutes_passenger_page/manage_commutes_passenger_page_widget.dar
 export 'account_page/account_page_widget.dart' show AccountPageWidget;
 export 'browse_drivers_details_page/browse_drivers_details_page_widget.dart'
     show BrowseDriversDetailsPageWidget;
-export 'delete_commutes_management_details_page/delete_commutes_management_details_page_widget.dart'
-    show DeleteCommutesManagementDetailsPageWidget;
 export 'government_id_update_page/government_id_update_page_widget.dart'
     show GovernmentIdUpdatePageWidget;
 export 'personal_information_update_page/personal_information_update_page_widget.dart'
@@ -49,5 +47,3 @@ export 'create_passenger_seat_hail_page/create_passenger_seat_hail_page_widget.d
     show CreatePassengerSeatHailPageWidget;
 export 'browse_passengers_details_page/browse_passengers_details_page_widget.dart'
     show BrowsePassengersDetailsPageWidget;
-export 'delete_accept_drivers_details_page/delete_accept_drivers_details_page_widget.dart'
-    show DeleteAcceptDriversDetailsPageWidget;

@@ -76,6 +76,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       errorBuilder: (context, _) => appStateNotifier.loggedIn
           ? NavBarPage()
           : PhoneAuthenticationPageWidget(),
+      navigatorBuilder: (_, __, child) => DynamicLinksHandler(child: child),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -145,16 +146,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => BrowseDriversDetailsPageWidget(
                 commuteDoc: params.getParam('commuteDoc', ParamType.Document),
                 driverDoc: params.getParam('driverDoc', ParamType.Document),
-              ),
-            ),
-            FFRoute(
-              name: 'delete_commutes_management_details_page',
-              path: 'deleteCommutesManagementDetailsPage',
-              requireAuth: true,
-              builder: (context, params) =>
-                  DeleteCommutesManagementDetailsPageWidget(
-                commuteRef: params.getParam('commuteRef',
-                    ParamType.DocumentReference, false, 'commutes'),
               ),
             ),
             FFRoute(
@@ -273,19 +264,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => BrowsePassengersDetailsPageWidget(
                 hailingDoc: params.getParam('hailingDoc', ParamType.Document),
                 passenger: params.getParam('passenger', ParamType.Document),
-              ),
-            ),
-            FFRoute(
-              name: 'delete_accept_drivers_details_page',
-              path: 'deleteAcceptDriversDetailsPage',
-              requireAuth: true,
-              asyncParams: {
-                'hailDoc': getDoc(
-                    'passengers_hailing', PassengersHailingRecord.serializer),
-              },
-              builder: (context, params) =>
-                  DeleteAcceptDriversDetailsPageWidget(
-                hailDoc: params.getParam('hailDoc', ParamType.Document),
               ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
@@ -466,8 +444,7 @@ class FFRoute {
                     fit: BoxFit.scaleDown,
                   ),
                 )
-              : PushNotificationsHandler(
-                  child: DynamicLinksHandler(child: page));
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

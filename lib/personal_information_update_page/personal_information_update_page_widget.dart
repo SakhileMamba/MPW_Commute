@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -40,6 +41,7 @@ class _PersonalInformationUpdatePageWidgetState
     textController3 = TextEditingController(text: currentPhoneNumber);
     textController4 = TextEditingController(
         text: valueOrDefault(currentUserDocument?.referrersCode, ''));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -71,7 +73,7 @@ class _PersonalInformationUpdatePageWidgetState
           ),
           onPressed: () async {
             logFirebaseEvent('PERSONAL_INFORMATION_UPDATE_arrow_back_r');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -94,7 +96,7 @@ class _PersonalInformationUpdatePageWidgetState
             child: InkWell(
               onTap: () async {
                 logFirebaseEvent('PERSONAL_INFORMATION_UPDATE_Column_z9py0');
-                logFirebaseEvent('Column_Backend-Call');
+                logFirebaseEvent('Column_backend_call');
 
                 final usersUpdateData = createUsersRecordData(
                   displayName: textController1!.text,
@@ -301,24 +303,43 @@ class _PersonalInformationUpdatePageWidgetState
                         onTap: () async {
                           logFirebaseEvent(
                               'PERSONAL_INFORMATION_UPDATE_Container_sv');
-                          logFirebaseEvent('Container_Date-Time-Picker');
-                          await DatePicker.showDatePicker(
-                            context,
-                            showTitleActions: true,
-                            onConfirm: (date) {
-                              setState(() => datePicked = date);
-                            },
-                            currentTime: getCurrentTimestamp,
-                            minTime: DateTime(0, 0, 0),
-                            locale: LocaleType.values.firstWhere(
-                              (l) =>
-                                  l.name ==
-                                  FFLocalizations.of(context).languageCode,
-                              orElse: () => LocaleType.en,
-                            ),
-                          );
+                          logFirebaseEvent('Container_date_time_picker');
+                          if (kIsWeb) {
+                            final _datePickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: getCurrentTimestamp,
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime(2050),
+                            );
 
-                          logFirebaseEvent('Container_Update-Local-State');
+                            if (_datePickedDate != null) {
+                              setState(
+                                () => datePicked = DateTime(
+                                  _datePickedDate.year,
+                                  _datePickedDate.month,
+                                  _datePickedDate.day,
+                                ),
+                              );
+                            }
+                          } else {
+                            await DatePicker.showDatePicker(
+                              context,
+                              showTitleActions: true,
+                              onConfirm: (date) {
+                                setState(() => datePicked = date);
+                              },
+                              currentTime: getCurrentTimestamp,
+                              minTime: DateTime(0, 0, 0),
+                              locale: LocaleType.values.firstWhere(
+                                (l) =>
+                                    l.name ==
+                                    FFLocalizations.of(context).languageCode,
+                                orElse: () => LocaleType.en,
+                              ),
+                            );
+                          }
+
+                          logFirebaseEvent('Container_update_local_state');
                           setState(
                               () => FFAppState().userBirthDate = datePicked);
                         },
@@ -401,7 +422,7 @@ class _PersonalInformationUpdatePageWidgetState
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'PERSONAL_INFORMATION_UPDATE_CANCEL_BTN_O');
-                                    logFirebaseEvent('Button_Navigate-Back');
+                                    logFirebaseEvent('Button_navigate_back');
                                     context.pop();
                                   },
                                   text: 'Cancel',
@@ -463,7 +484,7 @@ class _PersonalInformationUpdatePageWidgetState
                                           if (!(dropDownValue != null &&
                                               dropDownValue != '')) {
                                             logFirebaseEvent(
-                                                'Button_Alert-Dialog');
+                                                'Button_alert_dialog');
                                             await showDialog(
                                               context: context,
                                               builder: (alertDialogContext) {
@@ -487,7 +508,7 @@ class _PersonalInformationUpdatePageWidgetState
                                           }
                                         } else {
                                           logFirebaseEvent(
-                                              'Button_Alert-Dialog');
+                                              'Button_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -510,7 +531,7 @@ class _PersonalInformationUpdatePageWidgetState
                                           return;
                                         }
                                       } else {
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
@@ -533,7 +554,7 @@ class _PersonalInformationUpdatePageWidgetState
                                         return;
                                       }
                                     } else {
-                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
@@ -555,7 +576,7 @@ class _PersonalInformationUpdatePageWidgetState
                                       return;
                                     }
 
-                                    logFirebaseEvent('Button_Backend-Call');
+                                    logFirebaseEvent('Button_backend_call');
 
                                     final usersUpdateData =
                                         createUsersRecordData(
@@ -567,7 +588,7 @@ class _PersonalInformationUpdatePageWidgetState
                                     );
                                     await currentUserReference!
                                         .update(usersUpdateData);
-                                    logFirebaseEvent('Button_Navigate-To');
+                                    logFirebaseEvent('Button_navigate_to');
 
                                     context.goNamed('account_page');
                                   },

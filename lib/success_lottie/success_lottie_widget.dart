@@ -20,6 +20,7 @@ class _SuccessLottieWidgetState extends State<SuccessLottieWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'success_lottie'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

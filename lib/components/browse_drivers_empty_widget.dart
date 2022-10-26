@@ -15,6 +15,13 @@ class BrowseDriversEmptyWidget extends StatefulWidget {
 
 class _BrowseDriversEmptyWidgetState extends State<BrowseDriversEmptyWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),

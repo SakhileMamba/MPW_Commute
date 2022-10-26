@@ -26,13 +26,14 @@ class _PhoneConfirmationPageWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('PHONE_CONFIRMATION_phone_confirmation_pa');
-      logFirebaseEvent('phone_confirmation_page_Update-Local-Sta');
+      logFirebaseEvent('phone_confirmation_page_update_local_sta');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
     });
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phone_confirmation_page'});
     securityCodeTextFieldController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -132,7 +133,7 @@ class _PhoneConfirmationPageWidgetState
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PHONE_CONFIRMATION_VERIFY_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent();
                     final smsCodeVal = securityCodeTextFieldController!.text;
                     if (smsCodeVal == null || smsCodeVal.isEmpty) {

@@ -27,7 +27,7 @@ class _UpdateUserSurnameWidgetState extends State<UpdateUserSurnameWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('UPDATE_USER_SURNAME_update_user_surname_');
-      logFirebaseEvent('update_user_surname_Update-Local-State');
+      logFirebaseEvent('update_user_surname_update_local_state');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
     });
 
@@ -35,6 +35,7 @@ class _UpdateUserSurnameWidgetState extends State<UpdateUserSurnameWidget> {
         parameters: {'screen_name': 'update_user_surname'});
     surnameController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.displaySurname, ''));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -137,7 +138,7 @@ class _UpdateUserSurnameWidgetState extends State<UpdateUserSurnameWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('UPDATE_USER_SURNAME_UPDATE_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Backend-Call');
+                    logFirebaseEvent('Button_backend_call');
 
                     final usersUpdateData = createUsersRecordData(
                       displaySurname: surnameController!.text,

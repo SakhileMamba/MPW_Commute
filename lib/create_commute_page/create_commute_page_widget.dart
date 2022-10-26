@@ -11,6 +11,7 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -39,6 +40,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
         parameters: {'screen_name': 'create_commute_page'});
     textController1 = TextEditingController();
     textController2 = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -68,7 +70,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('CREATE_COMMUTE_arrow_back_rounded_ICN_ON');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -192,24 +194,55 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'CREATE_COMMUTE_Container_e8l72gjy_ON_TAP');
-                        logFirebaseEvent('Container_Date-Time-Picker');
-                        await DatePicker.showDateTimePicker(
-                          context,
-                          showTitleActions: true,
-                          onConfirm: (date) {
-                            setState(() => datePicked = date);
-                          },
-                          currentTime: getCurrentTimestamp,
-                          minTime: getCurrentTimestamp,
-                          locale: LocaleType.values.firstWhere(
-                            (l) =>
-                                l.name ==
-                                FFLocalizations.of(context).languageCode,
-                            orElse: () => LocaleType.en,
-                          ),
-                        );
+                        logFirebaseEvent('Container_date_time_picker');
+                        if (kIsWeb) {
+                          final _datePickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: getCurrentTimestamp,
+                            firstDate: getCurrentTimestamp,
+                            lastDate: DateTime(2050),
+                          );
 
-                        logFirebaseEvent('Container_Update-Local-State');
+                          TimeOfDay? _datePickedTime;
+                          if (_datePickedDate != null) {
+                            _datePickedTime = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(getCurrentTimestamp),
+                            );
+                          }
+
+                          if (_datePickedDate != null &&
+                              _datePickedTime != null) {
+                            setState(
+                              () => datePicked = DateTime(
+                                _datePickedDate.year,
+                                _datePickedDate.month,
+                                _datePickedDate.day,
+                                _datePickedTime!.hour,
+                                _datePickedTime.minute,
+                              ),
+                            );
+                          }
+                        } else {
+                          await DatePicker.showDateTimePicker(
+                            context,
+                            showTitleActions: true,
+                            onConfirm: (date) {
+                              setState(() => datePicked = date);
+                            },
+                            currentTime: getCurrentTimestamp,
+                            minTime: getCurrentTimestamp,
+                            locale: LocaleType.values.firstWhere(
+                              (l) =>
+                                  l.name ==
+                                  FFLocalizations.of(context).languageCode,
+                              orElse: () => LocaleType.en,
+                            ),
+                          );
+                        }
+
+                        logFirebaseEvent('Container_update_local_state');
                         setState(() => FFAppState().scheduleDepartureDatetime =
                                 dateTimeFormat(
                               'd/M h:mm a',
@@ -309,7 +342,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                     logFirebaseEvent(
                                         'CREATE_COMMUTE_Container_j9vh5nh3_ON_TAP');
                                     logFirebaseEvent(
-                                        'Container_Update-Local-State');
+                                        'Container_update_local_state');
                                     setState(() => FFAppState().chosenVehicle =
                                         rowVehiclesRecord.reference);
                                   },
@@ -561,7 +594,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'CREATE_COMMUTE_CANCEL_BTN_ON_TAP');
-                              logFirebaseEvent('Button_Navigate-Back');
+                              logFirebaseEvent('Button_navigate_back');
                               context.pop();
                             },
                             text: 'Cancel',
@@ -609,14 +642,57 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                                 textController1!.text))) {
                                           if (textController2!.text != null &&
                                               textController2!.text != '') {
-                                            if (!functions
+                                            if (functions
                                                 .isDoubleGreaterThanZero(
                                                     functions
                                                         .stringNumbertoDouble(
                                                             textController2!
                                                                 .text))) {
                                               logFirebaseEvent(
-                                                  'Button_Alert-Dialog');
+                                                  'Button_backend_call');
+
+                                              final commutesCreateData =
+                                                  createCommutesRecordData(
+                                                origin: placePickerValue1.name,
+                                                destination:
+                                                    placePickerValue2.name,
+                                                availablePassengerSeats:
+                                                    int.parse(
+                                                        textController1!.text),
+                                                pricePerSeat: double.parse(
+                                                    textController2!.text),
+                                                driver: currentUserReference,
+                                                vehicle:
+                                                    FFAppState().chosenVehicle,
+                                                departureDatetime: datePicked,
+                                                driversRating: valueOrDefault(
+                                                    currentUserDocument?.rating,
+                                                    0.0),
+                                                currency:
+                                                    FFAppState().pickedCurrency,
+                                                originAddress:
+                                                    placePickerValue1.address,
+                                                destinationAddress:
+                                                    placePickerValue2.address,
+                                                archived: false,
+                                              );
+                                              await CommutesRecord.collection
+                                                  .doc()
+                                                  .set(commutesCreateData);
+                                              logFirebaseEvent(
+                                                  'Button_update_local_state');
+                                              setState(() => FFAppState()
+                                                  .chosenVehicle = null);
+                                              logFirebaseEvent(
+                                                  'Button_navigate_to');
+
+                                              context.goNamed(
+                                                  'manage_commutes_driver_page');
+
+                                              return;
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'Button_alert_dialog');
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {
@@ -640,7 +716,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                             }
                                           } else {
                                             logFirebaseEvent(
-                                                'Button_Alert-Dialog');
+                                                'Button_alert_dialog');
                                             await showDialog(
                                               context: context,
                                               builder: (alertDialogContext) {
@@ -664,7 +740,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                           }
                                         } else {
                                           logFirebaseEvent(
-                                              'Button_Alert-Dialog');
+                                              'Button_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -687,7 +763,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                           return;
                                         }
                                       } else {
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
@@ -710,7 +786,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                         return;
                                       }
                                     } else {
-                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
@@ -732,7 +808,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                       return;
                                     }
                                   } else {
-                                    logFirebaseEvent('Button_Alert-Dialog');
+                                    logFirebaseEvent('Button_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -754,7 +830,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                     return;
                                   }
                                 } else {
-                                  logFirebaseEvent('Button_Alert-Dialog');
+                                  logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -776,7 +852,7 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                   return;
                                 }
                               } else {
-                                logFirebaseEvent('Button_Alert-Dialog');
+                                logFirebaseEvent('Button_alert_dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -796,34 +872,6 @@ class _CreateCommutePageWidgetState extends State<CreateCommutePageWidget> {
                                 );
                                 return;
                               }
-
-                              logFirebaseEvent('Button_Backend-Call');
-
-                              final commutesCreateData =
-                                  createCommutesRecordData(
-                                origin: placePickerValue1.name,
-                                destination: placePickerValue2.name,
-                                availablePassengerSeats:
-                                    int.parse(textController1!.text),
-                                pricePerSeat:
-                                    double.parse(textController2!.text),
-                                driver: currentUserReference,
-                                vehicle: FFAppState().chosenVehicle,
-                                departureDatetime: datePicked,
-                                driversRating: valueOrDefault(
-                                    currentUserDocument?.rating, 0.0),
-                                currency: FFAppState().pickedCurrency,
-                                originAddress: placePickerValue1.address,
-                                destinationAddress: placePickerValue2.address,
-                              );
-                              await CommutesRecord.collection
-                                  .doc()
-                                  .set(commutesCreateData);
-                              logFirebaseEvent('Button_Update-Local-State');
-                              setState(() => FFAppState().chosenVehicle = null);
-                              logFirebaseEvent('Button_Navigate-To');
-
-                              context.goNamed('manage_commutes_driver_page');
                             },
                             text: 'Proceed',
                             icon: Icon(

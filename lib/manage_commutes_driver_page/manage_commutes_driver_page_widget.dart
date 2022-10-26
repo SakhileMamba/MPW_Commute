@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,6 +31,7 @@ class _ManageCommutesDriverPageWidgetState
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'manage_commutes_driver_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -93,13 +95,13 @@ class _ManageCommutesDriverPageWidgetState
                     if (valueOrDefault<bool>(
                         currentUserDocument?.verifiedDriver, false)) {
                       if (iconButtonAppConstantsRecord!.freeApp!) {
-                        logFirebaseEvent('IconButton_Navigate-To');
+                        logFirebaseEvent('IconButton_navigate_to');
 
                         context.pushNamed('create_commute_page');
 
                         return;
                       } else {
-                        logFirebaseEvent('IconButton_Alert-Dialog');
+                        logFirebaseEvent('IconButton_alert_dialog');
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -121,7 +123,7 @@ class _ManageCommutesDriverPageWidgetState
 
                       return;
                     } else {
-                      logFirebaseEvent('IconButton_Alert-Dialog');
+                      logFirebaseEvent('IconButton_alert_dialog');
                       var confirmDialogResponse = await showDialog<bool>(
                             context: context,
                             builder: (alertDialogContext) {
@@ -146,7 +148,7 @@ class _ManageCommutesDriverPageWidgetState
                           ) ??
                           false;
                       if (confirmDialogResponse) {
-                        logFirebaseEvent('IconButton_Navigate-To');
+                        logFirebaseEvent('IconButton_navigate_to');
 
                         context.pushNamed('drivers_license_update_page');
 
@@ -156,7 +158,7 @@ class _ManageCommutesDriverPageWidgetState
                       }
                     }
                   } else {
-                    logFirebaseEvent('IconButton_Alert-Dialog');
+                    logFirebaseEvent('IconButton_alert_dialog');
                     var confirmDialogResponse = await showDialog<bool>(
                           context: context,
                           builder: (alertDialogContext) {
@@ -180,7 +182,7 @@ class _ManageCommutesDriverPageWidgetState
                         ) ??
                         false;
                     if (confirmDialogResponse) {
-                      logFirebaseEvent('IconButton_Navigate-To');
+                      logFirebaseEvent('IconButton_navigate_to');
 
                       context.pushNamed('account_page');
 
@@ -258,7 +260,7 @@ class _ManageCommutesDriverPageWidgetState
                         onTap: () async {
                           logFirebaseEvent(
                               'MANAGE_COMMUTES_DRIVER_Card_8fa1qyo0_ON_');
-                          logFirebaseEvent('Card_Navigate-To');
+                          logFirebaseEvent('Card_navigate_to');
 
                           context.pushNamed(
                             'browse_drivers_details_page',
@@ -662,9 +664,9 @@ class _ManageCommutesDriverPageWidgetState
                                             return FFButtonWidget(
                                               onPressed: () async {
                                                 logFirebaseEvent(
-                                                    'MANAGE_COMMUTES_DRIVER_CANCEL_BTN_ON_TAP');
+                                                    'MANAGE_COMMUTES_DRIVER_ARCHIVE_BTN_ON_TA');
                                                 logFirebaseEvent(
-                                                    'Button_Alert-Dialog');
+                                                    'Button_alert_dialog');
                                                 var confirmDialogResponse =
                                                     await showDialog<bool>(
                                                           context: context,
@@ -672,9 +674,9 @@ class _ManageCommutesDriverPageWidgetState
                                                               (alertDialogContext) {
                                                             return AlertDialog(
                                                               title: Text(
-                                                                  'Cancel Commute'),
+                                                                  'Archive Commute'),
                                                               content: Text(
-                                                                  'Are you sure you want to cancel this commute?'),
+                                                                  'Are you sure you want to archive this commute?'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
@@ -698,53 +700,76 @@ class _ManageCommutesDriverPageWidgetState
                                                         ) ??
                                                         false;
                                                 if (confirmDialogResponse) {
-                                                  logFirebaseEvent(
-                                                      'Button_Trigger-Push-Notification');
-                                                  triggerPushNotification(
-                                                    notificationTitle:
-                                                        'Commute Cancelled',
-                                                    notificationText:
-                                                        'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat(
-                                                      'MMMMEEEEd',
+                                                  if (getCurrentTimestamp <
                                                       listViewCommutesRecord
-                                                          .departureDatetime,
-                                                      locale:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .languageCode,
-                                                    )} at ${dateTimeFormat(
-                                                      'jm',
-                                                      listViewCommutesRecord
-                                                          .departureDatetime,
-                                                      locale:
-                                                          FFLocalizations.of(
-                                                                  context)
-                                                              .languageCode,
-                                                    )} has cancelled. Please find a different commute.',
-                                                    notificationSound:
-                                                        'default',
-                                                    userRefs:
-                                                        buttonPassengersRecordList
-                                                            .map((e) => e
-                                                                .passengerAccount!)
-                                                            .toList(),
-                                                    initialPageName:
-                                                        'manage_commutes_passenger_page',
-                                                    parameterData: {},
-                                                  );
-                                                  logFirebaseEvent(
-                                                      'Button_Backend-Call');
-                                                  await listViewCommutesRecord
-                                                      .reference
-                                                      .delete();
-                                                  return;
+                                                          .departureDatetime!) {
+                                                    logFirebaseEvent(
+                                                        'Button_trigger_push_notification');
+                                                    triggerPushNotification(
+                                                      notificationTitle:
+                                                          'Commute Cancelled',
+                                                      notificationText:
+                                                          'The driver of your commute to ${listViewCommutesRecord.destination} on ${dateTimeFormat(
+                                                        'MMMMEEEEd',
+                                                        listViewCommutesRecord
+                                                            .departureDatetime,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      )} at ${dateTimeFormat(
+                                                        'jm',
+                                                        listViewCommutesRecord
+                                                            .departureDatetime,
+                                                        locale:
+                                                            FFLocalizations.of(
+                                                                    context)
+                                                                .languageCode,
+                                                      )} has cancelled. Please find a different commute.',
+                                                      notificationSound:
+                                                          'default',
+                                                      userRefs:
+                                                          buttonPassengersRecordList
+                                                              .map((e) => e
+                                                                  .passengerAccount!)
+                                                              .toList(),
+                                                      initialPageName:
+                                                          'manage_commutes_passenger_page',
+                                                      parameterData: {},
+                                                    );
+                                                    logFirebaseEvent(
+                                                        'Button_backend_call');
+
+                                                    final commutesUpdateData =
+                                                        createCommutesRecordData(
+                                                      archived: true,
+                                                    );
+                                                    await listViewCommutesRecord
+                                                        .reference
+                                                        .update(
+                                                            commutesUpdateData);
+                                                    return;
+                                                  } else {
+                                                    logFirebaseEvent(
+                                                        'Button_backend_call');
+
+                                                    final commutesUpdateData =
+                                                        createCommutesRecordData(
+                                                      archived: true,
+                                                    );
+                                                    await listViewCommutesRecord
+                                                        .reference
+                                                        .update(
+                                                            commutesUpdateData);
+                                                    return;
+                                                  }
                                                 } else {
                                                   return;
                                                 }
                                               },
-                                              text: 'Cancel',
+                                              text: 'Archive',
                                               icon: Icon(
-                                                Icons.cancel_rounded,
+                                                Icons.archive_rounded,
                                                 size: 15,
                                               ),
                                               options: FFButtonOptions(
@@ -781,9 +806,9 @@ class _ManageCommutesDriverPageWidgetState
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             logFirebaseEvent(
-                                                'MANAGE_COMMUTES_DRIVER_SHARE_BTN_ON_TAP');
+                                                'MANAGE_COMMUTES_DRIVER_SECURE_BTN_ON_TAP');
                                             logFirebaseEvent(
-                                                'Button_Alert-Dialog');
+                                                'Button_alert_dialog');
                                             var confirmDialogResponse =
                                                 await showDialog<bool>(
                                                       context: context,
@@ -793,7 +818,7 @@ class _ManageCommutesDriverPageWidgetState
                                                           title: Text(
                                                               'Share Commute Details'),
                                                           content: Text(
-                                                              'Are you sure you want to share this commute\'s identifier? It can be used by authorities to request the commute\'s details in the case of an emergency.'),
+                                                              'Are you sure you want to share this commute\'s identifier? It can be used by authorities to request this commute\'s data in the case of an emergency.'),
                                                           actions: [
                                                             TextButton(
                                                               onPressed: () =>
@@ -817,17 +842,17 @@ class _ManageCommutesDriverPageWidgetState
                                                     ) ??
                                                     false;
                                             if (confirmDialogResponse) {
-                                              logFirebaseEvent('Button_Share');
+                                              logFirebaseEvent('Button_share');
                                               await Share.share(
-                                                  '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following commute identifier with you: ${functions.docRefToString(listViewCommutesRecord.reference)}.');
+                                                  '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')}is a Commute driver and has shared the following commute identifier with you. In the case of an emergency, share it with the police:${functions.docRefToString(listViewCommutesRecord.reference)}');
                                               return;
                                             } else {
                                               return;
                                             }
                                           },
-                                          text: 'Share',
+                                          text: 'Secure',
                                           icon: Icon(
-                                            Icons.share_rounded,
+                                            Icons.security_rounded,
                                             size: 15,
                                           ),
                                           options: FFButtonOptions(

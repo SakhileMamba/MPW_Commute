@@ -99,6 +99,23 @@ class _$CommutesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.applicantList;
+    if (value != null) {
+      result
+        ..add('applicant_list')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -170,6 +187,17 @@ class _$CommutesRecordSerializer
           result.destinationAddress = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'applicant_list':
+          result.applicantList.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType.nullable(Object)])
+              ]))! as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -207,6 +235,10 @@ class _$CommutesRecord extends CommutesRecord {
   @override
   final String? destinationAddress;
   @override
+  final bool? archived;
+  @override
+  final BuiltList<DocumentReference<Object?>>? applicantList;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$CommutesRecord([void Function(CommutesRecordBuilder)? updates]) =>
@@ -224,6 +256,8 @@ class _$CommutesRecord extends CommutesRecord {
       this.currency,
       this.originAddress,
       this.destinationAddress,
+      this.archived,
+      this.applicantList,
       this.ffRef})
       : super._();
 
@@ -250,6 +284,8 @@ class _$CommutesRecord extends CommutesRecord {
         currency == other.currency &&
         originAddress == other.originAddress &&
         destinationAddress == other.destinationAddress &&
+        archived == other.archived &&
+        applicantList == other.applicantList &&
         ffRef == other.ffRef;
   }
 
@@ -265,17 +301,22 @@ class _$CommutesRecord extends CommutesRecord {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, origin.hashCode),
-                                                destination.hashCode),
-                                            vehicle.hashCode),
-                                        availablePassengerSeats.hashCode),
-                                    pricePerSeat.hashCode),
-                                driver.hashCode),
-                            departureDatetime.hashCode),
-                        driversRating.hashCode),
-                    currency.hashCode),
-                originAddress.hashCode),
-            destinationAddress.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, origin.hashCode),
+                                                        destination.hashCode),
+                                                    vehicle.hashCode),
+                                                availablePassengerSeats
+                                                    .hashCode),
+                                            pricePerSeat.hashCode),
+                                        driver.hashCode),
+                                    departureDatetime.hashCode),
+                                driversRating.hashCode),
+                            currency.hashCode),
+                        originAddress.hashCode),
+                    destinationAddress.hashCode),
+                archived.hashCode),
+            applicantList.hashCode),
         ffRef.hashCode));
   }
 
@@ -293,6 +334,8 @@ class _$CommutesRecord extends CommutesRecord {
           ..add('currency', currency)
           ..add('originAddress', originAddress)
           ..add('destinationAddress', destinationAddress)
+          ..add('archived', archived)
+          ..add('applicantList', applicantList)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -351,6 +394,16 @@ class CommutesRecordBuilder
   set destinationAddress(String? destinationAddress) =>
       _$this._destinationAddress = destinationAddress;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
+  ListBuilder<DocumentReference<Object?>>? _applicantList;
+  ListBuilder<DocumentReference<Object?>> get applicantList =>
+      _$this._applicantList ??= new ListBuilder<DocumentReference<Object?>>();
+  set applicantList(ListBuilder<DocumentReference<Object?>>? applicantList) =>
+      _$this._applicantList = applicantList;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -373,6 +426,8 @@ class CommutesRecordBuilder
       _currency = $v.currency;
       _originAddress = $v.originAddress;
       _destinationAddress = $v.destinationAddress;
+      _archived = $v.archived;
+      _applicantList = $v.applicantList?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -394,20 +449,35 @@ class CommutesRecordBuilder
   CommutesRecord build() => _build();
 
   _$CommutesRecord _build() {
-    final _$result = _$v ??
-        new _$CommutesRecord._(
-            origin: origin,
-            destination: destination,
-            vehicle: vehicle,
-            availablePassengerSeats: availablePassengerSeats,
-            pricePerSeat: pricePerSeat,
-            driver: driver,
-            departureDatetime: departureDatetime,
-            driversRating: driversRating,
-            currency: currency,
-            originAddress: originAddress,
-            destinationAddress: destinationAddress,
-            ffRef: ffRef);
+    _$CommutesRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$CommutesRecord._(
+              origin: origin,
+              destination: destination,
+              vehicle: vehicle,
+              availablePassengerSeats: availablePassengerSeats,
+              pricePerSeat: pricePerSeat,
+              driver: driver,
+              departureDatetime: departureDatetime,
+              driversRating: driversRating,
+              currency: currency,
+              originAddress: originAddress,
+              destinationAddress: destinationAddress,
+              archived: archived,
+              applicantList: _applicantList?.build(),
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'applicantList';
+        _applicantList?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'CommutesRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

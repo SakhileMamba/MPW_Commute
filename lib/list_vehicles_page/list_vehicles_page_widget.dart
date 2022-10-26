@@ -25,6 +25,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'list_vehicles_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -47,7 +48,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('LIST_VEHICLES_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_Navigate-To');
+            logFirebaseEvent('IconButton_navigate_to');
 
             context.pushNamed('account_page');
           },
@@ -72,7 +73,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
             ),
             onPressed: () async {
               logFirebaseEvent('LIST_VEHICLES_add_rounded_ICN_ON_TAP');
-              logFirebaseEvent('IconButton_Navigate-To');
+              logFirebaseEvent('IconButton_navigate_to');
 
               context.pushNamed('add_vehicle_page');
             },
@@ -138,7 +139,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'LIST_VEHICLES_ARCHIVE_BTN_ON_TAP');
-                              logFirebaseEvent('Button_Alert-Dialog');
+                              logFirebaseEvent('Button_alert_dialog');
                               var confirmDialogResponse =
                                   await showDialog<bool>(
                                         context: context,
@@ -164,7 +165,7 @@ class _ListVehiclesPageWidgetState extends State<ListVehiclesPageWidget> {
                                       ) ??
                                       false;
                               if (confirmDialogResponse) {
-                                logFirebaseEvent('Button_Backend-Call');
+                                logFirebaseEvent('Button_backend_call');
 
                                 final vehiclesUpdateData =
                                     createVehiclesRecordData(
