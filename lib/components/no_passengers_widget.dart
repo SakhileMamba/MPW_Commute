@@ -13,6 +13,13 @@ class NoPassengersWidget extends StatefulWidget {
 
 class _NoPassengersWidgetState extends State<NoPassengersWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text(
       'Currently, there are no passengers in this commute.',

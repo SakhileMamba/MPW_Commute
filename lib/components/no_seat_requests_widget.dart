@@ -13,6 +13,13 @@ class NoSeatRequestsWidget extends StatefulWidget {
 
 class _NoSeatRequestsWidgetState extends State<NoSeatRequestsWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text(
       'Currently, there are no passengers requesting seats in this commute.',

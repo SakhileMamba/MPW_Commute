@@ -39,6 +39,7 @@ class _ProposePassengerPickupPageWidgetState
         parameters: {'screen_name': 'propose_passenger_pickup_page'});
     textController1 = TextEditingController();
     textController2 = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -68,12 +69,12 @@ class _ProposePassengerPickupPageWidgetState
           ),
           onPressed: () async {
             logFirebaseEvent('PROPOSE_PASSENGER_PICKUP_arrow_back_roun');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
         title: Text(
-          'Pickup Request',
+          ' Request To Drive',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
                 color: FlutterFlowTheme.of(context).secondaryText,
@@ -141,7 +142,7 @@ class _ProposePassengerPickupPageWidgetState
                                     logFirebaseEvent(
                                         'PROPOSE_PASSENGER_PICKUP_Container_3fmbc');
                                     logFirebaseEvent(
-                                        'Container_Update-Local-State');
+                                        'Container_update_local_state');
                                     setState(() => FFAppState().chosenVehicle =
                                         rowVehiclesRecord.reference);
                                   },
@@ -393,7 +394,7 @@ class _ProposePassengerPickupPageWidgetState
                             onPressed: () async {
                               logFirebaseEvent(
                                   'PROPOSE_PASSENGER_PICKUP_CANCEL_BTN_ON_T');
-                              logFirebaseEvent('Button_Navigate-Back');
+                              logFirebaseEvent('Button_navigate_back');
                               context.pop();
                             },
                             text: 'Cancel',
@@ -426,98 +427,217 @@ class _ProposePassengerPickupPageWidgetState
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'PROPOSE_PASSENGER_PICKUP_PROCEED_BTN_ON_');
-                              if (FFAppState().chosenVehicle != null) {
-                                if (textController1!.text != null &&
-                                    textController1!.text != '') {
-                                  if (functions.isIntGreaterThanZero(
-                                      functions.stringNumbertoInt(
-                                          textController1!.text))) {
-                                    if (textController2!.text != null &&
-                                        textController2!.text != '') {
-                                      if (functions.isDoubleGreaterThanZero(
-                                          functions.stringNumbertoDouble(
-                                              textController2!.text))) {
-                                        logFirebaseEvent('Button_Backend-Call');
+                          child: FutureBuilder<UsersRecord>(
+                            future: UsersRecord.getDocumentOnce(
+                                widget.passengerHail!.hailingPassenger!),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: SpinKitChasingDots(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      size: 50,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final buttonUsersRecord = snapshot.data!;
+                              return FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'PROPOSE_PASSENGER_PICKUP_PROCEED_BTN_ON_');
+                                  if (FFAppState().chosenVehicle != null) {
+                                    if (textController1!.text != null &&
+                                        textController1!.text != '') {
+                                      if (functions.isIntGreaterThanZero(
+                                          functions.stringNumbertoInt(
+                                              textController1!.text))) {
+                                        if (textController2!.text != null &&
+                                            textController2!.text != '') {
+                                          if (functions.isDoubleGreaterThanZero(
+                                              functions.stringNumbertoDouble(
+                                                  textController2!.text))) {
+                                            logFirebaseEvent(
+                                                'Button_alert_dialog');
+                                            var confirmDialogResponse =
+                                                await showDialog<bool>(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              'Request To Drive'),
+                                                          content: Text(
+                                                              'Are you sure you want to send this proposal to pick up and drive the passenger to the designated destination?'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      false),
+                                                              child: Text(
+                                                                  'Cancel'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext,
+                                                                      true),
+                                                              child: Text(
+                                                                  'Confirm'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ) ??
+                                                    false;
+                                            if (confirmDialogResponse) {
+                                              logFirebaseEvent(
+                                                  'Button_backend_call');
 
-                                        final pickupRequestsCreateData =
-                                            createPickupRequestsRecordData(
-                                          driver: currentUserReference,
-                                          vehicle: FFAppState().chosenVehicle,
-                                          availableSeats:
-                                              int.parse(textController1!.text),
-                                          pricePerSeat: double.parse(
-                                              textController2!.text),
-                                          currency: FFAppState().pickedCurrency,
-                                        );
-                                        await PickupRequestsRecord.createDoc(
-                                                widget.passengerHail!.reference)
-                                            .set(pickupRequestsCreateData);
-                                        logFirebaseEvent(
-                                            'Button_Trigger-Push-Notification');
-                                        triggerPushNotification(
-                                          notificationTitle:
-                                              'New Pickup Request',
-                                          notificationText:
-                                              '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has request to pick you up from your trip from ${widget.passengerHail!.origin} to ${widget.passengerHail!.destination} on ${dateTimeFormat(
-                                            'MMMEd',
-                                            widget.passengerHail!
-                                                .departureDatetime,
-                                            locale: FFLocalizations.of(context)
-                                                .languageCode,
-                                          )}, ${dateTimeFormat(
-                                            'jm',
-                                            widget.passengerHail!
-                                                .departureDatetime,
-                                            locale: FFLocalizations.of(context)
-                                                .languageCode,
-                                          )}.',
-                                          notificationSound: 'default',
-                                          userRefs: [
-                                            widget.passengerHail!
-                                                .hailingPassenger!
-                                          ],
-                                          initialPageName:
-                                              'delete_accept_drivers_details_page',
-                                          parameterData: {
-                                            'hailDoc': widget.passengerHail,
-                                          },
-                                        );
-                                        logFirebaseEvent('Button_Alert-Dialog');
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text('Pickup Request.'),
-                                              content: Text(
-                                                  'Your request has been sent successfully. '),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: Text('Continue'),
-                                                ),
-                                              ],
+                                              final pickupRequestsCreateData =
+                                                  createPickupRequestsRecordData(
+                                                driver: currentUserReference,
+                                                vehicle:
+                                                    FFAppState().chosenVehicle,
+                                                availableSeats: int.parse(
+                                                    textController1!.text),
+                                                pricePerSeat: double.parse(
+                                                    textController2!.text),
+                                                currency:
+                                                    FFAppState().pickedCurrency,
+                                              );
+                                              await PickupRequestsRecord
+                                                      .createDoc(widget
+                                                          .passengerHail!
+                                                          .reference)
+                                                  .set(
+                                                      pickupRequestsCreateData);
+                                              logFirebaseEvent(
+                                                  'Button_trigger_push_notification');
+                                              triggerPushNotification(
+                                                notificationTitle:
+                                                    'New Pickup Request',
+                                                notificationText:
+                                                    '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has request to pick you up from your trip from ${widget.passengerHail!.origin} to ${widget.passengerHail!.destination} on ${dateTimeFormat(
+                                                  'MMMEd',
+                                                  widget.passengerHail!
+                                                      .departureDatetime,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )}, ${dateTimeFormat(
+                                                  'jm',
+                                                  widget.passengerHail!
+                                                      .departureDatetime,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )}.',
+                                                notificationSound: 'default',
+                                                userRefs: [
+                                                  widget.passengerHail!
+                                                      .hailingPassenger!
+                                                ],
+                                                initialPageName:
+                                                    'browse_passengers_details_page',
+                                                parameterData: {
+                                                  'hailingDoc':
+                                                      widget.passengerHail,
+                                                  'passenger':
+                                                      buttonUsersRecord,
+                                                },
+                                              );
+                                              logFirebaseEvent(
+                                                  'Button_alert_dialog');
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title:
+                                                        Text('Pickup Request.'),
+                                                    content: Text(
+                                                        'Your request has been sent successfully. '),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Continue'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              logFirebaseEvent(
+                                                  'Button_navigate_back');
+                                              context.pop();
+                                              return;
+                                            } else {
+                                              return;
+                                            }
+                                          } else {
+                                            logFirebaseEvent(
+                                                'Button_alert_dialog');
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      'Correct Seat Price'),
+                                                  content: Text(
+                                                      'Please correctly input the price per seat for your commute.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Continue'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
                                             );
-                                          },
-                                        );
-                                        logFirebaseEvent(
-                                            'Button_Navigate-Back');
-                                        context.pop();
-                                        return;
+                                            return;
+                                          }
+                                        } else {
+                                          logFirebaseEvent(
+                                              'Button_alert_dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Missing Commute Seat Price'),
+                                                content: Text(
+                                                    'Please input your price per seat on this commute.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Continue'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
                                       } else {
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title: Text('Correct Seat Price'),
+                                              title: Text(
+                                                  'Correct Seat Number Info'),
                                               content: Text(
-                                                  'Please correctly input the price per seat for your commute.'),
+                                                  'Please correctly input the number of passenger seats available for sale on your commute. '),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -532,15 +652,15 @@ class _ProposePassengerPickupPageWidgetState
                                         return;
                                       }
                                     } else {
-                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
                                           return AlertDialog(
                                             title: Text(
-                                                'Missing Commute Seat Price'),
+                                                'Missing Commute Information'),
                                             content: Text(
-                                                'Please input your price per seat on this commute.'),
+                                                'Please input the number of available passenger seats for your commute.'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -554,15 +674,15 @@ class _ProposePassengerPickupPageWidgetState
                                       return;
                                     }
                                   } else {
-                                    logFirebaseEvent('Button_Alert-Dialog');
+                                    logFirebaseEvent('Button_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
                                         return AlertDialog(
                                           title:
-                                              Text('Correct Seat Number Info'),
+                                              Text('Missing Commute Vehicle'),
                                           content: Text(
-                                              'Please correctly input the number of passenger seats available for sale on your commute. '),
+                                              'Please select a vehicle for your commute.'),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Navigator.pop(
@@ -575,74 +695,34 @@ class _ProposePassengerPickupPageWidgetState
                                     );
                                     return;
                                   }
-                                } else {
-                                  logFirebaseEvent('Button_Alert-Dialog');
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title:
-                                            Text('Missing Commute Information'),
-                                        content: Text(
-                                            'Please input the number of available passenger seats for your commute.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                }
-                              } else {
-                                logFirebaseEvent('Button_Alert-Dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Missing Commute Vehicle'),
-                                      content: Text(
-                                          'Please select a vehicle for your commute.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Continue'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                return;
-                              }
-                            },
-                            text: 'Proceed',
-                            icon: Icon(
-                              Icons.check_circle_rounded,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              size: 15,
-                            ),
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 50,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .bodyText2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
+                                },
+                                text: 'Proceed',
+                                icon: Icon(
+                                  Icons.check_circle_rounded,
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  size: 15,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 130,
+                                  height: 50,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
+                                  elevation: 8,
+                                  borderSide: BorderSide(
+                                    width: 1,
                                   ),
-                              elevation: 8,
-                              borderSide: BorderSide(
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),

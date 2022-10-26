@@ -34,6 +34,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'approve_users_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -62,7 +63,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('APPROVE_USERS_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -189,7 +190,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'APPROVE_USERS_Image_9zotvzhr_ON_TAP');
-                                  logFirebaseEvent('Image_Expand-Image');
+                                  logFirebaseEvent('Image_expand_image');
                                   await Navigator.push(
                                     context,
                                     PageTransition(
@@ -225,7 +226,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'APPROVE_USERS_Image_6y9c6k5l_ON_TAP');
-                                  logFirebaseEvent('Image_Expand-Image');
+                                  logFirebaseEvent('Image_expand_image');
                                   await Navigator.push(
                                     context,
                                     PageTransition(
@@ -478,7 +479,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                       onPressed: () async {
                                         logFirebaseEvent(
                                             'APPROVE_USERS_CANCEL_BTN_ON_TAP');
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         var confirmDialogResponse =
                                             await showDialog<bool>(
                                                   context: context,
@@ -511,7 +512,16 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                                 false;
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
-                                              'Button_Trigger-Push-Notification');
+                                              'Button_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            accountVerificationSent: false,
+                                          );
+                                          await cardUsersRecord.reference
+                                              .update(usersUpdateData);
+                                          logFirebaseEvent(
+                                              'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
                                                 'Verification: Declined',
@@ -525,7 +535,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                             parameterData: {},
                                           );
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
                                           await listViewVerificationRequestsRecord
                                               .reference
                                               .delete();
@@ -572,7 +582,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                       onPressed: () async {
                                         logFirebaseEvent(
                                             'APPROVE_USERS_VERIFY_BTN_ON_TAP');
-                                        logFirebaseEvent('Button_Alert-Dialog');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         var confirmDialogResponse =
                                             await showDialog<bool>(
                                                   context: context,
@@ -606,16 +616,17 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                                 false;
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
 
                                           final usersUpdateData =
                                               createUsersRecordData(
                                             verifiedUser: true,
+                                            accountVerificationSent: false,
                                           );
                                           await cardUsersRecord.reference
                                               .update(usersUpdateData);
                                           logFirebaseEvent(
-                                              'Button_Trigger-Push-Notification');
+                                              'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
                                                 'Verification: Accepted',
@@ -629,7 +640,7 @@ class _ApproveUsersPageWidgetState extends State<ApproveUsersPageWidget> {
                                             parameterData: {},
                                           );
                                           logFirebaseEvent(
-                                              'Button_Backend-Call');
+                                              'Button_backend_call');
                                           await listViewVerificationRequestsRecord
                                               .reference
                                               .delete();

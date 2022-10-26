@@ -44,6 +44,7 @@ class _BrowsePassengersDetailsPageWidgetState
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'browse_passengers_details_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -66,7 +67,7 @@ class _BrowsePassengersDetailsPageWidgetState
           ),
           onPressed: () async {
             logFirebaseEvent('BROWSE_PASSENGERS_DETAILS_arrow_back_rou');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -93,23 +94,24 @@ class _BrowsePassengersDetailsPageWidgetState
               ),
               onPressed: () async {
                 logFirebaseEvent('BROWSE_PASSENGERS_DETAILS_share_rounded_');
-                logFirebaseEvent('IconButton_Generate-Current-Page-Link');
+                logFirebaseEvent('IconButton_generate_current_page_link');
                 _currentPageLink = await generateCurrentPageLink(
                   context,
                   title: 'Commute: Driver Required',
                   description:
-                      'Send me a request to drive me from ${widget.hailingDoc!.origin} to ${widget.hailingDoc!.destination}, on ${dateTimeFormat(
+                      'Drive me from ${widget.hailingDoc!.origin} to ${widget.hailingDoc!.destination}, on ${dateTimeFormat(
                     'MMMEd',
                     widget.hailingDoc!.departureDatetime,
                     locale: FFLocalizations.of(context).languageCode,
-                  )}at ${dateTimeFormat(
+                  )}, ${dateTimeFormat(
                     'jm',
                     widget.hailingDoc!.departureDatetime,
                     locale: FFLocalizations.of(context).languageCode,
                   )}.',
+                  isShortLink: false,
                 );
 
-                logFirebaseEvent('IconButton_Share');
+                logFirebaseEvent('IconButton_share');
                 await Share.share(_currentPageLink);
               },
             ),
@@ -154,25 +156,50 @@ class _BrowsePassengersDetailsPageWidgetState
                             currentUserDocument?.verifiedUser, false)) {
                           if (valueOrDefault<bool>(
                               currentUserDocument?.verifiedDriver, false)) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            if (getCurrentTimestamp <
+                                widget.hailingDoc!.departureDatetime!) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_navigate_to');
 
-                            context.pushNamed(
-                              'propose_passenger_pickup_page',
-                              queryParams: {
-                                'passengerHail': serializeParam(
-                                  widget.hailingDoc,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'passengerHail': widget.hailingDoc,
-                              },
-                            );
+                              context.pushNamed(
+                                'propose_passenger_pickup_page',
+                                queryParams: {
+                                  'passengerHail': serializeParam(
+                                    widget.hailingDoc,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'passengerHail': widget.hailingDoc,
+                                },
+                              );
 
-                            return;
+                              return;
+                            } else {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_alert_dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Driver Request Expired'),
+                                    content: Text(
+                                        'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Continue'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
                           } else {
                             logFirebaseEvent(
-                                'sendSeatRequestIcon_Alert-Dialog');
+                                'sendSeatRequestIcon_alert_dialog');
                             var confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -199,7 +226,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                 false;
                             if (confirmDialogResponse) {
                               logFirebaseEvent(
-                                  'sendSeatRequestIcon_Navigate-To');
+                                  'sendSeatRequestIcon_navigate_to');
 
                               context.pushNamed('drivers_license_update_page');
 
@@ -209,7 +236,7 @@ class _BrowsePassengersDetailsPageWidgetState
                             }
                           }
                         } else {
-                          logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                          logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -234,7 +261,7 @@ class _BrowsePassengersDetailsPageWidgetState
                               ) ??
                               false;
                           if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            logFirebaseEvent('sendSeatRequestIcon_navigate_to');
 
                             context.pushNamed('account_page');
 
@@ -244,7 +271,7 @@ class _BrowsePassengersDetailsPageWidgetState
                           }
                         }
                       } else {
-                        logFirebaseEvent('sendSeatRequestIcon_Revenue-Cat');
+                        logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
                         final isEntitled =
                             await revenue_cat.isEntitled('Driver Access');
                         if (isEntitled == null) {
@@ -258,26 +285,50 @@ class _BrowsePassengersDetailsPageWidgetState
                               currentUserDocument?.verifiedUser, false)) {
                             if (valueOrDefault<bool>(
                                 currentUserDocument?.verifiedDriver, false)) {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_Navigate-To');
+                              if (getCurrentTimestamp <
+                                  widget.hailingDoc!.departureDatetime!) {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_navigate_to');
 
-                              context.pushNamed(
-                                'propose_passenger_pickup_page',
-                                queryParams: {
-                                  'passengerHail': serializeParam(
-                                    widget.hailingDoc,
-                                    ParamType.Document,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'passengerHail': widget.hailingDoc,
-                                },
-                              );
+                                context.pushNamed(
+                                  'propose_passenger_pickup_page',
+                                  queryParams: {
+                                    'passengerHail': serializeParam(
+                                      widget.hailingDoc,
+                                      ParamType.Document,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    'passengerHail': widget.hailingDoc,
+                                  },
+                                );
 
-                              return;
+                                return;
+                              } else {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Driver Request Expired'),
+                                      content: Text(
+                                          'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return;
+                              }
                             } else {
                               logFirebaseEvent(
-                                  'sendSeatRequestIcon_Alert-Dialog');
+                                  'sendSeatRequestIcon_alert_dialog');
                               var confirmDialogResponse =
                                   await showDialog<bool>(
                                         context: context,
@@ -305,7 +356,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                       false;
                               if (confirmDialogResponse) {
                                 logFirebaseEvent(
-                                    'sendSeatRequestIcon_Navigate-To');
+                                    'sendSeatRequestIcon_navigate_to');
 
                                 context
                                     .pushNamed('drivers_license_update_page');
@@ -317,7 +368,7 @@ class _BrowsePassengersDetailsPageWidgetState
                             }
                           } else {
                             logFirebaseEvent(
-                                'sendSeatRequestIcon_Alert-Dialog');
+                                'sendSeatRequestIcon_alert_dialog');
                             var confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -343,7 +394,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                 false;
                             if (confirmDialogResponse) {
                               logFirebaseEvent(
-                                  'sendSeatRequestIcon_Navigate-To');
+                                  'sendSeatRequestIcon_navigate_to');
 
                               context.pushNamed('account_page');
 
@@ -353,7 +404,7 @@ class _BrowsePassengersDetailsPageWidgetState
                             }
                           }
                         } else {
-                          logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                          logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -378,7 +429,7 @@ class _BrowsePassengersDetailsPageWidgetState
                               ) ??
                               false;
                           if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            logFirebaseEvent('sendSeatRequestIcon_navigate_to');
 
                             context.pushNamed('subscriptions_page');
                           } else {
@@ -389,7 +440,7 @@ class _BrowsePassengersDetailsPageWidgetState
                         }
                       }
                     } else {
-                      logFirebaseEvent('sendSeatRequestIcon_Revenue-Cat');
+                      logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
                       final isEntitled =
                           await revenue_cat.isEntitled('Driver Access');
                       if (isEntitled == null) {
@@ -403,25 +454,50 @@ class _BrowsePassengersDetailsPageWidgetState
                             currentUserDocument?.verifiedUser, false)) {
                           if (valueOrDefault<bool>(
                               currentUserDocument?.verifiedDriver, false)) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            if (getCurrentTimestamp <
+                                widget.hailingDoc!.departureDatetime!) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_navigate_to');
 
-                            context.pushNamed(
-                              'propose_passenger_pickup_page',
-                              queryParams: {
-                                'passengerHail': serializeParam(
-                                  widget.hailingDoc,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'passengerHail': widget.hailingDoc,
-                              },
-                            );
+                              context.pushNamed(
+                                'propose_passenger_pickup_page',
+                                queryParams: {
+                                  'passengerHail': serializeParam(
+                                    widget.hailingDoc,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'passengerHail': widget.hailingDoc,
+                                },
+                              );
 
-                            return;
+                              return;
+                            } else {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_alert_dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Driver Request Expired'),
+                                    content: Text(
+                                        'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Continue'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
                           } else {
                             logFirebaseEvent(
-                                'sendSeatRequestIcon_Alert-Dialog');
+                                'sendSeatRequestIcon_alert_dialog');
                             var confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -448,7 +524,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                 false;
                             if (confirmDialogResponse) {
                               logFirebaseEvent(
-                                  'sendSeatRequestIcon_Navigate-To');
+                                  'sendSeatRequestIcon_navigate_to');
 
                               context.pushNamed('drivers_license_update_page');
 
@@ -458,7 +534,7 @@ class _BrowsePassengersDetailsPageWidgetState
                             }
                           }
                         } else {
-                          logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                          logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -483,7 +559,7 @@ class _BrowsePassengersDetailsPageWidgetState
                               ) ??
                               false;
                           if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                            logFirebaseEvent('sendSeatRequestIcon_navigate_to');
 
                             context.pushNamed('account_page');
 
@@ -493,7 +569,7 @@ class _BrowsePassengersDetailsPageWidgetState
                           }
                         }
                       } else {
-                        logFirebaseEvent('sendSeatRequestIcon_Alert-Dialog');
+                        logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
                         var confirmDialogResponse = await showDialog<bool>(
                               context: context,
                               builder: (alertDialogContext) {
@@ -518,7 +594,7 @@ class _BrowsePassengersDetailsPageWidgetState
                             ) ??
                             false;
                         if (confirmDialogResponse) {
-                          logFirebaseEvent('sendSeatRequestIcon_Navigate-To');
+                          logFirebaseEvent('sendSeatRequestIcon_navigate_to');
 
                           context.pushNamed('subscriptions_page');
                         } else {
@@ -570,7 +646,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                     logFirebaseEvent(
                                         'BROWSE_PASSENGERS_DETAILS_CircleImage_bb');
                                     logFirebaseEvent(
-                                        'CircleImage_Expand-Image');
+                                        'CircleImage_expand_image');
                                     await Navigator.push(
                                       context,
                                       PageTransition(
@@ -872,7 +948,7 @@ class _BrowsePassengersDetailsPageWidgetState
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
                   child: Text(
-                    'Pickup Requests By Drivers',
+                    'Pick up Requests By Drivers',
                     style: FlutterFlowTheme.of(context).title3,
                   ),
                 ),
@@ -963,7 +1039,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                   logFirebaseEvent(
                                                       'BROWSE_PASSENGERS_DETAILS_CircleImage_o4');
                                                   logFirebaseEvent(
-                                                      'CircleImage_Expand-Image');
+                                                      'CircleImage_expand_image');
                                                   await Navigator.push(
                                                     context,
                                                     PageTransition(
@@ -1151,7 +1227,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                       logFirebaseEvent(
                                                           'BROWSE_PASSENGERS_DETAILS_Image_ppod9h8a');
                                                       logFirebaseEvent(
-                                                          'Image_Expand-Image');
+                                                          'Image_expand_image');
                                                       await Navigator.push(
                                                         context,
                                                         PageTransition(
@@ -1293,7 +1369,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                     logFirebaseEvent(
                                                         'BROWSE_PASSENGERS_DETAILS_DECLINE_BTN_ON');
                                                     logFirebaseEvent(
-                                                        'Button_Trigger-Push-Notification');
+                                                        'Button_trigger_push_notification');
                                                     triggerPushNotification(
                                                       notificationTitle:
                                                           'Pickup Request Rejected',
@@ -1310,7 +1386,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                       parameterData: {},
                                                     );
                                                     logFirebaseEvent(
-                                                        'Button_Backend-Call');
+                                                        'Button_backend_call');
                                                     await listViewPickupRequestsRecord
                                                         .reference
                                                         .delete();
@@ -1386,7 +1462,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                                 ?.verifiedUser,
                                                             false)) {
                                                           logFirebaseEvent(
-                                                              'Button_Backend-Call');
+                                                              'Button_backend_call');
 
                                                           final commutesCreateData =
                                                               createCommutesRecordData(
@@ -1426,6 +1502,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                                 widget
                                                                     .hailingDoc!
                                                                     .destinationAddress,
+                                                            archived: false,
                                                           );
                                                           var commutesRecordReference =
                                                               CommutesRecord
@@ -1441,7 +1518,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                           _shouldSetState =
                                                               true;
                                                           logFirebaseEvent(
-                                                              'Button_Backend-Call');
+                                                              'Button_backend_call');
 
                                                           final passengersCreateData =
                                                               createPassengersRecordData(
@@ -1460,7 +1537,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                               .set(
                                                                   passengersCreateData);
                                                           logFirebaseEvent(
-                                                              'Button_Trigger-Push-Notification');
+                                                              'Button_trigger_push_notification');
                                                           triggerPushNotification(
                                                             notificationTitle:
                                                                 'Pickup Request Accepted',
@@ -1485,28 +1562,24 @@ class _BrowsePassengersDetailsPageWidgetState
                                                                   .driver!
                                                             ],
                                                             initialPageName:
-                                                                'delete_commutes_management_details_page',
-                                                            parameterData: {
-                                                              'commuteRef':
-                                                                  createdCommute!
-                                                                      .reference,
-                                                            },
+                                                                'manage_commutes_driver_page',
+                                                            parameterData: {},
                                                           );
                                                           logFirebaseEvent(
-                                                              'Button_Backend-Call');
+                                                              'Button_backend_call');
                                                           await widget
                                                               .hailingDoc!
                                                               .reference
                                                               .delete();
                                                           logFirebaseEvent(
-                                                              'Button_Navigate-Back');
+                                                              'Button_navigate_back');
                                                           context.pop();
                                                           if (_shouldSetState)
                                                             setState(() {});
                                                           return;
                                                         } else {
                                                           logFirebaseEvent(
-                                                              'Button_Alert-Dialog');
+                                                              'Button_alert_dialog');
                                                           var confirmDialogResponse =
                                                               await showDialog<
                                                                       bool>(
@@ -1539,7 +1612,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                                   false;
                                                           if (confirmDialogResponse) {
                                                             logFirebaseEvent(
-                                                                'Button_Navigate-To');
+                                                                'Button_navigate_to');
 
                                                             context.pushNamed(
                                                                 'account_page');

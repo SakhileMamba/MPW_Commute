@@ -19,14 +19,17 @@ abstract class PassengersRecord
   @BuiltValueField(wireName: 'commute_datetime')
   DateTime? get commuteDatetime;
 
+  bool? get archived;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(PassengersRecordBuilder builder) =>
-      builder..accepted = false;
+  static void _initializeBuilder(PassengersRecordBuilder builder) => builder
+    ..accepted = false
+    ..archived = false;
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -58,6 +61,7 @@ Map<String, dynamic> createPassengersRecordData({
   DocumentReference? passengerAccount,
   bool? accepted,
   DateTime? commuteDatetime,
+  bool? archived,
 }) {
   final firestoreData = serializers.toFirestore(
     PassengersRecord.serializer,
@@ -65,7 +69,8 @@ Map<String, dynamic> createPassengersRecordData({
       (p) => p
         ..passengerAccount = passengerAccount
         ..accepted = accepted
-        ..commuteDatetime = commuteDatetime,
+        ..commuteDatetime = commuteDatetime
+        ..archived = archived,
     ),
   );
 

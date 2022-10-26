@@ -25,6 +25,7 @@ class _PhoneAuthenticationPageWidgetState
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phone_authentication_page'});
     phoneNumberTextFieldController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -128,7 +129,7 @@ class _PhoneAuthenticationPageWidgetState
                   onPressed: () async {
                     logFirebaseEvent(
                         'PHONE_AUTHENTICATION_REQUEST_CODE_BTN_ON');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     final phoneNumberVal = phoneNumberTextFieldController!.text;
                     if (phoneNumberVal == null ||
                         phoneNumberVal.isEmpty ||

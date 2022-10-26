@@ -26,6 +26,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'account_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -56,10 +57,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               logFirebaseEvent(
                                   'ACCOUNT_CircleImage_svn9yn8h_ON_TAP');
                               logFirebaseEvent(
-                                  'CircleImage_Update-Local-State');
+                                  'CircleImage_update_local_state');
                               setState(() => FFAppState().currentPhotoURLTemp =
                                   currentUserPhoto);
-                              logFirebaseEvent('CircleImage_Navigate-To');
+                              logFirebaseEvent('CircleImage_navigate_to');
 
                               context.pushNamed('profile_picture_update_Page');
                             },
@@ -131,17 +132,14 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                     if (valueOrDefault<bool>(
                                         currentUserDocument?.verifiedUser,
                                         false)) {
-                                      logFirebaseEvent('Button_Show-Snack-Bar');
+                                      logFirebaseEvent('Button_show_snack_bar');
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
                                             'Account is verified.',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBtnText,
-                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
                                           ),
                                           duration:
                                               Duration(milliseconds: 4000),
@@ -150,42 +148,162 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                       );
                                       return;
                                     } else {
-                                      if (currentUserDisplayName != null &&
-                                          currentUserDisplayName != '') {
-                                        if (valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.displaySurname,
-                                                    '') !=
-                                                null &&
-                                            valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.displaySurname,
-                                                    '') !=
-                                                '') {
-                                          if (currentUserPhoto != null &&
-                                              currentUserPhoto != '') {
-                                            if (valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.nationalIdPhotoUrl,
-                                                        '') !=
-                                                    null &&
-                                                valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.nationalIdPhotoUrl,
-                                                        '') !=
-                                                    '') {
-                                              if (!(valueOrDefault(
+                                      if (valueOrDefault<bool>(
+                                              currentUserDocument
+                                                  ?.accountVerificationSent,
+                                              false) ==
+                                          true) {
+                                        logFirebaseEvent('Button_alert_dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  Text('Verification Pending'),
+                                              content: Text(
+                                                  'You have already sent a verification request. Please wait for the response on your current request before attempting to resend.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Continue'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      } else {
+                                        if (currentUserDisplayName != null &&
+                                            currentUserDisplayName != '') {
+                                          if (valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.displaySurname,
+                                                      '') !=
+                                                  null &&
+                                              valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.displaySurname,
+                                                      '') !=
+                                                  '') {
+                                            if (currentUserPhoto != null &&
+                                                currentUserPhoto != '') {
+                                              if (valueOrDefault(
                                                           currentUserDocument
-                                                              ?.gender,
+                                                              ?.nationalIdPhotoUrl,
                                                           '') !=
                                                       null &&
                                                   valueOrDefault(
                                                           currentUserDocument
-                                                              ?.gender,
+                                                              ?.nationalIdPhotoUrl,
                                                           '') !=
-                                                      '')) {
+                                                      '') {
+                                                if (valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.gender,
+                                                            '') !=
+                                                        null &&
+                                                    valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.gender,
+                                                            '') !=
+                                                        '') {
+                                                  logFirebaseEvent(
+                                                      'Button_backend_call');
+
+                                                  final verificationRequestsCreateData =
+                                                      createVerificationRequestsRecordData(
+                                                    requestUserRef:
+                                                        currentUserReference,
+                                                    requestDatetime:
+                                                        getCurrentTimestamp,
+                                                  );
+                                                  await VerificationRequestsRecord
+                                                      .collection
+                                                      .doc()
+                                                      .set(
+                                                          verificationRequestsCreateData);
+                                                  logFirebaseEvent(
+                                                      'Button_backend_call');
+
+                                                  final usersUpdateData =
+                                                      createUsersRecordData(
+                                                    accountVerificationSent:
+                                                        true,
+                                                  );
+                                                  await currentUserReference!
+                                                      .update(usersUpdateData);
+                                                  logFirebaseEvent(
+                                                      'Button_show_snack_bar');
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'Acount verification request sent.',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryBtnText,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          Color(0x00000000),
+                                                    ),
+                                                  );
+                                                  return;
+                                                } else {
+                                                  logFirebaseEvent(
+                                                      'Button_alert_dialog');
+                                                  var confirmDialogResponse =
+                                                      await showDialog<bool>(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    'Missing Account Information'),
+                                                                content: Text(
+                                                                    'Please specify your gender.'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                    child: Text(
+                                                                        'Cancel'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                    child: Text(
+                                                                        'Add Gender'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          ) ??
+                                                          false;
+                                                  if (confirmDialogResponse) {
+                                                    logFirebaseEvent(
+                                                        'Button_navigate_to');
+
+                                                    context.pushNamed(
+                                                        'personal_information_update_page');
+
+                                                    return;
+                                                  } else {
+                                                    return;
+                                                  }
+                                                }
+                                              } else {
                                                 logFirebaseEvent(
-                                                    'Button_Alert-Dialog');
+                                                    'Button_alert_dialog');
                                                 var confirmDialogResponse =
                                                     await showDialog<bool>(
                                                           context: context,
@@ -195,7 +313,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                               title: Text(
                                                                   'Missing Account Information'),
                                                               content: Text(
-                                                                  'Please specify your gender.'),
+                                                                  'Please add your government issued national ID picture to your account.'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
@@ -211,7 +329,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                                           alertDialogContext,
                                                                           true),
                                                                   child: Text(
-                                                                      'Add Gender'),
+                                                                      'Add ID'),
                                                                 ),
                                                               ],
                                                             );
@@ -220,10 +338,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                         false;
                                                 if (confirmDialogResponse) {
                                                   logFirebaseEvent(
-                                                      'Button_Navigate-To');
+                                                      'Button_navigate_to');
 
                                                   context.pushNamed(
-                                                      'personal_information_update_page');
+                                                      'government_id_update_Page');
 
                                                   return;
                                                 } else {
@@ -232,7 +350,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                               }
                                             } else {
                                               logFirebaseEvent(
-                                                  'Button_Alert-Dialog');
+                                                  'Button_alert_dialog');
                                               var confirmDialogResponse =
                                                   await showDialog<bool>(
                                                         context: context,
@@ -242,7 +360,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                             title: Text(
                                                                 'Missing Account Information'),
                                                             content: Text(
-                                                                'Please add your government issued national ID picture to your account.'),
+                                                                'Please add a profile picture to your account.'),
                                                             actions: [
                                                               TextButton(
                                                                 onPressed: () =>
@@ -258,7 +376,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                                         alertDialogContext,
                                                                         true),
                                                                 child: Text(
-                                                                    'Add ID'),
+                                                                    'Add Picture'),
                                                               ),
                                                             ],
                                                           );
@@ -267,10 +385,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                       false;
                                               if (confirmDialogResponse) {
                                                 logFirebaseEvent(
-                                                    'Button_Navigate-To');
+                                                    'Button_navigate_to');
 
                                                 context.pushNamed(
-                                                    'government_id_update_Page');
+                                                    'profile_picture_update_Page');
 
                                                 return;
                                               } else {
@@ -279,7 +397,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             }
                                           } else {
                                             logFirebaseEvent(
-                                                'Button_Alert-Dialog');
+                                                'Button_alert_dialog');
                                             var confirmDialogResponse =
                                                 await showDialog<bool>(
                                                       context: context,
@@ -289,7 +407,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                           title: Text(
                                                               'Missing Account Information'),
                                                           content: Text(
-                                                              'Please add a profile picture to your account.'),
+                                                              'Please add your surname to your account.'),
                                                           actions: [
                                                             TextButton(
                                                               onPressed: () =>
@@ -305,7 +423,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                                       alertDialogContext,
                                                                       true),
                                                               child: Text(
-                                                                  'Add Picture'),
+                                                                  'Add Surname'),
                                                             ),
                                                           ],
                                                         );
@@ -314,10 +432,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                     false;
                                             if (confirmDialogResponse) {
                                               logFirebaseEvent(
-                                                  'Button_Navigate-To');
+                                                  'Button_navigate_to');
 
                                               context.pushNamed(
-                                                  'profile_picture_update_Page');
+                                                  'personal_information_update_page');
 
                                               return;
                                             } else {
@@ -326,7 +444,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                           }
                                         } else {
                                           logFirebaseEvent(
-                                              'Button_Alert-Dialog');
+                                              'Button_alert_dialog');
                                           var confirmDialogResponse =
                                               await showDialog<bool>(
                                                     context: context,
@@ -336,7 +454,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                         title: Text(
                                                             'Missing Account Information'),
                                                         content: Text(
-                                                            'Please add your surname to your account.'),
+                                                            'Please add your name to your account.'),
                                                         actions: [
                                                           TextButton(
                                                             onPressed: () =>
@@ -352,7 +470,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                                     alertDialogContext,
                                                                     true),
                                                             child: Text(
-                                                                'Add Surname'),
+                                                                'Add Name'),
                                                           ),
                                                         ],
                                                       );
@@ -361,7 +479,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                                   false;
                                           if (confirmDialogResponse) {
                                             logFirebaseEvent(
-                                                'Button_Navigate-To');
+                                                'Button_navigate_to');
 
                                             context.pushNamed(
                                                 'personal_information_update_page');
@@ -371,81 +489,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                                             return;
                                           }
                                         }
-                                      } else {
-                                        logFirebaseEvent('Button_Alert-Dialog');
-                                        var confirmDialogResponse =
-                                            await showDialog<bool>(
-                                                  context: context,
-                                                  builder:
-                                                      (alertDialogContext) {
-                                                    return AlertDialog(
-                                                      title: Text(
-                                                          'Missing Account Information'),
-                                                      content: Text(
-                                                          'Please add your name to your account.'),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  alertDialogContext,
-                                                                  false),
-                                                          child: Text('Cancel'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  alertDialogContext,
-                                                                  true),
-                                                          child:
-                                                              Text('Add Name'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                ) ??
-                                                false;
-                                        if (confirmDialogResponse) {
-                                          logFirebaseEvent(
-                                              'Button_Navigate-To');
-
-                                          context.pushNamed(
-                                              'personal_information_update_page');
-
-                                          return;
-                                        } else {
-                                          return;
-                                        }
                                       }
-
-                                      logFirebaseEvent('Button_Backend-Call');
-
-                                      final verificationRequestsCreateData =
-                                          createVerificationRequestsRecordData(
-                                        requestUserRef: currentUserReference,
-                                        requestDatetime: getCurrentTimestamp,
-                                      );
-                                      await VerificationRequestsRecord
-                                          .collection
-                                          .doc()
-                                          .set(verificationRequestsCreateData);
-                                      logFirebaseEvent('Button_Show-Snack-Bar');
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Acount verification request sent.',
-                                            style: TextStyle(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBtnText,
-                                            ),
-                                          ),
-                                          duration:
-                                              Duration(milliseconds: 4000),
-                                          backgroundColor: Color(0x00000000),
-                                        ),
-                                      );
-                                      return;
                                     }
                                   },
                                   text: 'Verify Account',
@@ -487,10 +531,10 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_l9apwpbl_ON_TAP');
-                      logFirebaseEvent('Container_Update-Local-State');
+                      logFirebaseEvent('Container_update_local_state');
                       setState(() => FFAppState().userBirthDate =
                           currentUserDocument!.birthDate);
-                      logFirebaseEvent('Container_Navigate-To');
+                      logFirebaseEvent('Container_navigate_to');
 
                       context.pushNamed('personal_information_update_page');
                     },
@@ -536,11 +580,11 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_l96ezqyu_ON_TAP');
-                      logFirebaseEvent('Container_Update-Local-State');
+                      logFirebaseEvent('Container_update_local_state');
                       setState(() => FFAppState().currentPhotoURLTempID =
                           valueOrDefault(
                               currentUserDocument?.nationalIdPhotoUrl, ''));
-                      logFirebaseEvent('Container_Navigate-To');
+                      logFirebaseEvent('Container_navigate_to');
 
                       context.pushNamed('government_id_update_Page');
                     },
@@ -586,11 +630,11 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_16wxq3ky_ON_TAP');
-                      logFirebaseEvent('Container_Update-Local-State');
+                      logFirebaseEvent('Container_update_local_state');
                       setState(() => FFAppState().currentPhotoURLTempLicense =
                           valueOrDefault(
                               currentUserDocument?.driverLicensePhotoPath, ''));
-                      logFirebaseEvent('Container_Navigate-To');
+                      logFirebaseEvent('Container_navigate_to');
 
                       context.pushNamed('drivers_license_update_page');
                     },
@@ -636,7 +680,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_o7uudooc_ON_TAP');
-                      logFirebaseEvent('Container_Navigate-To');
+                      logFirebaseEvent('Container_navigate_to');
 
                       context.pushNamed('subscriptions_page');
                     },
@@ -682,7 +726,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_yvgctdvf_ON_TAP');
-                      logFirebaseEvent('Container_Navigate-To');
+                      logFirebaseEvent('Container_navigate_to');
 
                       context.pushNamed('list_vehicles_page');
                     },
@@ -728,7 +772,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_swt8pa0e_ON_TAP');
-                      logFirebaseEvent('Container_Alert-Dialog');
+                      logFirebaseEvent('Container_alert_dialog');
                       var confirmDialogResponse = await showDialog<bool>(
                             context: context,
                             builder: (alertDialogContext) {
@@ -753,7 +797,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                           ) ??
                           false;
                       if (confirmDialogResponse) {
-                        logFirebaseEvent('Container_Share');
+                        logFirebaseEvent('Container_share');
                         await Share.share(
                             '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has shared the following referral code with you. Add it to your profile so that he/she is attributed and recieves rewards: ${currentUserUid}');
                         return;
@@ -810,7 +854,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_fby6zkar_ON_TAP');
-                      logFirebaseEvent('Container_Launch-U-R-L');
+                      logFirebaseEvent('Container_launch_u_r_l');
                       await launchURL(
                           'https://commuteapp.blogspot.com/2022/09/terms-of-service.html');
                     },
@@ -856,7 +900,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: InkWell(
                     onTap: () async {
                       logFirebaseEvent('ACCOUNT_Container_2k4kcsv7_ON_TAP');
-                      logFirebaseEvent('Container_Launch-U-R-L');
+                      logFirebaseEvent('Container_launch_u_r_l');
                       await launchURL(
                           'https://commuteapp.blogspot.com/2022/09/privacy-policy.html');
                     },
@@ -919,7 +963,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'ACCOUNT_Container_7u1ncfd7_ON_TAP');
-                                logFirebaseEvent('Container_Navigate-To');
+                                logFirebaseEvent('Container_navigate_to');
 
                                 context.pushNamed('approve_users_page');
                               },
@@ -968,7 +1012,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'ACCOUNT_Container_7g0ib76l_ON_TAP');
-                                logFirebaseEvent('Container_Navigate-To');
+                                logFirebaseEvent('Container_navigate_to');
 
                                 context.pushNamed('approve_drivers_page');
                               },
@@ -1020,7 +1064,7 @@ class _AccountPageWidgetState extends State<AccountPageWidget> {
                   child: FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('ACCOUNT_PAGE_PAGE_LOGOUT_BTN_ON_TAP');
-                      logFirebaseEvent('Button_Auth');
+                      logFirebaseEvent('Button_auth');
                       GoRouter.of(context).prepareAuthEvent();
                       await signOut();
 

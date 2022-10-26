@@ -152,6 +152,20 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.accountVerificationSent;
+    if (value != null) {
+      result
+        ..add('account_verification_sent')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.licenseVerificationSent;
+    if (value != null) {
+      result
+        ..add('license_verification_sent')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -250,6 +264,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.referrersCode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'account_verification_sent':
+          result.accountVerificationSent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'license_verification_sent':
+          result.licenseVerificationSent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -303,6 +325,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? referrersCode;
   @override
+  final bool? accountVerificationSent;
+  @override
+  final bool? licenseVerificationSent;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -328,6 +354,8 @@ class _$UsersRecord extends UsersRecord {
       this.nationalIDVerified,
       this.admin,
       this.referrersCode,
+      this.accountVerificationSent,
+      this.licenseVerificationSent,
       this.ffRef})
       : super._();
 
@@ -361,6 +389,8 @@ class _$UsersRecord extends UsersRecord {
         nationalIDVerified == other.nationalIDVerified &&
         admin == other.admin &&
         referrersCode == other.referrersCode &&
+        accountVerificationSent == other.accountVerificationSent &&
+        licenseVerificationSent == other.licenseVerificationSent &&
         ffRef == other.ffRef;
   }
 
@@ -384,25 +414,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, email.hashCode),
-                                                                                displayName.hashCode),
-                                                                            photoUrl.hashCode),
-                                                                        uid.hashCode),
-                                                                    createdTime.hashCode),
-                                                                phoneNumber.hashCode),
-                                                            displaySurname.hashCode),
-                                                        nationalId.hashCode),
-                                                    nationalIdPhotoUrl.hashCode),
-                                                verifiedUser.hashCode),
-                                            gender.hashCode),
-                                        rating.hashCode),
-                                    birthDate.hashCode),
-                                driverLicenseNumber.hashCode),
-                            driverLicensePhotoPath.hashCode),
-                        verifiedDriver.hashCode),
-                    nationalIDVerified.hashCode),
-                admin.hashCode),
-            referrersCode.hashCode),
+                                                                            $jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode),
+                                                                                uid.hashCode),
+                                                                            createdTime.hashCode),
+                                                                        phoneNumber.hashCode),
+                                                                    displaySurname.hashCode),
+                                                                nationalId.hashCode),
+                                                            nationalIdPhotoUrl.hashCode),
+                                                        verifiedUser.hashCode),
+                                                    gender.hashCode),
+                                                rating.hashCode),
+                                            birthDate.hashCode),
+                                        driverLicenseNumber.hashCode),
+                                    driverLicensePhotoPath.hashCode),
+                                verifiedDriver.hashCode),
+                            nationalIDVerified.hashCode),
+                        admin.hashCode),
+                    referrersCode.hashCode),
+                accountVerificationSent.hashCode),
+            licenseVerificationSent.hashCode),
         ffRef.hashCode));
   }
 
@@ -428,6 +458,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('nationalIDVerified', nationalIDVerified)
           ..add('admin', admin)
           ..add('referrersCode', referrersCode)
+          ..add('accountVerificationSent', accountVerificationSent)
+          ..add('licenseVerificationSent', licenseVerificationSent)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -519,6 +551,16 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set referrersCode(String? referrersCode) =>
       _$this._referrersCode = referrersCode;
 
+  bool? _accountVerificationSent;
+  bool? get accountVerificationSent => _$this._accountVerificationSent;
+  set accountVerificationSent(bool? accountVerificationSent) =>
+      _$this._accountVerificationSent = accountVerificationSent;
+
+  bool? _licenseVerificationSent;
+  bool? get licenseVerificationSent => _$this._licenseVerificationSent;
+  set licenseVerificationSent(bool? licenseVerificationSent) =>
+      _$this._licenseVerificationSent = licenseVerificationSent;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -549,6 +591,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _nationalIDVerified = $v.nationalIDVerified;
       _admin = $v.admin;
       _referrersCode = $v.referrersCode;
+      _accountVerificationSent = $v.accountVerificationSent;
+      _licenseVerificationSent = $v.licenseVerificationSent;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -591,6 +635,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             nationalIDVerified: nationalIDVerified,
             admin: admin,
             referrersCode: referrersCode,
+            accountVerificationSent: accountVerificationSent,
+            licenseVerificationSent: licenseVerificationSent,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

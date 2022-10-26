@@ -12,6 +12,7 @@ Future<String> generateCurrentPageLink(
   String? title,
   String? description,
   String? imageUrl,
+  bool isShortLink = true,
 }) async {
   final dynamicLinkParams = DynamicLinkParameters(
     link: Uri.parse('$_kDynamicLinksUrl${GoRouter.of(context).location}'),
@@ -24,9 +25,13 @@ Future<String> generateCurrentPageLink(
       imageUrl: imageUrl != null ? Uri.tryParse(imageUrl) : null,
     ),
   );
-  return FirebaseDynamicLinks.instance
-      .buildLink(dynamicLinkParams)
-      .then((link) => link.toString());
+  return isShortLink
+      ? FirebaseDynamicLinks.instance
+          .buildShortLink(dynamicLinkParams)
+          .then((link) => link.shortUrl.toString())
+      : FirebaseDynamicLinks.instance
+          .buildLink(dynamicLinkParams)
+          .then((link) => link.toString());
 }
 
 class DynamicLinksHandler extends StatefulWidget {
@@ -43,7 +48,7 @@ class _DynamicLinksHandlerState extends State<DynamicLinksHandler> {
 
   static Set<String> kInitialLinks = {};
 
-  Future handleOpenedPushNotification() async {
+  Future handleOpenedDynamicLink() async {
     final linkData = await FirebaseDynamicLinks.instance.getInitialLink();
     final link = linkData?.link.toString();
     if (linkData != null && link != null && !kInitialLinks.contains(link)) {
@@ -66,7 +71,7 @@ class _DynamicLinksHandlerState extends State<DynamicLinksHandler> {
   void initState() {
     super.initState();
     if (!isWeb) {
-      handleOpenedPushNotification();
+      handleOpenedDynamicLink();
     }
   }
 

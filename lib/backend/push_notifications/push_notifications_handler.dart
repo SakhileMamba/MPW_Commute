@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import '../../index.dart';
 import '../../main.dart';
 
+final _handledMessageIds = <String?>{};
+
 class PushNotificationsHandler extends StatefulWidget {
   const PushNotificationsHandler({Key? key, required this.child})
       : super(key: key);
@@ -39,7 +41,14 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
   }
 
   Future _handlePushNotification(RemoteMessage message) async {
-    setState(() => _loading = true);
+    if (_handledMessageIds.contains(message.messageId)) {
+      return;
+    }
+    _handledMessageIds.add(message.messageId);
+
+    if (mounted) {
+      setState(() => _loading = true);
+    }
     try {
       final initialPageName = message.data['initialPageName'] as String;
       final initialParameterData = getInitialParameterData(message.data);
@@ -54,7 +63,9 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
     } catch (e) {
       print('Error: $e');
     } finally {
-      setState(() => _loading = false);
+      if (mounted) {
+        setState(() => _loading = false);
+      }
     }
   }
 
@@ -92,10 +103,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         driverDoc: await getDocumentParameter(
             data, 'driverDoc', UsersRecord.serializer),
       ),
-  'delete_commutes_management_details_page': (data) async =>
-      DeleteCommutesManagementDetailsPageWidget(
-        commuteRef: getParameter(data, 'commuteRef'),
-      ),
   'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
   'personal_information_update_page': (data) async =>
       PersonalInformationUpdatePageWidget(),
@@ -126,11 +133,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
             data, 'hailingDoc', PassengersHailingRecord.serializer),
         passenger: await getDocumentParameter(
             data, 'passenger', UsersRecord.serializer),
-      ),
-  'delete_accept_drivers_details_page': (data) async =>
-      DeleteAcceptDriversDetailsPageWidget(
-        hailDoc: await getDocumentParameter(
-            data, 'hailDoc', PassengersHailingRecord.serializer),
       ),
 };
 

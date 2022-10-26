@@ -35,13 +35,13 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('BROWSE_DRIVERS_browse_drivers_page_ON_LO');
-      logFirebaseEvent('browse_drivers_page_Update-Local-State');
+      logFirebaseEvent('browse_drivers_page_update_local_state');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
       if (FFAppState().privacyPolicyAndTermsOfServiceAgreement) {
         return;
       }
 
-      logFirebaseEvent('browse_drivers_page_Alert-Dialog');
+      logFirebaseEvent('browse_drivers_page_alert_dialog');
       await showDialog(
         context: context,
         builder: (alertDialogContext) {
@@ -58,7 +58,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
           );
         },
       );
-      logFirebaseEvent('browse_drivers_page_Update-Local-State');
+      logFirebaseEvent('browse_drivers_page_update_local_state');
       setState(
           () => FFAppState().privacyPolicyAndTermsOfServiceAgreement = true);
       return;
@@ -66,6 +66,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'browse_drivers_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -102,7 +103,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
             ),
             onPressed: () async {
               logFirebaseEvent('BROWSE_DRIVERS_filter_list_rounded_ICN_O');
-              logFirebaseEvent('IconButton_Navigate-To');
+              logFirebaseEvent('IconButton_navigate_to');
 
               context.pushNamed('filter_commutes_page');
             },
@@ -117,7 +118,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
           child: RefreshIndicator(
             onRefresh: () async {
               logFirebaseEvent('BROWSE_DRIVERS_Column_rh28ie7s_ON_PULL_T');
-              logFirebaseEvent('ListView_Update-Local-State');
+              logFirebaseEvent('ListView_update_local_state');
               setState(() =>
                   FFAppState().filterCurrentDateTime = getCurrentTimestamp);
             },
@@ -251,7 +252,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                           onTap: () async {
                             logFirebaseEvent(
                                 'BROWSE_DRIVERS_Card_64cz7cnr_ON_TAP');
-                            logFirebaseEvent('Card_Navigate-To');
+                            logFirebaseEvent('Card_navigate_to');
 
                             context.pushNamed(
                               'browse_drivers_details_page',
@@ -297,7 +298,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                                             logFirebaseEvent(
                                                 'BROWSE_DRIVERS_CircleImage_lyk7aa0f_ON_T');
                                             logFirebaseEvent(
-                                                'CircleImage_Expand-Image');
+                                                'CircleImage_expand_image');
                                             await Navigator.push(
                                               context,
                                               PageTransition(
@@ -432,7 +433,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                                             logFirebaseEvent(
                                                 'BROWSE_DRIVERS_Image_cckz8ort_ON_TAP');
                                             logFirebaseEvent(
-                                                'Image_Expand-Image');
+                                                'Image_expand_image');
                                             await Navigator.push(
                                               context,
                                               PageTransition(

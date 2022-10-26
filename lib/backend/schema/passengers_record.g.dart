@@ -43,6 +43,13 @@ class _$PassengersRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -80,6 +87,10 @@ class _$PassengersRecordSerializer
           result.commuteDatetime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -101,6 +112,8 @@ class _$PassengersRecord extends PassengersRecord {
   @override
   final DateTime? commuteDatetime;
   @override
+  final bool? archived;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$PassengersRecord(
@@ -108,7 +121,11 @@ class _$PassengersRecord extends PassengersRecord {
       (new PassengersRecordBuilder()..update(updates))._build();
 
   _$PassengersRecord._(
-      {this.passengerAccount, this.accepted, this.commuteDatetime, this.ffRef})
+      {this.passengerAccount,
+      this.accepted,
+      this.commuteDatetime,
+      this.archived,
+      this.ffRef})
       : super._();
 
   @override
@@ -126,14 +143,17 @@ class _$PassengersRecord extends PassengersRecord {
         passengerAccount == other.passengerAccount &&
         accepted == other.accepted &&
         commuteDatetime == other.commuteDatetime &&
+        archived == other.archived &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, passengerAccount.hashCode), accepted.hashCode),
-            commuteDatetime.hashCode),
+        $jc(
+            $jc($jc($jc(0, passengerAccount.hashCode), accepted.hashCode),
+                commuteDatetime.hashCode),
+            archived.hashCode),
         ffRef.hashCode));
   }
 
@@ -143,6 +163,7 @@ class _$PassengersRecord extends PassengersRecord {
           ..add('passengerAccount', passengerAccount)
           ..add('accepted', accepted)
           ..add('commuteDatetime', commuteDatetime)
+          ..add('archived', archived)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -166,6 +187,10 @@ class PassengersRecordBuilder
   set commuteDatetime(DateTime? commuteDatetime) =>
       _$this._commuteDatetime = commuteDatetime;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -180,6 +205,7 @@ class PassengersRecordBuilder
       _passengerAccount = $v.passengerAccount;
       _accepted = $v.accepted;
       _commuteDatetime = $v.commuteDatetime;
+      _archived = $v.archived;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -206,6 +232,7 @@ class PassengersRecordBuilder
             passengerAccount: passengerAccount,
             accepted: accepted,
             commuteDatetime: commuteDatetime,
+            archived: archived,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

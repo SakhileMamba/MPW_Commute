@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -33,6 +34,7 @@ class _CreatePassengerSeatHailPageWidgetState
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'create_passenger_seat_hail_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -55,7 +57,7 @@ class _CreatePassengerSeatHailPageWidgetState
           ),
           onPressed: () async {
             logFirebaseEvent('CREATE_PASSENGER_SEAT_HAIL_arrow_back_ro');
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -179,24 +181,55 @@ class _CreatePassengerSeatHailPageWidgetState
                       onTap: () async {
                         logFirebaseEvent(
                             'CREATE_PASSENGER_SEAT_HAIL_Container_or5');
-                        logFirebaseEvent('Container_Date-Time-Picker');
-                        await DatePicker.showDateTimePicker(
-                          context,
-                          showTitleActions: true,
-                          onConfirm: (date) {
-                            setState(() => datePicked = date);
-                          },
-                          currentTime: getCurrentTimestamp,
-                          minTime: getCurrentTimestamp,
-                          locale: LocaleType.values.firstWhere(
-                            (l) =>
-                                l.name ==
-                                FFLocalizations.of(context).languageCode,
-                            orElse: () => LocaleType.en,
-                          ),
-                        );
+                        logFirebaseEvent('Container_date_time_picker');
+                        if (kIsWeb) {
+                          final _datePickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: getCurrentTimestamp,
+                            firstDate: getCurrentTimestamp,
+                            lastDate: DateTime(2050),
+                          );
 
-                        logFirebaseEvent('Container_Update-Local-State');
+                          TimeOfDay? _datePickedTime;
+                          if (_datePickedDate != null) {
+                            _datePickedTime = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(getCurrentTimestamp),
+                            );
+                          }
+
+                          if (_datePickedDate != null &&
+                              _datePickedTime != null) {
+                            setState(
+                              () => datePicked = DateTime(
+                                _datePickedDate.year,
+                                _datePickedDate.month,
+                                _datePickedDate.day,
+                                _datePickedTime!.hour,
+                                _datePickedTime.minute,
+                              ),
+                            );
+                          }
+                        } else {
+                          await DatePicker.showDateTimePicker(
+                            context,
+                            showTitleActions: true,
+                            onConfirm: (date) {
+                              setState(() => datePicked = date);
+                            },
+                            currentTime: getCurrentTimestamp,
+                            minTime: getCurrentTimestamp,
+                            locale: LocaleType.values.firstWhere(
+                              (l) =>
+                                  l.name ==
+                                  FFLocalizations.of(context).languageCode,
+                              orElse: () => LocaleType.en,
+                            ),
+                          );
+                        }
+
+                        logFirebaseEvent('Container_update_local_state');
                         setState(() => FFAppState().scheduleDepartureDatetime =
                                 dateTimeFormat(
                               'd/M h:mm a',
@@ -259,7 +292,7 @@ class _CreatePassengerSeatHailPageWidgetState
                             onPressed: () async {
                               logFirebaseEvent(
                                   'CREATE_PASSENGER_SEAT_HAIL_CANCEL_BTN_ON');
-                              logFirebaseEvent('Button_Navigate-Back');
+                              logFirebaseEvent('Button_navigate_back');
                               context.pop();
                             },
                             text: 'Cancel',
@@ -301,7 +334,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                 if (placePickerValue1 != null) {
                                   if (placePickerValue2 != null) {
                                     if (datePicked != null) {
-                                      logFirebaseEvent('Button_Backend-Call');
+                                      logFirebaseEvent('Button_backend_call');
 
                                       final passengersHailingCreateData =
                                           createPassengersHailingRecordData(
@@ -317,11 +350,11 @@ class _CreatePassengerSeatHailPageWidgetState
                                       await PassengersHailingRecord.collection
                                           .doc()
                                           .set(passengersHailingCreateData);
-                                      logFirebaseEvent('Button_Navigate-Back');
+                                      logFirebaseEvent('Button_navigate_back');
                                       context.pop();
                                       return;
                                     } else {
-                                      logFirebaseEvent('Button_Alert-Dialog');
+                                      logFirebaseEvent('Button_alert_dialog');
                                       await showDialog(
                                         context: context,
                                         builder: (alertDialogContext) {
@@ -343,7 +376,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                       return;
                                     }
                                   } else {
-                                    logFirebaseEvent('Button_Alert-Dialog');
+                                    logFirebaseEvent('Button_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (alertDialogContext) {
@@ -365,7 +398,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                     return;
                                   }
                                 } else {
-                                  logFirebaseEvent('Button_Alert-Dialog');
+                                  logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -386,7 +419,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                   return;
                                 }
                               } else {
-                                logFirebaseEvent('Button_Alert-Dialog');
+                                logFirebaseEvent('Button_alert_dialog');
                                 var confirmDialogResponse = await showDialog<
                                         bool>(
                                       context: context,
@@ -412,7 +445,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                     ) ??
                                     false;
                                 if (confirmDialogResponse) {
-                                  logFirebaseEvent('Button_Navigate-To');
+                                  logFirebaseEvent('Button_navigate_to');
 
                                   context.pushNamed('account_page');
 

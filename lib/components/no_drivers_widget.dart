@@ -13,6 +13,13 @@ class NoDriversWidget extends StatefulWidget {
 
 class _NoDriversWidgetState extends State<NoDriversWidget> {
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Text(
       'Currently, there are no drivers requesting to pickup the passenger for this commute.',

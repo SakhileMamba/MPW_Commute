@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'auth_util.dart';
-
 class CommuteFirebaseUser {
   CommuteFirebaseUser(this.user);
   User? user;
@@ -19,7 +17,6 @@ Stream<CommuteFirebaseUser> commuteFirebaseUserStream() => FirebaseAuth.instance
         .map<CommuteFirebaseUser>(
       (user) {
         currentUser = CommuteFirebaseUser(user);
-        updateUserJwtTimer(user);
         return currentUser!;
       },
     );

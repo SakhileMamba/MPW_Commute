@@ -36,13 +36,13 @@ class _BrowsePassengersPageWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('BROWSE_PASSENGERS_browse_passengers_page');
-      logFirebaseEvent('browse_passengers_page_Update-Local-Stat');
+      logFirebaseEvent('browse_passengers_page_update_local_stat');
       setState(() => FFAppState().filterCurrentDateTime = getCurrentTimestamp);
       if (FFAppState().privacyPolicyAndTermsOfServiceAgreement) {
         return;
       }
 
-      logFirebaseEvent('browse_passengers_page_Alert-Dialog');
+      logFirebaseEvent('browse_passengers_page_alert_dialog');
       await showDialog(
         context: context,
         builder: (alertDialogContext) {
@@ -59,7 +59,7 @@ class _BrowsePassengersPageWidgetState
           );
         },
       );
-      logFirebaseEvent('browse_passengers_page_Update-Local-Stat');
+      logFirebaseEvent('browse_passengers_page_update_local_stat');
       setState(
           () => FFAppState().privacyPolicyAndTermsOfServiceAgreement = true);
       return;
@@ -67,6 +67,7 @@ class _BrowsePassengersPageWidgetState
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'browse_passengers_page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -103,7 +104,7 @@ class _BrowsePassengersPageWidgetState
             ),
             onPressed: () async {
               logFirebaseEvent('BROWSE_PASSENGERS_filter_list_rounded_IC');
-              logFirebaseEvent('IconButton_Navigate-To');
+              logFirebaseEvent('IconButton_navigate_to');
 
               context.pushNamed('filter_commutes_page');
             },
@@ -118,7 +119,7 @@ class _BrowsePassengersPageWidgetState
           child: RefreshIndicator(
             onRefresh: () async {
               logFirebaseEvent('BROWSE_PASSENGERS_ListView_f3i5h1o2_ON_P');
-              logFirebaseEvent('ListView_Update-Local-State');
+              logFirebaseEvent('ListView_update_local_state');
               setState(() =>
                   FFAppState().filterCurrentDateTime = getCurrentTimestamp);
             },
@@ -253,7 +254,7 @@ class _BrowsePassengersPageWidgetState
                           onTap: () async {
                             logFirebaseEvent(
                                 'BROWSE_PASSENGERS_Card_olygjjj3_ON_TAP');
-                            logFirebaseEvent('Card_Navigate-To');
+                            logFirebaseEvent('Card_navigate_to');
 
                             context.pushNamed(
                               'browse_passengers_details_page',
@@ -299,7 +300,7 @@ class _BrowsePassengersPageWidgetState
                                             logFirebaseEvent(
                                                 'BROWSE_PASSENGERS_CircleImage_w1v6emzl_O');
                                             logFirebaseEvent(
-                                                'CircleImage_Expand-Image');
+                                                'CircleImage_expand_image');
                                             await Navigator.push(
                                               context,
                                               PageTransition(

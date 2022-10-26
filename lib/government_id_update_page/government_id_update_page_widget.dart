@@ -38,6 +38,7 @@ class _GovernmentIdUpdatePageWidgetState
         parameters: {'screen_name': 'government_id_update_Page'});
     textController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.nationalId, ''));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -67,14 +68,14 @@ class _GovernmentIdUpdatePageWidgetState
           onPressed: () async {
             logFirebaseEvent('GOVERNMENT_ID_UPDATE_arrow_back_rounded_');
             if (FFAppState().backButtonFileUpload) {
-              logFirebaseEvent('IconButton_Custom-Action');
+              logFirebaseEvent('IconButton_custom_action');
               await actions.deleteUploadedImages(
                 uploadedFileUrl,
               );
             }
-            logFirebaseEvent('IconButton_Update-Local-State');
+            logFirebaseEvent('IconButton_update_local_state');
             setState(() => FFAppState().backButtonFileUpload = false);
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -175,7 +176,7 @@ class _GovernmentIdUpdatePageWidgetState
                       onTap: () async {
                         logFirebaseEvent(
                             'GOVERNMENT_ID_UPDATE_Image_h093kkx2_ON_T');
-                        logFirebaseEvent('Image_Expand-Image');
+                        logFirebaseEvent('Image_expand_image');
                         await Navigator.push(
                           context,
                           PageTransition(
@@ -216,216 +217,261 @@ class _GovernmentIdUpdatePageWidgetState
                       ),
                     ),
                   ),
-                  if (uploadedFileUrl == null || uploadedFileUrl == '')
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'GOVERNMENT_ID_UPDATE_UPLOAD_NEW_BTN_ON_T');
-                          logFirebaseEvent('Button_Update-Local-State');
-                          setState(() => FFAppState().oldPhotoURLTemp =
-                              valueOrDefault(
-                                  currentUserDocument?.nationalIdPhotoUrl, ''));
-                          logFirebaseEvent('Button_Upload-Photo-Video');
-                          final selectedMedia =
-                              await selectMediaWithSourceBottomSheet(
-                            context: context,
-                            imageQuality: 50,
-                            allowPhoto: true,
-                          );
-                          if (selectedMedia != null &&
-                              selectedMedia.every((m) =>
-                                  validateFileFormat(m.storagePath, context))) {
-                            setState(() => isMediaUploading = true);
-                            var downloadUrls = <String>[];
-                            try {
-                              showUploadMessage(
-                                context,
-                                'Uploading file...',
-                                showLoading: true,
-                              );
-                              downloadUrls = (await Future.wait(
-                                selectedMedia.map(
-                                  (m) async =>
-                                      await uploadData(m.storagePath, m.bytes),
-                                ),
-                              ))
-                                  .where((u) => u != null)
-                                  .map((u) => u!)
-                                  .toList();
-                            } finally {
-                              ScaffoldMessenger.of(context)
-                                  .hideCurrentSnackBar();
-                              isMediaUploading = false;
-                            }
-                            if (downloadUrls.length == selectedMedia.length) {
-                              setState(
-                                  () => uploadedFileUrl = downloadUrls.first);
-                              showUploadMessage(context, 'Success!');
-                            } else {
-                              setState(() {});
-                              showUploadMessage(
-                                  context, 'Failed to upload media');
-                              return;
-                            }
-                          }
-
-                          logFirebaseEvent('Button_Update-Local-State');
-                          setState(() => FFAppState().currentPhotoURLTempID =
-                              uploadedFileUrl);
-                          logFirebaseEvent('Button_Update-Local-State');
-                          setState(
-                              () => FFAppState().backButtonFileUpload = true);
-                        },
-                        text: 'Upload New',
-                        icon: Icon(
-                          Icons.upload_rounded,
-                          size: 15,
-                        ),
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 50,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .bodyText2
-                              .override(
-                                fontFamily: 'Roboto',
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                              ),
-                          elevation: 8,
-                          borderSide: BorderSide(
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  if (uploadedFileUrl != null && uploadedFileUrl != '')
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'GOVERNMENT_ID_UPDATE_CANCEL_BTN_ON_TAP');
-                                logFirebaseEvent('Button_Custom-Action');
-                                await actions.deleteUploadedImages(
-                                  FFAppState().currentPhotoURLTempID,
-                                );
-                                logFirebaseEvent('Button_Update-Local-State');
-                                setState(() =>
-                                    FFAppState().backButtonFileUpload = false);
-                                logFirebaseEvent('Button_Navigate-Back');
-                                context.pop();
-                              },
-                              text: 'Cancel',
-                              icon: Icon(
-                                Icons.cancel_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 15,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                    ),
-                                elevation: 8,
-                                borderSide: BorderSide(
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
-                                if (!(uploadedFileUrl != null &&
-                                    uploadedFileUrl != '')) {
-                                  logFirebaseEvent('Button_Alert-Dialog');
-                                  await showDialog(
+                  if (!valueOrDefault<bool>(
+                      currentUserDocument?.verifiedUser, false))
+                    AuthUserStreamWidget(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (uploadedFileUrl == null || uploadedFileUrl == '')
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'GOVERNMENT_ID_UPDATE_UPLOAD_NEW_BTN_ON_T');
+                                  logFirebaseEvent('Button_update_local_state');
+                                  setState(() => FFAppState().oldPhotoURLTemp =
+                                      valueOrDefault(
+                                          currentUserDocument
+                                              ?.nationalIdPhotoUrl,
+                                          ''));
+                                  logFirebaseEvent('Button_upload_photo_video');
+                                  final selectedMedia =
+                                      await selectMediaWithSourceBottomSheet(
                                     context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: Text('Missing ID Image'),
-                                        content: Text(
-                                            'Please upload an image of the front of your ID. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                    imageQuality: 50,
+                                    allowPhoto: true,
                                   );
-                                  return;
-                                }
-                                logFirebaseEvent('Button_Backend-Call');
+                                  if (selectedMedia != null &&
+                                      selectedMedia.every((m) =>
+                                          validateFileFormat(
+                                              m.storagePath, context))) {
+                                    setState(() => isMediaUploading = true);
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      showUploadMessage(
+                                        context,
+                                        'Uploading file...',
+                                        showLoading: true,
+                                      );
+                                      downloadUrls = (await Future.wait(
+                                        selectedMedia.map(
+                                          (m) async => await uploadData(
+                                              m.storagePath, m.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      isMediaUploading = false;
+                                    }
+                                    if (downloadUrls.length ==
+                                        selectedMedia.length) {
+                                      setState(() =>
+                                          uploadedFileUrl = downloadUrls.first);
+                                      showUploadMessage(context, 'Success!');
+                                    } else {
+                                      setState(() {});
+                                      showUploadMessage(
+                                          context, 'Failed to upload media');
+                                      return;
+                                    }
+                                  }
 
-                                final usersUpdateData = createUsersRecordData(
-                                  nationalIdPhotoUrl: uploadedFileUrl,
-                                  nationalId: textController!.text,
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                                logFirebaseEvent('Button_Custom-Action');
-                                await actions.deleteUploadedImages(
-                                  FFAppState().oldPhotoURLTemp,
-                                );
-                                logFirebaseEvent('Button_Update-Local-State');
-                                setState(() =>
-                                    FFAppState().backButtonFileUpload = false);
-                                logFirebaseEvent('Button_Navigate-To');
-
-                                context.goNamed('account_page');
-                              },
-                              text: 'Save',
-                              icon: Icon(
-                                Icons.check_circle_rounded,
-                                size: 15,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 50,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                    ),
-                                elevation: 8,
-                                borderSide: BorderSide(
-                                  width: 1,
+                                  logFirebaseEvent('Button_update_local_state');
+                                  setState(() => FFAppState()
+                                      .currentPhotoURLTempID = uploadedFileUrl);
+                                  logFirebaseEvent('Button_update_local_state');
+                                  setState(() =>
+                                      FFAppState().backButtonFileUpload = true);
+                                },
+                                text: 'Upload New',
+                                icon: Icon(
+                                  Icons.upload_rounded,
+                                  size: 15,
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 50,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
+                                  elevation: 8,
+                                  borderSide: BorderSide(
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ],
+                          if (uploadedFileUrl != null && uploadedFileUrl != '')
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 4, 0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'GOVERNMENT_ID_UPDATE_CANCEL_BTN_ON_TAP');
+                                        if (FFAppState()
+                                                    .currentPhotoURLTempID !=
+                                                null &&
+                                            FFAppState()
+                                                    .currentPhotoURLTempID !=
+                                                '') {
+                                          logFirebaseEvent(
+                                              'Button_custom_action');
+                                          await actions.deleteUploadedImages(
+                                            FFAppState().currentPhotoURLTempID,
+                                          );
+                                          logFirebaseEvent(
+                                              'Button_update_local_state');
+                                          setState(() => FFAppState()
+                                              .backButtonFileUpload = false);
+                                          logFirebaseEvent(
+                                              'Button_navigate_back');
+                                          context.pop();
+                                          return;
+                                        } else {
+                                          logFirebaseEvent(
+                                              'Button_navigate_back');
+                                          context.pop();
+                                          return;
+                                        }
+                                      },
+                                      text: 'Cancel',
+                                      icon: Icon(
+                                        Icons.cancel_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 15,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 130,
+                                        height: 50,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                        elevation: 8,
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        4, 0, 0, 0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'GOVERNMENT_ID_UPDATE_SAVE_BTN_ON_TAP');
+                                        if (uploadedFileUrl != null &&
+                                            uploadedFileUrl != '') {
+                                          logFirebaseEvent(
+                                              'Button_backend_call');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            nationalIdPhotoUrl: uploadedFileUrl,
+                                            nationalId: textController!.text,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                          logFirebaseEvent(
+                                              'Button_custom_action');
+                                          await actions.deleteUploadedImages(
+                                            FFAppState().oldPhotoURLTemp,
+                                          );
+                                          logFirebaseEvent(
+                                              'Button_update_local_state');
+                                          setState(() => FFAppState()
+                                              .backButtonFileUpload = false);
+                                          logFirebaseEvent(
+                                              'Button_navigate_to');
+
+                                          context.goNamed('account_page');
+
+                                          return;
+                                        } else {
+                                          logFirebaseEvent(
+                                              'Button_alert_dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Missing ID Image'),
+                                                content: Text(
+                                                    'Please upload an image of the front of your ID. If you have already selected an image, please wait for it to finish loading. It should be displayed on your screen once done.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Continue'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
+                                      },
+                                      text: 'Save',
+                                      icon: Icon(
+                                        Icons.check_circle_rounded,
+                                        size: 15,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 130,
+                                        height: 50,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                        elevation: 8,
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
                 ],
               ),

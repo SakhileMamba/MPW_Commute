@@ -35,6 +35,7 @@ class _ProfilePictureUpdatePageWidgetState
     super.initState();
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'profile_picture_update_Page'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,14 +59,14 @@ class _ProfilePictureUpdatePageWidgetState
           onPressed: () async {
             logFirebaseEvent('PROFILE_PICTURE_UPDATE_arrow_back_rounde');
             if (FFAppState().backButtonFileUpload) {
-              logFirebaseEvent('IconButton_Custom-Action');
+              logFirebaseEvent('IconButton_custom_action');
               await actions.deleteUploadedImages(
                 uploadedFileUrl,
               );
             }
-            logFirebaseEvent('IconButton_Update-Local-State');
+            logFirebaseEvent('IconButton_update_local_state');
             setState(() => FFAppState().backButtonFileUpload = false);
-            logFirebaseEvent('IconButton_Navigate-Back');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -97,7 +98,7 @@ class _ProfilePictureUpdatePageWidgetState
                       onTap: () async {
                         logFirebaseEvent(
                             'PROFILE_PICTURE_UPDATE_Image_thg3v6ne_ON');
-                        logFirebaseEvent('Image_Expand-Image');
+                        logFirebaseEvent('Image_expand_image');
                         await Navigator.push(
                           context,
                           PageTransition(
@@ -148,10 +149,10 @@ class _ProfilePictureUpdatePageWidgetState
                         onPressed: () async {
                           logFirebaseEvent(
                               'PROFILE_PICTURE_UPDATE_UPLOAD_NEW_BTN_ON');
-                          logFirebaseEvent('Button_Update-Local-State');
+                          logFirebaseEvent('Button_update_local_state');
                           setState(() =>
                               FFAppState().oldPhotoURLTemp = currentUserPhoto);
-                          logFirebaseEvent('Button_Upload-Photo-Video');
+                          logFirebaseEvent('Button_upload_photo_video');
                           final selectedMedia =
                               await selectMediaWithSourceBottomSheet(
                             context: context,
@@ -195,10 +196,10 @@ class _ProfilePictureUpdatePageWidgetState
                             }
                           }
 
-                          logFirebaseEvent('Button_Update-Local-State');
+                          logFirebaseEvent('Button_update_local_state');
                           setState(() => FFAppState().currentPhotoURLTemp =
                               uploadedFileUrl);
-                          logFirebaseEvent('Button_Update-Local-State');
+                          logFirebaseEvent('Button_update_local_state');
                           setState(
                               () => FFAppState().backButtonFileUpload = true);
                         },
@@ -238,15 +239,23 @@ class _ProfilePictureUpdatePageWidgetState
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'PROFILE_PICTURE_UPDATE_CANCEL_BTN_ON_TAP');
-                                logFirebaseEvent('Button_Custom-Action');
-                                await actions.deleteUploadedImages(
-                                  FFAppState().currentPhotoURLTemp,
-                                );
-                                logFirebaseEvent('Button_Update-Local-State');
-                                setState(() =>
-                                    FFAppState().backButtonFileUpload = false);
-                                logFirebaseEvent('Button_Navigate-Back');
-                                context.pop();
+                                if (FFAppState().currentPhotoURLTemp != null &&
+                                    FFAppState().currentPhotoURLTemp != '') {
+                                  logFirebaseEvent('Button_custom_action');
+                                  await actions.deleteUploadedImages(
+                                    FFAppState().currentPhotoURLTemp,
+                                  );
+                                  logFirebaseEvent('Button_update_local_state');
+                                  setState(() => FFAppState()
+                                      .backButtonFileUpload = false);
+                                  logFirebaseEvent('Button_navigate_back');
+                                  context.pop();
+                                  return;
+                                } else {
+                                  logFirebaseEvent('Button_navigate_back');
+                                  context.pop();
+                                  return;
+                                }
                               },
                               text: 'Cancel',
                               icon: Icon(
@@ -283,7 +292,7 @@ class _ProfilePictureUpdatePageWidgetState
                                     'PROFILE_PICTURE_UPDATE_SAVE_BTN_ON_TAP');
                                 if (!(uploadedFileUrl != null &&
                                     uploadedFileUrl != '')) {
-                                  logFirebaseEvent('Button_Alert-Dialog');
+                                  logFirebaseEvent('Button_alert_dialog');
                                   await showDialog(
                                     context: context,
                                     builder: (alertDialogContext) {
@@ -303,21 +312,21 @@ class _ProfilePictureUpdatePageWidgetState
                                   );
                                   return;
                                 }
-                                logFirebaseEvent('Button_Backend-Call');
+                                logFirebaseEvent('Button_backend_call');
 
                                 final usersUpdateData = createUsersRecordData(
                                   photoUrl: uploadedFileUrl,
                                 );
                                 await currentUserReference!
                                     .update(usersUpdateData);
-                                logFirebaseEvent('Button_Custom-Action');
+                                logFirebaseEvent('Button_custom_action');
                                 await actions.deleteUploadedImages(
                                   FFAppState().oldPhotoURLTemp,
                                 );
-                                logFirebaseEvent('Button_Update-Local-State');
+                                logFirebaseEvent('Button_update_local_state');
                                 setState(() =>
                                     FFAppState().backButtonFileUpload = false);
-                                logFirebaseEvent('Button_Navigate-To');
+                                logFirebaseEvent('Button_navigate_to');
 
                                 context.goNamed('account_page');
                               },
