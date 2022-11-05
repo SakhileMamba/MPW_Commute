@@ -1,4 +1,4 @@
-# MPW Commute
+# Commute
 
 A new Flutter project.
 

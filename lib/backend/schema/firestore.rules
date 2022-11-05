@@ -2,31 +2,98 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{document} {
-      allow create: if request.auth.uid == document;
-      allow read: if true;
-      allow write: if request.auth.uid == document;
-      allow delete: if false;
-    }
-
-    match /SupportedLocations/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if false;
-      allow delete: if false;
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
     }
 
     match /commutes/{document} {
-      allow create: if true;
-      allow read: if true;
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /users/{parent}/vehicles/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /{path=**}/vehicles/{document} {
+      allow read: if request.auth != null;
+    }
+
+
+    match /verification_requests/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /commutes/{parent}/passengers/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /{path=**}/passengers/{document} {
+      allow read: if request.auth != null;
+    }
+
+
+    match /commutes/{parent}/messages/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /{path=**}/messages/{document} {
+      allow read: if request.auth != null;
+    }
+
+
+    match /driver_verification_requests/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /app_constants/{document} {
+      allow create: if false;
+      allow read: if request.auth != null;
       allow write: if false;
       allow delete: if false;
     }
 
-    match /users/{parent}/vehicles/{document} {
-      allow create: if request.auth.uid == parent;
-      allow read: if true;
-      allow write: if request.auth.uid == parent;
-      allow delete: if false;
+    match /passengers_hailing/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /passengers_hailing/{parent}/pickup_requests/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+
+    match /{path=**}/pickup_requests/{document} {
+      allow read: if request.auth != null;
+    }
+
+
+    match /ff_user_push_notifications/{id} {
+      allow read, update, delete: if false;
+      allow create: if /databases/$(database)/documents/users/$(request.auth.uid) == request.resource.data.sender;
     }
   }
 }

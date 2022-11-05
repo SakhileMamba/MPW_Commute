@@ -96,6 +96,76 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.rating;
+    if (value != null) {
+      result
+        ..add('rating')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.birthDate;
+    if (value != null) {
+      result
+        ..add('birth_date')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.driverLicenseNumber;
+    if (value != null) {
+      result
+        ..add('driver_license_number')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.driverLicensePhotoPath;
+    if (value != null) {
+      result
+        ..add('driver_license_photo_path')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.verifiedDriver;
+    if (value != null) {
+      result
+        ..add('verified_driver')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.nationalIDVerified;
+    if (value != null) {
+      result
+        ..add('national_ID_verified')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.admin;
+    if (value != null) {
+      result
+        ..add('admin')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.referrersCode;
+    if (value != null) {
+      result
+        ..add('referrers_code')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.accountVerificationSent;
+    if (value != null) {
+      result
+        ..add('account_verification_sent')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.licenseVerificationSent;
+    if (value != null) {
+      result
+        ..add('license_verification_sent')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -114,7 +184,7 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
@@ -162,6 +232,46 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.gender = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'rating':
+          result.rating = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'birth_date':
+          result.birthDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'driver_license_number':
+          result.driverLicenseNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'driver_license_photo_path':
+          result.driverLicensePhotoPath = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'verified_driver':
+          result.verifiedDriver = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'national_ID_verified':
+          result.nationalIDVerified = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'admin':
+          result.admin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'referrers_code':
+          result.referrersCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'account_verification_sent':
+          result.accountVerificationSent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'license_verification_sent':
+          result.licenseVerificationSent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -199,10 +309,30 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? gender;
   @override
+  final double? rating;
+  @override
+  final DateTime? birthDate;
+  @override
+  final String? driverLicenseNumber;
+  @override
+  final String? driverLicensePhotoPath;
+  @override
+  final bool? verifiedDriver;
+  @override
+  final bool? nationalIDVerified;
+  @override
+  final bool? admin;
+  @override
+  final String? referrersCode;
+  @override
+  final bool? accountVerificationSent;
+  @override
+  final bool? licenseVerificationSent;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
-      (new UsersRecordBuilder()..update(updates)).build();
+      (new UsersRecordBuilder()..update(updates))._build();
 
   _$UsersRecord._(
       {this.email,
@@ -216,6 +346,16 @@ class _$UsersRecord extends UsersRecord {
       this.nationalIdPhotoUrl,
       this.verifiedUser,
       this.gender,
+      this.rating,
+      this.birthDate,
+      this.driverLicenseNumber,
+      this.driverLicensePhotoPath,
+      this.verifiedDriver,
+      this.nationalIDVerified,
+      this.admin,
+      this.referrersCode,
+      this.accountVerificationSent,
+      this.licenseVerificationSent,
       this.ffRef})
       : super._();
 
@@ -241,6 +381,16 @@ class _$UsersRecord extends UsersRecord {
         nationalIdPhotoUrl == other.nationalIdPhotoUrl &&
         verifiedUser == other.verifiedUser &&
         gender == other.gender &&
+        rating == other.rating &&
+        birthDate == other.birthDate &&
+        driverLicenseNumber == other.driverLicenseNumber &&
+        driverLicensePhotoPath == other.driverLicensePhotoPath &&
+        verifiedDriver == other.verifiedDriver &&
+        nationalIDVerified == other.nationalIDVerified &&
+        admin == other.admin &&
+        referrersCode == other.referrersCode &&
+        accountVerificationSent == other.accountVerificationSent &&
+        licenseVerificationSent == other.licenseVerificationSent &&
         ffRef == other.ffRef;
   }
 
@@ -256,23 +406,39 @@ class _$UsersRecord extends UsersRecord {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, email.hashCode),
-                                                displayName.hashCode),
-                                            photoUrl.hashCode),
-                                        uid.hashCode),
-                                    createdTime.hashCode),
-                                phoneNumber.hashCode),
-                            displaySurname.hashCode),
-                        nationalId.hashCode),
-                    nationalIdPhotoUrl.hashCode),
-                verifiedUser.hashCode),
-            gender.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode),
+                                                                                uid.hashCode),
+                                                                            createdTime.hashCode),
+                                                                        phoneNumber.hashCode),
+                                                                    displaySurname.hashCode),
+                                                                nationalId.hashCode),
+                                                            nationalIdPhotoUrl.hashCode),
+                                                        verifiedUser.hashCode),
+                                                    gender.hashCode),
+                                                rating.hashCode),
+                                            birthDate.hashCode),
+                                        driverLicenseNumber.hashCode),
+                                    driverLicensePhotoPath.hashCode),
+                                verifiedDriver.hashCode),
+                            nationalIDVerified.hashCode),
+                        admin.hashCode),
+                    referrersCode.hashCode),
+                accountVerificationSent.hashCode),
+            licenseVerificationSent.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UsersRecord')
+    return (newBuiltValueToStringHelper(r'UsersRecord')
           ..add('email', email)
           ..add('displayName', displayName)
           ..add('photoUrl', photoUrl)
@@ -284,6 +450,16 @@ class _$UsersRecord extends UsersRecord {
           ..add('nationalIdPhotoUrl', nationalIdPhotoUrl)
           ..add('verifiedUser', verifiedUser)
           ..add('gender', gender)
+          ..add('rating', rating)
+          ..add('birthDate', birthDate)
+          ..add('driverLicenseNumber', driverLicenseNumber)
+          ..add('driverLicensePhotoPath', driverLicensePhotoPath)
+          ..add('verifiedDriver', verifiedDriver)
+          ..add('nationalIDVerified', nationalIDVerified)
+          ..add('admin', admin)
+          ..add('referrersCode', referrersCode)
+          ..add('accountVerificationSent', accountVerificationSent)
+          ..add('licenseVerificationSent', licenseVerificationSent)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -338,6 +514,53 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get gender => _$this._gender;
   set gender(String? gender) => _$this._gender = gender;
 
+  double? _rating;
+  double? get rating => _$this._rating;
+  set rating(double? rating) => _$this._rating = rating;
+
+  DateTime? _birthDate;
+  DateTime? get birthDate => _$this._birthDate;
+  set birthDate(DateTime? birthDate) => _$this._birthDate = birthDate;
+
+  String? _driverLicenseNumber;
+  String? get driverLicenseNumber => _$this._driverLicenseNumber;
+  set driverLicenseNumber(String? driverLicenseNumber) =>
+      _$this._driverLicenseNumber = driverLicenseNumber;
+
+  String? _driverLicensePhotoPath;
+  String? get driverLicensePhotoPath => _$this._driverLicensePhotoPath;
+  set driverLicensePhotoPath(String? driverLicensePhotoPath) =>
+      _$this._driverLicensePhotoPath = driverLicensePhotoPath;
+
+  bool? _verifiedDriver;
+  bool? get verifiedDriver => _$this._verifiedDriver;
+  set verifiedDriver(bool? verifiedDriver) =>
+      _$this._verifiedDriver = verifiedDriver;
+
+  bool? _nationalIDVerified;
+  bool? get nationalIDVerified => _$this._nationalIDVerified;
+  set nationalIDVerified(bool? nationalIDVerified) =>
+      _$this._nationalIDVerified = nationalIDVerified;
+
+  bool? _admin;
+  bool? get admin => _$this._admin;
+  set admin(bool? admin) => _$this._admin = admin;
+
+  String? _referrersCode;
+  String? get referrersCode => _$this._referrersCode;
+  set referrersCode(String? referrersCode) =>
+      _$this._referrersCode = referrersCode;
+
+  bool? _accountVerificationSent;
+  bool? get accountVerificationSent => _$this._accountVerificationSent;
+  set accountVerificationSent(bool? accountVerificationSent) =>
+      _$this._accountVerificationSent = accountVerificationSent;
+
+  bool? _licenseVerificationSent;
+  bool? get licenseVerificationSent => _$this._licenseVerificationSent;
+  set licenseVerificationSent(bool? licenseVerificationSent) =>
+      _$this._licenseVerificationSent = licenseVerificationSent;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -360,6 +583,16 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _nationalIdPhotoUrl = $v.nationalIdPhotoUrl;
       _verifiedUser = $v.verifiedUser;
       _gender = $v.gender;
+      _rating = $v.rating;
+      _birthDate = $v.birthDate;
+      _driverLicenseNumber = $v.driverLicenseNumber;
+      _driverLicensePhotoPath = $v.driverLicensePhotoPath;
+      _verifiedDriver = $v.verifiedDriver;
+      _nationalIDVerified = $v.nationalIDVerified;
+      _admin = $v.admin;
+      _referrersCode = $v.referrersCode;
+      _accountVerificationSent = $v.accountVerificationSent;
+      _licenseVerificationSent = $v.licenseVerificationSent;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -378,7 +611,9 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   }
 
   @override
-  _$UsersRecord build() {
+  UsersRecord build() => _build();
+
+  _$UsersRecord _build() {
     final _$result = _$v ??
         new _$UsersRecord._(
             email: email,
@@ -392,10 +627,20 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             nationalIdPhotoUrl: nationalIdPhotoUrl,
             verifiedUser: verifiedUser,
             gender: gender,
+            rating: rating,
+            birthDate: birthDate,
+            driverLicenseNumber: driverLicenseNumber,
+            driverLicensePhotoPath: driverLicensePhotoPath,
+            verifiedDriver: verifiedDriver,
+            nationalIDVerified: nationalIDVerified,
+            admin: admin,
+            referrersCode: referrersCode,
+            accountVerificationSent: accountVerificationSent,
+            licenseVerificationSent: licenseVerificationSent,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

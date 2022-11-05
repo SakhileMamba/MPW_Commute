@@ -1,9 +1,16 @@
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:from_css_color/from_css_color.dart';
 
 import 'users_record.dart';
-import 'supported_locations_record.dart';
 import 'commutes_record.dart';
 import 'vehicles_record.dart';
+import 'verification_requests_record.dart';
+import 'passengers_record.dart';
+import 'messages_record.dart';
+import 'driver_verification_requests_record.dart';
+import 'app_constants_record.dart';
+import 'passengers_hailing_record.dart';
+import 'pickup_requests_record.dart';
 
 import 'index.dart';
 
@@ -15,15 +22,22 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
-  SupportedLocationsRecord,
   CommutesRecord,
   VehiclesRecord,
+  VerificationRequestsRecord,
+  PassengersRecord,
+  MessagesRecord,
+  DriverVerificationRequestsRecord,
+  AppConstantsRecord,
+  PassengersHailingRecord,
+  PickupRequestsRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
       ..add(DateTimeSerializer())
       ..add(LatLngSerializer())
       ..add(FirestoreUtilDataSerializer())
+      ..add(ColorSerializer())
       ..addPlugin(StandardJsonPlugin()))
     .build();
 
@@ -93,10 +107,12 @@ class FirestoreUtilData {
   const FirestoreUtilData({
     this.fieldValues = const {},
     this.clearUnsetFields = true,
+    this.create = false,
     this.delete = false,
   });
   final Map<String, dynamic> fieldValues;
   final bool clearUnsetFields;
+  final bool create;
   final bool delete;
   static String get name => 'firestoreUtilData';
 }
@@ -121,6 +137,24 @@ class FirestoreUtilDataSerializer
       serialized as FirestoreUtilData;
 }
 
+class ColorSerializer implements PrimitiveSerializer<Color> {
+  @override
+  final Iterable<Type> types = new BuiltList<Type>([Color]);
+  @override
+  final String wireName = 'Color';
+
+  @override
+  Object serialize(Serializers serializers, Color color,
+      {FullType specifiedType: FullType.unspecified}) {
+    return color.toCssString();
+  }
+
+  @override
+  Color deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType: FullType.unspecified}) =>
+      fromCssColor(serialized as String);
+}
+
 Map<String, dynamic> serializedData(DocumentSnapshot doc) => {
       ...mapFromFirestore(doc.data() as Map<String, dynamic>),
       kDocumentReferenceField: doc.reference
@@ -130,20 +164,30 @@ Map<String, dynamic> mapFromFirestore(Map<String, dynamic> data) =>
     mergeNestedFields(data)
         .where((k, _) => k != FirestoreUtilData.name)
         .map((key, value) {
+      // Handle Timestamp
       if (value is Timestamp) {
         value = value.toDate();
       }
+      // Handle list of Timestamp
+      if (value is Iterable && value.isNotEmpty && value.first is Timestamp) {
+        value = value.map((v) => (v as Timestamp).toDate()).toList();
+      }
+      // Handle GeoPoint
       if (value is GeoPoint) {
         value = value.toLatLng();
       }
+      // Handle list of GeoPoint
+      if (value is Iterable && value.isNotEmpty && value.first is GeoPoint) {
+        value = value.map((v) => (v as GeoPoint).toLatLng()).toList();
+      }
       // Handle nested data.
       if (value is Map) {
-        value = mergeNestedFields(value as Map<String, dynamic>);
+        value = mapFromFirestore(value as Map<String, dynamic>);
       }
       // Handle list of nested data.
       if (value is Iterable && value.isNotEmpty && value.first is Map) {
         value = value
-            .map((v) => mergeNestedFields(v as Map<String, dynamic>))
+            .map((v) => mapFromFirestore(v as Map<String, dynamic>))
             .toList();
       }
       return MapEntry(key, value);
@@ -151,8 +195,13 @@ Map<String, dynamic> mapFromFirestore(Map<String, dynamic> data) =>
 
 Map<String, dynamic> mapToFirestore(Map<String, dynamic> data) =>
     data.where((k, v) => k != FirestoreUtilData.name).map((key, value) {
+      // Handle GeoPoint
       if (value is LatLng) {
         value = value.toGeoPoint();
+      }
+      // Handle list of GeoPoint
+      if (value is Iterable && value.isNotEmpty && value.first is LatLng) {
+        value = value.map((v) => (v as LatLng).toGeoPoint()).toList();
       }
       // Handle nested data.
       if (value is Map) {

@@ -62,6 +62,13 @@ class _$VehiclesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -81,7 +88,7 @@ class _$VehiclesRecordSerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
@@ -108,6 +115,10 @@ class _$VehiclesRecordSerializer
         case 'year':
           result.year = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
+          break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -136,10 +147,12 @@ class _$VehiclesRecord extends VehiclesRecord {
   @override
   final String? year;
   @override
+  final bool? archived;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$VehiclesRecord([void Function(VehiclesRecordBuilder)? updates]) =>
-      (new VehiclesRecordBuilder()..update(updates)).build();
+      (new VehiclesRecordBuilder()..update(updates))._build();
 
   _$VehiclesRecord._(
       {this.registrationNumber,
@@ -148,6 +161,7 @@ class _$VehiclesRecord extends VehiclesRecord {
       this.make,
       this.model,
       this.year,
+      this.archived,
       this.ffRef})
       : super._();
 
@@ -169,6 +183,7 @@ class _$VehiclesRecord extends VehiclesRecord {
         make == other.make &&
         model == other.model &&
         year == other.year &&
+        archived == other.archived &&
         ffRef == other.ffRef;
   }
 
@@ -179,24 +194,27 @@ class _$VehiclesRecord extends VehiclesRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc(0, registrationNumber.hashCode),
-                            numberOfPassengerSeats.hashCode),
-                        imageURL.hashCode),
-                    make.hashCode),
-                model.hashCode),
-            year.hashCode),
+                        $jc(
+                            $jc($jc(0, registrationNumber.hashCode),
+                                numberOfPassengerSeats.hashCode),
+                            imageURL.hashCode),
+                        make.hashCode),
+                    model.hashCode),
+                year.hashCode),
+            archived.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VehiclesRecord')
+    return (newBuiltValueToStringHelper(r'VehiclesRecord')
           ..add('registrationNumber', registrationNumber)
           ..add('numberOfPassengerSeats', numberOfPassengerSeats)
           ..add('imageURL', imageURL)
           ..add('make', make)
           ..add('model', model)
           ..add('year', year)
+          ..add('archived', archived)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -232,6 +250,10 @@ class VehiclesRecordBuilder
   String? get year => _$this._year;
   set year(String? year) => _$this._year = year;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -249,6 +271,7 @@ class VehiclesRecordBuilder
       _make = $v.make;
       _model = $v.model;
       _year = $v.year;
+      _archived = $v.archived;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -267,7 +290,9 @@ class VehiclesRecordBuilder
   }
 
   @override
-  _$VehiclesRecord build() {
+  VehiclesRecord build() => _build();
+
+  _$VehiclesRecord _build() {
     final _$result = _$v ??
         new _$VehiclesRecord._(
             registrationNumber: registrationNumber,
@@ -276,10 +301,11 @@ class VehiclesRecordBuilder
             make: make,
             model: model,
             year: year,
+            archived: archived,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

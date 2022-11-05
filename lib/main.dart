@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
@@ -10,14 +10,19 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+import 'flutter_flow/revenue_cat_util.dart' as revenue_cat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FlutterFlowTheme.initialize();
 
   FFAppState(); // Initialize FFAppState
+  await revenue_cat.initialize(
+    "appl_AmiVkplKrAVcLNwlFjiKSyujnFk",
+    "goog_pQSjrugHgHmKpVWWUVZOpkTKwVz",
+  );
 
   runApp(MyApp());
 }
@@ -33,23 +38,29 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = ThemeMode.system;
 
-  late Stream<MPWCommuteFirebaseUser> userStream;
-  MPWCommuteFirebaseUser? initialUser;
-  bool displaySplashImage = true;
+  late Stream<CommuteFirebaseUser> userStream;
 
-  final authUserSub = authenticatedUserStream.listen((_) {});
+  late AppStateNotifier _appStateNotifier;
+  late GoRouter _router;
+
+  final authUserSub = authenticatedUserStream.listen((user) {
+    revenue_cat.login(user?.uid);
+  });
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
   @override
   void initState() {
     super.initState();
-    userStream = mPWCommuteFirebaseUserStream()
-      ..listen((user) => initialUser ?? setState(() => initialUser = user));
+    _appStateNotifier = AppStateNotifier();
+    _router = createRouter(_appStateNotifier);
+    userStream = commuteFirebaseUserStream()
+      ..listen((user) => _appStateNotifier.update(user));
+    jwtTokenStream.listen((_) {});
     Future.delayed(
       Duration(seconds: 1),
-      () => setState(() => displaySplashImage = false),
+      () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
 
@@ -60,16 +71,16 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  void setLocale(Locale value) => setState(() => _locale = value);
+  void setLocale(String language) =>
+      setState(() => _locale = createLocale(language));
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
       });
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MPW Commute',
+    return MaterialApp.router(
+      title: 'Commute',
       localizationsDelegates: [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -78,33 +89,21 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       supportedLocales: const [
-        Locale('en', ''),
+        Locale('en'),
       ],
       theme: ThemeData(brightness: Brightness.light),
-      darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: _themeMode,
-      home: initialUser == null || displaySplashImage
-          ? Center(
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: SpinKitChasingDots(
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  size: 50,
-                ),
-              ),
-            )
-          : currentUser!.loggedIn
-              ? PushNotificationsHandler(child: NavBarPage())
-              : PhoneAuthenticationPageWidget(),
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
     );
   }
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({Key? key, this.initialPage}) : super(key: key);
+  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
 
   final String? initialPage;
+  final Widget? page;
 
   @override
   _NavBarPageState createState() => _NavBarPageState();
@@ -112,27 +111,34 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPage = 'browse_commutes_page';
+  String _currentPageName = 'browse_drivers_page';
+  late Widget? _currentPage;
 
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage ?? _currentPage;
+    _currentPageName = widget.initialPage ?? _currentPageName;
+    _currentPage = widget.page;
   }
 
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'browse_commutes_page': BrowseCommutesPageWidget(),
-      'manage_commutes_page': ManageCommutesPageWidget(),
+      'browse_drivers_page': BrowseDriversPageWidget(),
+      'browse_passengers_page': BrowsePassengersPageWidget(),
+      'manage_commutes_driver_page': ManageCommutesDriverPageWidget(),
+      'manage_commutes_passenger_page': ManageCommutesPassengerPageWidget(),
       'account_page': AccountPageWidget(),
     };
-    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
+    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
-      body: tabs[_currentPage],
+      body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
+        onTap: (i) => setState(() {
+          _currentPage = null;
+          _currentPageName = tabs.keys.toList()[i];
+        }),
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         selectedItemColor: FlutterFlowTheme.of(context).primaryBtnText,
         unselectedItemColor: FlutterFlowTheme.of(context).primaryBtnText,
@@ -142,18 +148,34 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.airline_seat_recline_normal_rounded,
+              Icons.commute_sharp,
               size: 24,
             ),
-            label: 'Seats',
+            label: 'Drivers',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.commute,
+              Icons.hail,
               size: 24,
             ),
-            label: 'Commutes',
+            label: 'Passengers',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.drive_eta_rounded,
+              size: 24,
+            ),
+            label: 'Drive',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.airline_seat_recline_normal_rounded,
+              size: 24,
+            ),
+            label: 'Seats',
             tooltip: '',
           ),
           BottomNavigationBarItem(
