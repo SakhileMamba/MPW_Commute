@@ -204,7 +204,9 @@ class _BrowseDriversDetailsPageWidgetState
                               createPassengersRecordData(
                             passengerAccount: currentUserReference,
                             accepted: false,
-                            archived: true,
+                            archived: false,
+                            commuteDatetime:
+                                widget.commuteDoc!.departureDatetime,
                           );
                           await PassengersRecord.createDoc(
                                   widget.commuteDoc!.reference)
@@ -226,7 +228,7 @@ class _BrowseDriversDetailsPageWidgetState
                               'MMMMEEEEd',
                               widget.commuteDoc!.departureDatetime,
                               locale: FFLocalizations.of(context).languageCode,
-                            )} at ${dateTimeFormat(
+                            )}, ${dateTimeFormat(
                               'jm',
                               widget.commuteDoc!.departureDatetime,
                               locale: FFLocalizations.of(context).languageCode,
@@ -955,7 +957,8 @@ class _BrowseDriversDetailsPageWidgetState
                       stream: queryPassengersRecord(
                         parent: widget.commuteDoc!.reference,
                         queryBuilder: (passengersRecord) => passengersRecord
-                            .where('accepted', isEqualTo: false),
+                            .where('accepted', isEqualTo: false)
+                            .where('archived', isEqualTo: false),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
@@ -1208,9 +1211,15 @@ class _BrowseDriversDetailsPageWidgetState
                                                           );
                                                           logFirebaseEvent(
                                                               'Button_backend_call');
+
+                                                          final passengersUpdateData =
+                                                              createPassengersRecordData(
+                                                            archived: true,
+                                                          );
                                                           await listViewPassengersRecord
                                                               .reference
-                                                              .delete();
+                                                              .update(
+                                                                  passengersUpdateData);
                                                           logFirebaseEvent(
                                                               'Button_backend_call');
 
@@ -1341,11 +1350,6 @@ class _BrowseDriversDetailsPageWidgetState
                                                                           createPassengersRecordData(
                                                                         accepted:
                                                                             true,
-                                                                        commuteDatetime: widget
-                                                                            .commuteDoc!
-                                                                            .departureDatetime,
-                                                                        archived:
-                                                                            false,
                                                                       );
                                                                       await listViewPassengersRecord
                                                                           .reference
@@ -1508,11 +1512,6 @@ class _BrowseDriversDetailsPageWidgetState
                                                                             createPassengersRecordData(
                                                                           accepted:
                                                                               true,
-                                                                          commuteDatetime: widget
-                                                                              .commuteDoc!
-                                                                              .departureDatetime,
-                                                                          archived:
-                                                                              false,
                                                                         );
                                                                         await listViewPassengersRecord
                                                                             .reference
@@ -1705,11 +1704,6 @@ class _BrowseDriversDetailsPageWidgetState
                                                                           createPassengersRecordData(
                                                                         accepted:
                                                                             true,
-                                                                        commuteDatetime: widget
-                                                                            .commuteDoc!
-                                                                            .departureDatetime,
-                                                                        archived:
-                                                                            false,
                                                                       );
                                                                       await listViewPassengersRecord
                                                                           .reference
@@ -1952,8 +1946,9 @@ class _BrowseDriversDetailsPageWidgetState
                   child: StreamBuilder<List<PassengersRecord>>(
                     stream: queryPassengersRecord(
                       parent: widget.commuteDoc!.reference,
-                      queryBuilder: (passengersRecord) =>
-                          passengersRecord.where('accepted', isEqualTo: true),
+                      queryBuilder: (passengersRecord) => passengersRecord
+                          .where('accepted', isEqualTo: true)
+                          .where('archived', isEqualTo: false),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

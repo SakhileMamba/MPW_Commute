@@ -102,23 +102,38 @@ class _ManageCommutesDriverPageWidgetState
                         return;
                       } else {
                         logFirebaseEvent('IconButton_alert_dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Free App Usage Has Expired'),
-                              content: Text(
-                                  'This free app version has expired. Please update this app and enroll into the driver\'s subscription to continue scheduiing and posting your commutes.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        var confirmDialogResponse = await showDialog<bool>(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Subscription Required'),
+                                  content: Text(
+                                      'Subscribe to schedule and post your commutes.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, false),
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(
+                                          alertDialogContext, true),
+                                      child: Text('Confirm'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ) ??
+                            false;
+                        if (confirmDialogResponse) {
+                          logFirebaseEvent('IconButton_navigate_to');
+                          if (Navigator.of(context).canPop()) {
+                            context.pop();
+                          }
+                          context.pushNamed('subscriptions_page');
+                        } else {
+                          return;
+                        }
                       }
 
                       return;
@@ -206,9 +221,7 @@ class _ManageCommutesDriverPageWidgetState
             stream: queryCommutesRecord(
               queryBuilder: (commutesRecord) => commutesRecord
                   .where('driver', isEqualTo: currentUserReference)
-                  .where('departure_datetime',
-                      isGreaterThanOrEqualTo:
-                          FFAppState().filterCurrentDateTime)
+                  .where('archived', isEqualTo: false)
                   .orderBy('departure_datetime', descending: true),
             ),
             builder: (context, snapshot) {
@@ -717,7 +730,7 @@ class _ManageCommutesDriverPageWidgetState
                                                             FFLocalizations.of(
                                                                     context)
                                                                 .languageCode,
-                                                      )} at ${dateTimeFormat(
+                                                      )}, ${dateTimeFormat(
                                                         'jm',
                                                         listViewCommutesRecord
                                                             .departureDatetime,

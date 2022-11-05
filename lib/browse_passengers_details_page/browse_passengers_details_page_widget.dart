@@ -79,42 +79,38 @@ class _BrowsePassengersDetailsPageWidgetState
               ),
         ),
         actions: [
-          Visibility(
-            visible:
-                currentUserReference == widget.hailingDoc!.hailingPassenger,
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 60,
-              icon: Icon(
-                Icons.share_rounded,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                size: 30,
-              ),
-              onPressed: () async {
-                logFirebaseEvent('BROWSE_PASSENGERS_DETAILS_share_rounded_');
-                logFirebaseEvent('IconButton_generate_current_page_link');
-                _currentPageLink = await generateCurrentPageLink(
-                  context,
-                  title: 'Commute: Driver Required',
-                  description:
-                      'Drive me from ${widget.hailingDoc!.origin} to ${widget.hailingDoc!.destination}, on ${dateTimeFormat(
-                    'MMMEd',
-                    widget.hailingDoc!.departureDatetime,
-                    locale: FFLocalizations.of(context).languageCode,
-                  )}, ${dateTimeFormat(
-                    'jm',
-                    widget.hailingDoc!.departureDatetime,
-                    locale: FFLocalizations.of(context).languageCode,
-                  )}.',
-                  isShortLink: false,
-                );
-
-                logFirebaseEvent('IconButton_share');
-                await Share.share(_currentPageLink);
-              },
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: Icon(
+              Icons.share_rounded,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 30,
             ),
+            onPressed: () async {
+              logFirebaseEvent('BROWSE_PASSENGERS_DETAILS_share_rounded_');
+              logFirebaseEvent('IconButton_generate_current_page_link');
+              _currentPageLink = await generateCurrentPageLink(
+                context,
+                title: 'Commute: Driver Required',
+                description:
+                    'Drive me from ${widget.hailingDoc!.origin} to ${widget.hailingDoc!.destination}, on ${dateTimeFormat(
+                  'MMMEd',
+                  widget.hailingDoc!.departureDatetime,
+                  locale: FFLocalizations.of(context).languageCode,
+                )}, ${dateTimeFormat(
+                  'jm',
+                  widget.hailingDoc!.departureDatetime,
+                  locale: FFLocalizations.of(context).languageCode,
+                )}.',
+                isShortLink: false,
+              );
+
+              logFirebaseEvent('IconButton_share');
+              await Share.share(_currentPageLink);
+            },
           ),
           Visibility(
             visible:
@@ -150,52 +146,113 @@ class _BrowsePassengersDetailsPageWidgetState
                   onPressed: () async {
                     logFirebaseEvent(
                         'BROWSE_PASSENGERS_DETAILS_sendSeatReques');
-                    if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
-                      if (functions.swaziNumberTest(currentPhoneNumber)) {
-                        if (valueOrDefault<bool>(
-                            currentUserDocument?.verifiedUser, false)) {
+                    if (widget.hailingDoc!.archived!) {
+                      logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
+                      await showDialog(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Driver Request Expired '),
+                            content: Text(
+                                'This request for a driver has expired. The passenger has either selected a different driver or has cancelled the commute.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext),
+                                child: Text('Continue'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                      return;
+                    } else {
+                      if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
+                        if (functions.swaziNumberTest(currentPhoneNumber)) {
                           if (valueOrDefault<bool>(
-                              currentUserDocument?.verifiedDriver, false)) {
-                            if (getCurrentTimestamp <
-                                widget.hailingDoc!.departureDatetime!) {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_navigate_to');
+                              currentUserDocument?.verifiedUser, false)) {
+                            if (valueOrDefault<bool>(
+                                currentUserDocument?.verifiedDriver, false)) {
+                              if (getCurrentTimestamp <
+                                  widget.hailingDoc!.departureDatetime!) {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_navigate_to');
 
-                              context.pushNamed(
-                                'propose_passenger_pickup_page',
-                                queryParams: {
-                                  'passengerHail': serializeParam(
-                                    widget.hailingDoc,
-                                    ParamType.Document,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'passengerHail': widget.hailingDoc,
-                                },
-                              );
+                                context.pushNamed(
+                                  'propose_passenger_pickup_page',
+                                  queryParams: {
+                                    'passengerHail': serializeParam(
+                                      widget.hailingDoc,
+                                      ParamType.Document,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    'passengerHail': widget.hailingDoc,
+                                  },
+                                );
 
-                              return;
+                                return;
+                              } else {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Driver Request Expired'),
+                                      content: Text(
+                                          'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return;
+                              }
                             } else {
                               logFirebaseEvent(
                                   'sendSeatRequestIcon_alert_dialog');
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Driver Request Expired'),
-                                    content: Text(
-                                        'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Continue'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                'Driver\'s License Verification'),
+                                            content: Text(
+                                                'Please upload your driver\'s license and send a request to verify it.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Verify'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              if (confirmDialogResponse) {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_navigate_to');
+
+                                context
+                                    .pushNamed('drivers_license_update_page');
+
+                                return;
+                              } else {
+                                return;
+                              }
                             }
                           } else {
                             logFirebaseEvent(
@@ -204,10 +261,9 @@ class _BrowsePassengersDetailsPageWidgetState
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: Text(
-                                          'Driver\'s License Verification'),
-                                      content: Text(
-                                          'Please upload your driver\'s license and send a request to verify it.'),
+                                      title: Text('Account Verification'),
+                                      content:
+                                          Text('Your account is not verified.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () => Navigator.pop(
@@ -228,7 +284,7 @@ class _BrowsePassengersDetailsPageWidgetState
                               logFirebaseEvent(
                                   'sendSeatRequestIcon_navigate_to');
 
-                              context.pushNamed('drivers_license_update_page');
+                              context.pushNamed('account_page');
 
                               return;
                             } else {
@@ -236,37 +292,178 @@ class _BrowsePassengersDetailsPageWidgetState
                             }
                           }
                         } else {
-                          logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
-                          var confirmDialogResponse = await showDialog<bool>(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Account Verification'),
-                                    content:
-                                        Text('Your account is not verified.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: Text('Verify'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ) ??
-                              false;
-                          if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_navigate_to');
-
-                            context.pushNamed('account_page');
-
+                          logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
+                          final isEntitled =
+                              await revenue_cat.isEntitled('Driver Access');
+                          if (isEntitled == null) {
                             return;
+                          } else if (!isEntitled) {
+                            await revenue_cat.loadOfferings();
+                          }
+
+                          if (isEntitled) {
+                            if (valueOrDefault<bool>(
+                                currentUserDocument?.verifiedUser, false)) {
+                              if (valueOrDefault<bool>(
+                                  currentUserDocument?.verifiedDriver, false)) {
+                                if (getCurrentTimestamp <
+                                    widget.hailingDoc!.departureDatetime!) {
+                                  logFirebaseEvent(
+                                      'sendSeatRequestIcon_navigate_to');
+
+                                  context.pushNamed(
+                                    'propose_passenger_pickup_page',
+                                    queryParams: {
+                                      'passengerHail': serializeParam(
+                                        widget.hailingDoc,
+                                        ParamType.Document,
+                                      ),
+                                    }.withoutNulls,
+                                    extra: <String, dynamic>{
+                                      'passengerHail': widget.hailingDoc,
+                                    },
+                                  );
+
+                                  return;
+                                } else {
+                                  logFirebaseEvent(
+                                      'sendSeatRequestIcon_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Driver Request Expired'),
+                                        content: Text(
+                                            'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Continue'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                              } else {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_alert_dialog');
+                                var confirmDialogResponse =
+                                    await showDialog<bool>(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  'Driver\'s License Verification'),
+                                              content: Text(
+                                                  'Please upload your driver\'s license and send a request to verify it.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext,
+                                                          false),
+                                                  child: Text('Cancel'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext,
+                                                          true),
+                                                  child: Text('Verify'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ) ??
+                                        false;
+                                if (confirmDialogResponse) {
+                                  logFirebaseEvent(
+                                      'sendSeatRequestIcon_navigate_to');
+
+                                  context
+                                      .pushNamed('drivers_license_update_page');
+
+                                  return;
+                                } else {
+                                  return;
+                                }
+                              }
+                            } else {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_alert_dialog');
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Account Verification'),
+                                            content: Text(
+                                                'Your account is not verified.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Verify'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              if (confirmDialogResponse) {
+                                logFirebaseEvent(
+                                    'sendSeatRequestIcon_navigate_to');
+
+                                context.pushNamed('account_page');
+
+                                return;
+                              } else {
+                                return;
+                              }
+                            }
                           } else {
+                            logFirebaseEvent(
+                                'sendSeatRequestIcon_alert_dialog');
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Driver Subscription'),
+                                      content: Text(
+                                          'To accept passengers into your commute, please subscribe.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Subscribe'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_navigate_to');
+
+                              context.pushNamed('subscriptions_page');
+                            } else {
+                              return;
+                            }
+
                             return;
                           }
                         }
@@ -438,170 +635,6 @@ class _BrowsePassengersDetailsPageWidgetState
 
                           return;
                         }
-                      }
-                    } else {
-                      logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
-                      final isEntitled =
-                          await revenue_cat.isEntitled('Driver Access');
-                      if (isEntitled == null) {
-                        return;
-                      } else if (!isEntitled) {
-                        await revenue_cat.loadOfferings();
-                      }
-
-                      if (isEntitled) {
-                        if (valueOrDefault<bool>(
-                            currentUserDocument?.verifiedUser, false)) {
-                          if (valueOrDefault<bool>(
-                              currentUserDocument?.verifiedDriver, false)) {
-                            if (getCurrentTimestamp <
-                                widget.hailingDoc!.departureDatetime!) {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_navigate_to');
-
-                              context.pushNamed(
-                                'propose_passenger_pickup_page',
-                                queryParams: {
-                                  'passengerHail': serializeParam(
-                                    widget.hailingDoc,
-                                    ParamType.Document,
-                                  ),
-                                }.withoutNulls,
-                                extra: <String, dynamic>{
-                                  'passengerHail': widget.hailingDoc,
-                                },
-                              );
-
-                              return;
-                            } else {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_alert_dialog');
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Driver Request Expired'),
-                                    content: Text(
-                                        'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Continue'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
-                          } else {
-                            logFirebaseEvent(
-                                'sendSeatRequestIcon_alert_dialog');
-                            var confirmDialogResponse = await showDialog<bool>(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text(
-                                          'Driver\'s License Verification'),
-                                      content: Text(
-                                          'Please upload your driver\'s license and send a request to verify it.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, false),
-                                          child: Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, true),
-                                          child: Text('Verify'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ) ??
-                                false;
-                            if (confirmDialogResponse) {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_navigate_to');
-
-                              context.pushNamed('drivers_license_update_page');
-
-                              return;
-                            } else {
-                              return;
-                            }
-                          }
-                        } else {
-                          logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
-                          var confirmDialogResponse = await showDialog<bool>(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Account Verification'),
-                                    content:
-                                        Text('Your account is not verified.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: Text('Verify'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ) ??
-                              false;
-                          if (confirmDialogResponse) {
-                            logFirebaseEvent('sendSeatRequestIcon_navigate_to');
-
-                            context.pushNamed('account_page');
-
-                            return;
-                          } else {
-                            return;
-                          }
-                        }
-                      } else {
-                        logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
-                        var confirmDialogResponse = await showDialog<bool>(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Driver Subscription'),
-                                  content: Text(
-                                      'To accept passengers into your commute, please subscribe.'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, false),
-                                      child: Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(
-                                          alertDialogContext, true),
-                                      child: Text('Subscribe'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ) ??
-                            false;
-                        if (confirmDialogResponse) {
-                          logFirebaseEvent('sendSeatRequestIcon_navigate_to');
-
-                          context.pushNamed('subscriptions_page');
-                        } else {
-                          return;
-                        }
-
-                        return;
                       }
                     }
                   },
@@ -948,7 +981,7 @@ class _BrowsePassengersDetailsPageWidgetState
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
                   child: Text(
-                    'Pick up Requests By Drivers',
+                    'Pending Pick Up Requests',
                     style: FlutterFlowTheme.of(context).title3,
                   ),
                 ),
@@ -957,6 +990,9 @@ class _BrowsePassengersDetailsPageWidgetState
                   child: StreamBuilder<List<PickupRequestsRecord>>(
                     stream: queryPickupRequestsRecord(
                       parent: widget.hailingDoc!.reference,
+                      queryBuilder: (pickupRequestsRecord) =>
+                          pickupRequestsRecord.where('archived',
+                              isEqualTo: false),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
@@ -1387,9 +1423,15 @@ class _BrowsePassengersDetailsPageWidgetState
                                                     );
                                                     logFirebaseEvent(
                                                         'Button_backend_call');
+
+                                                    final pickupRequestsUpdateData =
+                                                        createPickupRequestsRecordData(
+                                                      archived: true,
+                                                    );
                                                     await listViewPickupRequestsRecord
                                                         .reference
-                                                        .delete();
+                                                        .update(
+                                                            pickupRequestsUpdateData);
                                                   },
                                                   text: 'Decline',
                                                   icon: Icon(
@@ -1529,6 +1571,7 @@ class _BrowsePassengersDetailsPageWidgetState
                                                             commuteDatetime: widget
                                                                 .hailingDoc!
                                                                 .departureDatetime,
+                                                            archived: false,
                                                           );
                                                           await PassengersRecord
                                                                   .createDoc(
@@ -1567,13 +1610,33 @@ class _BrowsePassengersDetailsPageWidgetState
                                                           );
                                                           logFirebaseEvent(
                                                               'Button_backend_call');
+
+                                                          final passengersHailingUpdateData =
+                                                              createPassengersHailingRecordData(
+                                                            archived: true,
+                                                          );
                                                           await widget
                                                               .hailingDoc!
                                                               .reference
-                                                              .delete();
+                                                              .update(
+                                                                  passengersHailingUpdateData);
                                                           logFirebaseEvent(
-                                                              'Button_navigate_back');
-                                                          context.pop();
+                                                              'Button_backend_call');
+
+                                                          final pickupRequestsUpdateData =
+                                                              createPickupRequestsRecordData(
+                                                            archived: true,
+                                                          );
+                                                          await listViewPickupRequestsRecord
+                                                              .reference
+                                                              .update(
+                                                                  pickupRequestsUpdateData);
+                                                          logFirebaseEvent(
+                                                              'Button_navigate_to');
+
+                                                          context.goNamed(
+                                                              'manage_commutes_passenger_page');
+
                                                           if (_shouldSetState)
                                                             setState(() {});
                                                           return;

@@ -106,9 +106,7 @@ class _ManageCommutesPassengerPageWidgetState
                               .where('passenger_account',
                                   isEqualTo: currentUserReference)
                               .where('accepted', isEqualTo: true)
-                              .where('commute_datetime',
-                                  isGreaterThanOrEqualTo:
-                                      FFAppState().filterCurrentDateTime)
+                              .where('archived', isEqualTo: false)
                               .orderBy('commute_datetime', descending: true),
                         ),
                         builder: (context, snapshot) {
@@ -906,7 +904,7 @@ class _ManageCommutesPassengerPageWidgetState
                                                                 locale: FFLocalizations.of(
                                                                         context)
                                                                     .languageCode,
-                                                              )} at ${dateTimeFormat(
+                                                              )}, ${dateTimeFormat(
                                                                 'jm',
                                                                 cardCommutesRecord
                                                                     .departureDatetime,
@@ -924,6 +922,20 @@ class _ManageCommutesPassengerPageWidgetState
                                                                   'manage_commutes_driver_page',
                                                               parameterData: {},
                                                             );
+                                                            logFirebaseEvent(
+                                                                'Button_backend_call');
+
+                                                            final commutesUpdateData =
+                                                                {
+                                                              'available_passenger_seats':
+                                                                  FieldValue
+                                                                      .increment(
+                                                                          1),
+                                                            };
+                                                            await cardCommutesRecord
+                                                                .reference
+                                                                .update(
+                                                                    commutesUpdateData);
                                                             logFirebaseEvent(
                                                                 'Button_backend_call');
 
@@ -1098,6 +1110,7 @@ class _ManageCommutesPassengerPageWidgetState
                                           FFAppState().filterCurrentDateTime)
                                   .where('hailingPassenger',
                                       isEqualTo: currentUserReference)
+                                  .where('archived', isEqualTo: false)
                                   .orderBy('departure_datetime'),
                         ),
                         builder: (context, snapshot) {
@@ -1509,9 +1522,15 @@ class _ManageCommutesPassengerPageWidgetState
                                                         if (confirmDialogResponse) {
                                                           logFirebaseEvent(
                                                               'Button_backend_call');
+
+                                                          final passengersHailingUpdateData =
+                                                              createPassengersHailingRecordData(
+                                                            archived: true,
+                                                          );
                                                           await listViewPassengersHailingRecord
                                                               .reference
-                                                              .delete();
+                                                              .update(
+                                                                  passengersHailingUpdateData);
                                                           return;
                                                         } else {
                                                           return;

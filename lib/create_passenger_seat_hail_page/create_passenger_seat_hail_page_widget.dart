@@ -346,6 +346,7 @@ class _CreatePassengerSeatHailPageWidgetState
                                         destinationAddress:
                                             placePickerValue2.address,
                                         hailingPassenger: currentUserReference,
+                                        archived: false,
                                       );
                                       await PassengersHailingRecord.collection
                                           .doc()

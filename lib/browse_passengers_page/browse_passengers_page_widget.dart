@@ -142,6 +142,7 @@ class _BrowsePassengersPageWidgetState
                         .where('departure_datetime',
                             isGreaterThanOrEqualTo:
                                 FFAppState().filterCurrentDateTime)
+                        .where('archived', isEqualTo: false)
                         .orderBy('departure_datetime', descending: true);
                 if (_pagingController != null) {
                   final query =
@@ -176,6 +177,7 @@ class _BrowsePassengersPageWidgetState
                             .where('departure_datetime',
                                 isGreaterThanOrEqualTo:
                                     FFAppState().filterCurrentDateTime)
+                            .where('archived', isEqualTo: false)
                             .orderBy('departure_datetime', descending: true),
                     nextPageMarker: nextPageMarker,
                     pageSize: 25,

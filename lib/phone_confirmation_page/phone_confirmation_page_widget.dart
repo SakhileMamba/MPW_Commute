@@ -124,7 +124,6 @@ class _PhoneConfirmationPageWidgetState
                               fontWeight: FontWeight.normal,
                             ),
                         textAlign: TextAlign.start,
-                        maxLines: 1,
                         keyboardType: TextInputType.number,
                       ),
                     ),

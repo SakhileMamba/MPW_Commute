@@ -15,9 +15,10 @@ set purchaserInfo(PurchaserInfo? purchaserInfo) =>
 
 Future initialize(
   String appStoreKey,
-  String playStoreKey,
-  bool debugLogEnabled,
-) async {
+  String playStoreKey, {
+  bool debugLogEnabled = false,
+  bool loadDataAfterLaunch = false,
+}) async {
   if (kIsWeb) {
     print('RevenueCat is not supported on web.');
     return;
@@ -34,8 +35,13 @@ Future initialize(
       return;
     }
 
-    await loadPurchaserInfo();
-    await loadOfferings();
+    if (loadDataAfterLaunch) {
+      loadPurchaserInfo();
+      loadOfferings();
+    } else {
+      await loadPurchaserInfo();
+      await loadOfferings();
+    }
   } on Exception catch (e) {
     // This should happen only in the web run mode.
     print("RevenueCat initialization failed: $e");

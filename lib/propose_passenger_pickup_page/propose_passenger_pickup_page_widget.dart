@@ -510,6 +510,7 @@ class _ProposePassengerPickupPageWidgetState
                                                     textController2!.text),
                                                 currency:
                                                     FFAppState().pickedCurrency,
+                                                archived: false,
                                               );
                                               await PickupRequestsRecord
                                                       .createDoc(widget
@@ -523,7 +524,7 @@ class _ProposePassengerPickupPageWidgetState
                                                 notificationTitle:
                                                     'New Pickup Request',
                                                 notificationText:
-                                                    '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has request to pick you up from your trip from ${widget.passengerHail!.origin} to ${widget.passengerHail!.destination} on ${dateTimeFormat(
+                                                    '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} has requested to pick you up for your trip from ${widget.passengerHail!.origin} to ${widget.passengerHail!.destination} on ${dateTimeFormat(
                                                   'MMMEd',
                                                   widget.passengerHail!
                                                       .departureDatetime,

@@ -26,6 +26,8 @@ abstract class PassengersHailingRecord
 
   DocumentReference? get hailingPassenger;
 
+  bool? get archived;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -35,7 +37,8 @@ abstract class PassengersHailingRecord
         ..origin = ''
         ..destination = ''
         ..originAddress = ''
-        ..destinationAddress = '';
+        ..destinationAddress = ''
+        ..archived = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('passengers_hailing');
@@ -67,6 +70,7 @@ Map<String, dynamic> createPassengersHailingRecordData({
   String? originAddress,
   String? destinationAddress,
   DocumentReference? hailingPassenger,
+  bool? archived,
 }) {
   final firestoreData = serializers.toFirestore(
     PassengersHailingRecord.serializer,
@@ -77,7 +81,8 @@ Map<String, dynamic> createPassengersHailingRecordData({
         ..departureDatetime = departureDatetime
         ..originAddress = originAddress
         ..destinationAddress = destinationAddress
-        ..hailingPassenger = hailingPassenger,
+        ..hailingPassenger = hailingPassenger
+        ..archived = archived,
     ),
   );
 

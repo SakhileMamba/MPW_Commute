@@ -23,6 +23,8 @@ abstract class PickupRequestsRecord
 
   String? get currency;
 
+  bool? get archived;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -32,7 +34,8 @@ abstract class PickupRequestsRecord
   static void _initializeBuilder(PickupRequestsRecordBuilder builder) => builder
     ..availableSeats = 0
     ..pricePerSeat = 0.0
-    ..currency = '';
+    ..currency = ''
+    ..archived = false;
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -67,6 +70,7 @@ Map<String, dynamic> createPickupRequestsRecordData({
   int? availableSeats,
   double? pricePerSeat,
   String? currency,
+  bool? archived,
 }) {
   final firestoreData = serializers.toFirestore(
     PickupRequestsRecord.serializer,
@@ -76,7 +80,8 @@ Map<String, dynamic> createPickupRequestsRecordData({
         ..vehicle = vehicle
         ..availableSeats = availableSeats
         ..pricePerSeat = pricePerSeat
-        ..currency = currency,
+        ..currency = currency
+        ..archived = archived,
     ),
   );
 

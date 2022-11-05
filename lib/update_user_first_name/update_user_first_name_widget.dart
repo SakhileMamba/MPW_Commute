@@ -127,7 +127,6 @@ class _UpdateUserFirstNameWidgetState extends State<UpdateUserFirstNameWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                           textAlign: TextAlign.start,
-                          maxLines: 1,
                           keyboardType: TextInputType.name,
                         ),
                       ),

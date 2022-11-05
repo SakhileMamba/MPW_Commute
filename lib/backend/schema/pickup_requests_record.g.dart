@@ -61,6 +61,13 @@ class _$PickupRequestsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -108,6 +115,10 @@ class _$PickupRequestsRecordSerializer
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -133,6 +144,8 @@ class _$PickupRequestsRecord extends PickupRequestsRecord {
   @override
   final String? currency;
   @override
+  final bool? archived;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$PickupRequestsRecord(
@@ -145,6 +158,7 @@ class _$PickupRequestsRecord extends PickupRequestsRecord {
       this.availableSeats,
       this.pricePerSeat,
       this.currency,
+      this.archived,
       this.ffRef})
       : super._();
 
@@ -166,6 +180,7 @@ class _$PickupRequestsRecord extends PickupRequestsRecord {
         availableSeats == other.availableSeats &&
         pricePerSeat == other.pricePerSeat &&
         currency == other.currency &&
+        archived == other.archived &&
         ffRef == other.ffRef;
   }
 
@@ -174,10 +189,12 @@ class _$PickupRequestsRecord extends PickupRequestsRecord {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, driver.hashCode), vehicle.hashCode),
-                    availableSeats.hashCode),
-                pricePerSeat.hashCode),
-            currency.hashCode),
+                $jc(
+                    $jc($jc($jc(0, driver.hashCode), vehicle.hashCode),
+                        availableSeats.hashCode),
+                    pricePerSeat.hashCode),
+                currency.hashCode),
+            archived.hashCode),
         ffRef.hashCode));
   }
 
@@ -189,6 +206,7 @@ class _$PickupRequestsRecord extends PickupRequestsRecord {
           ..add('availableSeats', availableSeats)
           ..add('pricePerSeat', pricePerSeat)
           ..add('currency', currency)
+          ..add('archived', archived)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -219,6 +237,10 @@ class PickupRequestsRecordBuilder
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -235,6 +257,7 @@ class PickupRequestsRecordBuilder
       _availableSeats = $v.availableSeats;
       _pricePerSeat = $v.pricePerSeat;
       _currency = $v.currency;
+      _archived = $v.archived;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -263,6 +286,7 @@ class PickupRequestsRecordBuilder
             availableSeats: availableSeats,
             pricePerSeat: pricePerSeat,
             currency: currency,
+            archived: archived,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

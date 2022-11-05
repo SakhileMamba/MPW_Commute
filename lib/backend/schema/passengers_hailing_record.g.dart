@@ -68,6 +68,13 @@ class _$PassengersHailingRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
+    value = object.archived;
+    if (value != null) {
+      result
+        ..add('archived')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -117,6 +124,10 @@ class _$PassengersHailingRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
+        case 'archived':
+          result.archived = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -144,6 +155,8 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
   @override
   final DocumentReference<Object?>? hailingPassenger;
   @override
+  final bool? archived;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$PassengersHailingRecord(
@@ -157,6 +170,7 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
       this.originAddress,
       this.destinationAddress,
       this.hailingPassenger,
+      this.archived,
       this.ffRef})
       : super._();
 
@@ -179,6 +193,7 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
         originAddress == other.originAddress &&
         destinationAddress == other.destinationAddress &&
         hailingPassenger == other.hailingPassenger &&
+        archived == other.archived &&
         ffRef == other.ffRef;
   }
 
@@ -188,11 +203,13 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, origin.hashCode), destination.hashCode),
-                        departureDatetime.hashCode),
-                    originAddress.hashCode),
-                destinationAddress.hashCode),
-            hailingPassenger.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, origin.hashCode), destination.hashCode),
+                            departureDatetime.hashCode),
+                        originAddress.hashCode),
+                    destinationAddress.hashCode),
+                hailingPassenger.hashCode),
+            archived.hashCode),
         ffRef.hashCode));
   }
 
@@ -205,6 +222,7 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
           ..add('originAddress', originAddress)
           ..add('destinationAddress', destinationAddress)
           ..add('hailingPassenger', hailingPassenger)
+          ..add('archived', archived)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -243,6 +261,10 @@ class PassengersHailingRecordBuilder
   set hailingPassenger(DocumentReference<Object?>? hailingPassenger) =>
       _$this._hailingPassenger = hailingPassenger;
 
+  bool? _archived;
+  bool? get archived => _$this._archived;
+  set archived(bool? archived) => _$this._archived = archived;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -260,6 +282,7 @@ class PassengersHailingRecordBuilder
       _originAddress = $v.originAddress;
       _destinationAddress = $v.destinationAddress;
       _hailingPassenger = $v.hailingPassenger;
+      _archived = $v.archived;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -289,6 +312,7 @@ class PassengersHailingRecordBuilder
             originAddress: originAddress,
             destinationAddress: destinationAddress,
             hailingPassenger: hailingPassenger,
+            archived: archived,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

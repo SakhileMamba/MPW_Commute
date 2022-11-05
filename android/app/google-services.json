@@ -14,23 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "549233771637-879tuluo3nbdfhk67o95jnhb36g85v82.apps.googleusercontent.com",
+          "client_id": "549233771637-1ik01n8ioukihfsusq5s6cs19nofinid.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "online.mpwstore.mpwcommute",
-            "certificate_hash": "e296f789b2691a6afe40d9872798b5f8ddf62aa0"
+            "certificate_hash": "0225a2863001dc7a8a4688dca0833689ee0db200"
           }
         },
         {
-          "client_id": "549233771637-f1r7aec781n23ljnd9t5r7s4an1gv59b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "online.mpwstore.mpwcommute",
-            "certificate_hash": "d9ce47cfc42530f5281f05f8cc54887dcedde53c"
-          }
-        },
-        {
-          "client_id": "549233771637-gcs514than4fute6lo5po71urgpffbft.apps.googleusercontent.com",
+          "client_id": "549233771637-6c0nhmurgbgm51c84jfupgf2o2rin72o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "online.mpwstore.mpwcommute",
@@ -38,15 +30,7 @@
           }
         },
         {
-          "client_id": "549233771637-n6df62r8pof8828o7r20i0uce1so51ol.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "online.mpwstore.mpwcommute",
-            "certificate_hash": "455779ca907f669829e60e87c68d18d454f51f80"
-          }
-        },
-        {
-          "client_id": "549233771637-p85bapmh5q5hra3cm22etau8rcs5r6bt.apps.googleusercontent.com",
+          "client_id": "549233771637-gi55uvlcgjoq6uaol3bl0j8mas0jvsri.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "online.mpwstore.mpwcommute",

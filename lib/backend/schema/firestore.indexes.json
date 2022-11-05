@@ -9,6 +9,10 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "archived",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "departure_datetime",
           "order": "DESCENDING"
         }
@@ -27,6 +31,10 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "archived",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "commute_datetime",
           "order": "DESCENDING"
         }
@@ -38,6 +46,10 @@
       "fields": [
         {
           "fieldPath": "hailingPassenger",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "archived",
           "order": "ASCENDING"
         },
         {
@@ -56,6 +68,10 @@
         },
         {
           "fieldPath": "destination",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "archived",
           "order": "ASCENDING"
         },
         {
@@ -82,6 +98,10 @@
         },
         {
           "fieldPath": "destination",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "archived",
           "order": "ASCENDING"
         },
         {
