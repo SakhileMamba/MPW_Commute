@@ -119,7 +119,6 @@ class _PhoneAuthenticationPageWidgetState
                               fontWeight: FontWeight.normal,
                             ),
                         textAlign: TextAlign.start,
-                        maxLines: 1,
                         keyboardType: TextInputType.phone,
                       ),
                     ),

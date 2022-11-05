@@ -147,7 +147,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: 1,
                     ),
                   ),
                   Padding(
@@ -191,7 +190,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: 1,
                     ),
                   ),
                   Padding(
@@ -235,7 +233,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -280,7 +277,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: 1,
                     ),
                   ),
                   Padding(
@@ -324,7 +320,6 @@ class _AddVehiclePageWidgetState extends State<AddVehiclePageWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
-                      maxLines: 1,
                       keyboardType: TextInputType.number,
                     ),
                   ),

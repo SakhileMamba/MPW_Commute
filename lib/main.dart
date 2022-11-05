@@ -20,9 +20,8 @@ void main() async {
 
   FFAppState(); // Initialize FFAppState
   await revenue_cat.initialize(
-    "testkey",
+    "appl_AmiVkplKrAVcLNwlFjiKSyujnFk",
     "goog_pQSjrugHgHmKpVWWUVZOpkTKwVz",
-    false,
   );
 
   runApp(MyApp());

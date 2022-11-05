@@ -140,6 +140,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                         .where('departure_datetime',
                             isGreaterThanOrEqualTo:
                                 FFAppState().filterCurrentDateTime)
+                        .where('archived', isEqualTo: false)
                         .orderBy('departure_datetime', descending: true)
                         .orderBy('available_passenger_seats', descending: true)
                         .orderBy('driversRating', descending: true);
@@ -174,6 +175,7 @@ class _BrowseDriversPageWidgetState extends State<BrowseDriversPageWidget> {
                         .where('departure_datetime',
                             isGreaterThanOrEqualTo:
                                 FFAppState().filterCurrentDateTime)
+                        .where('archived', isEqualTo: false)
                         .orderBy('departure_datetime', descending: true)
                         .orderBy('available_passenger_seats', descending: true)
                         .orderBy('driversRating', descending: true),

@@ -108,7 +108,7 @@ class _SubscriptionsPageWidgetState extends State<SubscriptionsPageWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                         child: Text(
-                          'To gain the privilege of scheduling and managing commutes as a driver, you are required to subscribe.',
+                          'To gain the privilege of selling your car seats to passengers, you are required to subscribe.',
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
