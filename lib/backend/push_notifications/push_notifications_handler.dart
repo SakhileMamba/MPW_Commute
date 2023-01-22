@@ -52,12 +52,13 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
     try {
       final initialPageName = message.data['initialPageName'] as String;
       final initialParameterData = getInitialParameterData(message.data);
-      final pageBuilder = pageBuilderMap[initialPageName];
-      if (pageBuilder != null) {
-        final page = await pageBuilder(initialParameterData);
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => page),
+      final parametersBuilder = parametersBuilderMap[initialPageName];
+      if (parametersBuilder != null) {
+        final parameterData = await parametersBuilder(initialParameterData);
+        context.pushNamed(
+          initialPageName,
+          params: parameterData.params,
+          extra: parameterData.extra,
         );
       }
     } catch (e) {
@@ -80,64 +81,92 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
       ? Container(
           color: FlutterFlowTheme.of(context).primaryColor,
           child: Image.asset(
-            'assets/images/Commute_2160px_logo.png',
-            fit: BoxFit.scaleDown,
+            'assets/images/Commute_Logo_google_play_512x512_black.png',
+            fit: BoxFit.fitWidth,
           ),
         )
       : widget.child;
 }
 
-final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
-  'phone_authentication_page': (data) async => PhoneAuthenticationPageWidget(),
-  'phone_confirmation_page': (data) async => PhoneConfirmationPageWidget(),
-  'browse_passengers_page': (data) async =>
-      NavBarPage(initialPage: 'browse_passengers_page'),
-  'manage_commutes_driver_page': (data) async =>
-      NavBarPage(initialPage: 'manage_commutes_driver_page'),
-  'manage_commutes_passenger_page': (data) async =>
-      NavBarPage(initialPage: 'manage_commutes_passenger_page'),
-  'account_page': (data) async => NavBarPage(initialPage: 'account_page'),
-  'browse_drivers_details_page': (data) async => BrowseDriversDetailsPageWidget(
-        commuteDoc: await getDocumentParameter(
-            data, 'commuteDoc', CommutesRecord.serializer),
-        driverDoc: await getDocumentParameter(
-            data, 'driverDoc', UsersRecord.serializer),
-      ),
-  'government_id_update_Page': (data) async => GovernmentIdUpdatePageWidget(),
-  'personal_information_update_page': (data) async =>
-      PersonalInformationUpdatePageWidget(),
-  'list_vehicles_page': (data) async => ListVehiclesPageWidget(),
-  'filter_commutes_page': (data) async => FilterCommutesPageWidget(),
-  'create_commute_page': (data) async => CreateCommutePageWidget(),
-  'add_vehicle_page': (data) async => AddVehiclePageWidget(),
-  'subscriptions_page': (data) async => SubscriptionsPageWidget(),
-  'profile_picture_update_Page': (data) async =>
-      ProfilePictureUpdatePageWidget(),
-  'drivers_license_update_page': (data) async =>
-      DriversLicenseUpdatePageWidget(),
-  'approve_drivers_page': (data) async => ApproveDriversPageWidget(),
-  'approve_users_page': (data) async => ApproveUsersPageWidget(),
-  'update_user_first_name': (data) async => UpdateUserFirstNameWidget(),
-  'update_user_surname': (data) async => UpdateUserSurnameWidget(),
-  'success_lottie': (data) async => SuccessLottieWidget(),
-  'propose_passenger_pickup_page': (data) async =>
-      ProposePassengerPickupPageWidget(
-        passengerHail: await getDocumentParameter(
-            data, 'passengerHail', PassengersHailingRecord.serializer),
-      ),
-  'create_passenger_seat_hail_page': (data) async =>
-      CreatePassengerSeatHailPageWidget(),
-  'browse_passengers_details_page': (data) async =>
-      BrowsePassengersDetailsPageWidget(
-        hailingDoc: await getDocumentParameter(
-            data, 'hailingDoc', PassengersHailingRecord.serializer),
-        passenger: await getDocumentParameter(
-            data, 'passenger', UsersRecord.serializer),
-      ),
-};
+class ParameterData {
+  const ParameterData(
+      {this.requiredParams = const {}, this.allParams = const {}});
+  final Map<String, String?> requiredParams;
+  final Map<String, dynamic> allParams;
 
-bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
-    params.any((param) => getParameter(data, param) != null);
+  Map<String, String> get params => Map.fromEntries(
+        requiredParams.entries
+            .where((e) => e.value != null)
+            .map((e) => MapEntry(e.key, e.value!)),
+      );
+  Map<String, dynamic> get extra => Map.fromEntries(
+        allParams.entries.where((e) => e.value != null),
+      );
+
+  static Future<ParameterData> Function(Map<String, dynamic>) none() =>
+      (data) async => ParameterData();
+}
+
+final parametersBuilderMap =
+    <String, Future<ParameterData> Function(Map<String, dynamic>)>{
+  'phoneAuthentication': (data) async => ParameterData(
+        allParams: {
+          'referrerRef': getParameter<DocumentReference>(data, 'referrerRef'),
+        },
+      ),
+  'phoneConfirmation': ParameterData.none(),
+  'checkSetup': ParameterData.none(),
+  'drivers': ParameterData.none(),
+  'passengers': ParameterData.none(),
+  'drives': ParameterData.none(),
+  'seats': ParameterData.none(),
+  'account': ParameterData.none(),
+  'driveDetails': (data) async => ParameterData(
+        allParams: {
+          'commuteDoc': await getDocumentParameter<CommutesRecord>(
+              data, 'commuteDoc', CommutesRecord.serializer),
+          'driverDoc': await getDocumentParameter<UsersRecord>(
+              data, 'driverDoc', UsersRecord.serializer),
+        },
+      ),
+  'vehicles': ParameterData.none(),
+  'governmentId': ParameterData.none(),
+  'profilePicture': ParameterData.none(),
+  'filterCommutes': ParameterData.none(),
+  'personalInformation': ParameterData.none(),
+  'addVehicle': ParameterData.none(),
+  'driversLicense': ParameterData.none(),
+  'subscription': ParameterData.none(),
+  'approveDrivers': ParameterData.none(),
+  'approveUsers': ParameterData.none(),
+  'firstName': ParameterData.none(),
+  'surname': ParameterData.none(),
+  'gender': ParameterData.none(),
+  'birthdate': ParameterData.none(),
+  'successLottie': ParameterData.none(),
+  'beginRequest': ParameterData.none(),
+  'driverRequestDetails': (data) async => ParameterData(
+        allParams: {
+          'hailingDoc': await getDocumentParameter<PassengersHailingRecord>(
+              data, 'hailingDoc', PassengersHailingRecord.serializer),
+          'passenger': await getDocumentParameter<UsersRecord>(
+              data, 'passenger', UsersRecord.serializer),
+        },
+      ),
+  'requestType': ParameterData.none(),
+  'originType': ParameterData.none(),
+  'origin': ParameterData.none(),
+  'destination': ParameterData.none(),
+  'departureDatetime': ParameterData.none(),
+  'availableSeats': ParameterData.none(),
+  'chooseVehicle': ParameterData.none(),
+  'price': ParameterData.none(),
+  'requestConfirmation': ParameterData.none(),
+  'announcements': ParameterData.none(),
+  'createAnnouncement': ParameterData.none(),
+  'referFriend': ParameterData.none(),
+  'checkSetup0': ParameterData.none(),
+};
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
   try {

@@ -1,6 +1,7 @@
 import 'package:built_value/serializer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../auth/auth_util.dart';
 
 import '../flutter_flow/flutter_flow_util.dart';
 
@@ -14,6 +15,8 @@ import 'schema/driver_verification_requests_record.dart';
 import 'schema/app_constants_record.dart';
 import 'schema/passengers_hailing_record.dart';
 import 'schema/pickup_requests_record.dart';
+import 'schema/announcements_record.dart';
+import 'schema/tutorials_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -31,8 +34,20 @@ export 'schema/driver_verification_requests_record.dart';
 export 'schema/app_constants_record.dart';
 export 'schema/passengers_hailing_record.dart';
 export 'schema/pickup_requests_record.dart';
+export 'schema/announcements_record.dart';
+export 'schema/tutorials_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
+Future<int> queryUsersRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      UsersRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<UsersRecord>> queryUsersRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -75,6 +90,16 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
     );
 
 /// Functions to query CommutesRecords (as a Stream and as a Future).
+Future<int> queryCommutesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      CommutesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<CommutesRecord>> queryCommutesRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -117,6 +142,17 @@ Future<FFFirestorePage<CommutesRecord>> queryCommutesRecordPage({
     );
 
 /// Functions to query VehiclesRecords (as a Stream and as a Future).
+Future<int> queryVehiclesRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      VehiclesRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<VehiclesRecord>> queryVehiclesRecord({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -162,6 +198,16 @@ Future<FFFirestorePage<VehiclesRecord>> queryVehiclesRecordPage({
     );
 
 /// Functions to query VerificationRequestsRecords (as a Stream and as a Future).
+Future<int> queryVerificationRequestsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      VerificationRequestsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<VerificationRequestsRecord>> queryVerificationRequestsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -205,6 +251,17 @@ Future<FFFirestorePage<VerificationRequestsRecord>>
         );
 
 /// Functions to query PassengersRecords (as a Stream and as a Future).
+Future<int> queryPassengersRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PassengersRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<PassengersRecord>> queryPassengersRecord({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -250,6 +307,17 @@ Future<FFFirestorePage<PassengersRecord>> queryPassengersRecordPage({
     );
 
 /// Functions to query MessagesRecords (as a Stream and as a Future).
+Future<int> queryMessagesRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      MessagesRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<MessagesRecord>> queryMessagesRecord({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -295,6 +363,16 @@ Future<FFFirestorePage<MessagesRecord>> queryMessagesRecordPage({
     );
 
 /// Functions to query DriverVerificationRequestsRecords (as a Stream and as a Future).
+Future<int> queryDriverVerificationRequestsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      DriverVerificationRequestsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<DriverVerificationRequestsRecord>>
     queryDriverVerificationRequestsRecord({
   Query Function(Query)? queryBuilder,
@@ -340,6 +418,16 @@ Future<FFFirestorePage<DriverVerificationRequestsRecord>>
         );
 
 /// Functions to query AppConstantsRecords (as a Stream and as a Future).
+Future<int> queryAppConstantsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      AppConstantsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<AppConstantsRecord>> queryAppConstantsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -382,6 +470,16 @@ Future<FFFirestorePage<AppConstantsRecord>> queryAppConstantsRecordPage({
     );
 
 /// Functions to query PassengersHailingRecords (as a Stream and as a Future).
+Future<int> queryPassengersHailingRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PassengersHailingRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<PassengersHailingRecord>> queryPassengersHailingRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -425,6 +523,17 @@ Future<FFFirestorePage<PassengersHailingRecord>>
         );
 
 /// Functions to query PickupRequestsRecords (as a Stream and as a Future).
+Future<int> queryPickupRequestsRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PickupRequestsRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<PickupRequestsRecord>> queryPickupRequestsRecord({
   DocumentReference? parent,
   Query Function(Query)? queryBuilder,
@@ -468,6 +577,126 @@ Future<FFFirestorePage<PickupRequestsRecord>> queryPickupRequestsRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query AnnouncementsRecords (as a Stream and as a Future).
+Future<int> queryAnnouncementsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      AnnouncementsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<AnnouncementsRecord>> queryAnnouncementsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      AnnouncementsRecord.collection,
+      AnnouncementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<AnnouncementsRecord>> queryAnnouncementsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      AnnouncementsRecord.collection,
+      AnnouncementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<AnnouncementsRecord>> queryAnnouncementsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      AnnouncementsRecord.collection,
+      AnnouncementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query TutorialsRecords (as a Stream and as a Future).
+Future<int> queryTutorialsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      TutorialsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<TutorialsRecord>> queryTutorialsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      TutorialsRecord.collection,
+      TutorialsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<TutorialsRecord>> queryTutorialsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      TutorialsRecord.collection,
+      TutorialsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<TutorialsRecord>> queryTutorialsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      TutorialsRecord.collection,
+      TutorialsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+Future<int> queryCollectionCount(
+  Query collection, {
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) {
+  final builder = queryBuilder ?? (q) => q;
+  var query = builder(collection);
+  if (limit > 0) {
+    query = query.limit(limit);
+  }
+
+  return query.count().get().catchError((err) {
+    print('Error querying $collection: $err');
+  }).then((value) => value.count);
+}
 
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
@@ -579,6 +808,7 @@ Future maybeCreateUser(User user) async {
   final userRecord = UsersRecord.collection.doc(user.uid);
   final userExists = await userRecord.get().then((u) => u.exists);
   if (userExists) {
+    currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
     return;
   }
 
@@ -592,4 +822,6 @@ Future maybeCreateUser(User user) async {
   );
 
   await userRecord.set(userData);
+  currentUserDocument =
+      serializers.deserializeWith(UsersRecord.serializer, userData);
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SeatsEmptyWidget extends StatefulWidget {
   const SeatsEmptyWidget({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _SeatsEmptyWidgetState extends State<SeatsEmptyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Column(
@@ -38,7 +41,7 @@ class _SeatsEmptyWidgetState extends State<SeatsEmptyWidget> {
             ),
           ),
           Text(
-            'You currently do not have a seat on any commute. Try sending a seat request.',
+            'You do not have seats in any commutes. Try sending seat requests.',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),

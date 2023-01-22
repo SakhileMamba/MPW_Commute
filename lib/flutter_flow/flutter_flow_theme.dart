@@ -39,7 +39,7 @@ abstract class FlutterFlowTheme {
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFF011638);
+  late Color primaryColor = const Color(0xFF000000);
   late Color secondaryColor = const Color(0xFFD90000);
   late Color tertiaryColor = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFFFF5963);
@@ -115,14 +115,14 @@ class ThemeTypography extends Typography {
         'Roboto',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 14,
+        fontSize: 16,
       );
   String get bodyText2Family => 'Roboto';
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Roboto',
         color: Colors.black,
         fontWeight: FontWeight.w500,
-        fontSize: 14,
+        fontSize: 16,
         fontStyle: FontStyle.normal,
       );
 }

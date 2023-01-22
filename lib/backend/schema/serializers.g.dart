@@ -7,16 +7,37 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AnnouncementsRecord.serializer)
       ..add(AppConstantsRecord.serializer)
       ..add(CommutesRecord.serializer)
       ..add(DriverVerificationRequestsRecord.serializer)
+      ..add(LatlngReverseGeocodingStruct.serializer)
       ..add(MessagesRecord.serializer)
       ..add(PassengersHailingRecord.serializer)
       ..add(PassengersRecord.serializer)
       ..add(PickupRequestsRecord.serializer)
+      ..add(TutorialsRecord.serializer)
       ..add(UsersRecord.serializer)
       ..add(VehiclesRecord.serializer)
       ..add(VerificationRequestsRecord.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])
+          ]),
+          () => new ListBuilder<DocumentReference<Object?>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])
+          ]),
+          () => new ListBuilder<DocumentReference<Object?>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])
+          ]),
+          () => new ListBuilder<DocumentReference<Object?>>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(

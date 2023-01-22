@@ -29,6 +29,43 @@ class _$AppConstantsRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.notificationReferenceList;
+    if (value != null) {
+      result
+        ..add('notificationReferenceList')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
+    }
+    value = object.privacyPolicyURL;
+    if (value != null) {
+      result
+        ..add('privacy_policy_URL')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.termsOfServiceURL;
+    if (value != null) {
+      result
+        ..add('terms_of_service_URL')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.pushNotificationImageURL;
+    if (value != null) {
+      result
+        ..add('push_notification_Image_URL')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.uselessCount;
+    if (value != null) {
+      result
+        ..add('useless_count')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -56,6 +93,30 @@ class _$AppConstantsRecordSerializer
           result.freeApp = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'notificationReferenceList':
+          result.notificationReferenceList
+              .replace(serializers.deserialize(value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentReference,
+                        const [const FullType.nullable(Object)])
+                  ]))! as BuiltList<Object?>);
+          break;
+        case 'privacy_policy_URL':
+          result.privacyPolicyURL = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'terms_of_service_URL':
+          result.termsOfServiceURL = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'push_notification_Image_URL':
+          result.pushNotificationImageURL = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'useless_count':
+          result.uselessCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -73,13 +134,31 @@ class _$AppConstantsRecord extends AppConstantsRecord {
   @override
   final bool? freeApp;
   @override
+  final BuiltList<DocumentReference<Object?>>? notificationReferenceList;
+  @override
+  final String? privacyPolicyURL;
+  @override
+  final String? termsOfServiceURL;
+  @override
+  final String? pushNotificationImageURL;
+  @override
+  final int? uselessCount;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$AppConstantsRecord(
           [void Function(AppConstantsRecordBuilder)? updates]) =>
       (new AppConstantsRecordBuilder()..update(updates))._build();
 
-  _$AppConstantsRecord._({this.freeApp, this.ffRef}) : super._();
+  _$AppConstantsRecord._(
+      {this.freeApp,
+      this.notificationReferenceList,
+      this.privacyPolicyURL,
+      this.termsOfServiceURL,
+      this.pushNotificationImageURL,
+      this.uselessCount,
+      this.ffRef})
+      : super._();
 
   @override
   AppConstantsRecord rebuild(
@@ -95,18 +174,39 @@ class _$AppConstantsRecord extends AppConstantsRecord {
     if (identical(other, this)) return true;
     return other is AppConstantsRecord &&
         freeApp == other.freeApp &&
+        notificationReferenceList == other.notificationReferenceList &&
+        privacyPolicyURL == other.privacyPolicyURL &&
+        termsOfServiceURL == other.termsOfServiceURL &&
+        pushNotificationImageURL == other.pushNotificationImageURL &&
+        uselessCount == other.uselessCount &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, freeApp.hashCode), ffRef.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc($jc(0, freeApp.hashCode),
+                            notificationReferenceList.hashCode),
+                        privacyPolicyURL.hashCode),
+                    termsOfServiceURL.hashCode),
+                pushNotificationImageURL.hashCode),
+            uselessCount.hashCode),
+        ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'AppConstantsRecord')
           ..add('freeApp', freeApp)
+          ..add('notificationReferenceList', notificationReferenceList)
+          ..add('privacyPolicyURL', privacyPolicyURL)
+          ..add('termsOfServiceURL', termsOfServiceURL)
+          ..add('pushNotificationImageURL', pushNotificationImageURL)
+          ..add('uselessCount', uselessCount)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -120,6 +220,33 @@ class AppConstantsRecordBuilder
   bool? get freeApp => _$this._freeApp;
   set freeApp(bool? freeApp) => _$this._freeApp = freeApp;
 
+  ListBuilder<DocumentReference<Object?>>? _notificationReferenceList;
+  ListBuilder<DocumentReference<Object?>> get notificationReferenceList =>
+      _$this._notificationReferenceList ??=
+          new ListBuilder<DocumentReference<Object?>>();
+  set notificationReferenceList(
+          ListBuilder<DocumentReference<Object?>>? notificationReferenceList) =>
+      _$this._notificationReferenceList = notificationReferenceList;
+
+  String? _privacyPolicyURL;
+  String? get privacyPolicyURL => _$this._privacyPolicyURL;
+  set privacyPolicyURL(String? privacyPolicyURL) =>
+      _$this._privacyPolicyURL = privacyPolicyURL;
+
+  String? _termsOfServiceURL;
+  String? get termsOfServiceURL => _$this._termsOfServiceURL;
+  set termsOfServiceURL(String? termsOfServiceURL) =>
+      _$this._termsOfServiceURL = termsOfServiceURL;
+
+  String? _pushNotificationImageURL;
+  String? get pushNotificationImageURL => _$this._pushNotificationImageURL;
+  set pushNotificationImageURL(String? pushNotificationImageURL) =>
+      _$this._pushNotificationImageURL = pushNotificationImageURL;
+
+  int? _uselessCount;
+  int? get uselessCount => _$this._uselessCount;
+  set uselessCount(int? uselessCount) => _$this._uselessCount = uselessCount;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -132,6 +259,11 @@ class AppConstantsRecordBuilder
     final $v = _$v;
     if ($v != null) {
       _freeApp = $v.freeApp;
+      _notificationReferenceList = $v.notificationReferenceList?.toBuilder();
+      _privacyPolicyURL = $v.privacyPolicyURL;
+      _termsOfServiceURL = $v.termsOfServiceURL;
+      _pushNotificationImageURL = $v.pushNotificationImageURL;
+      _uselessCount = $v.uselessCount;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -153,8 +285,28 @@ class AppConstantsRecordBuilder
   AppConstantsRecord build() => _build();
 
   _$AppConstantsRecord _build() {
-    final _$result =
-        _$v ?? new _$AppConstantsRecord._(freeApp: freeApp, ffRef: ffRef);
+    _$AppConstantsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$AppConstantsRecord._(
+              freeApp: freeApp,
+              notificationReferenceList: _notificationReferenceList?.build(),
+              privacyPolicyURL: privacyPolicyURL,
+              termsOfServiceURL: termsOfServiceURL,
+              pushNotificationImageURL: pushNotificationImageURL,
+              uselessCount: uselessCount,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'notificationReferenceList';
+        _notificationReferenceList?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'AppConstantsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

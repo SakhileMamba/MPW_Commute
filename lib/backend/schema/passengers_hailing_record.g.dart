@@ -23,42 +23,21 @@ class _$PassengersHailingRecordSerializer
   Iterable<Object?> serialize(
       Serializers serializers, PassengersHailingRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'originReversedGeocoded',
+      serializers.serialize(object.originReversedGeocoded,
+          specifiedType: const FullType(LatlngReverseGeocodingStruct)),
+      'destinationReversedGeocoded',
+      serializers.serialize(object.destinationReversedGeocoded,
+          specifiedType: const FullType(LatlngReverseGeocodingStruct)),
+    ];
     Object? value;
-    value = object.origin;
-    if (value != null) {
-      result
-        ..add('origin')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.destination;
-    if (value != null) {
-      result
-        ..add('destination')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.departureDatetime;
     if (value != null) {
       result
         ..add('departure_datetime')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
-    }
-    value = object.originAddress;
-    if (value != null) {
-      result
-        ..add('origin_address')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.destinationAddress;
-    if (value != null) {
-      result
-        ..add('destination_address')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     value = object.hailingPassenger;
     if (value != null) {
@@ -74,6 +53,13 @@ class _$PassengersHailingRecordSerializer
         ..add('archived')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.createdDatetime;
+    if (value != null) {
+      result
+        ..add('created_datetime')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -98,25 +84,9 @@ class _$PassengersHailingRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'origin':
-          result.origin = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'destination':
-          result.destination = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'departure_datetime':
           result.departureDatetime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
-          break;
-        case 'origin_address':
-          result.originAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'destination_address':
-          result.destinationAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'hailingPassenger':
           result.hailingPassenger = serializers.deserialize(value,
@@ -127,6 +97,21 @@ class _$PassengersHailingRecordSerializer
         case 'archived':
           result.archived = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'originReversedGeocoded':
+          result.originReversedGeocoded.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(LatlngReverseGeocodingStruct))!
+              as LatlngReverseGeocodingStruct);
+          break;
+        case 'destinationReversedGeocoded':
+          result.destinationReversedGeocoded.replace(serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(LatlngReverseGeocodingStruct))!
+              as LatlngReverseGeocodingStruct);
+          break;
+        case 'created_datetime':
+          result.createdDatetime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -143,19 +128,17 @@ class _$PassengersHailingRecordSerializer
 
 class _$PassengersHailingRecord extends PassengersHailingRecord {
   @override
-  final String? origin;
-  @override
-  final String? destination;
-  @override
   final DateTime? departureDatetime;
-  @override
-  final String? originAddress;
-  @override
-  final String? destinationAddress;
   @override
   final DocumentReference<Object?>? hailingPassenger;
   @override
   final bool? archived;
+  @override
+  final LatlngReverseGeocodingStruct originReversedGeocoded;
+  @override
+  final LatlngReverseGeocodingStruct destinationReversedGeocoded;
+  @override
+  final DateTime? createdDatetime;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -164,15 +147,19 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
       (new PassengersHailingRecordBuilder()..update(updates))._build();
 
   _$PassengersHailingRecord._(
-      {this.origin,
-      this.destination,
-      this.departureDatetime,
-      this.originAddress,
-      this.destinationAddress,
+      {this.departureDatetime,
       this.hailingPassenger,
       this.archived,
+      required this.originReversedGeocoded,
+      required this.destinationReversedGeocoded,
+      this.createdDatetime,
       this.ffRef})
-      : super._();
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(originReversedGeocoded,
+        r'PassengersHailingRecord', 'originReversedGeocoded');
+    BuiltValueNullFieldError.checkNotNull(destinationReversedGeocoded,
+        r'PassengersHailingRecord', 'destinationReversedGeocoded');
+  }
 
   @override
   PassengersHailingRecord rebuild(
@@ -187,13 +174,12 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is PassengersHailingRecord &&
-        origin == other.origin &&
-        destination == other.destination &&
         departureDatetime == other.departureDatetime &&
-        originAddress == other.originAddress &&
-        destinationAddress == other.destinationAddress &&
         hailingPassenger == other.hailingPassenger &&
         archived == other.archived &&
+        originReversedGeocoded == other.originReversedGeocoded &&
+        destinationReversedGeocoded == other.destinationReversedGeocoded &&
+        createdDatetime == other.createdDatetime &&
         ffRef == other.ffRef;
   }
 
@@ -204,25 +190,24 @@ class _$PassengersHailingRecord extends PassengersHailingRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, origin.hashCode), destination.hashCode),
-                            departureDatetime.hashCode),
-                        originAddress.hashCode),
-                    destinationAddress.hashCode),
-                hailingPassenger.hashCode),
-            archived.hashCode),
+                        $jc($jc(0, departureDatetime.hashCode),
+                            hailingPassenger.hashCode),
+                        archived.hashCode),
+                    originReversedGeocoded.hashCode),
+                destinationReversedGeocoded.hashCode),
+            createdDatetime.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'PassengersHailingRecord')
-          ..add('origin', origin)
-          ..add('destination', destination)
           ..add('departureDatetime', departureDatetime)
-          ..add('originAddress', originAddress)
-          ..add('destinationAddress', destinationAddress)
           ..add('hailingPassenger', hailingPassenger)
           ..add('archived', archived)
+          ..add('originReversedGeocoded', originReversedGeocoded)
+          ..add('destinationReversedGeocoded', destinationReversedGeocoded)
+          ..add('createdDatetime', createdDatetime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -233,28 +218,10 @@ class PassengersHailingRecordBuilder
         Builder<PassengersHailingRecord, PassengersHailingRecordBuilder> {
   _$PassengersHailingRecord? _$v;
 
-  String? _origin;
-  String? get origin => _$this._origin;
-  set origin(String? origin) => _$this._origin = origin;
-
-  String? _destination;
-  String? get destination => _$this._destination;
-  set destination(String? destination) => _$this._destination = destination;
-
   DateTime? _departureDatetime;
   DateTime? get departureDatetime => _$this._departureDatetime;
   set departureDatetime(DateTime? departureDatetime) =>
       _$this._departureDatetime = departureDatetime;
-
-  String? _originAddress;
-  String? get originAddress => _$this._originAddress;
-  set originAddress(String? originAddress) =>
-      _$this._originAddress = originAddress;
-
-  String? _destinationAddress;
-  String? get destinationAddress => _$this._destinationAddress;
-  set destinationAddress(String? destinationAddress) =>
-      _$this._destinationAddress = destinationAddress;
 
   DocumentReference<Object?>? _hailingPassenger;
   DocumentReference<Object?>? get hailingPassenger => _$this._hailingPassenger;
@@ -264,6 +231,27 @@ class PassengersHailingRecordBuilder
   bool? _archived;
   bool? get archived => _$this._archived;
   set archived(bool? archived) => _$this._archived = archived;
+
+  LatlngReverseGeocodingStructBuilder? _originReversedGeocoded;
+  LatlngReverseGeocodingStructBuilder get originReversedGeocoded =>
+      _$this._originReversedGeocoded ??=
+          new LatlngReverseGeocodingStructBuilder();
+  set originReversedGeocoded(
+          LatlngReverseGeocodingStructBuilder? originReversedGeocoded) =>
+      _$this._originReversedGeocoded = originReversedGeocoded;
+
+  LatlngReverseGeocodingStructBuilder? _destinationReversedGeocoded;
+  LatlngReverseGeocodingStructBuilder get destinationReversedGeocoded =>
+      _$this._destinationReversedGeocoded ??=
+          new LatlngReverseGeocodingStructBuilder();
+  set destinationReversedGeocoded(
+          LatlngReverseGeocodingStructBuilder? destinationReversedGeocoded) =>
+      _$this._destinationReversedGeocoded = destinationReversedGeocoded;
+
+  DateTime? _createdDatetime;
+  DateTime? get createdDatetime => _$this._createdDatetime;
+  set createdDatetime(DateTime? createdDatetime) =>
+      _$this._createdDatetime = createdDatetime;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -276,13 +264,12 @@ class PassengersHailingRecordBuilder
   PassengersHailingRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _origin = $v.origin;
-      _destination = $v.destination;
       _departureDatetime = $v.departureDatetime;
-      _originAddress = $v.originAddress;
-      _destinationAddress = $v.destinationAddress;
       _hailingPassenger = $v.hailingPassenger;
       _archived = $v.archived;
+      _originReversedGeocoded = $v.originReversedGeocoded.toBuilder();
+      _destinationReversedGeocoded = $v.destinationReversedGeocoded.toBuilder();
+      _createdDatetime = $v.createdDatetime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -304,16 +291,30 @@ class PassengersHailingRecordBuilder
   PassengersHailingRecord build() => _build();
 
   _$PassengersHailingRecord _build() {
-    final _$result = _$v ??
-        new _$PassengersHailingRecord._(
-            origin: origin,
-            destination: destination,
-            departureDatetime: departureDatetime,
-            originAddress: originAddress,
-            destinationAddress: destinationAddress,
-            hailingPassenger: hailingPassenger,
-            archived: archived,
-            ffRef: ffRef);
+    _$PassengersHailingRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$PassengersHailingRecord._(
+              departureDatetime: departureDatetime,
+              hailingPassenger: hailingPassenger,
+              archived: archived,
+              originReversedGeocoded: originReversedGeocoded.build(),
+              destinationReversedGeocoded: destinationReversedGeocoded.build(),
+              createdDatetime: createdDatetime,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'originReversedGeocoded';
+        originReversedGeocoded.build();
+        _$failedField = 'destinationReversedGeocoded';
+        destinationReversedGeocoded.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'PassengersHailingRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

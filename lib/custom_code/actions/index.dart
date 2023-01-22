@@ -1,1 +1,1 @@
-export 'delete_uploaded_images.dart' show deleteUploadedImages;
+export 'reverse_geocode.dart' show reverseGeocode;

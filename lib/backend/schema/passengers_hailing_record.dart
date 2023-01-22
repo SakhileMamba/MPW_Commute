@@ -11,22 +11,19 @@ abstract class PassengersHailingRecord
   static Serializer<PassengersHailingRecord> get serializer =>
       _$passengersHailingRecordSerializer;
 
-  String? get origin;
-
-  String? get destination;
-
   @BuiltValueField(wireName: 'departure_datetime')
   DateTime? get departureDatetime;
-
-  @BuiltValueField(wireName: 'origin_address')
-  String? get originAddress;
-
-  @BuiltValueField(wireName: 'destination_address')
-  String? get destinationAddress;
 
   DocumentReference? get hailingPassenger;
 
   bool? get archived;
+
+  LatlngReverseGeocodingStruct get originReversedGeocoded;
+
+  LatlngReverseGeocodingStruct get destinationReversedGeocoded;
+
+  @BuiltValueField(wireName: 'created_datetime')
+  DateTime? get createdDatetime;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -34,11 +31,9 @@ abstract class PassengersHailingRecord
 
   static void _initializeBuilder(PassengersHailingRecordBuilder builder) =>
       builder
-        ..origin = ''
-        ..destination = ''
-        ..originAddress = ''
-        ..destinationAddress = ''
-        ..archived = false;
+        ..archived = false
+        ..originReversedGeocoded = LatlngReverseGeocodingStructBuilder()
+        ..destinationReversedGeocoded = LatlngReverseGeocodingStructBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('passengers_hailing');
@@ -64,27 +59,33 @@ abstract class PassengersHailingRecord
 }
 
 Map<String, dynamic> createPassengersHailingRecordData({
-  String? origin,
-  String? destination,
   DateTime? departureDatetime,
-  String? originAddress,
-  String? destinationAddress,
   DocumentReference? hailingPassenger,
   bool? archived,
+  LatlngReverseGeocodingStruct? originReversedGeocoded,
+  LatlngReverseGeocodingStruct? destinationReversedGeocoded,
+  DateTime? createdDatetime,
 }) {
   final firestoreData = serializers.toFirestore(
     PassengersHailingRecord.serializer,
     PassengersHailingRecord(
       (p) => p
-        ..origin = origin
-        ..destination = destination
         ..departureDatetime = departureDatetime
-        ..originAddress = originAddress
-        ..destinationAddress = destinationAddress
         ..hailingPassenger = hailingPassenger
-        ..archived = archived,
+        ..archived = archived
+        ..originReversedGeocoded = LatlngReverseGeocodingStructBuilder()
+        ..destinationReversedGeocoded = LatlngReverseGeocodingStructBuilder()
+        ..createdDatetime = createdDatetime,
     ),
   );
+
+  // Handle nested data for "originReversedGeocoded" field.
+  addLatlngReverseGeocodingStructData(
+      firestoreData, originReversedGeocoded, 'originReversedGeocoded');
+
+  // Handle nested data for "destinationReversedGeocoded" field.
+  addLatlngReverseGeocodingStructData(firestoreData,
+      destinationReversedGeocoded, 'destinationReversedGeocoded');
 
   return firestoreData;
 }

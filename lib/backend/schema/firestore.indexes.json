@@ -1,19 +1,15 @@
 {
   "indexes": [
     {
-      "collectionGroup": "commutes",
+      "collectionGroup": "announcements",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "driver",
-          "order": "ASCENDING"
-        },
         {
           "fieldPath": "archived",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "departure_datetime",
+          "fieldPath": "created_time",
           "order": "DESCENDING"
         }
       ]
@@ -63,14 +59,6 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "origin",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "destination",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "archived",
           "order": "ASCENDING"
         },
@@ -93,11 +81,21 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "origin",
+          "fieldPath": "archived",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "destination",
+          "fieldPath": "departure_datetime",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "commutes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "driver",
           "order": "ASCENDING"
         },
         {

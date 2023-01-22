@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
+
 import '../../auth/firebase_user_provider.dart';
 import '../../backend/push_notifications/push_notifications_handler.dart'
     show PushNotificationsHandler;
@@ -74,197 +75,266 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) => appStateNotifier.loggedIn
-          ? NavBarPage()
-          : PhoneAuthenticationPageWidget(),
+          ? CheckSetupWidget()
+          : PhoneAuthenticationWidget(),
       navigatorBuilder: (_, __, child) => DynamicLinksHandler(child: child),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? NavBarPage()
-              : PhoneAuthenticationPageWidget(),
+              ? CheckSetupWidget()
+              : PhoneAuthenticationWidget(),
           routes: [
             FFRoute(
-              name: 'phone_authentication_page',
-              path: 'phoneAuthenticationPage',
-              builder: (context, params) => PhoneAuthenticationPageWidget(),
+              name: 'phoneAuthentication',
+              path: 'phoneAuthentication',
+              builder: (context, params) => PhoneAuthenticationWidget(
+                referrerRef: params.getParam('referrerRef',
+                    ParamType.DocumentReference, false, ['users']),
+              ),
             ),
             FFRoute(
-              name: 'phone_confirmation_page',
-              path: 'phoneConfirmationPage',
-              builder: (context, params) => PhoneConfirmationPageWidget(),
+              name: 'phoneConfirmation',
+              path: 'phoneConfirmation',
+              builder: (context, params) => PhoneConfirmationWidget(),
             ),
             FFRoute(
-              name: 'browse_drivers_page',
-              path: 'browseDriversPage',
+              name: 'checkSetup',
+              path: 'checkSetup',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'browse_drivers_page')
-                  : BrowseDriversPageWidget(),
+              builder: (context, params) => CheckSetupWidget(),
             ),
             FFRoute(
-              name: 'browse_passengers_page',
-              path: 'browsePassengersPage',
+              name: 'drivers',
+              path: 'drivers',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'browse_passengers_page')
-                  : BrowsePassengersPageWidget(),
+              builder: (context, params) => DriversWidget(),
             ),
             FFRoute(
-              name: 'manage_commutes_driver_page',
-              path: 'manageCommutesDriverPage',
+              name: 'passengers',
+              path: 'passengers',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'manage_commutes_driver_page')
-                  : ManageCommutesDriverPageWidget(),
+              builder: (context, params) => PassengersWidget(),
             ),
             FFRoute(
-              name: 'manage_commutes_passenger_page',
-              path: 'manageCommutesPassengerPage',
+              name: 'drives',
+              path: 'drives',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'manage_commutes_passenger_page')
-                  : ManageCommutesPassengerPageWidget(),
+              builder: (context, params) => DrivesWidget(),
             ),
             FFRoute(
-              name: 'account_page',
-              path: 'accountPage',
+              name: 'seats',
+              path: 'seats',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'account_page')
-                  : AccountPageWidget(),
+              builder: (context, params) => SeatsWidget(),
             ),
             FFRoute(
-              name: 'browse_drivers_details_page',
-              path: 'browseDriversDetailsPage',
+              name: 'account',
+              path: 'account',
+              requireAuth: true,
+              builder: (context, params) => AccountWidget(),
+            ),
+            FFRoute(
+              name: 'driveDetails',
+              path: 'driveDetails',
               requireAuth: true,
               asyncParams: {
-                'commuteDoc': getDoc('commutes', CommutesRecord.serializer),
-                'driverDoc': getDoc('users', UsersRecord.serializer),
+                'commuteDoc': getDoc(['commutes'], CommutesRecord.serializer),
+                'driverDoc': getDoc(['users'], UsersRecord.serializer),
               },
-              builder: (context, params) => BrowseDriversDetailsPageWidget(
+              builder: (context, params) => DriveDetailsWidget(
                 commuteDoc: params.getParam('commuteDoc', ParamType.Document),
                 driverDoc: params.getParam('driverDoc', ParamType.Document),
               ),
             ),
             FFRoute(
-              name: 'government_id_update_Page',
-              path: 'governmentIdUpdatePage',
+              name: 'vehicles',
+              path: 'vehicles',
               requireAuth: true,
-              builder: (context, params) => GovernmentIdUpdatePageWidget(),
+              builder: (context, params) => VehiclesWidget(),
             ),
             FFRoute(
-              name: 'personal_information_update_page',
-              path: 'personalInformationUpdatePage',
+              name: 'governmentId',
+              path: 'governmentId',
               requireAuth: true,
-              builder: (context, params) =>
-                  PersonalInformationUpdatePageWidget(),
+              builder: (context, params) => GovernmentIdWidget(),
             ),
             FFRoute(
-              name: 'list_vehicles_page',
-              path: 'listVehiclesPage',
+              name: 'profilePicture',
+              path: 'profilePicture',
               requireAuth: true,
-              builder: (context, params) => ListVehiclesPageWidget(),
+              builder: (context, params) => ProfilePictureWidget(),
             ),
             FFRoute(
-              name: 'filter_commutes_page',
-              path: 'filterCommutesPage',
+              name: 'filterCommutes',
+              path: 'filterCommutes',
               requireAuth: true,
-              builder: (context, params) => FilterCommutesPageWidget(),
+              builder: (context, params) => FilterCommutesWidget(),
             ),
             FFRoute(
-              name: 'create_commute_page',
-              path: 'createCommutePage',
+              name: 'personalInformation',
+              path: 'personalInformation',
               requireAuth: true,
-              builder: (context, params) => CreateCommutePageWidget(),
+              builder: (context, params) => PersonalInformationWidget(),
             ),
             FFRoute(
-              name: 'add_vehicle_page',
-              path: 'addVehiclePage',
+              name: 'addVehicle',
+              path: 'addVehicle',
               requireAuth: true,
-              builder: (context, params) => AddVehiclePageWidget(),
+              builder: (context, params) => AddVehicleWidget(),
             ),
             FFRoute(
-              name: 'subscriptions_page',
-              path: 'subscriptionsPage',
+              name: 'driversLicense',
+              path: 'driversLicense',
               requireAuth: true,
-              builder: (context, params) => SubscriptionsPageWidget(),
+              builder: (context, params) => DriversLicenseWidget(),
             ),
             FFRoute(
-              name: 'profile_picture_update_Page',
-              path: 'profilePictureUpdatePage',
+              name: 'subscription',
+              path: 'subscription',
               requireAuth: true,
-              builder: (context, params) => ProfilePictureUpdatePageWidget(),
+              builder: (context, params) => SubscriptionWidget(),
             ),
             FFRoute(
-              name: 'drivers_license_update_page',
-              path: 'driversLicenseUpdatePage',
+              name: 'approveDrivers',
+              path: 'approveDrivers',
               requireAuth: true,
-              builder: (context, params) => DriversLicenseUpdatePageWidget(),
+              builder: (context, params) => ApproveDriversWidget(),
             ),
             FFRoute(
-              name: 'approve_drivers_page',
-              path: 'approveDriversPage',
+              name: 'approveUsers',
+              path: 'approveUsers',
               requireAuth: true,
-              builder: (context, params) => ApproveDriversPageWidget(),
+              builder: (context, params) => ApproveUsersWidget(),
             ),
             FFRoute(
-              name: 'approve_users_page',
-              path: 'approveUsersPage',
+              name: 'firstName',
+              path: 'firstName',
               requireAuth: true,
-              builder: (context, params) => ApproveUsersPageWidget(),
+              builder: (context, params) => FirstNameWidget(),
             ),
             FFRoute(
-              name: 'update_user_first_name',
-              path: 'updateUserFirstName',
+              name: 'surname',
+              path: 'surname',
               requireAuth: true,
-              builder: (context, params) => UpdateUserFirstNameWidget(),
+              builder: (context, params) => SurnameWidget(),
             ),
             FFRoute(
-              name: 'update_user_surname',
-              path: 'updateUserSurname',
+              name: 'gender',
+              path: 'gender',
               requireAuth: true,
-              builder: (context, params) => UpdateUserSurnameWidget(),
+              builder: (context, params) => GenderWidget(),
             ),
             FFRoute(
-              name: 'success_lottie',
+              name: 'birthdate',
+              path: 'birthdate',
+              requireAuth: true,
+              builder: (context, params) => BirthdateWidget(),
+            ),
+            FFRoute(
+              name: 'successLottie',
               path: 'successLottie',
               requireAuth: true,
               builder: (context, params) => SuccessLottieWidget(),
             ),
             FFRoute(
-              name: 'propose_passenger_pickup_page',
-              path: 'proposePassengerPickupPage',
+              name: 'beginRequest',
+              path: 'beginRequest',
               requireAuth: true,
-              asyncParams: {
-                'passengerHail': getDoc(
-                    'passengers_hailing', PassengersHailingRecord.serializer),
-              },
-              builder: (context, params) => ProposePassengerPickupPageWidget(
-                passengerHail:
-                    params.getParam('passengerHail', ParamType.Document),
-              ),
+              builder: (context, params) => BeginRequestWidget(),
             ),
             FFRoute(
-              name: 'create_passenger_seat_hail_page',
-              path: 'createPassengerSeatHailPage',
-              requireAuth: true,
-              builder: (context, params) => CreatePassengerSeatHailPageWidget(),
-            ),
-            FFRoute(
-              name: 'browse_passengers_details_page',
-              path: 'browsePassengersDetailsPage',
+              name: 'driverRequestDetails',
+              path: 'driverRequestDetails',
               requireAuth: true,
               asyncParams: {
                 'hailingDoc': getDoc(
-                    'passengers_hailing', PassengersHailingRecord.serializer),
-                'passenger': getDoc('users', UsersRecord.serializer),
+                    ['passengers_hailing'], PassengersHailingRecord.serializer),
+                'passenger': getDoc(['users'], UsersRecord.serializer),
               },
-              builder: (context, params) => BrowsePassengersDetailsPageWidget(
+              builder: (context, params) => DriverRequestDetailsWidget(
                 hailingDoc: params.getParam('hailingDoc', ParamType.Document),
                 passenger: params.getParam('passenger', ParamType.Document),
               ),
+            ),
+            FFRoute(
+              name: 'requestType',
+              path: 'requestType',
+              requireAuth: true,
+              builder: (context, params) => RequestTypeWidget(),
+            ),
+            FFRoute(
+              name: 'originType',
+              path: 'originType',
+              requireAuth: true,
+              builder: (context, params) => OriginTypeWidget(),
+            ),
+            FFRoute(
+              name: 'origin',
+              path: 'origin',
+              requireAuth: true,
+              builder: (context, params) => OriginWidget(),
+            ),
+            FFRoute(
+              name: 'destination',
+              path: 'destination',
+              requireAuth: true,
+              builder: (context, params) => DestinationWidget(),
+            ),
+            FFRoute(
+              name: 'departureDatetime',
+              path: 'departureDatetime',
+              requireAuth: true,
+              builder: (context, params) => DepartureDatetimeWidget(),
+            ),
+            FFRoute(
+              name: 'availableSeats',
+              path: 'availableSeats',
+              requireAuth: true,
+              builder: (context, params) => AvailableSeatsWidget(),
+            ),
+            FFRoute(
+              name: 'chooseVehicle',
+              path: 'chooseVehicle',
+              requireAuth: true,
+              builder: (context, params) => ChooseVehicleWidget(),
+            ),
+            FFRoute(
+              name: 'price',
+              path: 'price',
+              requireAuth: true,
+              builder: (context, params) => PriceWidget(),
+            ),
+            FFRoute(
+              name: 'requestConfirmation',
+              path: 'requestConfirmation',
+              requireAuth: true,
+              builder: (context, params) => RequestConfirmationWidget(),
+            ),
+            FFRoute(
+              name: 'announcements',
+              path: 'announcements',
+              requireAuth: true,
+              builder: (context, params) => AnnouncementsWidget(),
+            ),
+            FFRoute(
+              name: 'createAnnouncement',
+              path: 'createAnnouncement',
+              requireAuth: true,
+              builder: (context, params) => CreateAnnouncementWidget(),
+            ),
+            FFRoute(
+              name: 'referFriend',
+              path: 'referFriend',
+              requireAuth: true,
+              builder: (context, params) => ReferFriendWidget(),
+            ),
+            FFRoute(
+              name: 'checkSetup0',
+              path: 'checkSetup0',
+              requireAuth: true,
+              builder: (context, params) => CheckSetup0Widget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -377,7 +447,7 @@ class FFParameters {
     String paramName,
     ParamType type, [
     bool isList = false,
-    String? collectionName,
+    List<String>? collectionNamePath,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -391,7 +461,7 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionName);
+    return deserializeParam<T>(param, type, isList, collectionNamePath);
   }
 }
 
@@ -424,7 +494,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/phoneAuthenticationPage';
+            return '/phoneAuthentication';
           }
           return null;
         },
@@ -440,8 +510,8 @@ class FFRoute {
               ? Container(
                   color: FlutterFlowTheme.of(context).primaryColor,
                   child: Image.asset(
-                    'assets/images/Commute_2160px_logo.png',
-                    fit: BoxFit.scaleDown,
+                    'assets/images/Commute_Logo_google_play_512x512_black.png',
+                    fit: BoxFit.fitWidth,
                   ),
                 )
               : PushNotificationsHandler(child: page);

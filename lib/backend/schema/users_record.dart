@@ -44,9 +44,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'birth_date')
   DateTime? get birthDate;
 
-  @BuiltValueField(wireName: 'driver_license_number')
-  String? get driverLicenseNumber;
-
   @BuiltValueField(wireName: 'driver_license_photo_path')
   String? get driverLicensePhotoPath;
 
@@ -58,14 +55,17 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   bool? get admin;
 
-  @BuiltValueField(wireName: 'referrers_code')
-  String? get referrersCode;
-
   @BuiltValueField(wireName: 'account_verification_sent')
   bool? get accountVerificationSent;
 
   @BuiltValueField(wireName: 'license_verification_sent')
   bool? get licenseVerificationSent;
+
+  @BuiltValueField(wireName: 'referrer_ref')
+  DocumentReference? get referrerRef;
+
+  @BuiltValueField(wireName: 'users_referred_list')
+  BuiltList<DocumentReference>? get usersReferredList;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -83,14 +83,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..verifiedUser = false
     ..gender = ''
     ..rating = 0.0
-    ..driverLicenseNumber = ''
     ..driverLicensePhotoPath = ''
     ..verifiedDriver = false
     ..nationalIDVerified = false
     ..admin = false
-    ..referrersCode = ''
     ..accountVerificationSent = false
-    ..licenseVerificationSent = false;
+    ..licenseVerificationSent = false
+    ..usersReferredList = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -127,14 +126,13 @@ Map<String, dynamic> createUsersRecordData({
   String? gender,
   double? rating,
   DateTime? birthDate,
-  String? driverLicenseNumber,
   String? driverLicensePhotoPath,
   bool? verifiedDriver,
   bool? nationalIDVerified,
   bool? admin,
-  String? referrersCode,
   bool? accountVerificationSent,
   bool? licenseVerificationSent,
+  DocumentReference? referrerRef,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -153,14 +151,14 @@ Map<String, dynamic> createUsersRecordData({
         ..gender = gender
         ..rating = rating
         ..birthDate = birthDate
-        ..driverLicenseNumber = driverLicenseNumber
         ..driverLicensePhotoPath = driverLicensePhotoPath
         ..verifiedDriver = verifiedDriver
         ..nationalIDVerified = nationalIDVerified
         ..admin = admin
-        ..referrersCode = referrersCode
         ..accountVerificationSent = accountVerificationSent
-        ..licenseVerificationSent = licenseVerificationSent,
+        ..licenseVerificationSent = licenseVerificationSent
+        ..referrerRef = referrerRef
+        ..usersReferredList = null,
     ),
   );
 
