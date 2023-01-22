@@ -19,22 +19,15 @@ class _$CommutesRecordSerializer
   @override
   Iterable<Object?> serialize(Serializers serializers, CommutesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'originReversedGeocoded',
+      serializers.serialize(object.originReversedGeocoded,
+          specifiedType: const FullType(LatlngReverseGeocodingStruct)),
+      'destinationReversedGeocoded',
+      serializers.serialize(object.destinationReversedGeocoded,
+          specifiedType: const FullType(LatlngReverseGeocodingStruct)),
+    ];
     Object? value;
-    value = object.origin;
-    if (value != null) {
-      result
-        ..add('origin')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.destination;
-    if (value != null) {
-      result
-        ..add('destination')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.vehicle;
     if (value != null) {
       result
@@ -85,20 +78,6 @@ class _$CommutesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.originAddress;
-    if (value != null) {
-      result
-        ..add('origin_address')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.destinationAddress;
-    if (value != null) {
-      result
-        ..add('destination_address')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.archived;
     if (value != null) {
       result
@@ -115,6 +94,13 @@ class _$CommutesRecordSerializer
               const FullType(
                   DocumentReference, const [const FullType.nullable(Object)])
             ])));
+    }
+    value = object.createdDatetime;
+    if (value != null) {
+      result
+        ..add('created_datetime')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -139,14 +125,6 @@ class _$CommutesRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'origin':
-          result.origin = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'destination':
-          result.destination = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'vehicle':
           result.vehicle = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -179,14 +157,6 @@ class _$CommutesRecordSerializer
           result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'origin_address':
-          result.originAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'destination_address':
-          result.destinationAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'archived':
           result.archived = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -197,6 +167,21 @@ class _$CommutesRecordSerializer
                 const FullType(
                     DocumentReference, const [const FullType.nullable(Object)])
               ]))! as BuiltList<Object?>);
+          break;
+        case 'originReversedGeocoded':
+          result.originReversedGeocoded.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(LatlngReverseGeocodingStruct))!
+              as LatlngReverseGeocodingStruct);
+          break;
+        case 'destinationReversedGeocoded':
+          result.destinationReversedGeocoded.replace(serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(LatlngReverseGeocodingStruct))!
+              as LatlngReverseGeocodingStruct);
+          break;
+        case 'created_datetime':
+          result.createdDatetime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -213,10 +198,6 @@ class _$CommutesRecordSerializer
 
 class _$CommutesRecord extends CommutesRecord {
   @override
-  final String? origin;
-  @override
-  final String? destination;
-  @override
   final DocumentReference<Object?>? vehicle;
   @override
   final int? availablePassengerSeats;
@@ -231,13 +212,15 @@ class _$CommutesRecord extends CommutesRecord {
   @override
   final String? currency;
   @override
-  final String? originAddress;
-  @override
-  final String? destinationAddress;
-  @override
   final bool? archived;
   @override
   final BuiltList<DocumentReference<Object?>>? applicantList;
+  @override
+  final LatlngReverseGeocodingStruct originReversedGeocoded;
+  @override
+  final LatlngReverseGeocodingStruct destinationReversedGeocoded;
+  @override
+  final DateTime? createdDatetime;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -245,21 +228,25 @@ class _$CommutesRecord extends CommutesRecord {
       (new CommutesRecordBuilder()..update(updates))._build();
 
   _$CommutesRecord._(
-      {this.origin,
-      this.destination,
-      this.vehicle,
+      {this.vehicle,
       this.availablePassengerSeats,
       this.pricePerSeat,
       this.driver,
       this.departureDatetime,
       this.driversRating,
       this.currency,
-      this.originAddress,
-      this.destinationAddress,
       this.archived,
       this.applicantList,
+      required this.originReversedGeocoded,
+      required this.destinationReversedGeocoded,
+      this.createdDatetime,
       this.ffRef})
-      : super._();
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        originReversedGeocoded, r'CommutesRecord', 'originReversedGeocoded');
+    BuiltValueNullFieldError.checkNotNull(destinationReversedGeocoded,
+        r'CommutesRecord', 'destinationReversedGeocoded');
+  }
 
   @override
   CommutesRecord rebuild(void Function(CommutesRecordBuilder) updates) =>
@@ -273,8 +260,6 @@ class _$CommutesRecord extends CommutesRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CommutesRecord &&
-        origin == other.origin &&
-        destination == other.destination &&
         vehicle == other.vehicle &&
         availablePassengerSeats == other.availablePassengerSeats &&
         pricePerSeat == other.pricePerSeat &&
@@ -282,10 +267,11 @@ class _$CommutesRecord extends CommutesRecord {
         departureDatetime == other.departureDatetime &&
         driversRating == other.driversRating &&
         currency == other.currency &&
-        originAddress == other.originAddress &&
-        destinationAddress == other.destinationAddress &&
         archived == other.archived &&
         applicantList == other.applicantList &&
+        originReversedGeocoded == other.originReversedGeocoded &&
+        destinationReversedGeocoded == other.destinationReversedGeocoded &&
+        createdDatetime == other.createdDatetime &&
         ffRef == other.ffRef;
   }
 
@@ -303,28 +289,25 @@ class _$CommutesRecord extends CommutesRecord {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, origin.hashCode),
-                                                        destination.hashCode),
-                                                    vehicle.hashCode),
-                                                availablePassengerSeats
-                                                    .hashCode),
-                                            pricePerSeat.hashCode),
-                                        driver.hashCode),
-                                    departureDatetime.hashCode),
-                                driversRating.hashCode),
-                            currency.hashCode),
-                        originAddress.hashCode),
-                    destinationAddress.hashCode),
-                archived.hashCode),
-            applicantList.hashCode),
+                                                    $jc(0, vehicle.hashCode),
+                                                    availablePassengerSeats
+                                                        .hashCode),
+                                                pricePerSeat.hashCode),
+                                            driver.hashCode),
+                                        departureDatetime.hashCode),
+                                    driversRating.hashCode),
+                                currency.hashCode),
+                            archived.hashCode),
+                        applicantList.hashCode),
+                    originReversedGeocoded.hashCode),
+                destinationReversedGeocoded.hashCode),
+            createdDatetime.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'CommutesRecord')
-          ..add('origin', origin)
-          ..add('destination', destination)
           ..add('vehicle', vehicle)
           ..add('availablePassengerSeats', availablePassengerSeats)
           ..add('pricePerSeat', pricePerSeat)
@@ -332,10 +315,11 @@ class _$CommutesRecord extends CommutesRecord {
           ..add('departureDatetime', departureDatetime)
           ..add('driversRating', driversRating)
           ..add('currency', currency)
-          ..add('originAddress', originAddress)
-          ..add('destinationAddress', destinationAddress)
           ..add('archived', archived)
           ..add('applicantList', applicantList)
+          ..add('originReversedGeocoded', originReversedGeocoded)
+          ..add('destinationReversedGeocoded', destinationReversedGeocoded)
+          ..add('createdDatetime', createdDatetime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -344,14 +328,6 @@ class _$CommutesRecord extends CommutesRecord {
 class CommutesRecordBuilder
     implements Builder<CommutesRecord, CommutesRecordBuilder> {
   _$CommutesRecord? _$v;
-
-  String? _origin;
-  String? get origin => _$this._origin;
-  set origin(String? origin) => _$this._origin = origin;
-
-  String? _destination;
-  String? get destination => _$this._destination;
-  set destination(String? destination) => _$this._destination = destination;
 
   DocumentReference<Object?>? _vehicle;
   DocumentReference<Object?>? get vehicle => _$this._vehicle;
@@ -384,16 +360,6 @@ class CommutesRecordBuilder
   String? get currency => _$this._currency;
   set currency(String? currency) => _$this._currency = currency;
 
-  String? _originAddress;
-  String? get originAddress => _$this._originAddress;
-  set originAddress(String? originAddress) =>
-      _$this._originAddress = originAddress;
-
-  String? _destinationAddress;
-  String? get destinationAddress => _$this._destinationAddress;
-  set destinationAddress(String? destinationAddress) =>
-      _$this._destinationAddress = destinationAddress;
-
   bool? _archived;
   bool? get archived => _$this._archived;
   set archived(bool? archived) => _$this._archived = archived;
@@ -403,6 +369,27 @@ class CommutesRecordBuilder
       _$this._applicantList ??= new ListBuilder<DocumentReference<Object?>>();
   set applicantList(ListBuilder<DocumentReference<Object?>>? applicantList) =>
       _$this._applicantList = applicantList;
+
+  LatlngReverseGeocodingStructBuilder? _originReversedGeocoded;
+  LatlngReverseGeocodingStructBuilder get originReversedGeocoded =>
+      _$this._originReversedGeocoded ??=
+          new LatlngReverseGeocodingStructBuilder();
+  set originReversedGeocoded(
+          LatlngReverseGeocodingStructBuilder? originReversedGeocoded) =>
+      _$this._originReversedGeocoded = originReversedGeocoded;
+
+  LatlngReverseGeocodingStructBuilder? _destinationReversedGeocoded;
+  LatlngReverseGeocodingStructBuilder get destinationReversedGeocoded =>
+      _$this._destinationReversedGeocoded ??=
+          new LatlngReverseGeocodingStructBuilder();
+  set destinationReversedGeocoded(
+          LatlngReverseGeocodingStructBuilder? destinationReversedGeocoded) =>
+      _$this._destinationReversedGeocoded = destinationReversedGeocoded;
+
+  DateTime? _createdDatetime;
+  DateTime? get createdDatetime => _$this._createdDatetime;
+  set createdDatetime(DateTime? createdDatetime) =>
+      _$this._createdDatetime = createdDatetime;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -415,8 +402,6 @@ class CommutesRecordBuilder
   CommutesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _origin = $v.origin;
-      _destination = $v.destination;
       _vehicle = $v.vehicle;
       _availablePassengerSeats = $v.availablePassengerSeats;
       _pricePerSeat = $v.pricePerSeat;
@@ -424,10 +409,11 @@ class CommutesRecordBuilder
       _departureDatetime = $v.departureDatetime;
       _driversRating = $v.driversRating;
       _currency = $v.currency;
-      _originAddress = $v.originAddress;
-      _destinationAddress = $v.destinationAddress;
       _archived = $v.archived;
       _applicantList = $v.applicantList?.toBuilder();
+      _originReversedGeocoded = $v.originReversedGeocoded.toBuilder();
+      _destinationReversedGeocoded = $v.destinationReversedGeocoded.toBuilder();
+      _createdDatetime = $v.createdDatetime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -453,8 +439,6 @@ class CommutesRecordBuilder
     try {
       _$result = _$v ??
           new _$CommutesRecord._(
-              origin: origin,
-              destination: destination,
               vehicle: vehicle,
               availablePassengerSeats: availablePassengerSeats,
               pricePerSeat: pricePerSeat,
@@ -462,16 +446,21 @@ class CommutesRecordBuilder
               departureDatetime: departureDatetime,
               driversRating: driversRating,
               currency: currency,
-              originAddress: originAddress,
-              destinationAddress: destinationAddress,
               archived: archived,
               applicantList: _applicantList?.build(),
+              originReversedGeocoded: originReversedGeocoded.build(),
+              destinationReversedGeocoded: destinationReversedGeocoded.build(),
+              createdDatetime: createdDatetime,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'applicantList';
         _applicantList?.build();
+        _$failedField = 'originReversedGeocoded';
+        originReversedGeocoded.build();
+        _$failedField = 'destinationReversedGeocoded';
+        destinationReversedGeocoded.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CommutesRecord', _$failedField, e.toString());

@@ -11,9 +11,12 @@ import 'driver_verification_requests_record.dart';
 import 'app_constants_record.dart';
 import 'passengers_hailing_record.dart';
 import 'pickup_requests_record.dart';
+import 'announcements_record.dart';
+import 'tutorials_record.dart';
 
 import 'index.dart';
 
+export '../algolia/algolia_manager.dart';
 export 'index.dart';
 
 part 'serializers.g.dart';
@@ -31,6 +34,9 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   AppConstantsRecord,
   PassengersHailingRecord,
   PickupRequestsRecord,
+  AnnouncementsRecord,
+  TutorialsRecord,
+  LatlngReverseGeocodingStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

@@ -4,7 +4,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
-const _kDynamicLinksUrl = 'https://mpwcommute.page.link';
+const _kDynamicLinksUrl = 'https://commuteridesharing.page.link';
 const _kAppId = 'online.mpwstore.mpwcommute';
 
 Future<String> generateCurrentPageLink(

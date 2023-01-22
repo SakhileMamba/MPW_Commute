@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Commute</string>
+	<string>Commute Ridesharing</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -55,10 +55,14 @@
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>In order to search nearby, this app requires access to your current location.</string>
 	<key>NSCameraUsageDescription</key>
-      <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+    <string>This app requires permission to access the camera to upload an image of a vehicle, government-issued ID, driver's license, or profile picture,</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>In order to record audio for video, this app requires permission to access the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-      <string>In order to upload media, this app requires permission to access the photo library.</string>
+    <string>This app requires permission to access the photo library to upload an image of a vehicle, government-issued ID, driver's license, or profile picture,</string>
 
     <key>UIBackgroundModes</key>
     <array>

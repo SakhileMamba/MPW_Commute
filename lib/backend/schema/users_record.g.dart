@@ -110,13 +110,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
-    value = object.driverLicenseNumber;
-    if (value != null) {
-      result
-        ..add('driver_license_number')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.driverLicensePhotoPath;
     if (value != null) {
       result
@@ -145,13 +138,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.referrersCode;
-    if (value != null) {
-      result
-        ..add('referrers_code')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.accountVerificationSent;
     if (value != null) {
       result
@@ -165,6 +151,24 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add('license_verification_sent')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.referrerRef;
+    if (value != null) {
+      result
+        ..add('referrer_ref')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
+    value = object.usersReferredList;
+    if (value != null) {
+      result
+        ..add('users_referred_list')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
     }
     value = object.ffRef;
     if (value != null) {
@@ -240,10 +244,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.birthDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
-        case 'driver_license_number':
-          result.driverLicenseNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'driver_license_photo_path':
           result.driverLicensePhotoPath = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -260,10 +260,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.admin = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'referrers_code':
-          result.referrersCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'account_verification_sent':
           result.accountVerificationSent = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -271,6 +267,19 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         case 'license_verification_sent':
           result.licenseVerificationSent = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'referrer_ref':
+          result.referrerRef = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
+        case 'users_referred_list':
+          result.usersReferredList.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType.nullable(Object)])
+              ]))! as BuiltList<Object?>);
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -313,8 +322,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final DateTime? birthDate;
   @override
-  final String? driverLicenseNumber;
-  @override
   final String? driverLicensePhotoPath;
   @override
   final bool? verifiedDriver;
@@ -323,11 +330,13 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? admin;
   @override
-  final String? referrersCode;
-  @override
   final bool? accountVerificationSent;
   @override
   final bool? licenseVerificationSent;
+  @override
+  final DocumentReference<Object?>? referrerRef;
+  @override
+  final BuiltList<DocumentReference<Object?>>? usersReferredList;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -348,14 +357,14 @@ class _$UsersRecord extends UsersRecord {
       this.gender,
       this.rating,
       this.birthDate,
-      this.driverLicenseNumber,
       this.driverLicensePhotoPath,
       this.verifiedDriver,
       this.nationalIDVerified,
       this.admin,
-      this.referrersCode,
       this.accountVerificationSent,
       this.licenseVerificationSent,
+      this.referrerRef,
+      this.usersReferredList,
       this.ffRef})
       : super._();
 
@@ -383,14 +392,14 @@ class _$UsersRecord extends UsersRecord {
         gender == other.gender &&
         rating == other.rating &&
         birthDate == other.birthDate &&
-        driverLicenseNumber == other.driverLicenseNumber &&
         driverLicensePhotoPath == other.driverLicensePhotoPath &&
         verifiedDriver == other.verifiedDriver &&
         nationalIDVerified == other.nationalIDVerified &&
         admin == other.admin &&
-        referrersCode == other.referrersCode &&
         accountVerificationSent == other.accountVerificationSent &&
         licenseVerificationSent == other.licenseVerificationSent &&
+        referrerRef == other.referrerRef &&
+        usersReferredList == other.usersReferredList &&
         ffRef == other.ffRef;
   }
 
@@ -425,14 +434,14 @@ class _$UsersRecord extends UsersRecord {
                                                     gender.hashCode),
                                                 rating.hashCode),
                                             birthDate.hashCode),
-                                        driverLicenseNumber.hashCode),
-                                    driverLicensePhotoPath.hashCode),
-                                verifiedDriver.hashCode),
-                            nationalIDVerified.hashCode),
-                        admin.hashCode),
-                    referrersCode.hashCode),
-                accountVerificationSent.hashCode),
-            licenseVerificationSent.hashCode),
+                                        driverLicensePhotoPath.hashCode),
+                                    verifiedDriver.hashCode),
+                                nationalIDVerified.hashCode),
+                            admin.hashCode),
+                        accountVerificationSent.hashCode),
+                    licenseVerificationSent.hashCode),
+                referrerRef.hashCode),
+            usersReferredList.hashCode),
         ffRef.hashCode));
   }
 
@@ -452,14 +461,14 @@ class _$UsersRecord extends UsersRecord {
           ..add('gender', gender)
           ..add('rating', rating)
           ..add('birthDate', birthDate)
-          ..add('driverLicenseNumber', driverLicenseNumber)
           ..add('driverLicensePhotoPath', driverLicensePhotoPath)
           ..add('verifiedDriver', verifiedDriver)
           ..add('nationalIDVerified', nationalIDVerified)
           ..add('admin', admin)
-          ..add('referrersCode', referrersCode)
           ..add('accountVerificationSent', accountVerificationSent)
           ..add('licenseVerificationSent', licenseVerificationSent)
+          ..add('referrerRef', referrerRef)
+          ..add('usersReferredList', usersReferredList)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -522,11 +531,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   DateTime? get birthDate => _$this._birthDate;
   set birthDate(DateTime? birthDate) => _$this._birthDate = birthDate;
 
-  String? _driverLicenseNumber;
-  String? get driverLicenseNumber => _$this._driverLicenseNumber;
-  set driverLicenseNumber(String? driverLicenseNumber) =>
-      _$this._driverLicenseNumber = driverLicenseNumber;
-
   String? _driverLicensePhotoPath;
   String? get driverLicensePhotoPath => _$this._driverLicensePhotoPath;
   set driverLicensePhotoPath(String? driverLicensePhotoPath) =>
@@ -546,11 +550,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   bool? get admin => _$this._admin;
   set admin(bool? admin) => _$this._admin = admin;
 
-  String? _referrersCode;
-  String? get referrersCode => _$this._referrersCode;
-  set referrersCode(String? referrersCode) =>
-      _$this._referrersCode = referrersCode;
-
   bool? _accountVerificationSent;
   bool? get accountVerificationSent => _$this._accountVerificationSent;
   set accountVerificationSent(bool? accountVerificationSent) =>
@@ -560,6 +559,19 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   bool? get licenseVerificationSent => _$this._licenseVerificationSent;
   set licenseVerificationSent(bool? licenseVerificationSent) =>
       _$this._licenseVerificationSent = licenseVerificationSent;
+
+  DocumentReference<Object?>? _referrerRef;
+  DocumentReference<Object?>? get referrerRef => _$this._referrerRef;
+  set referrerRef(DocumentReference<Object?>? referrerRef) =>
+      _$this._referrerRef = referrerRef;
+
+  ListBuilder<DocumentReference<Object?>>? _usersReferredList;
+  ListBuilder<DocumentReference<Object?>> get usersReferredList =>
+      _$this._usersReferredList ??=
+          new ListBuilder<DocumentReference<Object?>>();
+  set usersReferredList(
+          ListBuilder<DocumentReference<Object?>>? usersReferredList) =>
+      _$this._usersReferredList = usersReferredList;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -585,14 +597,14 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _gender = $v.gender;
       _rating = $v.rating;
       _birthDate = $v.birthDate;
-      _driverLicenseNumber = $v.driverLicenseNumber;
       _driverLicensePhotoPath = $v.driverLicensePhotoPath;
       _verifiedDriver = $v.verifiedDriver;
       _nationalIDVerified = $v.nationalIDVerified;
       _admin = $v.admin;
-      _referrersCode = $v.referrersCode;
       _accountVerificationSent = $v.accountVerificationSent;
       _licenseVerificationSent = $v.licenseVerificationSent;
+      _referrerRef = $v.referrerRef;
+      _usersReferredList = $v.usersReferredList?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -614,30 +626,43 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    final _$result = _$v ??
-        new _$UsersRecord._(
-            email: email,
-            displayName: displayName,
-            photoUrl: photoUrl,
-            uid: uid,
-            createdTime: createdTime,
-            phoneNumber: phoneNumber,
-            displaySurname: displaySurname,
-            nationalId: nationalId,
-            nationalIdPhotoUrl: nationalIdPhotoUrl,
-            verifiedUser: verifiedUser,
-            gender: gender,
-            rating: rating,
-            birthDate: birthDate,
-            driverLicenseNumber: driverLicenseNumber,
-            driverLicensePhotoPath: driverLicensePhotoPath,
-            verifiedDriver: verifiedDriver,
-            nationalIDVerified: nationalIDVerified,
-            admin: admin,
-            referrersCode: referrersCode,
-            accountVerificationSent: accountVerificationSent,
-            licenseVerificationSent: licenseVerificationSent,
-            ffRef: ffRef);
+    _$UsersRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$UsersRecord._(
+              email: email,
+              displayName: displayName,
+              photoUrl: photoUrl,
+              uid: uid,
+              createdTime: createdTime,
+              phoneNumber: phoneNumber,
+              displaySurname: displaySurname,
+              nationalId: nationalId,
+              nationalIdPhotoUrl: nationalIdPhotoUrl,
+              verifiedUser: verifiedUser,
+              gender: gender,
+              rating: rating,
+              birthDate: birthDate,
+              driverLicensePhotoPath: driverLicensePhotoPath,
+              verifiedDriver: verifiedDriver,
+              nationalIDVerified: nationalIDVerified,
+              admin: admin,
+              accountVerificationSent: accountVerificationSent,
+              licenseVerificationSent: licenseVerificationSent,
+              referrerRef: referrerRef,
+              usersReferredList: _usersReferredList?.build(),
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'usersReferredList';
+        _usersReferredList?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UsersRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

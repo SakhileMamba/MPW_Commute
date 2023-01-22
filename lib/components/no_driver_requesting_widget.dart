@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class NoDriverRequestingWidget extends StatefulWidget {
   const NoDriverRequestingWidget({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _NoDriverRequestingWidgetState extends State<NoDriverRequestingWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
       child: Column(
@@ -39,7 +42,7 @@ class _NoDriverRequestingWidgetState extends State<NoDriverRequestingWidget> {
             ),
           ),
           Text(
-            'There are no drivers requesting to pick you up at the moment.',
+            'No drivers are proposing to pick you up at the moment.',
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),

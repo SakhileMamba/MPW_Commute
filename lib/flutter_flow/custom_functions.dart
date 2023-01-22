@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -48,6 +49,10 @@ String docRefToString(DocumentReference docRefArg) {
   return theString;
 }
 
+String returnVideoPath(String mediaURL) {
+  return mediaURL;
+}
+
 bool swaziNumberTest(String? phoneNumber) {
   // Add your function code here!
   if (phoneNumber?.substring(0, 4) == "+268")
@@ -63,4 +68,24 @@ int availableSeatsMinusOne(int availableSeats) {
   }
 
   return (availableSeats - 1);
+}
+
+String nullTest(String testString) {
+  if (testString != "null") {
+    return "$testString, ";
+  }
+
+  return "";
+}
+
+String trimCommaEnd(String stringToTrim) {
+  return stringToTrim.substring(0, stringToTrim.length - 2);
+}
+
+String returnImagePath(String mediaURL) {
+  return mediaURL;
+}
+
+DocumentReference returnAppContantsDocRefFromStringID(String stringID) {
+  return FirebaseFirestore.instance.doc('app_constants/$stringID');
 }
