@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'origin_type_model.dart';
+export 'origin_type_model.dart';
 
 class OriginTypeWidget extends StatefulWidget {
   const OriginTypeWidget({Key? key}) : super(key: key);
@@ -17,21 +19,25 @@ class OriginTypeWidget extends StatefulWidget {
 }
 
 class _OriginTypeWidgetState extends State<OriginTypeWidget> {
-  LatLng? currentUserLocationValue;
-  final _unfocusNode = FocusNode();
+  late OriginTypeModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? radioButtonValue;
-  dynamic? currrentDeviceLocation;
+  final _unfocusNode = FocusNode();
+  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => OriginTypeModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'originType'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -108,7 +114,7 @@ class _OriginTypeWidgetState extends State<OriginTypeWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -163,7 +169,7 @@ class _OriginTypeWidgetState extends State<OriginTypeWidget> {
                           'Choose Different Location'
                         ].toList(),
                         onChanged: (val) =>
-                            setState(() => radioButtonValue = val),
+                            setState(() => _model.radioButtonValue = val),
                         optionHeight: 30,
                         textStyle: FlutterFlowTheme.of(context).bodyText2,
                         buttonPosition: RadioButtonPosition.left,
@@ -184,21 +190,47 @@ class _OriginTypeWidgetState extends State<OriginTypeWidget> {
                     currentUserLocationValue = await getCurrentUserLocation(
                         defaultLocation: LatLng(0.0, 0.0));
                     var _shouldSetState = false;
-                    if (radioButtonValue == 'Current Device Location') {
-                      logFirebaseEvent('Button_custom_action');
-                      currrentDeviceLocation = await actions.reverseGeocode(
-                        currentUserLocationValue!,
-                      );
-                      _shouldSetState = true;
-                      logFirebaseEvent('Button_update_local_state');
-                      FFAppState().tempOriginReversed = currrentDeviceLocation!;
-                      FFAppState().tempOriginLatLng = currentUserLocationValue;
-                      logFirebaseEvent('Button_navigate_to');
+                    if (_model.radioButtonValue == 'Current Device Location') {
+                      if (currentUserLocationValue != null) {
+                        logFirebaseEvent('Button_custom_action');
+                        _model.currrentDeviceLocation =
+                            await actions.reverseGeocode(
+                          currentUserLocationValue!,
+                        );
+                        _shouldSetState = true;
+                        logFirebaseEvent('Button_update_app_state');
+                        FFAppState().tempOriginReversed =
+                            _model.currrentDeviceLocation!;
+                        FFAppState().tempOriginLatLng =
+                            currentUserLocationValue;
+                        logFirebaseEvent('Button_navigate_to');
 
-                      context.pushNamed('destination');
+                        context.pushNamed('destination');
 
-                      if (_shouldSetState) setState(() {});
-                      return;
+                        if (_shouldSetState) setState(() {});
+                        return;
+                      } else {
+                        logFirebaseEvent('Button_alert_dialog');
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Alert'),
+                              content: Text(
+                                  'Make sure your device\'s location services are turned on.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Continue'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        if (_shouldSetState) setState(() {});
+                        return;
+                      }
                     } else {
                       logFirebaseEvent('Button_navigate_to');
 

@@ -61,12 +61,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'license_verification_sent')
   bool? get licenseVerificationSent;
 
-  @BuiltValueField(wireName: 'referrer_ref')
-  DocumentReference? get referrerRef;
-
-  @BuiltValueField(wireName: 'users_referred_list')
-  BuiltList<DocumentReference>? get usersReferredList;
-
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -88,8 +82,7 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..nationalIDVerified = false
     ..admin = false
     ..accountVerificationSent = false
-    ..licenseVerificationSent = false
-    ..usersReferredList = ListBuilder();
+    ..licenseVerificationSent = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -132,7 +125,6 @@ Map<String, dynamic> createUsersRecordData({
   bool? admin,
   bool? accountVerificationSent,
   bool? licenseVerificationSent,
-  DocumentReference? referrerRef,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -156,9 +148,7 @@ Map<String, dynamic> createUsersRecordData({
         ..nationalIDVerified = nationalIDVerified
         ..admin = admin
         ..accountVerificationSent = accountVerificationSent
-        ..licenseVerificationSent = licenseVerificationSent
-        ..referrerRef = referrerRef
-        ..usersReferredList = null,
+        ..licenseVerificationSent = licenseVerificationSent,
     ),
   );
 

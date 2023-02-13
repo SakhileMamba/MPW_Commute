@@ -63,6 +63,158 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "originReversedGeocoded.neighborhood",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.locality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_6",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_7",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.country",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_code",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_code_prefix",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_town",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.neighborhood",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.locality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_6",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_7",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.country",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_code",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_code_prefix",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_town",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "departure_datetime",
           "order": "DESCENDING"
         },
@@ -82,6 +234,158 @@
       "fields": [
         {
           "fieldPath": "archived",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.neighborhood",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.locality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.sublocality_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_6",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.administrative_area_level_7",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.country",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_code",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_code_prefix",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "originReversedGeocoded.postal_town",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.neighborhood",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.locality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.sublocality_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_6",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.administrative_area_level_7",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.country",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_code",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_code_prefix",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "destinationReversedGeocoded.postal_town",
           "order": "ASCENDING"
         },
         {

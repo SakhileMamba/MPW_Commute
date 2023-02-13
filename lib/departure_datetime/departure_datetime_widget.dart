@@ -8,6 +8,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'departure_datetime_model.dart';
+export 'departure_datetime_model.dart';
 
 class DepartureDatetimeWidget extends StatefulWidget {
   const DepartureDatetimeWidget({Key? key}) : super(key: key);
@@ -18,13 +20,16 @@ class DepartureDatetimeWidget extends StatefulWidget {
 }
 
 class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
-  DateTime? datePicked;
-  final _unfocusNode = FocusNode();
+  late DepartureDatetimeModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => DepartureDatetimeModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'departureDatetime'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -32,6 +37,8 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -58,7 +65,7 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('DEPARTURE_DATETIME_arrow_back_rounded_IC');
-            logFirebaseEvent('IconButton_update_local_state');
+            logFirebaseEvent('IconButton_update_app_state');
             FFAppState().tempDepartureDateTime = null;
             logFirebaseEvent('IconButton_navigate_back');
             context.pop();
@@ -110,7 +117,7 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -183,22 +190,24 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
 
                             if (_datePickedDate != null &&
                                 _datePickedTime != null) {
-                              setState(
-                                () => datePicked = DateTime(
+                              setState(() {
+                                _model.datePicked = DateTime(
                                   _datePickedDate.year,
                                   _datePickedDate.month,
                                   _datePickedDate.day,
                                   _datePickedTime!.hour,
                                   _datePickedTime.minute,
-                                ),
-                              );
+                                );
+                              });
                             }
                           } else {
                             await DatePicker.showDateTimePicker(
                               context,
                               showTitleActions: true,
                               onConfirm: (date) {
-                                setState(() => datePicked = date);
+                                setState(() {
+                                  _model.datePicked = date;
+                                });
                               },
                               currentTime: getCurrentTimestamp,
                               minTime: getCurrentTimestamp,
@@ -211,9 +220,10 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
                             );
                           }
 
-                          logFirebaseEvent('Container_update_local_state');
+                          logFirebaseEvent('Container_update_app_state');
                           setState(() {
-                            FFAppState().tempDepartureDateTime = datePicked;
+                            FFAppState().tempDepartureDateTime =
+                                _model.datePicked;
                           });
                         },
                         child: Container(

@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'origin_model.dart';
+export 'origin_model.dart';
 
 class OriginWidget extends StatefulWidget {
   const OriginWidget({Key? key}) : super(key: key);
@@ -19,20 +21,24 @@ class OriginWidget extends StatefulWidget {
 }
 
 class _OriginWidgetState extends State<OriginWidget> {
-  dynamic? chosenOriginReversed;
-  var placePickerValue = FFPlace();
-  final _unfocusNode = FocusNode();
+  late OriginModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => OriginModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'origin'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -109,7 +115,7 @@ class _OriginWidgetState extends State<OriginWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -166,7 +172,7 @@ class _OriginWidgetState extends State<OriginWidget> {
                         webGoogleMapsApiKey:
                             'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
                         onSelect: (place) async {
-                          setState(() => placePickerValue = place);
+                          setState(() => _model.placePickerValue = place);
                         },
                         defaultText: 'Select Location',
                         buttonOptions: FFButtonOptions(
@@ -192,15 +198,18 @@ class _OriginWidgetState extends State<OriginWidget> {
                   onPressed: () async {
                     logFirebaseEvent('ORIGIN_PAGE_NEXT_BTN_ON_TAP');
                     var _shouldSetState = false;
-                    if (placePickerValue != null) {
+                    if (_model.placePickerValue != null) {
                       logFirebaseEvent('Button_custom_action');
-                      chosenOriginReversed = await actions.reverseGeocode(
-                        placePickerValue.latLng,
+                      _model.chosenOriginReversed =
+                          await actions.reverseGeocode(
+                        _model.placePickerValue.latLng,
                       );
                       _shouldSetState = true;
-                      logFirebaseEvent('Button_update_local_state');
-                      FFAppState().tempOriginReversed = chosenOriginReversed!;
-                      FFAppState().tempOriginLatLng = placePickerValue.latLng;
+                      logFirebaseEvent('Button_update_app_state');
+                      FFAppState().tempOriginReversed =
+                          _model.chosenOriginReversed!;
+                      FFAppState().tempOriginLatLng =
+                          _model.placePickerValue.latLng;
                       logFirebaseEvent('Button_navigate_to');
 
                       context.pushNamed('destination');

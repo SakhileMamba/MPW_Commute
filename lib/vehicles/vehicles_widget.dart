@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'vehicles_model.dart';
+export 'vehicles_model.dart';
 
 class VehiclesWidget extends StatefulWidget {
   const VehiclesWidget({Key? key}) : super(key: key);
@@ -19,18 +21,24 @@ class VehiclesWidget extends StatefulWidget {
 }
 
 class _VehiclesWidgetState extends State<VehiclesWidget> {
-  final _unfocusNode = FocusNode();
+  late VehiclesModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => VehiclesModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'vehicles'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -43,7 +51,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -52,7 +60,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
           buttonSize: 60,
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: Colors.white,
+            color: FlutterFlowTheme.of(context).primaryColor,
             size: 30,
           ),
           onPressed: () async {
@@ -66,7 +74,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
           'Vehicles',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
               ),
         ),
         actions: [
@@ -77,7 +85,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
             buttonSize: 60,
             icon: Icon(
               Icons.add_rounded,
-              color: FlutterFlowTheme.of(context).primaryBackground,
+              color: FlutterFlowTheme.of(context).primaryColor,
               size: 30,
             ),
             onPressed: () async {
@@ -89,7 +97,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
           ),
         ],
         centerTitle: true,
-        elevation: 2,
+        elevation: 0,
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -123,7 +131,7 @@ class _VehiclesWidgetState extends State<VehiclesWidget> {
                   final listViewVehiclesRecord =
                       listViewVehiclesRecordList[listViewIndex];
                   return Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 16),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [

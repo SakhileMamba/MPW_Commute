@@ -152,24 +152,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.referrerRef;
-    if (value != null) {
-      result
-        ..add('referrer_ref')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
-    }
-    value = object.usersReferredList;
-    if (value != null) {
-      result
-        ..add('users_referred_list')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltList, const [
-              const FullType(
-                  DocumentReference, const [const FullType.nullable(Object)])
-            ])));
-    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -268,19 +250,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.licenseVerificationSent = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
-        case 'referrer_ref':
-          result.referrerRef = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
-          break;
-        case 'users_referred_list':
-          result.usersReferredList.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(
-                    DocumentReference, const [const FullType.nullable(Object)])
-              ]))! as BuiltList<Object?>);
-          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -334,10 +303,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? licenseVerificationSent;
   @override
-  final DocumentReference<Object?>? referrerRef;
-  @override
-  final BuiltList<DocumentReference<Object?>>? usersReferredList;
-  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -363,8 +328,6 @@ class _$UsersRecord extends UsersRecord {
       this.admin,
       this.accountVerificationSent,
       this.licenseVerificationSent,
-      this.referrerRef,
-      this.usersReferredList,
       this.ffRef})
       : super._();
 
@@ -398,8 +361,6 @@ class _$UsersRecord extends UsersRecord {
         admin == other.admin &&
         accountVerificationSent == other.accountVerificationSent &&
         licenseVerificationSent == other.licenseVerificationSent &&
-        referrerRef == other.referrerRef &&
-        usersReferredList == other.usersReferredList &&
         ffRef == other.ffRef;
   }
 
@@ -423,25 +384,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode),
-                                                                                uid.hashCode),
-                                                                            createdTime.hashCode),
-                                                                        phoneNumber.hashCode),
-                                                                    displaySurname.hashCode),
-                                                                nationalId.hashCode),
-                                                            nationalIdPhotoUrl.hashCode),
-                                                        verifiedUser.hashCode),
-                                                    gender.hashCode),
-                                                rating.hashCode),
-                                            birthDate.hashCode),
-                                        driverLicensePhotoPath.hashCode),
-                                    verifiedDriver.hashCode),
-                                nationalIDVerified.hashCode),
-                            admin.hashCode),
-                        accountVerificationSent.hashCode),
-                    licenseVerificationSent.hashCode),
-                referrerRef.hashCode),
-            usersReferredList.hashCode),
+                                                                            $jc($jc(0, email.hashCode),
+                                                                                displayName.hashCode),
+                                                                            photoUrl.hashCode),
+                                                                        uid.hashCode),
+                                                                    createdTime.hashCode),
+                                                                phoneNumber.hashCode),
+                                                            displaySurname.hashCode),
+                                                        nationalId.hashCode),
+                                                    nationalIdPhotoUrl.hashCode),
+                                                verifiedUser.hashCode),
+                                            gender.hashCode),
+                                        rating.hashCode),
+                                    birthDate.hashCode),
+                                driverLicensePhotoPath.hashCode),
+                            verifiedDriver.hashCode),
+                        nationalIDVerified.hashCode),
+                    admin.hashCode),
+                accountVerificationSent.hashCode),
+            licenseVerificationSent.hashCode),
         ffRef.hashCode));
   }
 
@@ -467,8 +428,6 @@ class _$UsersRecord extends UsersRecord {
           ..add('admin', admin)
           ..add('accountVerificationSent', accountVerificationSent)
           ..add('licenseVerificationSent', licenseVerificationSent)
-          ..add('referrerRef', referrerRef)
-          ..add('usersReferredList', usersReferredList)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -560,19 +519,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set licenseVerificationSent(bool? licenseVerificationSent) =>
       _$this._licenseVerificationSent = licenseVerificationSent;
 
-  DocumentReference<Object?>? _referrerRef;
-  DocumentReference<Object?>? get referrerRef => _$this._referrerRef;
-  set referrerRef(DocumentReference<Object?>? referrerRef) =>
-      _$this._referrerRef = referrerRef;
-
-  ListBuilder<DocumentReference<Object?>>? _usersReferredList;
-  ListBuilder<DocumentReference<Object?>> get usersReferredList =>
-      _$this._usersReferredList ??=
-          new ListBuilder<DocumentReference<Object?>>();
-  set usersReferredList(
-          ListBuilder<DocumentReference<Object?>>? usersReferredList) =>
-      _$this._usersReferredList = usersReferredList;
-
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -603,8 +549,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _admin = $v.admin;
       _accountVerificationSent = $v.accountVerificationSent;
       _licenseVerificationSent = $v.licenseVerificationSent;
-      _referrerRef = $v.referrerRef;
-      _usersReferredList = $v.usersReferredList?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -626,43 +570,28 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    _$UsersRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$UsersRecord._(
-              email: email,
-              displayName: displayName,
-              photoUrl: photoUrl,
-              uid: uid,
-              createdTime: createdTime,
-              phoneNumber: phoneNumber,
-              displaySurname: displaySurname,
-              nationalId: nationalId,
-              nationalIdPhotoUrl: nationalIdPhotoUrl,
-              verifiedUser: verifiedUser,
-              gender: gender,
-              rating: rating,
-              birthDate: birthDate,
-              driverLicensePhotoPath: driverLicensePhotoPath,
-              verifiedDriver: verifiedDriver,
-              nationalIDVerified: nationalIDVerified,
-              admin: admin,
-              accountVerificationSent: accountVerificationSent,
-              licenseVerificationSent: licenseVerificationSent,
-              referrerRef: referrerRef,
-              usersReferredList: _usersReferredList?.build(),
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'usersReferredList';
-        _usersReferredList?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'UsersRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$UsersRecord._(
+            email: email,
+            displayName: displayName,
+            photoUrl: photoUrl,
+            uid: uid,
+            createdTime: createdTime,
+            phoneNumber: phoneNumber,
+            displaySurname: displaySurname,
+            nationalId: nationalId,
+            nationalIdPhotoUrl: nationalIdPhotoUrl,
+            verifiedUser: verifiedUser,
+            gender: gender,
+            rating: rating,
+            birthDate: birthDate,
+            driverLicensePhotoPath: driverLicensePhotoPath,
+            verifiedDriver: verifiedDriver,
+            nationalIDVerified: nationalIDVerified,
+            admin: admin,
+            accountVerificationSent: accountVerificationSent,
+            licenseVerificationSent: licenseVerificationSent,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

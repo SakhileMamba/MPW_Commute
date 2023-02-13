@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'surname_model.dart';
+export 'surname_model.dart';
 
 class SurnameWidget extends StatefulWidget {
   const SurnameWidget({Key? key}) : super(key: key);
@@ -17,23 +19,27 @@ class SurnameWidget extends StatefulWidget {
 }
 
 class _SurnameWidgetState extends State<SurnameWidget> {
-  TextEditingController? surnameController;
-  final _unfocusNode = FocusNode();
+  late SurnameModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => SurnameModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'surname'});
-    surnameController = TextEditingController(
+    _model.surnameController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.displaySurname, ''));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    surnameController?.dispose();
     super.dispose();
   }
 
@@ -83,7 +89,7 @@ class _SurnameWidgetState extends State<SurnameWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: AuthUserStreamWidget(
                         builder: (context) => TextFormField(
-                          controller: surnameController,
+                          controller: _model.surnameController,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Surname',
@@ -132,6 +138,8 @@ class _SurnameWidgetState extends State<SurnameWidget> {
                                   ),
                           textAlign: TextAlign.start,
                           keyboardType: TextInputType.name,
+                          validator: _model.surnameControllerValidator
+                              .asValidator(context),
                         ),
                       ),
                     ),
@@ -143,7 +151,7 @@ class _SurnameWidgetState extends State<SurnameWidget> {
                     logFirebaseEvent('Button_backend_call');
 
                     final usersUpdateData = createUsersRecordData(
-                      displaySurname: surnameController!.text,
+                      displaySurname: _model.surnameController.text,
                     );
                     await currentUserReference!.update(usersUpdateData);
                     if (valueOrDefault(currentUserDocument?.gender, '') !=
@@ -157,7 +165,7 @@ class _SurnameWidgetState extends State<SurnameWidget> {
                     } else {
                       logFirebaseEvent('Button_navigate_to');
 
-                      context.pushNamed('gender');
+                      context.goNamed('gender');
 
                       return;
                     }

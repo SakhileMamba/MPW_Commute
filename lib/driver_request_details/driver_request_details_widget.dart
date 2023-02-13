@@ -19,16 +19,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'driver_request_details_model.dart';
+export 'driver_request_details_model.dart';
 
 class DriverRequestDetailsWidget extends StatefulWidget {
   const DriverRequestDetailsWidget({
     Key? key,
     this.hailingDoc,
     this.passenger,
-  }) : super(key: key);
+    bool? notNotificationOpen,
+  })  : this.notNotificationOpen = notNotificationOpen ?? false,
+        super(key: key);
 
   final PassengersHailingRecord? hailingDoc;
   final UsersRecord? passenger;
+  final bool notNotificationOpen;
 
   @override
   _DriverRequestDetailsWidgetState createState() =>
@@ -37,20 +42,16 @@ class DriverRequestDetailsWidget extends StatefulWidget {
 
 class _DriverRequestDetailsWidgetState
     extends State<DriverRequestDetailsWidget> {
-  CommutesRecord? createdCommute;
-  final _unfocusNode = FocusNode();
+  late DriverRequestDetailsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String _currentPageLink = '';
-  dynamic? reverseGeocodeDestinationOutput1;
-  dynamic? reverseGeocodeDestinationOutput;
-  dynamic? reverseGeocodeOriginOutput;
-  dynamic? reverseGeocodeOriginOutput1;
-  dynamic? reverseGeocodeOriginOutput2;
-  dynamic? reverseGeocodeDestinationOutput2;
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => DriverRequestDetailsModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'driverRequestDetails'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -58,6 +59,8 @@ class _DriverRequestDetailsWidgetState
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -84,8 +87,17 @@ class _DriverRequestDetailsWidgetState
           ),
           onPressed: () async {
             logFirebaseEvent('DRIVER_REQUEST_DETAILS_arrow_back_rounde');
-            logFirebaseEvent('IconButton_navigate_back');
-            context.pop();
+            if (widget.notNotificationOpen) {
+              logFirebaseEvent('IconButton_navigate_back');
+              context.pop();
+              return;
+            } else {
+              logFirebaseEvent('IconButton_navigate_to');
+
+              context.goNamed('beginRequest');
+
+              return;
+            }
           },
         ),
         title: Text(
@@ -110,7 +122,7 @@ class _DriverRequestDetailsWidgetState
               onPressed: () async {
                 logFirebaseEvent('DRIVER_REQUEST_DETAILS_share_rounded_ICN');
                 logFirebaseEvent('IconButton_generate_current_page_link');
-                _currentPageLink = await generateCurrentPageLink(
+                _model.currentPageLink = await generateCurrentPageLink(
                   context,
                   title: 'Commute Ridesharing: Driver Required',
                   description:
@@ -128,7 +140,7 @@ class _DriverRequestDetailsWidgetState
 
                 logFirebaseEvent('IconButton_share');
                 await Share.share(
-                  _currentPageLink,
+                  _model.currentPageLink,
                   sharePositionOrigin: getWidgetBoundingBox(context),
                 );
               },
@@ -201,7 +213,7 @@ class _DriverRequestDetailsWidgetState
                                   widget.hailingDoc!.departureDatetime!) {
                                 logFirebaseEvent(
                                     'sendSeatRequestIcon_custom_action');
-                                reverseGeocodeOriginOutput =
+                                _model.reverseGeocodeOriginOutput =
                                     await actions.reverseGeocode(
                                   widget.hailingDoc!.originReversedGeocoded
                                       .latlng!,
@@ -209,14 +221,14 @@ class _DriverRequestDetailsWidgetState
                                 _shouldSetState = true;
                                 logFirebaseEvent(
                                     'sendSeatRequestIcon_custom_action');
-                                reverseGeocodeDestinationOutput =
+                                _model.reverseGeocodeDestinationOutput =
                                     await actions.reverseGeocode(
                                   widget.hailingDoc!.destinationReversedGeocoded
                                       .latlng!,
                                 );
                                 _shouldSetState = true;
                                 logFirebaseEvent(
-                                    'sendSeatRequestIcon_update_local_state');
+                                    'sendSeatRequestIcon_update_app_state');
                                 FFAppState().tempProposingToDrive = true;
                                 FFAppState().tempPassengerHailingDriverRef =
                                     widget.hailingDoc!.reference;
@@ -227,9 +239,9 @@ class _DriverRequestDetailsWidgetState
                                     .destinationReversedGeocoded
                                     .latlng;
                                 FFAppState().tempOriginReversed =
-                                    reverseGeocodeOriginOutput!;
+                                    _model.reverseGeocodeOriginOutput!;
                                 FFAppState().tempDestinationReversed =
-                                    reverseGeocodeDestinationOutput!;
+                                    _model.reverseGeocodeDestinationOutput!;
                                 FFAppState().tempDepartureDateTime =
                                     widget.hailingDoc!.departureDatetime;
                                 logFirebaseEvent(
@@ -361,7 +373,7 @@ class _DriverRequestDetailsWidgetState
                                     widget.hailingDoc!.departureDatetime!) {
                                   logFirebaseEvent(
                                       'sendSeatRequestIcon_custom_action');
-                                  reverseGeocodeOriginOutput1 =
+                                  _model.reverseGeocodeOriginOutput1 =
                                       await actions.reverseGeocode(
                                     widget.hailingDoc!.originReversedGeocoded
                                         .latlng!,
@@ -369,14 +381,14 @@ class _DriverRequestDetailsWidgetState
                                   _shouldSetState = true;
                                   logFirebaseEvent(
                                       'sendSeatRequestIcon_custom_action');
-                                  reverseGeocodeDestinationOutput1 =
+                                  _model.reverseGeocodeDestinationOutput1 =
                                       await actions.reverseGeocode(
                                     widget.hailingDoc!
                                         .destinationReversedGeocoded.latlng!,
                                   );
                                   _shouldSetState = true;
                                   logFirebaseEvent(
-                                      'sendSeatRequestIcon_update_local_state');
+                                      'sendSeatRequestIcon_update_app_state');
                                   FFAppState().tempProposingToDrive = true;
                                   FFAppState().tempPassengerHailingDriverRef =
                                       widget.hailingDoc!.reference;
@@ -387,9 +399,9 @@ class _DriverRequestDetailsWidgetState
                                       .destinationReversedGeocoded
                                       .latlng;
                                   FFAppState().tempOriginReversed =
-                                      reverseGeocodeOriginOutput1!;
+                                      _model.reverseGeocodeOriginOutput1!;
                                   FFAppState().tempDestinationReversed =
-                                      reverseGeocodeDestinationOutput1!;
+                                      _model.reverseGeocodeDestinationOutput1!;
                                   FFAppState().tempDepartureDateTime =
                                       widget.hailingDoc!.departureDatetime;
                                   logFirebaseEvent(
@@ -566,7 +578,7 @@ class _DriverRequestDetailsWidgetState
                                   widget.hailingDoc!.departureDatetime!) {
                                 logFirebaseEvent(
                                     'sendSeatRequestIcon_custom_action');
-                                reverseGeocodeOriginOutput2 =
+                                _model.reverseGeocodeOriginOutput2 =
                                     await actions.reverseGeocode(
                                   widget.hailingDoc!.originReversedGeocoded
                                       .latlng!,
@@ -574,14 +586,14 @@ class _DriverRequestDetailsWidgetState
                                 _shouldSetState = true;
                                 logFirebaseEvent(
                                     'sendSeatRequestIcon_custom_action');
-                                reverseGeocodeDestinationOutput2 =
+                                _model.reverseGeocodeDestinationOutput2 =
                                     await actions.reverseGeocode(
                                   widget.hailingDoc!.destinationReversedGeocoded
                                       .latlng!,
                                 );
                                 _shouldSetState = true;
                                 logFirebaseEvent(
-                                    'sendSeatRequestIcon_update_local_state');
+                                    'sendSeatRequestIcon_update_app_state');
                                 FFAppState().tempProposingToDrive = true;
                                 FFAppState().tempPassengerHailingDriverRef =
                                     widget.hailingDoc!.reference;
@@ -592,9 +604,9 @@ class _DriverRequestDetailsWidgetState
                                     .destinationReversedGeocoded
                                     .latlng;
                                 FFAppState().tempOriginReversed =
-                                    reverseGeocodeOriginOutput2!;
+                                    _model.reverseGeocodeOriginOutput2!;
                                 FFAppState().tempDestinationReversed =
-                                    reverseGeocodeDestinationOutput2!;
+                                    _model.reverseGeocodeDestinationOutput2!;
                                 FFAppState().tempDepartureDateTime =
                                     widget.hailingDoc!.departureDatetime;
                                 logFirebaseEvent(
@@ -1642,10 +1654,11 @@ class _DriverRequestDetailsWidgetState
                                                           await commutesRecordReference
                                                               .set(
                                                                   commutesCreateData);
-                                                          createdCommute = CommutesRecord
-                                                              .getDocumentFromData(
-                                                                  commutesCreateData,
-                                                                  commutesRecordReference);
+                                                          _model.createdCommute =
+                                                              CommutesRecord
+                                                                  .getDocumentFromData(
+                                                                      commutesCreateData,
+                                                                      commutesRecordReference);
                                                           _shouldSetState =
                                                               true;
                                                           logFirebaseEvent(
@@ -1663,9 +1676,9 @@ class _DriverRequestDetailsWidgetState
                                                             archived: false,
                                                           );
                                                           await PassengersRecord
-                                                                  .createDoc(
-                                                                      createdCommute!
-                                                                          .reference)
+                                                                  .createDoc(_model
+                                                                      .createdCommute!
+                                                                      .reference)
                                                               .set(
                                                                   passengersCreateData);
                                                           logFirebaseEvent(
@@ -1721,7 +1734,7 @@ class _DriverRequestDetailsWidgetState
                                                               .update(
                                                                   pickupRequestsUpdateData);
                                                           logFirebaseEvent(
-                                                              'Button_update_local_state');
+                                                              'Button_update_app_state');
                                                           FFAppState()
                                                               .seatsPageInitialIndex = 0;
                                                           logFirebaseEvent(

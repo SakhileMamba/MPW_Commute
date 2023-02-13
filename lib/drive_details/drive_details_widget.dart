@@ -19,29 +19,37 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'drive_details_model.dart';
+export 'drive_details_model.dart';
 
 class DriveDetailsWidget extends StatefulWidget {
   const DriveDetailsWidget({
     Key? key,
     this.commuteDoc,
     this.driverDoc,
-  }) : super(key: key);
+    bool? notNotificationOpen,
+  })  : this.notNotificationOpen = notNotificationOpen ?? false,
+        super(key: key);
 
   final CommutesRecord? commuteDoc;
   final UsersRecord? driverDoc;
+  final bool notNotificationOpen;
 
   @override
   _DriveDetailsWidgetState createState() => _DriveDetailsWidgetState();
 }
 
 class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
-  String _currentPageLink = '';
-  final _unfocusNode = FocusNode();
+  late DriveDetailsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => DriveDetailsModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'driveDetails'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -49,6 +57,8 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -75,8 +85,17 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
           ),
           onPressed: () async {
             logFirebaseEvent('DRIVE_DETAILS_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_navigate_back');
-            context.pop();
+            if (widget.notNotificationOpen) {
+              logFirebaseEvent('IconButton_navigate_back');
+              context.pop();
+              return;
+            } else {
+              logFirebaseEvent('IconButton_navigate_to');
+
+              context.goNamed('beginRequest');
+
+              return;
+            }
           },
         ),
         title: Text(
@@ -102,7 +121,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
               onPressed: () async {
                 logFirebaseEvent('DRIVE_DETAILS_share_rounded_ICN_ON_TAP');
                 logFirebaseEvent('IconButton_generate_current_page_link');
-                _currentPageLink = await generateCurrentPageLink(
+                _model.currentPageLink = await generateCurrentPageLink(
                   context,
                   title: 'Commute Ridesharing: Passengers Required',
                   description:
@@ -120,7 +139,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
 
                 logFirebaseEvent('IconButton_share');
                 await Share.share(
-                  _currentPageLink,
+                  _model.currentPageLink,
                   sharePositionOrigin: getWidgetBoundingBox(context),
                 );
               },
@@ -1334,7 +1353,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       logFirebaseEvent(
                                                                           'Button_backend_call');
 
-                                                                      final passengersUpdateData =
+                                                                      final passengersUpdateData1 =
                                                                           createPassengersRecordData(
                                                                         accepted:
                                                                             true,
@@ -1342,11 +1361,11 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       await listViewPassengersRecord
                                                                           .reference
                                                                           .update(
-                                                                              passengersUpdateData);
+                                                                              passengersUpdateData1);
                                                                       logFirebaseEvent(
                                                                           'Button_backend_call');
 
-                                                                      final commutesUpdateData =
+                                                                      final commutesUpdateData1 =
                                                                           {
                                                                         'available_passenger_seats':
                                                                             FieldValue.increment(-(1)),
@@ -1359,7 +1378,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       await listViewPassengersRecord
                                                                           .parentReference
                                                                           .update(
-                                                                              commutesUpdateData);
+                                                                              commutesUpdateData1);
                                                                       logFirebaseEvent(
                                                                           'Button_trigger_push_notification');
                                                                       triggerPushNotification(
@@ -1496,18 +1515,18 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                         logFirebaseEvent(
                                                                             'Button_backend_call');
 
-                                                                        final passengersUpdateData =
+                                                                        final passengersUpdateData2 =
                                                                             createPassengersRecordData(
                                                                           accepted:
                                                                               true,
                                                                         );
                                                                         await listViewPassengersRecord
                                                                             .reference
-                                                                            .update(passengersUpdateData);
+                                                                            .update(passengersUpdateData2);
                                                                         logFirebaseEvent(
                                                                             'Button_backend_call');
 
-                                                                        final commutesUpdateData =
+                                                                        final commutesUpdateData2 =
                                                                             {
                                                                           'available_passenger_seats':
                                                                               FieldValue.increment(-(1)),
@@ -1518,7 +1537,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                         };
                                                                         await listViewPassengersRecord
                                                                             .parentReference
-                                                                            .update(commutesUpdateData);
+                                                                            .update(commutesUpdateData2);
                                                                         logFirebaseEvent(
                                                                             'Button_trigger_push_notification');
                                                                         triggerPushNotification(
@@ -1688,7 +1707,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       logFirebaseEvent(
                                                                           'Button_backend_call');
 
-                                                                      final passengersUpdateData =
+                                                                      final passengersUpdateData3 =
                                                                           createPassengersRecordData(
                                                                         accepted:
                                                                             true,
@@ -1696,11 +1715,11 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       await listViewPassengersRecord
                                                                           .reference
                                                                           .update(
-                                                                              passengersUpdateData);
+                                                                              passengersUpdateData3);
                                                                       logFirebaseEvent(
                                                                           'Button_backend_call');
 
-                                                                      final commutesUpdateData =
+                                                                      final commutesUpdateData3 =
                                                                           {
                                                                         'available_passenger_seats':
                                                                             FieldValue.increment(-(1)),
@@ -1713,7 +1732,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                                                       await listViewPassengersRecord
                                                                           .parentReference
                                                                           .update(
-                                                                              commutesUpdateData);
+                                                                              commutesUpdateData3);
                                                                       logFirebaseEvent(
                                                                           'Button_trigger_push_notification');
                                                                       triggerPushNotification(

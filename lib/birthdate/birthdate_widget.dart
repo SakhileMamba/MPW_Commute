@@ -10,6 +10,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'birthdate_model.dart';
+export 'birthdate_model.dart';
 
 class BirthdateWidget extends StatefulWidget {
   const BirthdateWidget({Key? key}) : super(key: key);
@@ -19,19 +21,24 @@ class BirthdateWidget extends StatefulWidget {
 }
 
 class _BirthdateWidgetState extends State<BirthdateWidget> {
-  DateTime? datePicked;
-  final _unfocusNode = FocusNode();
+  late BirthdateModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => BirthdateModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'birthdate'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -94,20 +101,22 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                             );
 
                             if (_datePickedDate != null) {
-                              setState(
-                                () => datePicked = DateTime(
+                              setState(() {
+                                _model.datePicked = DateTime(
                                   _datePickedDate.year,
                                   _datePickedDate.month,
                                   _datePickedDate.day,
-                                ),
-                              );
+                                );
+                              });
                             }
                           } else {
                             await DatePicker.showDatePicker(
                               context,
                               showTitleActions: true,
                               onConfirm: (date) {
-                                setState(() => datePicked = date);
+                                setState(() {
+                                  _model.datePicked = date;
+                                });
                               },
                               currentTime: getCurrentTimestamp,
                               minTime: DateTime(0, 0, 0),
@@ -121,9 +130,9 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                             );
                           }
 
-                          logFirebaseEvent('Container_update_local_state');
+                          logFirebaseEvent('Container_update_app_state');
                           FFAppState().update(() {
-                            FFAppState().userBirthDate = datePicked;
+                            FFAppState().userBirthDate = _model.datePicked;
                           });
                         },
                         child: Container(
@@ -174,7 +183,7 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
                     logFirebaseEvent('Button_backend_call');
 
                     final usersUpdateData = createUsersRecordData(
-                      birthDate: datePicked,
+                      birthDate: _model.datePicked,
                     );
                     await currentUserReference!.update(usersUpdateData);
                     if (currentUserPhoto != null && currentUserPhoto != '') {
@@ -184,11 +193,11 @@ class _BirthdateWidgetState extends State<BirthdateWidget> {
 
                       return;
                     } else {
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().currentPhotoURLTemp = currentUserPhoto;
                       logFirebaseEvent('Button_navigate_to');
 
-                      context.pushNamed('profilePicture');
+                      context.goNamed('profilePicture');
 
                       return;
                     }

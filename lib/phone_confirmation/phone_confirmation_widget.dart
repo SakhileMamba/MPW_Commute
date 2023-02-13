@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'phone_confirmation_model.dart';
+export 'phone_confirmation_model.dart';
 
 class PhoneConfirmationWidget extends StatefulWidget {
   const PhoneConfirmationWidget({Key? key}) : super(key: key);
@@ -17,23 +19,27 @@ class PhoneConfirmationWidget extends StatefulWidget {
 }
 
 class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
-  TextEditingController? securityCodeTextFieldController;
-  final _unfocusNode = FocusNode();
+  late PhoneConfirmationModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => PhoneConfirmationModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phoneConfirmation'});
-    securityCodeTextFieldController = TextEditingController();
+    _model.securityCodeTextFieldController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    securityCodeTextFieldController?.dispose();
     super.dispose();
   }
 
@@ -101,13 +107,13 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Please enter the confirmation code we just sent to your phone number. Find it in your text messages.',
+                          'Enter the confirmation code we just sent to your phone number.',
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                           child: TextFormField(
-                            controller: securityCodeTextFieldController,
+                            controller: _model.securityCodeTextFieldController,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Confirmation Code',
@@ -156,6 +162,9 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                                     ),
                             textAlign: TextAlign.start,
                             keyboardType: TextInputType.number,
+                            validator: _model
+                                .securityCodeTextFieldControllerValidator
+                                .asValidator(context),
                           ),
                         ),
                       ],
@@ -167,7 +176,7 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                         logFirebaseEvent('Button_auth');
                         GoRouter.of(context).prepareAuthEvent();
                         final smsCodeVal =
-                            securityCodeTextFieldController!.text;
+                            _model.securityCodeTextFieldController.text;
                         if (smsCodeVal == null || smsCodeVal.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'no_seat_requests_model.dart';
+export 'no_seat_requests_model.dart';
 
 class NoSeatRequestsWidget extends StatefulWidget {
   const NoSeatRequestsWidget({Key? key}) : super(key: key);
@@ -13,11 +15,27 @@ class NoSeatRequestsWidget extends StatefulWidget {
 }
 
 class _NoSeatRequestsWidgetState extends State<NoSeatRequestsWidget> {
+  late NoSeatRequestsModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => NoSeatRequestsModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -25,7 +43,7 @@ class _NoSeatRequestsWidgetState extends State<NoSeatRequestsWidget> {
     context.watch<FFAppState>();
 
     return Text(
-      'The are no commuters requesting seats at the moment.',
+      'There are no passengers requesting a seat at the moment.',
       textAlign: TextAlign.start,
       style: FlutterFlowTheme.of(context).bodyText1,
     );

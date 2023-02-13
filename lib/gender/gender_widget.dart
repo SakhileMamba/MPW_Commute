@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'gender_model.dart';
+export 'gender_model.dart';
 
 class GenderWidget extends StatefulWidget {
   const GenderWidget({Key? key}) : super(key: key);
@@ -18,19 +20,24 @@ class GenderWidget extends StatefulWidget {
 }
 
 class _GenderWidgetState extends State<GenderWidget> {
-  String? radioButtonValue;
-  final _unfocusNode = FocusNode();
+  late GenderModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => GenderModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'gender'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -83,7 +90,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                         builder: (context) => FlutterFlowRadioButton(
                           options: ['Male', 'Female'].toList(),
                           onChanged: (val) =>
-                              setState(() => radioButtonValue = val),
+                              setState(() => _model.radioButtonValue = val),
                           optionHeight: 30,
                           textStyle: FlutterFlowTheme.of(context).bodyText2,
                           buttonPosition: RadioButtonPosition.left,
@@ -105,7 +112,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                     logFirebaseEvent('Button_backend_call');
 
                     final usersUpdateData = createUsersRecordData(
-                      gender: radioButtonValue,
+                      gender: _model.radioButtonValue,
                     );
                     await currentUserReference!.update(usersUpdateData);
                     if (currentUserDocument!.birthDate != null) {
@@ -115,11 +122,11 @@ class _GenderWidgetState extends State<GenderWidget> {
 
                       return;
                     } else {
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().userBirthDate = getCurrentTimestamp;
                       logFirebaseEvent('Button_navigate_to');
 
-                      context.pushNamed('birthdate');
+                      context.goNamed('birthdate');
 
                       return;
                     }

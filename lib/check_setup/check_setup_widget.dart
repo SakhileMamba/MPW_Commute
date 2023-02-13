@@ -2,15 +2,14 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'check_setup_model.dart';
+export 'check_setup_model.dart';
 
 class CheckSetupWidget extends StatefulWidget {
   const CheckSetupWidget({Key? key}) : super(key: key);
@@ -20,61 +19,30 @@ class CheckSetupWidget extends StatefulWidget {
 }
 
 class _CheckSetupWidgetState extends State<CheckSetupWidget> {
-  LatLng? currentUserLocationValue;
-  final _unfocusNode = FocusNode();
+  late CheckSetupModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  dynamic? currentDeviceLocationReverseGeocoded;
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => CheckSetupModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'checkSetup'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('CHECK_SETUP_PAGE_checkSetup_ON_PAGE_LOAD');
-      currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-      if (FFAppState().referrerRef != null) {
-        if (!(currentUserDocument!.referrerRef != null)) {
-          logFirebaseEvent('checkSetup_backend_call');
-
-          final usersUpdateData = createUsersRecordData(
-            referrerRef: FFAppState().referrerRef,
-            email: 'hggdfgfdgdfgfgdf',
-          );
-          await currentUserReference!.update(usersUpdateData);
-        }
-        logFirebaseEvent('checkSetup_backend_call');
-
-        final usersUpdateData = {
-          'users_referred_list': FieldValue.arrayUnion([currentUserReference]),
-        };
-        await FFAppState().referrerRef!.update(usersUpdateData);
-        logFirebaseEvent('checkSetup_update_local_state');
-        FFAppState().referrerRef = null;
-      }
-      logFirebaseEvent('checkSetup_backend_call');
-
-      final appConstantsUpdateData = {
-        'notificationReferenceList':
-            FieldValue.arrayUnion([currentUserReference]),
-      };
-      await functions
-          .returnAppContantsDocRefFromStringID(' kOOn2yvmHgWV3k61xPRS')
-          .update(appConstantsUpdateData);
-      logFirebaseEvent('checkSetup_update_local_state');
+      logFirebaseEvent('checkSetup_wait__delay');
+      await Future.delayed(const Duration(milliseconds: 3000));
+      logFirebaseEvent('checkSetup_update_app_state');
       FFAppState().filterCurrentDateTime = getCurrentTimestamp;
-      logFirebaseEvent('checkSetup_custom_action');
-      currentDeviceLocationReverseGeocoded = await actions.reverseGeocode(
-        currentUserLocationValue!,
-      );
-      logFirebaseEvent('checkSetup_update_local_state');
-      FFAppState().tempOriginReversed = currentDeviceLocationReverseGeocoded!;
       if (valueOrDefault<bool>(currentUserDocument?.verifiedUser, false) ||
           valueOrDefault<bool>(
               currentUserDocument?.accountVerificationSent, false)) {
         logFirebaseEvent('checkSetup_navigate_to');
 
-        context.pushNamed('beginRequest');
+        context.goNamed('beginRequest');
 
         return;
       } else {
@@ -92,63 +60,62 @@ class _CheckSetupWidgetState extends State<CheckSetupWidget> {
                               currentUserDocument?.nationalIdPhotoUrl, '') !=
                           '') {
                     logFirebaseEvent('checkSetup_navigate_to');
-                    if (Navigator.of(context).canPop()) {
-                      context.pop();
-                    }
-                    context.pushNamed('personalInformation');
+
+                    context.goNamed('personalInformation');
 
                     return;
                   } else {
                     logFirebaseEvent('checkSetup_navigate_to');
 
-                    context.pushNamed('governmentId');
+                    context.goNamed('governmentId');
 
                     return;
                   }
                 } else {
                   logFirebaseEvent('checkSetup_navigate_to');
 
-                  context.pushNamed('profilePicture');
+                  context.goNamed('profilePicture');
 
                   return;
                 }
               } else {
                 logFirebaseEvent('checkSetup_navigate_to');
 
-                context.pushNamed('birthdate');
+                context.goNamed('birthdate');
 
                 return;
               }
             } else {
               logFirebaseEvent('checkSetup_navigate_to');
 
-              context.pushNamed('gender');
+              context.goNamed('gender');
 
               return;
             }
           } else {
             logFirebaseEvent('checkSetup_navigate_to');
 
-            context.pushNamed('surname');
+            context.goNamed('surname');
 
             return;
           }
         } else {
           logFirebaseEvent('checkSetup_navigate_to');
 
-          context.pushNamed('firstName');
+          context.goNamed('firstName');
 
           return;
         }
       }
     });
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'checkSetup'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -157,31 +124,50 @@ class _CheckSetupWidgetState extends State<CheckSetupWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryBackground,
+    return StreamBuilder<UsersRecord>(
+      stream: UsersRecord.getDocument(currentUserReference!),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: SpinKitChasingDots(
+                color: FlutterFlowTheme.of(context).primaryColor,
+                size: 50,
+              ),
             ),
-            child: Align(
-              alignment: AlignmentDirectional(0, 0),
-              child: Lottie.asset(
-                'assets/lottie_animations/lf30_editor_qvakyxtx.json',
-                width: MediaQuery.of(context).size.width,
-                height: 130,
-                fit: BoxFit.fitWidth,
-                animate: true,
+          );
+        }
+        final checkSetupUsersRecord = snapshot.data!;
+        return Scaffold(
+          key: scaffoldKey,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Lottie.asset(
+                    'assets/lottie_animations/lf30_editor_qvakyxtx.json',
+                    width: MediaQuery.of(context).size.width,
+                    height: 130,
+                    fit: BoxFit.fitWidth,
+                    animate: true,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

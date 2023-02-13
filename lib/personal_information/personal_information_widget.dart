@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'personal_information_model.dart';
+export 'personal_information_model.dart';
 
 class PersonalInformationWidget extends StatefulWidget {
   const PersonalInformationWidget({Key? key}) : super(key: key);
@@ -19,12 +21,16 @@ class PersonalInformationWidget extends StatefulWidget {
 }
 
 class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
-  final _unfocusNode = FocusNode();
+  late PersonalInformationModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => PersonalInformationModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'personalInformation'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -32,6 +38,8 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -104,7 +112,7 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
               ),
         ),
         actions: [],
-        centerTitle: false,
+        centerTitle: true,
         elevation: 0,
       ),
       body: SafeArea(
@@ -404,6 +412,9 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                               );
                               return;
                             } else {
+                              logFirebaseEvent('ListTile_update_app_state');
+                              FFAppState().userBirthDate =
+                                  currentUserDocument!.birthDate;
                               logFirebaseEvent('ListTile_navigate_to');
 
                               context.goNamed('birthdate');
@@ -486,6 +497,11 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                               );
                               return;
                             } else {
+                              logFirebaseEvent('ListTile_update_app_state');
+                              FFAppState().currentPhotoURLTempID =
+                                  valueOrDefault(
+                                      currentUserDocument?.nationalIdPhotoUrl,
+                                      '');
                               logFirebaseEvent('ListTile_navigate_to');
 
                               context.goNamed('governmentId');
@@ -591,7 +607,7 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                                       return AlertDialog(
                                         title: Text('Alert'),
                                         content: Text(
-                                            'Acount verification request sent.'),
+                                            'Account verification request sent.'),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(

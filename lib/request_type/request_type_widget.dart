@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'request_type_model.dart';
+export 'request_type_model.dart';
 
 class RequestTypeWidget extends StatefulWidget {
   const RequestTypeWidget({Key? key}) : super(key: key);
@@ -17,19 +19,24 @@ class RequestTypeWidget extends StatefulWidget {
 }
 
 class _RequestTypeWidgetState extends State<RequestTypeWidget> {
-  String? radioButtonValue;
-  final _unfocusNode = FocusNode();
+  late RequestTypeModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => RequestTypeModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'requestType'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -97,7 +104,7 @@ class _RequestTypeWidgetState extends State<RequestTypeWidget> {
                       child: FlutterFlowRadioButton(
                         options: ['Drivers', 'Passengers'].toList(),
                         onChanged: (val) =>
-                            setState(() => radioButtonValue = val),
+                            setState(() => _model.radioButtonValue = val),
                         optionHeight: 30,
                         textStyle: FlutterFlowTheme.of(context).bodyText2,
                         buttonPosition: RadioButtonPosition.left,
@@ -115,8 +122,8 @@ class _RequestTypeWidgetState extends State<RequestTypeWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('REQUEST_TYPE_PAGE_NEXT_BTN_ON_TAP');
-                    logFirebaseEvent('Button_update_local_state');
-                    FFAppState().tempRequestType = radioButtonValue!;
+                    logFirebaseEvent('Button_update_app_state');
+                    FFAppState().tempRequestType = _model.radioButtonValue!;
                     if (FFAppState().tempRequestType == 'Passengers') {
                       if (valueOrDefault<bool>(
                           currentUserDocument?.verifiedDriver, false)) {

@@ -5,6 +5,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'success_lottie_model.dart';
+export 'success_lottie_model.dart';
 
 class SuccessLottieWidget extends StatefulWidget {
   const SuccessLottieWidget({Key? key}) : super(key: key);
@@ -14,12 +16,16 @@ class SuccessLottieWidget extends StatefulWidget {
 }
 
 class _SuccessLottieWidgetState extends State<SuccessLottieWidget> {
-  final _unfocusNode = FocusNode();
+  late SuccessLottieModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => SuccessLottieModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'successLottie'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -27,6 +33,8 @@ class _SuccessLottieWidgetState extends State<SuccessLottieWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }

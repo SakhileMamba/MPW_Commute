@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'first_name_model.dart';
+export 'first_name_model.dart';
 
 class FirstNameWidget extends StatefulWidget {
   const FirstNameWidget({Key? key}) : super(key: key);
@@ -17,22 +19,27 @@ class FirstNameWidget extends StatefulWidget {
 }
 
 class _FirstNameWidgetState extends State<FirstNameWidget> {
-  TextEditingController? firstNameController;
-  final _unfocusNode = FocusNode();
+  late FirstNameModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    firstNameController = TextEditingController(text: currentUserDisplayName);
+    _model = createModel(context, () => FirstNameModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'firstName'});
+    _model.firstNameController =
+        TextEditingController(text: currentUserDisplayName);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    firstNameController?.dispose();
     super.dispose();
   }
 
@@ -84,7 +91,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                         child: AuthUserStreamWidget(
                           builder: (context) => TextFormField(
-                            controller: firstNameController,
+                            controller: _model.firstNameController,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'First Name',
@@ -133,6 +140,8 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                                     ),
                             textAlign: TextAlign.start,
                             keyboardType: TextInputType.name,
+                            validator: _model.firstNameControllerValidator
+                                .asValidator(context),
                           ),
                         ),
                       ),
@@ -144,7 +153,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                       logFirebaseEvent('Button_backend_call');
 
                       final usersUpdateData = createUsersRecordData(
-                        displayName: firstNameController!.text,
+                        displayName: _model.firstNameController.text,
                       );
                       await currentUserReference!.update(usersUpdateData);
                       if (valueOrDefault(
@@ -161,7 +170,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                       } else {
                         logFirebaseEvent('Button_navigate_to');
 
-                        context.pushNamed('surname');
+                        context.goNamed('surname');
 
                         return;
                       }

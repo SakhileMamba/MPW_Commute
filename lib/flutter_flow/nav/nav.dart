@@ -146,6 +146,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => DriveDetailsWidget(
                 commuteDoc: params.getParam('commuteDoc', ParamType.Document),
                 driverDoc: params.getParam('driverDoc', ParamType.Document),
+                notNotificationOpen:
+                    params.getParam('notNotificationOpen', ParamType.bool),
+              ),
+            ),
+            FFRoute(
+              name: 'driverRequestDetails',
+              path: 'driverRequestDetails',
+              requireAuth: true,
+              asyncParams: {
+                'hailingDoc': getDoc(
+                    ['passengers_hailing'], PassengersHailingRecord.serializer),
+                'passenger': getDoc(['users'], UsersRecord.serializer),
+              },
+              builder: (context, params) => DriverRequestDetailsWidget(
+                hailingDoc: params.getParam('hailingDoc', ParamType.Document),
+                passenger: params.getParam('passenger', ParamType.Document),
+                notNotificationOpen:
+                    params.getParam('notNotificationOpen', ParamType.bool),
               ),
             ),
             FFRoute(
@@ -167,10 +185,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ProfilePictureWidget(),
             ),
             FFRoute(
-              name: 'filterCommutes',
-              path: 'filterCommutes',
+              name: 'driversLicense',
+              path: 'driversLicense',
               requireAuth: true,
-              builder: (context, params) => FilterCommutesWidget(),
+              builder: (context, params) => DriversLicenseWidget(),
             ),
             FFRoute(
               name: 'personalInformation',
@@ -185,28 +203,22 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AddVehicleWidget(),
             ),
             FFRoute(
-              name: 'driversLicense',
-              path: 'driversLicense',
-              requireAuth: true,
-              builder: (context, params) => DriversLicenseWidget(),
-            ),
-            FFRoute(
               name: 'subscription',
               path: 'subscription',
               requireAuth: true,
               builder: (context, params) => SubscriptionWidget(),
             ),
             FFRoute(
-              name: 'approveDrivers',
-              path: 'approveDrivers',
-              requireAuth: true,
-              builder: (context, params) => ApproveDriversWidget(),
-            ),
-            FFRoute(
               name: 'approveUsers',
               path: 'approveUsers',
               requireAuth: true,
               builder: (context, params) => ApproveUsersWidget(),
+            ),
+            FFRoute(
+              name: 'approveDrivers',
+              path: 'approveDrivers',
+              requireAuth: true,
+              builder: (context, params) => ApproveDriversWidget(),
             ),
             FFRoute(
               name: 'firstName',
@@ -243,20 +255,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'beginRequest',
               requireAuth: true,
               builder: (context, params) => BeginRequestWidget(),
-            ),
-            FFRoute(
-              name: 'driverRequestDetails',
-              path: 'driverRequestDetails',
-              requireAuth: true,
-              asyncParams: {
-                'hailingDoc': getDoc(
-                    ['passengers_hailing'], PassengersHailingRecord.serializer),
-                'passenger': getDoc(['users'], UsersRecord.serializer),
-              },
-              builder: (context, params) => DriverRequestDetailsWidget(
-                hailingDoc: params.getParam('hailingDoc', ParamType.Document),
-                passenger: params.getParam('passenger', ParamType.Document),
-              ),
             ),
             FFRoute(
               name: 'requestType',
@@ -307,16 +305,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => PriceWidget(),
             ),
             FFRoute(
-              name: 'requestConfirmation',
-              path: 'requestConfirmation',
-              requireAuth: true,
-              builder: (context, params) => RequestConfirmationWidget(),
-            ),
-            FFRoute(
               name: 'announcements',
               path: 'announcements',
               requireAuth: true,
               builder: (context, params) => AnnouncementsWidget(),
+            ),
+            FFRoute(
+              name: 'requestConfirmation',
+              path: 'requestConfirmation',
+              requireAuth: true,
+              builder: (context, params) => RequestConfirmationWidget(),
             ),
             FFRoute(
               name: 'createAnnouncement',
@@ -325,16 +323,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => CreateAnnouncementWidget(),
             ),
             FFRoute(
-              name: 'referFriend',
-              path: 'referFriend',
+              name: 'filterOriginType',
+              path: 'filterOriginType',
               requireAuth: true,
-              builder: (context, params) => ReferFriendWidget(),
+              builder: (context, params) => FilterOriginTypeWidget(),
             ),
             FFRoute(
-              name: 'checkSetup0',
-              path: 'checkSetup0',
+              name: 'filterOrigin',
+              path: 'filterOrigin',
               requireAuth: true,
-              builder: (context, params) => CheckSetup0Widget(),
+              builder: (context, params) => FilterOriginWidget(),
+            ),
+            FFRoute(
+              name: 'filterDestination',
+              path: 'filterDestination',
+              requireAuth: true,
+              builder: (context, params) => FilterDestinationWidget(),
+            ),
+            FFRoute(
+              name: 'filterDepartureDatetime',
+              path: 'filterDepartureDatetime',
+              requireAuth: true,
+              builder: (context, params) => FilterDepartureDatetimeWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -510,7 +520,7 @@ class FFRoute {
               ? Container(
                   color: FlutterFlowTheme.of(context).primaryColor,
                   child: Image.asset(
-                    'assets/images/Commute_Logo_google_play_512x512_black.png',
+                    'assets/images/Commute_Logo_google_play_512x512.png',
                     fit: BoxFit.fitWidth,
                   ),
                 )

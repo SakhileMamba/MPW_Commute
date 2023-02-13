@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'available_seats_model.dart';
+export 'available_seats_model.dart';
 
 class AvailableSeatsWidget extends StatefulWidget {
   const AvailableSeatsWidget({Key? key}) : super(key: key);
@@ -16,13 +18,16 @@ class AvailableSeatsWidget extends StatefulWidget {
 }
 
 class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
-  final _unfocusNode = FocusNode();
+  late AvailableSeatsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int? countControllerValue;
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => AvailableSeatsModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'availableSeats'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -30,6 +35,8 @@ class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -106,7 +113,7 @@ class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -194,9 +201,9 @@ class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
                                 fontSize: 16,
                               ),
                             ),
-                            count: countControllerValue ??= 1,
-                            updateCount: (count) =>
-                                setState(() => countControllerValue = count),
+                            count: _model.countControllerValue ??= 1,
+                            updateCount: (count) => setState(
+                                () => _model.countControllerValue = count),
                             stepSize: 1,
                             minimum: 1,
                             maximum: 11,
@@ -209,10 +216,10 @@ class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
                 FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('AVAILABLE_SEATS_PAGE_NEXT_BTN_ON_TAP');
-                    if (countControllerValue! <=
+                    if (_model.countControllerValue! <=
                         FFAppState().tempChosenVehicleMaxSeats) {
-                      logFirebaseEvent('Button_update_local_state');
-                      FFAppState().tempSeats = countControllerValue!;
+                      logFirebaseEvent('Button_update_app_state');
+                      FFAppState().tempSeats = _model.countControllerValue!;
                       logFirebaseEvent('Button_navigate_to');
 
                       context.pushNamed('price');
