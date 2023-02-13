@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'destination_model.dart';
+export 'destination_model.dart';
 
 class DestinationWidget extends StatefulWidget {
   const DestinationWidget({Key? key}) : super(key: key);
@@ -19,20 +21,24 @@ class DestinationWidget extends StatefulWidget {
 }
 
 class _DestinationWidgetState extends State<DestinationWidget> {
-  dynamic? chosenDestinationReversed;
-  var placePickerValue = FFPlace();
-  final _unfocusNode = FocusNode();
+  late DestinationModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => DestinationModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'destination'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -109,7 +115,7 @@ class _DestinationWidgetState extends State<DestinationWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -166,7 +172,7 @@ class _DestinationWidgetState extends State<DestinationWidget> {
                         webGoogleMapsApiKey:
                             'AIzaSyAqMpvumo1SHrdsD9moyulPYRxC5O58XCg',
                         onSelect: (place) async {
-                          setState(() => placePickerValue = place);
+                          setState(() => _model.placePickerValue = place);
                         },
                         defaultText: 'Select Location',
                         buttonOptions: FFButtonOptions(
@@ -192,17 +198,18 @@ class _DestinationWidgetState extends State<DestinationWidget> {
                   onPressed: () async {
                     logFirebaseEvent('DESTINATION_PAGE_NEXT_BTN_ON_TAP');
                     var _shouldSetState = false;
-                    if (placePickerValue != null) {
+                    if (_model.placePickerValue != null) {
                       logFirebaseEvent('Button_custom_action');
-                      chosenDestinationReversed = await actions.reverseGeocode(
-                        placePickerValue.latLng,
+                      _model.chosenDestinationReversed =
+                          await actions.reverseGeocode(
+                        _model.placePickerValue.latLng,
                       );
                       _shouldSetState = true;
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().tempDestinationLatLng =
-                          placePickerValue.latLng;
+                          _model.placePickerValue.latLng;
                       FFAppState().tempDestinationReversed =
-                          chosenDestinationReversed!;
+                          _model.chosenDestinationReversed!;
                       FFAppState().tempDepartureDateTime = getCurrentTimestamp;
                       logFirebaseEvent('Button_navigate_to');
 

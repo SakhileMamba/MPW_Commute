@@ -81,7 +81,7 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
       ? Container(
           color: FlutterFlowTheme.of(context).primaryColor,
           child: Image.asset(
-            'assets/images/Commute_Logo_google_play_512x512_black.png',
+            'assets/images/Commute_Logo_google_play_512x512.png',
             fit: BoxFit.fitWidth,
           ),
         )
@@ -127,32 +127,35 @@ final parametersBuilderMap =
               data, 'commuteDoc', CommutesRecord.serializer),
           'driverDoc': await getDocumentParameter<UsersRecord>(
               data, 'driverDoc', UsersRecord.serializer),
+          'notNotificationOpen':
+              getParameter<bool>(data, 'notNotificationOpen'),
         },
       ),
-  'vehicles': ParameterData.none(),
-  'governmentId': ParameterData.none(),
-  'profilePicture': ParameterData.none(),
-  'filterCommutes': ParameterData.none(),
-  'personalInformation': ParameterData.none(),
-  'addVehicle': ParameterData.none(),
-  'driversLicense': ParameterData.none(),
-  'subscription': ParameterData.none(),
-  'approveDrivers': ParameterData.none(),
-  'approveUsers': ParameterData.none(),
-  'firstName': ParameterData.none(),
-  'surname': ParameterData.none(),
-  'gender': ParameterData.none(),
-  'birthdate': ParameterData.none(),
-  'successLottie': ParameterData.none(),
-  'beginRequest': ParameterData.none(),
   'driverRequestDetails': (data) async => ParameterData(
         allParams: {
           'hailingDoc': await getDocumentParameter<PassengersHailingRecord>(
               data, 'hailingDoc', PassengersHailingRecord.serializer),
           'passenger': await getDocumentParameter<UsersRecord>(
               data, 'passenger', UsersRecord.serializer),
+          'notNotificationOpen':
+              getParameter<bool>(data, 'notNotificationOpen'),
         },
       ),
+  'vehicles': ParameterData.none(),
+  'governmentId': ParameterData.none(),
+  'profilePicture': ParameterData.none(),
+  'driversLicense': ParameterData.none(),
+  'personalInformation': ParameterData.none(),
+  'addVehicle': ParameterData.none(),
+  'subscription': ParameterData.none(),
+  'approveUsers': ParameterData.none(),
+  'approveDrivers': ParameterData.none(),
+  'firstName': ParameterData.none(),
+  'surname': ParameterData.none(),
+  'gender': ParameterData.none(),
+  'birthdate': ParameterData.none(),
+  'successLottie': ParameterData.none(),
+  'beginRequest': ParameterData.none(),
   'requestType': ParameterData.none(),
   'originType': ParameterData.none(),
   'origin': ParameterData.none(),
@@ -161,11 +164,13 @@ final parametersBuilderMap =
   'availableSeats': ParameterData.none(),
   'chooseVehicle': ParameterData.none(),
   'price': ParameterData.none(),
-  'requestConfirmation': ParameterData.none(),
   'announcements': ParameterData.none(),
+  'requestConfirmation': ParameterData.none(),
   'createAnnouncement': ParameterData.none(),
-  'referFriend': ParameterData.none(),
-  'checkSetup0': ParameterData.none(),
+  'filterOriginType': ParameterData.none(),
+  'filterOrigin': ParameterData.none(),
+  'filterDestination': ParameterData.none(),
+  'filterDepartureDatetime': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

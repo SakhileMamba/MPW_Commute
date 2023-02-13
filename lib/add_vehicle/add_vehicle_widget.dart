@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'add_vehicle_model.dart';
+export 'add_vehicle_model.dart';
 
 class AddVehicleWidget extends StatefulWidget {
   const AddVehicleWidget({Key? key}) : super(key: key);
@@ -22,37 +24,30 @@ class AddVehicleWidget extends StatefulWidget {
 }
 
 class _AddVehicleWidgetState extends State<AddVehicleWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  late AddVehicleModel _model;
 
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  TextEditingController? textController4;
-  TextEditingController? textController5;
-  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => AddVehicleModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'addVehicle'});
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-    textController4 = TextEditingController();
-    textController5 = TextEditingController();
+    _model.textController1 = TextEditingController();
+    _model.textController2 = TextEditingController();
+    _model.textController3 = TextEditingController();
+    _model.textController4 = TextEditingController();
+    _model.textController5 = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
-    textController4?.dispose();
-    textController5?.dispose();
     super.dispose();
   }
 
@@ -64,7 +59,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -73,7 +68,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
           buttonSize: 60,
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: Colors.white,
+            color: FlutterFlowTheme.of(context).primaryColor,
             size: 30,
           ),
           onPressed: () async {
@@ -81,10 +76,10 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
             if (FFAppState().backButtonFileUpload) {
               logFirebaseEvent('IconButton_delete_media');
               await FirebaseStorage.instance
-                  .refFromURL(uploadedFileUrl)
+                  .refFromURL(_model.uploadedFileUrl)
                   .delete();
             }
-            logFirebaseEvent('IconButton_update_local_state');
+            logFirebaseEvent('IconButton_update_app_state');
             FFAppState().update(() {
               FFAppState().backButtonFileUpload = false;
             });
@@ -96,12 +91,12 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
           'Add Vehicle',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).secondaryText,
+                color: FlutterFlowTheme.of(context).primaryText,
               ),
         ),
         actions: [],
         centerTitle: true,
-        elevation: 2,
+        elevation: 0,
       ),
       body: SafeArea(
         child: GestureDetector(
@@ -115,7 +110,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
-                      controller: textController1,
+                      controller: _model.textController1,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Make',
@@ -153,12 +148,14 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
+                      validator:
+                          _model.textController1Validator.asValidator(context),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
-                      controller: textController2,
+                      controller: _model.textController2,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Model',
@@ -196,12 +193,14 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
+                      validator:
+                          _model.textController2Validator.asValidator(context),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
-                      controller: textController3,
+                      controller: _model.textController3,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Year',
@@ -240,12 +239,14 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       keyboardType: TextInputType.number,
+                      validator:
+                          _model.textController3Validator.asValidator(context),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
-                      controller: textController4,
+                      controller: _model.textController4,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Registration',
@@ -283,12 +284,14 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                             FlutterFlowTheme.of(context).primaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
+                      validator:
+                          _model.textController4Validator.asValidator(context),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextFormField(
-                      controller: textController5,
+                      controller: _model.textController5,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Number of Passenger Seats',
@@ -327,6 +330,8 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       keyboardType: TextInputType.number,
+                      validator:
+                          _model.textController5Validator.asValidator(context),
                     ),
                   ),
                   Align(
@@ -345,7 +350,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                       borderRadius: BorderRadius.circular(8),
                       child: CachedNetworkImage(
                         imageUrl: valueOrDefault<String>(
-                          uploadedFileUrl,
+                          _model.uploadedFileUrl,
                           'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/add_image2.png?alt=media&token=4ffe4096-df47-4d0f-b96b-e717df64c7c3',
                         ),
                         width: MediaQuery.of(context).size.width,
@@ -353,7 +358,8 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                       ),
                     ),
                   ),
-                  if (uploadedFileUrl != null && uploadedFileUrl != '')
+                  if (_model.uploadedFileUrl != null &&
+                      _model.uploadedFileUrl != '')
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: Row(
@@ -370,9 +376,9 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                                       'ADD_VEHICLE_PAGE_CANCEL_BTN_ON_TAP');
                                   logFirebaseEvent('Button_delete_media');
                                   await FirebaseStorage.instance
-                                      .refFromURL(uploadedFileUrl)
+                                      .refFromURL(_model.uploadedFileUrl)
                                       .delete();
-                                  logFirebaseEvent('Button_update_local_state');
+                                  logFirebaseEvent('Button_update_app_state');
                                   FFAppState().update(() {
                                     FFAppState().backButtonFileUpload = false;
                                   });
@@ -415,42 +421,50 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'ADD_VEHICLE_PAGE_SAVE_BTN_ON_TAP');
-                                  if (textController1!.text != null &&
-                                      textController1!.text != '') {
-                                    if (textController2!.text != null &&
-                                        textController2!.text != '') {
-                                      if (textController3!.text != null &&
-                                          textController3!.text != '') {
-                                        if (textController4!.text != null &&
-                                            textController4!.text != '') {
-                                          if (textController5!.text != null &&
-                                              textController5!.text != '') {
-                                            if (uploadedFileUrl != null &&
-                                                uploadedFileUrl != '') {
+                                  if (_model.textController1.text != null &&
+                                      _model.textController1.text != '') {
+                                    if (_model.textController2.text != null &&
+                                        _model.textController2.text != '') {
+                                      if (_model.textController3.text != null &&
+                                          _model.textController3.text != '') {
+                                        if (_model.textController4.text !=
+                                                null &&
+                                            _model.textController4.text != '') {
+                                          if (_model.textController5.text !=
+                                                  null &&
+                                              _model.textController5.text !=
+                                                  '') {
+                                            if (_model.uploadedFileUrl !=
+                                                    null &&
+                                                _model.uploadedFileUrl != '') {
                                               logFirebaseEvent(
                                                   'Button_backend_call');
 
                                               final vehiclesCreateData =
                                                   createVehiclesRecordData(
                                                 registrationNumber:
-                                                    textController4!.text,
+                                                    _model.textController4.text,
                                                 numberOfPassengerSeats:
-                                                    int.tryParse(
-                                                        textController5!.text),
-                                                imageURL: uploadedFileUrl,
-                                                make: textController1!.text,
-                                                model: textController2!.text,
-                                                year: textController3!.text,
+                                                    int.tryParse(_model
+                                                        .textController5.text),
+                                                imageURL:
+                                                    _model.uploadedFileUrl,
+                                                make:
+                                                    _model.textController1.text,
+                                                model:
+                                                    _model.textController2.text,
+                                                year:
+                                                    _model.textController3.text,
                                                 archived: false,
                                               );
                                               await VehiclesRecord.createDoc(
                                                       currentUserReference!)
                                                   .set(vehiclesCreateData);
                                               logFirebaseEvent(
-                                                  'Button_update_local_state');
+                                                  'Button_update_app_state');
                                               FFAppState().update(() {
                                                 FFAppState().oldPhotoURLTemp =
-                                                    uploadedFileUrl;
+                                                    _model.uploadedFileUrl;
                                                 FFAppState()
                                                         .backButtonFileUpload =
                                                     false;
@@ -630,16 +644,18 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ],
                       ),
                     ),
-                  if (uploadedFileUrl == null || uploadedFileUrl == '')
+                  if (_model.uploadedFileUrl == null ||
+                      _model.uploadedFileUrl == '')
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: FFButtonWidget(
                         onPressed: () async {
                           logFirebaseEvent(
                               'ADD_VEHICLE_PAGE_UPLOAD_NEW_BTN_ON_TAP');
-                          logFirebaseEvent('Button_update_local_state');
+                          logFirebaseEvent('Button_update_app_state');
                           FFAppState().update(() {
-                            FFAppState().oldPhotoURLTemp = uploadedFileUrl;
+                            FFAppState().oldPhotoURLTemp =
+                                _model.uploadedFileUrl;
                           });
                           logFirebaseEvent('Button_upload_media_to_firebase');
                           final selectedMedia =
@@ -651,7 +667,8 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            setState(() => isMediaUploading = true);
+                            setState(() => _model.isMediaUploading = true);
+                            var selectedUploadedFiles = <FFUploadedFile>[];
                             var downloadUrls = <String>[];
                             try {
                               showUploadMessage(
@@ -659,6 +676,15 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                                 'Uploading file...',
                                 showLoading: true,
                               );
+                              selectedUploadedFiles = selectedMedia
+                                  .map((m) => FFUploadedFile(
+                                        name: m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                      ))
+                                  .toList();
+
                               downloadUrls = (await Future.wait(
                                 selectedMedia.map(
                                   (m) async =>
@@ -671,11 +697,16 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                             } finally {
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
-                              isMediaUploading = false;
+                              _model.isMediaUploading = false;
                             }
-                            if (downloadUrls.length == selectedMedia.length) {
-                              setState(
-                                  () => uploadedFileUrl = downloadUrls.first);
+                            if (selectedUploadedFiles.length ==
+                                    selectedMedia.length &&
+                                downloadUrls.length == selectedMedia.length) {
+                              setState(() {
+                                _model.uploadedLocalFile =
+                                    selectedUploadedFiles.first;
+                                _model.uploadedFileUrl = downloadUrls.first;
+                              });
                               showUploadMessage(context, 'Success!');
                             } else {
                               setState(() {});
@@ -685,7 +716,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                             }
                           }
 
-                          logFirebaseEvent('Button_update_local_state');
+                          logFirebaseEvent('Button_update_app_state');
                           FFAppState().update(() {
                             FFAppState().backButtonFileUpload = true;
                           });

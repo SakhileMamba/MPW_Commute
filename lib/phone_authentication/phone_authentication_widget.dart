@@ -5,10 +5,11 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'phone_authentication_model.dart';
+export 'phone_authentication_model.dart';
 
 class PhoneAuthenticationWidget extends StatefulWidget {
   const PhoneAuthenticationWidget({
@@ -24,30 +25,27 @@ class PhoneAuthenticationWidget extends StatefulWidget {
 }
 
 class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
-  TextEditingController? phoneNumberTextFieldController;
-  final _unfocusNode = FocusNode();
+  late PhoneAuthenticationModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('PHONE_AUTHENTICATION_phoneAuthentication');
-      logFirebaseEvent('phoneAuthentication_update_local_state');
-      FFAppState().referrerRef = widget.referrerRef;
-    });
+    _model = createModel(context, () => PhoneAuthenticationModel());
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phoneAuthentication'});
-    phoneNumberTextFieldController = TextEditingController();
+    _model.phoneNumberTextFieldController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    phoneNumberTextFieldController?.dispose();
     super.dispose();
   }
 
@@ -89,7 +87,7 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Please enter your phone number.',
+                      'Select your country\'s dialing code and enter your phone number.',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                     Padding(
@@ -114,7 +112,8 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                               child: TextFormField(
-                                controller: phoneNumberTextFieldController,
+                                controller:
+                                    _model.phoneNumberTextFieldController,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: 'Phone Number',
@@ -166,6 +165,9 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
                                     ),
                                 textAlign: TextAlign.start,
                                 keyboardType: TextInputType.phone,
+                                validator: _model
+                                    .phoneNumberTextFieldControllerValidator
+                                    .asValidator(context),
                               ),
                             ),
                           ),
@@ -180,7 +182,7 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
                         'PHONE_AUTHENTICATION_REQUEST_CODE_BTN_ON');
                     logFirebaseEvent('Button_auth');
                     final phoneNumberVal =
-                        '${FFAppState().countryDiallingCode}${phoneNumberTextFieldController!.text}';
+                        '${FFAppState().countryDiallingCode}${_model.phoneNumberTextFieldController.text}';
                     if (phoneNumberVal == null ||
                         phoneNumberVal.isEmpty ||
                         !phoneNumberVal.startsWith('+')) {

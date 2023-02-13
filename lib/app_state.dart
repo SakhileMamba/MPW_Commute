@@ -35,6 +35,12 @@ class FFAppState extends ChangeNotifier {
     _persistedTermsOfServiceURL =
         prefs.getString('ff_persistedTermsOfServiceURL') ??
             _persistedTermsOfServiceURL;
+    _isProfilePicHintGiven =
+        prefs.getBool('ff_isProfilePicHintGiven') ?? _isProfilePicHintGiven;
+    _isIdPicHintGiven =
+        prefs.getBool('ff_isIdPicHintGiven') ?? _isIdPicHintGiven;
+    _isLicenseHintPicGiven =
+        prefs.getBool('ff_isLicenseHintPicGiven') ?? _isLicenseHintPicGiven;
   }
 
   void update(VoidCallback callback) {
@@ -54,18 +60,6 @@ class FFAppState extends ChangeNotifier {
   String get scheduleDepartureDatetime => _scheduleDepartureDatetime;
   set scheduleDepartureDatetime(String _value) {
     _scheduleDepartureDatetime = _value;
-  }
-
-  String _filterOrigin = '';
-  String get filterOrigin => _filterOrigin;
-  set filterOrigin(String _value) {
-    _filterOrigin = _value;
-  }
-
-  String _filterDestination = '';
-  String get filterDestination => _filterDestination;
-  set filterDestination(String _value) {
-    _filterDestination = _value;
   }
 
   DateTime? _filterDepartureDatetime;
@@ -111,8 +105,7 @@ class FFAppState extends ChangeNotifier {
     _oldPhotoURLTemp = _value;
   }
 
-  String _currentPhotoURLTemp =
-      'https://firebasestorage.googleapis.com/v0/b/mpw-commute.appspot.com/o/placeholder.png?alt=media&token=ce8e634c-e229-4c0e-a8bb-093f7cfa3c8e';
+  String _currentPhotoURLTemp = '';
   String get currentPhotoURLTemp => _currentPhotoURLTemp;
   set currentPhotoURLTemp(String _value) {
     _currentPhotoURLTemp = _value;
@@ -277,6 +270,57 @@ class FFAppState extends ChangeNotifier {
   String get countryDiallingCode => _countryDiallingCode;
   set countryDiallingCode(String _value) {
     _countryDiallingCode = _value;
+  }
+
+  dynamic _filterTempOriginReversed;
+  dynamic get filterTempOriginReversed => _filterTempOriginReversed;
+  set filterTempOriginReversed(dynamic _value) {
+    _filterTempOriginReversed = _value;
+  }
+
+  dynamic _filterTempDestinationReversed;
+  dynamic get filterTempDestinationReversed => _filterTempDestinationReversed;
+  set filterTempDestinationReversed(dynamic _value) {
+    _filterTempDestinationReversed = _value;
+  }
+
+  String _filterCallingSource = '';
+  String get filterCallingSource => _filterCallingSource;
+  set filterCallingSource(String _value) {
+    _filterCallingSource = _value;
+  }
+
+  LatLng? _filterTempOriginLatLng;
+  LatLng? get filterTempOriginLatLng => _filterTempOriginLatLng;
+  set filterTempOriginLatLng(LatLng? _value) {
+    _filterTempOriginLatLng = _value;
+  }
+
+  LatLng? _filterTempDestinationLatLng;
+  LatLng? get filterTempDestinationLatLng => _filterTempDestinationLatLng;
+  set filterTempDestinationLatLng(LatLng? _value) {
+    _filterTempDestinationLatLng = _value;
+  }
+
+  bool _isProfilePicHintGiven = false;
+  bool get isProfilePicHintGiven => _isProfilePicHintGiven;
+  set isProfilePicHintGiven(bool _value) {
+    _isProfilePicHintGiven = _value;
+    prefs.setBool('ff_isProfilePicHintGiven', _value);
+  }
+
+  bool _isIdPicHintGiven = false;
+  bool get isIdPicHintGiven => _isIdPicHintGiven;
+  set isIdPicHintGiven(bool _value) {
+    _isIdPicHintGiven = _value;
+    prefs.setBool('ff_isIdPicHintGiven', _value);
+  }
+
+  bool _isLicenseHintPicGiven = false;
+  bool get isLicenseHintPicGiven => _isLicenseHintPicGiven;
+  set isLicenseHintPicGiven(bool _value) {
+    _isLicenseHintPicGiven = _value;
+    prefs.setBool('ff_isLicenseHintPicGiven', _value);
   }
 }
 

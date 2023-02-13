@@ -8,12 +8,15 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'approve_drivers_model.dart';
+export 'approve_drivers_model.dart';
 
 class ApproveDriversWidget extends StatefulWidget {
   const ApproveDriversWidget({Key? key}) : super(key: key);
@@ -23,17 +26,16 @@ class ApproveDriversWidget extends StatefulWidget {
 }
 
 class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
-  PagingController<DocumentSnapshot?, DriverVerificationRequestsRecord>?
-      _pagingController;
-  Query? _pagingQuery;
-  List<StreamSubscription?> _streamSubscriptions = [];
+  late ApproveDriversModel _model;
 
-  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ApproveDriversModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'approveDrivers'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -41,7 +43,8 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
 
   @override
   void dispose() {
-    _streamSubscriptions.forEach((s) => s?.cancel());
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -94,23 +97,23 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
                   (driverVerificationRequestsRecord) =>
                       driverVerificationRequestsRecord
                           .orderBy('request_datetime');
-              if (_pagingController != null) {
+              if (_model.pagingController != null) {
                 final query =
                     queryBuilder(DriverVerificationRequestsRecord.collection);
-                if (query != _pagingQuery) {
+                if (query != _model.pagingQuery) {
                   // The query has changed
-                  _pagingQuery = query;
-                  _streamSubscriptions.forEach((s) => s?.cancel());
-                  _streamSubscriptions.clear();
-                  _pagingController!.refresh();
+                  _model.pagingQuery = query;
+                  _model.streamSubscriptions.forEach((s) => s?.cancel());
+                  _model.streamSubscriptions.clear();
+                  _model.pagingController!.refresh();
                 }
-                return _pagingController!;
+                return _model.pagingController!;
               }
 
-              _pagingController = PagingController(firstPageKey: null);
-              _pagingQuery =
+              _model.pagingController = PagingController(firstPageKey: null);
+              _model.pagingQuery =
                   queryBuilder(DriverVerificationRequestsRecord.collection);
-              _pagingController!.addPageRequestListener((nextPageMarker) {
+              _model.pagingController!.addPageRequestListener((nextPageMarker) {
                 queryDriverVerificationRequestsRecordPage(
                   queryBuilder: (driverVerificationRequestsRecord) =>
                       driverVerificationRequestsRecord
@@ -119,30 +122,30 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
                   pageSize: 25,
                   isStream: true,
                 ).then((page) {
-                  _pagingController!.appendPage(
+                  _model.pagingController!.appendPage(
                     page.data,
                     page.nextPageMarker,
                   );
                   final streamSubscription = page.dataStream?.listen((data) {
                     data.forEach((item) {
-                      final itemIndexes = _pagingController!.itemList!
+                      final itemIndexes = _model.pagingController!.itemList!
                           .asMap()
                           .map((k, v) => MapEntry(v.reference.id, k));
                       final index = itemIndexes[item.reference.id];
-                      final items = _pagingController!.itemList!;
+                      final items = _model.pagingController!.itemList!;
                       if (index != null) {
                         items.replaceRange(index, index + 1, [item]);
-                        _pagingController!.itemList = {
+                        _model.pagingController!.itemList = {
                           for (var item in items) item.reference: item
                         }.values.toList();
                       }
                     });
                     setState(() {});
                   });
-                  _streamSubscriptions.add(streamSubscription);
+                  _model.streamSubscriptions.add(streamSubscription);
                 });
               });
-              return _pagingController!;
+              return _model.pagingController!;
             }(),
             padding: EdgeInsets.zero,
             scrollDirection: Axis.vertical,
@@ -162,7 +165,7 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
 
               itemBuilder: (context, _, listViewIndex) {
                 final listViewDriverVerificationRequestsRecord =
-                    _pagingController!.itemList![listViewIndex];
+                    _model.pagingController!.itemList![listViewIndex];
                 return StreamBuilder<UsersRecord>(
                   stream: UsersRecord.getDocument(
                       listViewDriverVerificationRequestsRecord
@@ -460,10 +463,10 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
                                                   builder:
                                                       (alertDialogContext) {
                                                     return AlertDialog(
-                                                      title: Text(
-                                                          'Decline Driver'),
+                                                      title:
+                                                          Text('Reject Driver'),
                                                       content: Text(
-                                                          'Are you sure you want to decline this driver\'s verification?'),
+                                                          'Are you sure you want to reject this driver\'s verification?'),
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () =>
@@ -486,26 +489,35 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
                                                 false;
                                         if (confirmDialogResponse) {
                                           logFirebaseEvent(
+                                              'Button_delete_media');
+                                          await FirebaseStorage.instance
+                                              .refFromURL(cardUsersRecord
+                                                  .driverLicensePhotoPath!)
+                                              .delete();
+                                          logFirebaseEvent(
                                               'Button_backend_call');
 
-                                          final usersUpdateData =
-                                              createUsersRecordData(
-                                            licenseVerificationSent: false,
-                                          );
+                                          final usersUpdateData = {
+                                            ...createUsersRecordData(
+                                              licenseVerificationSent: false,
+                                            ),
+                                            'driver_license_photo_path':
+                                                FieldValue.delete(),
+                                          };
                                           await cardUsersRecord.reference
                                               .update(usersUpdateData);
                                           logFirebaseEvent(
                                               'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
-                                                'Driving Verification: Declined',
+                                                'Driving Status: Rejected',
                                             notificationText:
-                                                'Your driving verification has been declined. Please review your driver\'s license  details and send a new verification request.',
+                                                'Your driver\'s license has been rejected. Please review your license and resend your verification request.',
                                             notificationSound: 'default',
                                             userRefs: [
                                               cardUsersRecord.reference
                                             ],
-                                            initialPageName: 'driversLicense',
+                                            initialPageName: 'account',
                                             parameterData: {},
                                           );
                                           logFirebaseEvent(
@@ -603,9 +615,9 @@ class _ApproveDriversWidgetState extends State<ApproveDriversWidget> {
                                               'Button_trigger_push_notification');
                                           triggerPushNotification(
                                             notificationTitle:
-                                                'Driving Verification: Accepted',
+                                                'Driving Status: Accepted',
                                             notificationText:
-                                                'You have been verified as a driver. You may start scheduling drives for your potential passenger to find you.',
+                                                'You have been verified to drive. You may start scheduling drives to attract potential passengers.',
                                             notificationSound: 'default',
                                             userRefs: [
                                               cardUsersRecord.reference

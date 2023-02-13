@@ -17,6 +17,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'create_announcement_model.dart';
+export 'create_announcement_model.dart';
 
 class CreateAnnouncementWidget extends StatefulWidget {
   const CreateAnnouncementWidget({Key? key}) : super(key: key);
@@ -27,34 +29,29 @@ class CreateAnnouncementWidget extends StatefulWidget {
 }
 
 class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  late CreateAnnouncementModel _model;
 
-  String? radioButtonValue;
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  bool? switchValue;
-  TextEditingController? textController3;
-  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => CreateAnnouncementModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'createAnnouncement'});
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
+    _model.textController1 = TextEditingController();
+    _model.textController2 = TextEditingController();
+    _model.textController3 = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    textController1?.dispose();
-    textController2?.dispose();
-    textController3?.dispose();
     super.dispose();
   }
 
@@ -90,7 +87,7 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                   child: TextFormField(
-                    controller: textController1,
+                    controller: _model.textController1,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Title',
@@ -126,12 +123,14 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1,
                     maxLines: null,
+                    validator:
+                        _model.textController1Validator.asValidator(context),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                   child: TextFormField(
-                    controller: textController2,
+                    controller: _model.textController2,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Message',
@@ -167,6 +166,8 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1,
                     maxLines: null,
+                    validator:
+                        _model.textController2Validator.asValidator(context),
                   ),
                 ),
                 Padding(
@@ -180,9 +181,9 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                         style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                       Switch(
-                        value: switchValue ??= true,
+                        value: _model.switchValue ??= true,
                         onChanged: (newValue) async {
-                          setState(() => switchValue = newValue!);
+                          setState(() => _model.switchValue = newValue!);
                         },
                         activeColor: FlutterFlowTheme.of(context).primaryText,
                       ),
@@ -200,7 +201,8 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                   child: FlutterFlowRadioButton(
                     options: ['none', 'image', 'video', 'youtube'].toList(),
-                    onChanged: (val) => setState(() => radioButtonValue = val),
+                    onChanged: (val) =>
+                        setState(() => _model.radioButtonValue = val),
                     optionHeight: 25,
                     textStyle: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Roboto',
@@ -215,11 +217,11 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                     verticalAlignment: WrapCrossAlignment.start,
                   ),
                 ),
-                if (radioButtonValue == 'youtube')
+                if (_model.radioButtonValue == 'youtube')
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                     child: TextFormField(
-                      controller: textController3,
+                      controller: _model.textController3,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -255,10 +257,12 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                         ),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
+                      validator:
+                          _model.textController3Validator.asValidator(context),
                     ),
                   ),
-                if ((radioButtonValue == 'image') ||
-                    (radioButtonValue == 'video'))
+                if ((_model.radioButtonValue == 'image') ||
+                    (_model.radioButtonValue == 'video'))
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
                     child: SingleChildScrollView(
@@ -266,7 +270,7 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (radioButtonValue == 'image')
+                          if (_model.radioButtonValue == 'image')
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
@@ -281,21 +285,21 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                       type: PageTransitionType.fade,
                                       child: FlutterFlowExpandedImageView(
                                         image: CachedNetworkImage(
-                                          imageUrl: uploadedFileUrl,
+                                          imageUrl: _model.uploadedFileUrl,
                                           fit: BoxFit.contain,
                                         ),
                                         allowRotation: false,
-                                        tag: uploadedFileUrl,
+                                        tag: _model.uploadedFileUrl,
                                         useHeroAnimation: true,
                                       ),
                                     ),
                                   );
                                 },
                                 child: Hero(
-                                  tag: uploadedFileUrl,
+                                  tag: _model.uploadedFileUrl,
                                   transitionOnUserGestures: true,
                                   child: CachedNetworkImage(
-                                    imageUrl: uploadedFileUrl,
+                                    imageUrl: _model.uploadedFileUrl,
                                     width: MediaQuery.of(context).size.width,
                                     height: 250,
                                     fit: BoxFit.cover,
@@ -303,12 +307,12 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                 ),
                               ),
                             ),
-                          if (radioButtonValue == 'video')
+                          if (_model.radioButtonValue == 'video')
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowVideoPlayer(
-                                path: uploadedFileUrl,
+                                path: _model.uploadedFileUrl,
                                 videoType: VideoType.network,
                                 autoPlay: false,
                                 looping: true,
@@ -317,7 +321,8 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                 allowPlaybackSpeedMenu: false,
                               ),
                             ),
-                          if (uploadedFileUrl == null || uploadedFileUrl == '')
+                          if (_model.uploadedFileUrl == null ||
+                              _model.uploadedFileUrl == '')
                             FFButtonWidget(
                               onPressed: () async {
                                 logFirebaseEvent(
@@ -345,7 +350,10 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                     selectedMedia.every((m) =>
                                         validateFileFormat(
                                             m.storagePath, context))) {
-                                  setState(() => isMediaUploading = true);
+                                  setState(
+                                      () => _model.isMediaUploading = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
                                   var downloadUrls = <String>[];
                                   try {
                                     showUploadMessage(
@@ -353,6 +361,16 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                       'Uploading file...',
                                       showLoading: true,
                                     );
+                                    selectedUploadedFiles = selectedMedia
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                              height: m.dimensions?.height,
+                                              width: m.dimensions?.width,
+                                            ))
+                                        .toList();
+
                                     downloadUrls = (await Future.wait(
                                       selectedMedia.map(
                                         (m) async => await uploadData(
@@ -365,12 +383,18 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                   } finally {
                                     ScaffoldMessenger.of(context)
                                         .hideCurrentSnackBar();
-                                    isMediaUploading = false;
+                                    _model.isMediaUploading = false;
                                   }
-                                  if (downloadUrls.length ==
-                                      selectedMedia.length) {
-                                    setState(() =>
-                                        uploadedFileUrl = downloadUrls.first);
+                                  if (selectedUploadedFiles.length ==
+                                          selectedMedia.length &&
+                                      downloadUrls.length ==
+                                          selectedMedia.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl =
+                                          downloadUrls.first;
+                                    });
                                     showUploadMessage(context, 'Success!');
                                   } else {
                                     setState(() {});
@@ -380,10 +404,10 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                   }
                                 }
 
-                                logFirebaseEvent('Button_update_local_state');
+                                logFirebaseEvent('Button_update_app_state');
                                 setState(() {
                                   FFAppState().currentAnnouncementMediaURL =
-                                      uploadedFileUrl;
+                                      _model.uploadedFileUrl;
                                 });
                               },
                               text: 'Upload',
@@ -502,27 +526,29 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'CREATE_ANNOUNCEMENT_PAGE_SAVE_BTN_ON_TAP');
-                                  if (textController1!.text != null &&
-                                      textController1!.text != '') {
-                                    if (textController2!.text != null &&
-                                        textController2!.text != '') {
-                                      if (radioButtonValue != null &&
-                                          radioButtonValue != '') {
-                                        if (radioButtonValue == 'none') {
-                                          if (switchValue!) {
+                                  if (_model.textController1.text != null &&
+                                      _model.textController1.text != '') {
+                                    if (_model.textController2.text != null &&
+                                        _model.textController2.text != '') {
+                                      if (_model.radioButtonValue != null &&
+                                          _model.radioButtonValue != '') {
+                                        if (_model.radioButtonValue == 'none') {
+                                          if (_model.switchValue!) {
                                             logFirebaseEvent(
                                                 'Button_backend_call');
 
-                                            final announcementsCreateData =
+                                            final announcementsCreateData1 =
                                                 createAnnouncementsRecordData(
                                               createdTime: getCurrentTimestamp,
-                                              title: textController1!.text,
-                                              message: textController2!.text,
+                                              title:
+                                                  _model.textController1.text,
+                                              message:
+                                                  _model.textController2.text,
                                               archived: false,
                                             );
                                             await AnnouncementsRecord.collection
                                                 .doc()
-                                                .set(announcementsCreateData);
+                                                .set(announcementsCreateData1);
                                             logFirebaseEvent(
                                                 'Button_trigger_push_notification');
                                             triggerPushNotification(
@@ -567,16 +593,18 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                             logFirebaseEvent(
                                                 'Button_backend_call');
 
-                                            final announcementsCreateData =
+                                            final announcementsCreateData2 =
                                                 createAnnouncementsRecordData(
                                               createdTime: getCurrentTimestamp,
-                                              title: textController1!.text,
-                                              message: textController2!.text,
+                                              title:
+                                                  _model.textController1.text,
+                                              message:
+                                                  _model.textController2.text,
                                               archived: false,
                                             );
                                             await AnnouncementsRecord.collection
                                                 .doc()
-                                                .set(announcementsCreateData);
+                                                .set(announcementsCreateData2);
                                             logFirebaseEvent(
                                                 'Button_trigger_push_notification');
                                             triggerPushNotification(
@@ -616,30 +644,35 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                             return;
                                           }
                                         } else {
-                                          if (radioButtonValue == 'youtube') {
-                                            if (textController3!.text != null &&
-                                                textController3!.text != '') {
-                                              if (switchValue!) {
+                                          if (_model.radioButtonValue ==
+                                              'youtube') {
+                                            if (_model.textController3.text !=
+                                                    null &&
+                                                _model.textController3.text !=
+                                                    '') {
+                                              if (_model.switchValue!) {
                                                 logFirebaseEvent(
                                                     'Button_backend_call');
 
-                                                final announcementsCreateData =
+                                                final announcementsCreateData3 =
                                                     createAnnouncementsRecordData(
                                                   createdTime:
                                                       getCurrentTimestamp,
-                                                  title: textController1!.text,
-                                                  message:
-                                                      textController2!.text,
-                                                  mediaType: radioButtonValue,
-                                                  mediaURL:
-                                                      textController3!.text,
+                                                  title: _model
+                                                      .textController1.text,
+                                                  message: _model
+                                                      .textController2.text,
+                                                  mediaType:
+                                                      _model.radioButtonValue,
+                                                  mediaURL: _model
+                                                      .textController3.text,
                                                   archived: false,
                                                 );
                                                 await AnnouncementsRecord
                                                     .collection
                                                     .doc()
                                                     .set(
-                                                        announcementsCreateData);
+                                                        announcementsCreateData3);
                                                 logFirebaseEvent(
                                                     'Button_trigger_push_notification');
                                                 triggerPushNotification(
@@ -689,23 +722,25 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                                 logFirebaseEvent(
                                                     'Button_backend_call');
 
-                                                final announcementsCreateData =
+                                                final announcementsCreateData4 =
                                                     createAnnouncementsRecordData(
                                                   createdTime:
                                                       getCurrentTimestamp,
-                                                  title: textController1!.text,
-                                                  message:
-                                                      textController2!.text,
-                                                  mediaType: radioButtonValue,
-                                                  mediaURL:
-                                                      textController3!.text,
+                                                  title: _model
+                                                      .textController1.text,
+                                                  message: _model
+                                                      .textController2.text,
+                                                  mediaType:
+                                                      _model.radioButtonValue,
+                                                  mediaURL: _model
+                                                      .textController3.text,
                                                   archived: false,
                                                 );
                                                 await AnnouncementsRecord
                                                     .collection
                                                     .doc()
                                                     .set(
-                                                        announcementsCreateData);
+                                                        announcementsCreateData4);
                                                 logFirebaseEvent(
                                                     'Button_trigger_push_notification');
                                                 triggerPushNotification(
@@ -773,28 +808,32 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                               return;
                                             }
                                           } else {
-                                            if (uploadedFileUrl != null &&
-                                                uploadedFileUrl != '') {
-                                              if (switchValue!) {
+                                            if (_model.uploadedFileUrl !=
+                                                    null &&
+                                                _model.uploadedFileUrl != '') {
+                                              if (_model.switchValue!) {
                                                 logFirebaseEvent(
                                                     'Button_backend_call');
 
-                                                final announcementsCreateData =
+                                                final announcementsCreateData5 =
                                                     createAnnouncementsRecordData(
                                                   createdTime:
                                                       getCurrentTimestamp,
-                                                  title: textController1!.text,
-                                                  message:
-                                                      textController2!.text,
-                                                  mediaType: radioButtonValue,
-                                                  mediaURL: uploadedFileUrl,
+                                                  title: _model
+                                                      .textController1.text,
+                                                  message: _model
+                                                      .textController2.text,
+                                                  mediaType:
+                                                      _model.radioButtonValue,
+                                                  mediaURL:
+                                                      _model.uploadedFileUrl,
                                                   archived: false,
                                                 );
                                                 await AnnouncementsRecord
                                                     .collection
                                                     .doc()
                                                     .set(
-                                                        announcementsCreateData);
+                                                        announcementsCreateData5);
                                                 logFirebaseEvent(
                                                     'Button_trigger_push_notification');
                                                 triggerPushNotification(
@@ -844,21 +883,23 @@ class _CreateAnnouncementWidgetState extends State<CreateAnnouncementWidget> {
                                                 logFirebaseEvent(
                                                     'Button_backend_call');
 
-                                                final announcementsCreateData =
+                                                final announcementsCreateData6 =
                                                     createAnnouncementsRecordData(
                                                   createdTime:
                                                       getCurrentTimestamp,
-                                                  title: textController1!.text,
-                                                  message:
-                                                      textController2!.text,
-                                                  mediaType: radioButtonValue,
+                                                  title: _model
+                                                      .textController1.text,
+                                                  message: _model
+                                                      .textController2.text,
+                                                  mediaType:
+                                                      _model.radioButtonValue,
                                                   archived: false,
                                                 );
                                                 await AnnouncementsRecord
                                                     .collection
                                                     .doc()
                                                     .set(
-                                                        announcementsCreateData);
+                                                        announcementsCreateData6);
                                                 logFirebaseEvent(
                                                     'Button_trigger_push_notification');
                                                 triggerPushNotification(

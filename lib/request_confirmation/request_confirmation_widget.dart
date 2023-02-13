@@ -15,6 +15,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'request_confirmation_model.dart';
+export 'request_confirmation_model.dart';
 
 class RequestConfirmationWidget extends StatefulWidget {
   const RequestConfirmationWidget({Key? key}) : super(key: key);
@@ -25,12 +27,16 @@ class RequestConfirmationWidget extends StatefulWidget {
 }
 
 class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
-  final _unfocusNode = FocusNode();
+  late RequestConfirmationModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => RequestConfirmationModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'requestConfirmation'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -38,6 +44,8 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -114,7 +122,7 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -886,7 +894,7 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                                           .doc()
                                           .set(commutesCreateData);
                                       logFirebaseEvent(
-                                          'Button_update_local_state');
+                                          'Button_update_app_state');
                                       FFAppState().chosenVehicle = null;
                                       FFAppState().tempOriginReversed = null;
                                       FFAppState().tempDestinationReversed =
@@ -1146,9 +1154,10 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                                           .tempPassengerHailingDriverRef,
                                       'passenger': FFAppState()
                                           .tempHailingPassengerAccountRef,
+                                      'notNotificationOpen': false,
                                     },
                                   );
-                                  logFirebaseEvent('Button_update_local_state');
+                                  logFirebaseEvent('Button_update_app_state');
                                   FFAppState().tempSeats = 0;
                                   FFAppState().tempPrice = 0.0;
                                   FFAppState().chosenVehicle = null;
@@ -1450,7 +1459,7 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                               await PassengersHailingRecord.collection
                                   .doc()
                                   .set(passengersHailingCreateData);
-                              logFirebaseEvent('Button_update_local_state');
+                              logFirebaseEvent('Button_update_app_state');
                               FFAppState().seatsPageInitialIndex = 1;
                               FFAppState().tempOriginReversed = null;
                               FFAppState().tempDestinationReversed = null;

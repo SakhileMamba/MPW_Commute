@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'price_model.dart';
+export 'price_model.dart';
 
 class PriceWidget extends StatefulWidget {
   const PriceWidget({Key? key}) : super(key: key);
@@ -17,22 +19,26 @@ class PriceWidget extends StatefulWidget {
 }
 
 class _PriceWidgetState extends State<PriceWidget> {
-  TextEditingController? textController;
-  final _unfocusNode = FocusNode();
+  late PriceModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => PriceModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'price'});
-    textController = TextEditingController();
+    _model.textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
-    textController?.dispose();
     super.dispose();
   }
 
@@ -108,7 +114,7 @@ class _PriceWidgetState extends State<PriceWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -167,7 +173,7 @@ class _PriceWidgetState extends State<PriceWidget> {
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                             child: TextFormField(
-                              controller: textController,
+                              controller: _model.textController,
                               obscureText: false,
                               decoration: InputDecoration(
                                 hintText: 'Not set',
@@ -207,6 +213,8 @@ class _PriceWidgetState extends State<PriceWidget> {
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                       signed: true, decimal: true),
+                              validator: _model.textControllerValidator
+                                  .asValidator(context),
                             ),
                           ),
                         ),
@@ -226,10 +234,10 @@ class _PriceWidgetState extends State<PriceWidget> {
                   onPressed: () async {
                     logFirebaseEvent('PRICE_PAGE_NEXT_BTN_ON_TAP');
                     if (functions.isDoubleGreaterThanZero(
-                        double.parse(textController!.text))) {
-                      logFirebaseEvent('Button_update_local_state');
+                        double.parse(_model.textController.text))) {
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().tempPrice =
-                          double.parse(textController!.text);
+                          double.parse(_model.textController.text);
                       logFirebaseEvent('Button_navigate_to');
 
                       context.pushNamed('requestConfirmation');

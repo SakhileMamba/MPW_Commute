@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'choose_vehicle_model.dart';
+export 'choose_vehicle_model.dart';
 
 class ChooseVehicleWidget extends StatefulWidget {
   const ChooseVehicleWidget({Key? key}) : super(key: key);
@@ -18,12 +20,16 @@ class ChooseVehicleWidget extends StatefulWidget {
 }
 
 class _ChooseVehicleWidgetState extends State<ChooseVehicleWidget> {
-  final _unfocusNode = FocusNode();
+  late ChooseVehicleModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ChooseVehicleModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'chooseVehicle'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -31,6 +37,8 @@ class _ChooseVehicleWidgetState extends State<ChooseVehicleWidget> {
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -107,7 +115,7 @@ class _ChooseVehicleWidgetState extends State<ChooseVehicleWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                logFirebaseEvent('IconButton_update_local_state');
+                logFirebaseEvent('IconButton_update_app_state');
                 FFAppState().tempRequestType = '';
                 FFAppState().tempDepartureDateTime = null;
                 FFAppState().tempSeats = 0;
@@ -195,7 +203,7 @@ class _ChooseVehicleWidgetState extends State<ChooseVehicleWidget> {
                                       logFirebaseEvent(
                                           'CHOOSE_VEHICLE_Container_wf52k8ep_ON_TAP');
                                       logFirebaseEvent(
-                                          'Container_update_local_state');
+                                          'Container_update_app_state');
                                       setState(() {
                                         FFAppState().chosenVehicle =
                                             rowVehiclesRecord.reference;
