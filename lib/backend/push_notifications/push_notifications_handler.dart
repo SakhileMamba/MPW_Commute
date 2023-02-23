@@ -119,8 +119,8 @@ final parametersBuilderMap =
   'drivers': ParameterData.none(),
   'passengers': ParameterData.none(),
   'drives': ParameterData.none(),
-  'seats': ParameterData.none(),
   'account': ParameterData.none(),
+  'seats': ParameterData.none(),
   'driveDetails': (data) async => ParameterData(
         allParams: {
           'commuteDoc': await getDocumentParameter<CommutesRecord>(
@@ -156,7 +156,6 @@ final parametersBuilderMap =
   'birthdate': ParameterData.none(),
   'successLottie': ParameterData.none(),
   'beginRequest': ParameterData.none(),
-  'requestType': ParameterData.none(),
   'originType': ParameterData.none(),
   'origin': ParameterData.none(),
   'destination': ParameterData.none(),
@@ -164,9 +163,7 @@ final parametersBuilderMap =
   'availableSeats': ParameterData.none(),
   'chooseVehicle': ParameterData.none(),
   'price': ParameterData.none(),
-  'announcements': ParameterData.none(),
   'requestConfirmation': ParameterData.none(),
-  'createAnnouncement': ParameterData.none(),
   'filterOriginType': ParameterData.none(),
   'filterOrigin': ParameterData.none(),
   'filterDestination': ParameterData.none(),

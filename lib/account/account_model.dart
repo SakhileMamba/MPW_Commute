@@ -11,6 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AccountModel extends FlutterFlowModel {
+  ///  State fields for stateful widgets in this page.
+
+  // State field(s) for SwitchListTile widget.
+  bool? switchListTileValue;
+
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

@@ -112,58 +112,56 @@ class _FilterOriginTypeWidgetState extends State<FilterOriginTypeWidget> {
                     logFirebaseEvent('FILTER_ORIGIN_TYPE_PAGE_NEXT_BTN_ON_TAP');
                     currentUserLocationValue = await getCurrentUserLocation(
                         defaultLocation: LatLng(0.0, 0.0));
-                    var _shouldSetState = false;
                     if (_model.radioButtonValue == 'Current Device Location') {
-                      if (currentUserLocationValue != null) {
-                        logFirebaseEvent('Button_custom_action');
-                        _model.currrentDeviceLocation =
-                            await actions.reverseGeocode(
-                          currentUserLocationValue!,
-                        );
-                        _shouldSetState = true;
-                        logFirebaseEvent('Button_update_app_state');
-                        FFAppState().filterTempOriginReversed =
-                            _model.currrentDeviceLocation!;
-                        FFAppState().filterTempOriginLatLng =
-                            currentUserLocationValue;
-                        logFirebaseEvent('Button_navigate_to');
+                      logFirebaseEvent('Button_custom_action');
+                      _model.isLocationServiceEnabled =
+                          await actions.checkLocationServiceEnabled();
+                      if (_model.isLocationServiceEnabled!) {
+                        if (currentUserLocationValue != null) {
+                          logFirebaseEvent('Button_custom_action');
+                          _model.currrentDeviceLocation =
+                              await actions.reverseGeocode(
+                            currentUserLocationValue!,
+                          );
+                          logFirebaseEvent('Button_update_app_state');
+                          FFAppState().filterTempOriginReversed =
+                              _model.currrentDeviceLocation!;
+                          FFAppState().filterTempOriginLatLng =
+                              currentUserLocationValue;
+                          logFirebaseEvent('Button_navigate_to');
 
-                        context.pushNamed('filterDestination');
-
-                        if (_shouldSetState) setState(() {});
-                        return;
+                          context.pushNamed('filterDestination');
+                        } else {
+                          logFirebaseEvent('Button_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Alert'),
+                                content: Text(
+                                    'Make sure your device\'s location services are turned on.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Continue'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       } else {
-                        logFirebaseEvent('Button_alert_dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Alert'),
-                              content: Text(
-                                  'Make sure your device\'s location services are turned on.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Continue'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        if (_shouldSetState) setState(() {});
-                        return;
+                        logFirebaseEvent('Button_custom_action');
+                        await actions.requestEnableLocationService();
                       }
                     } else {
                       logFirebaseEvent('Button_navigate_to');
 
                       context.pushNamed('filterOrigin');
-
-                      if (_shouldSetState) setState(() {});
-                      return;
                     }
 
-                    if (_shouldSetState) setState(() {});
+                    setState(() {});
                   },
                   text: 'Next',
                   options: FFButtonOptions(

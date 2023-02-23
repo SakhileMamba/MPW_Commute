@@ -35,11 +35,11 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
     _model = createModel(context, () => AddVehicleModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'addVehicle'});
-    _model.textController1 = TextEditingController();
-    _model.textController2 = TextEditingController();
-    _model.textController3 = TextEditingController();
-    _model.textController4 = TextEditingController();
-    _model.textController5 = TextEditingController();
+    _model.textController1 ??= TextEditingController();
+    _model.textController2 ??= TextEditingController();
+    _model.textController3 ??= TextEditingController();
+    _model.textController4 ??= TextEditingController();
+    _model.textController5 ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -124,7 +124,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -169,7 +169,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -214,7 +214,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -260,7 +260,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),
@@ -305,7 +305,7 @@ class _AddVehicleWidgetState extends State<AddVehicleWidget> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryText,
+                            color: Color(0x00000000),
                             width: 1,
                           ),
                           borderRadius: BorderRadius.circular(8),

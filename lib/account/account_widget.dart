@@ -175,113 +175,99 @@ class _AccountWidgetState extends State<AccountWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                     title: Text(
-                      'Send Request',
+                      FFAppState().driverMode
+                          ? 'Request Passengers'
+                          : 'Request Drivers',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                     tileColor: FlutterFlowTheme.of(context).primaryText,
                     dense: false,
                   ),
                 ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('ACCOUNT_PAGE_ListTile_6782g49s_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_6782g49s_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drivers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.commute_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drivers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.commute_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Drivers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Drivers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('ACCOUNT_PAGE_ListTile_035tqq1d_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_035tqq1d_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('passengers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.emoji_people,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('passengers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.emoji_people,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Hailers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Hailers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('ACCOUNT_PAGE_ListTile_rvoq1qhl_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_rvoq1qhl_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drives');
-                  },
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.road,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drives');
+                    },
+                    child: ListTile(
+                      leading: FaIcon(
+                        FontAwesomeIcons.road,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Drives',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Drives',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('ACCOUNT_PAGE_ListTile_yiavq52n_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_yiavq52n_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('seats');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.airline_seat_recline_normal_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('seats');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.airline_seat_recline_normal_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Seats',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Seats',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('ACCOUNT_PAGE_ListTile_h7kt2z73_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
-
-                    context.goNamed('announcements');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.announcement_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-                    title: Text(
-                      'Announcements',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
-                  ),
-                ),
                 InkWell(
                   onTap: () async {
                     logFirebaseEvent('ACCOUNT_PAGE_ListTile_wqns8qn4_ON_TAP');
@@ -362,106 +348,106 @@ class _AccountWidgetState extends State<AccountWidget> {
                       context.pushNamed('personalInformation');
                     },
                     child: ListTile(
-                      leading: Icon(
-                        Icons.person_rounded,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                      ),
                       title: Text(
                         'Personal Information',
                         style: FlutterFlowTheme.of(context).bodyText2,
                       ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
-                      ),
                       tileColor: FlutterFlowTheme.of(context).primaryBackground,
                       dense: false,
                     ),
                   ),
-                  InkWell(
-                    onTap: () async {
-                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_y36q1130_ON_TAP');
-                      logFirebaseEvent('ListTile_update_app_state');
-                      FFAppState().update(() {
-                        FFAppState().currentPhotoURLTempLicense =
-                            valueOrDefault(
-                                currentUserDocument?.driverLicensePhotoPath,
-                                '');
-                      });
-                      logFirebaseEvent('ListTile_navigate_to');
-
-                      context.pushNamed('driversLicense');
+                  SwitchListTile(
+                    value: _model.switchListTileValue ??=
+                        FFAppState().driverMode,
+                    onChanged: (newValue) async {
+                      setState(() => _model.switchListTileValue = newValue!);
+                      if (newValue!) {
+                        logFirebaseEvent(
+                            'ACCOUNT_SwitchListTile_yh5gnqal_ON_TOGGL');
+                        logFirebaseEvent('SwitchListTile_update_app_state');
+                        setState(() {
+                          FFAppState().driverMode = true;
+                        });
+                      } else {
+                        logFirebaseEvent(
+                            'ACCOUNT_SwitchListTile_yh5gnqal_ON_TOGGL');
+                        logFirebaseEvent('SwitchListTile_update_app_state');
+                        setState(() {
+                          FFAppState().driverMode = false;
+                        });
+                      }
                     },
-                    child: ListTile(
-                      leading: FaIcon(
-                        FontAwesomeIcons.solidIdCard,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24,
-                      ),
-                      title: Text(
-                        'Driver\'s License',
-                        style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryBackground,
-                      dense: false,
+                    title: Text(
+                      'Driver Mode',
+                      style: FlutterFlowTheme.of(context).bodyText2,
                     ),
+                    dense: false,
+                    controlAffinity: ListTileControlAffinity.trailing,
                   ),
-                  InkWell(
-                    onTap: () async {
-                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_j7g6skdv_ON_TAP');
-                      logFirebaseEvent('ListTile_navigate_to');
+                  if (FFAppState().driverMode)
+                    InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'ACCOUNT_PAGE_ListTile_y36q1130_ON_TAP');
+                        logFirebaseEvent('ListTile_update_app_state');
+                        FFAppState().update(() {
+                          FFAppState().currentPhotoURLTempLicense =
+                              valueOrDefault(
+                                  currentUserDocument?.driverLicensePhotoPath,
+                                  '');
+                        });
+                        logFirebaseEvent('ListTile_navigate_to');
 
-                      context.pushNamed('subscription');
-                    },
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.monetization_on_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        context.pushNamed('driversLicense');
+                      },
+                      child: ListTile(
+                        title: Text(
+                          'Driver\'s License',
+                          style: FlutterFlowTheme.of(context).bodyText2,
+                        ),
+                        tileColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        dense: false,
                       ),
-                      title: Text(
-                        'Subscriptions',
-                        style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryBackground,
-                      dense: false,
                     ),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      logFirebaseEvent('ACCOUNT_PAGE_ListTile_57x6wv1u_ON_TAP');
-                      logFirebaseEvent('ListTile_navigate_to');
+                  if (FFAppState().driverMode)
+                    InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'ACCOUNT_PAGE_ListTile_j7g6skdv_ON_TAP');
+                        logFirebaseEvent('ListTile_navigate_to');
 
-                      context.pushNamed('vehicles');
-                    },
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.directions_car_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        context.pushNamed('subscription');
+                      },
+                      child: ListTile(
+                        title: Text(
+                          'Subscriptions',
+                          style: FlutterFlowTheme.of(context).bodyText2,
+                        ),
+                        tileColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        dense: false,
                       ),
-                      title: Text(
-                        'Vehicles',
-                        style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
-                      ),
-                      tileColor: FlutterFlowTheme.of(context).primaryBackground,
-                      dense: false,
                     ),
-                  ),
+                  if (FFAppState().driverMode)
+                    InkWell(
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'ACCOUNT_PAGE_ListTile_57x6wv1u_ON_TAP');
+                        logFirebaseEvent('ListTile_navigate_to');
+
+                        context.pushNamed('vehicles');
+                      },
+                      child: ListTile(
+                        title: Text(
+                          'Vehicles',
+                          style: FlutterFlowTheme.of(context).bodyText2,
+                        ),
+                        tileColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        dense: false,
+                      ),
+                    ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
                     child: Text(
@@ -477,18 +463,9 @@ class _AccountWidgetState extends State<AccountWidget> {
                           'https://commuteapp.blogspot.com/2022/09/terms-of-service.html');
                     },
                     child: ListTile(
-                      leading: Icon(
-                        Icons.menu_book_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                      ),
                       title: Text(
                         'Terms of Service',
                         style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
                       ),
                       tileColor: FlutterFlowTheme.of(context).primaryBackground,
                       dense: false,
@@ -502,18 +479,9 @@ class _AccountWidgetState extends State<AccountWidget> {
                           'https://commuteapp.blogspot.com/2022/09/privacy-policy.html');
                     },
                     child: ListTile(
-                      leading: Icon(
-                        Icons.privacy_tip_rounded,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                      ),
                       title: Text(
                         'Privacy Policy',
                         style: FlutterFlowTheme.of(context).bodyText2,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Color(0xFF303030),
-                        size: 20,
                       ),
                       tileColor: FlutterFlowTheme.of(context).primaryBackground,
                       dense: false,
@@ -550,11 +518,6 @@ class _AccountWidgetState extends State<AccountWidget> {
                                 'Approve Users',
                                 style: FlutterFlowTheme.of(context).bodyText2,
                               ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF303030),
-                                size: 20,
-                              ),
                               tileColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
                               dense: false,
@@ -576,38 +539,6 @@ class _AccountWidgetState extends State<AccountWidget> {
                               title: Text(
                                 'Approve Drivers',
                                 style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF303030),
-                                size: 20,
-                              ),
-                              tileColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              dense: false,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'ACCOUNT_PAGE_ListTile_srvbpaag_ON_TAP');
-                              logFirebaseEvent('ListTile_navigate_to');
-
-                              context.pushNamed('createAnnouncement');
-                            },
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.admin_panel_settings_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                              title: Text(
-                                'Create Announcement',
-                                style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(0xFF303030),
-                                size: 20,
                               ),
                               tileColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,

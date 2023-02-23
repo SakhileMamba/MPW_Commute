@@ -146,7 +146,8 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
             ),
           ),
           Visibility(
-            visible: widget.driverDoc!.reference != currentUserReference,
+            visible: (widget.driverDoc!.reference != currentUserReference) &&
+                !FFAppState().driverMode,
             child: FlutterFlowIconButton(
               borderColor: Colors.transparent,
               borderRadius: 30,
@@ -213,7 +214,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                                 return AlertDialog(
                                   title: Text('Seat Request'),
                                   content: Text(
-                                      'Are you sure you want to send the driver a request for a seat on this commute?'),
+                                      'Are you sure you want to send this driver a request for a seat?'),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Navigator.pop(
@@ -277,7 +278,7 @@ class _DriveDetailsWidgetState extends State<DriveDetailsWidget> {
                               return AlertDialog(
                                 title: Text('Seat Request Confirmation'),
                                 content: Text(
-                                    'Your request for a seat on this commute has been sent to the driver. You will receive a notification to inform you whether your request has been accepted or rejected.'),
+                                    'Your request for a seat has been sent to the driver. You will receive a notification to inform you whether you\'ve been accepted or rejected.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>

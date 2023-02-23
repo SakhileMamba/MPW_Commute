@@ -34,7 +34,7 @@ class _CheckSetupWidgetState extends State<CheckSetupWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('CHECK_SETUP_PAGE_checkSetup_ON_PAGE_LOAD');
       logFirebaseEvent('checkSetup_wait__delay');
-      await Future.delayed(const Duration(milliseconds: 3000));
+      await Future.delayed(const Duration(milliseconds: 5000));
       logFirebaseEvent('checkSetup_update_app_state');
       FFAppState().filterCurrentDateTime = getCurrentTimestamp;
       if (valueOrDefault<bool>(currentUserDocument?.verifiedUser, false) ||

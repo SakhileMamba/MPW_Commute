@@ -30,7 +30,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
     _model = createModel(context, () => FirstNameModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'firstName'});
-    _model.firstNameController =
+    _model.firstNameController ??=
         TextEditingController(text: currentUserDisplayName);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -105,7 +105,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.black,
+                                  color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

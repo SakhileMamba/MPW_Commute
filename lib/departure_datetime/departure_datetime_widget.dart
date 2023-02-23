@@ -280,7 +280,7 @@ class _DepartureDatetimeWidgetState extends State<DepartureDatetimeWidget> {
                   onPressed: () async {
                     logFirebaseEvent('DEPARTURE_DATETIME_PAGE_NEXT_BTN_ON_TAP');
                     if (FFAppState().tempDepartureDateTime != null) {
-                      if (FFAppState().tempRequestType == 'Passengers') {
+                      if (FFAppState().driverMode) {
                         logFirebaseEvent('Button_navigate_to');
 
                         context.pushNamed('chooseVehicle');

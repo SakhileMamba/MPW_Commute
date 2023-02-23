@@ -191,46 +191,53 @@ class _OriginTypeWidgetState extends State<OriginTypeWidget> {
                         defaultLocation: LatLng(0.0, 0.0));
                     var _shouldSetState = false;
                     if (_model.radioButtonValue == 'Current Device Location') {
-                      if (currentUserLocationValue != null) {
-                        logFirebaseEvent('Button_custom_action');
-                        _model.currrentDeviceLocation =
-                            await actions.reverseGeocode(
-                          currentUserLocationValue!,
-                        );
-                        _shouldSetState = true;
-                        logFirebaseEvent('Button_update_app_state');
-                        FFAppState().tempOriginReversed =
-                            _model.currrentDeviceLocation!;
-                        FFAppState().tempOriginLatLng =
-                            currentUserLocationValue;
-                        logFirebaseEvent('Button_navigate_to');
+                      logFirebaseEvent('Button_custom_action');
+                      _model.isLocationServiceEnabled =
+                          await actions.checkLocationServiceEnabled();
+                      _shouldSetState = true;
+                      if (_model.isLocationServiceEnabled!) {
+                        if (currentUserLocationValue != null) {
+                          logFirebaseEvent('Button_custom_action');
+                          _model.currrentDeviceLocation =
+                              await actions.reverseGeocode(
+                            currentUserLocationValue!,
+                          );
+                          _shouldSetState = true;
+                          logFirebaseEvent('Button_update_app_state');
+                          FFAppState().tempOriginReversed =
+                              _model.currrentDeviceLocation!;
+                          FFAppState().tempOriginLatLng =
+                              currentUserLocationValue;
+                          logFirebaseEvent('Button_navigate_to');
 
-                        context.pushNamed('destination');
-
-                        if (_shouldSetState) setState(() {});
-                        return;
+                          context.pushNamed('destination');
+                        } else {
+                          logFirebaseEvent('Button_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Alert'),
+                                content: Text(
+                                    'Make sure your device\'s location services are turned on.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Continue'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       } else {
-                        logFirebaseEvent('Button_alert_dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Alert'),
-                              content: Text(
-                                  'Make sure your device\'s location services are turned on.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Continue'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        if (_shouldSetState) setState(() {});
-                        return;
+                        logFirebaseEvent('Button_custom_action');
+                        await actions.requestEnableLocationService();
                       }
+
+                      if (_shouldSetState) setState(() {});
+                      return;
                     } else {
                       logFirebaseEvent('Button_navigate_to');
 

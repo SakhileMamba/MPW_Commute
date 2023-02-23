@@ -1,20 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "announcements",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "archived",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "created_time",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "passengers",
       "queryScope": "COLLECTION_GROUP",
       "fields": [

@@ -170,9 +170,10 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                         child: Text(
                           () {
-                            if (FFAppState().tempRequestType == 'Drivers') {
+                            if (!FFAppState().driverMode) {
                               return 'Request Drivers';
-                            } else if (FFAppState().tempProposingToDrive) {
+                            } else if (FFAppState().driverMode &&
+                                FFAppState().tempProposingToDrive) {
                               return 'Propose To Drive';
                             } else {
                               return 'Request Paasengers';
@@ -181,6 +182,128 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                           style: FlutterFlowTheme.of(context).title3,
                         ),
                       ),
+                      if (FFAppState().driverMode &&
+                          FFAppState().tempProposingToDrive)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                          child: FutureBuilder<UsersRecord>(
+                            future: UsersRecord.getDocumentOnce(
+                                FFAppState().tempHailingPassengerAccountRef!),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: SpinKitChasingDots(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      size: 50,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final nameRatingUsersRecord = snapshot.data!;
+                              return Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'REQUEST_CONFIRMATION_CircleImage_57c6f4o');
+                                      logFirebaseEvent(
+                                          'CircleImage_expand_image');
+                                      await Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: FlutterFlowExpandedImageView(
+                                            image: CachedNetworkImage(
+                                              imageUrl: nameRatingUsersRecord
+                                                  .photoUrl!,
+                                              fit: BoxFit.contain,
+                                            ),
+                                            allowRotation: false,
+                                            tag:
+                                                nameRatingUsersRecord.photoUrl!,
+                                            useHeroAnimation: true,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Hero(
+                                      tag: nameRatingUsersRecord.photoUrl!,
+                                      transitionOnUserGestures: true,
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              nameRatingUsersRecord.photoUrl!,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4, 10, 0, 0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${nameRatingUsersRecord.displayName} ${nameRatingUsersRecord.displaySurname}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                          Text(
+                                            nameRatingUsersRecord.gender!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  if (nameRatingUsersRecord.rating! > 0.0)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4, 10, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            functions.twoDeci(
+                                                nameRatingUsersRecord.rating!),
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                          Icon(
+                                            Icons.star_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            size: 18,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       if (FFAppState().tempOriginReversed != null)
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
@@ -660,431 +783,7 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                   onPressed: () async {
                     logFirebaseEvent(
                         'REQUEST_CONFIRMATION_SEND_REQUEST_BTN_ON');
-                    if (FFAppState().tempRequestType == 'Passengers') {
-                      if (FFAppState().tempOriginReversed != null) {
-                        if (FFAppState().tempDestinationReversed != null) {
-                          if (FFAppState().tempDepartureDateTime != null) {
-                            if (FFAppState().chosenVehicle != null) {
-                              if (FFAppState().tempSeats != null) {
-                                if (functions.isIntGreaterThanZero(
-                                    functions.stringNumbertoInt(
-                                        FFAppState().tempSeats.toString()))) {
-                                  if (FFAppState().tempPrice != null) {
-                                    if (functions.isDoubleGreaterThanZero(
-                                        functions.stringNumbertoDouble(
-                                            FFAppState()
-                                                .tempPrice
-                                                .toString()))) {
-                                      logFirebaseEvent('Button_backend_call');
-
-                                      final commutesCreateData =
-                                          createCommutesRecordData(
-                                        availablePassengerSeats:
-                                            FFAppState().tempSeats,
-                                        pricePerSeat: FFAppState().tempPrice,
-                                        driver: currentUserReference,
-                                        vehicle: FFAppState().chosenVehicle,
-                                        departureDatetime:
-                                            FFAppState().tempDepartureDateTime,
-                                        driversRating: valueOrDefault(
-                                            currentUserDocument?.rating, 0.0),
-                                        currency: FFAppState().pickedCurrency,
-                                        archived: false,
-                                        originReversedGeocoded:
-                                            createLatlngReverseGeocodingStruct(
-                                          neighborhood: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['neighborhood']''',
-                                          ).toString(),
-                                          locality: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['locality']''',
-                                          ).toString(),
-                                          sublocality: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality']''',
-                                          ).toString(),
-                                          sublocalityLevel1: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality_level_1']''',
-                                          ).toString(),
-                                          sublocalityLevel2: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality_level_2']''',
-                                          ).toString(),
-                                          sublocalityLevel3: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality_level_3']''',
-                                          ).toString(),
-                                          sublocalityLevel4: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality_level_4']''',
-                                          ).toString(),
-                                          sublocalityLevel5: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['sublocality_level_5']''',
-                                          ).toString(),
-                                          administrativeAreaLevel1:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_1']''',
-                                          ).toString(),
-                                          administrativeAreaLevel2:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_2']''',
-                                          ).toString(),
-                                          administrativeAreaLevel3:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_3']''',
-                                          ).toString(),
-                                          administrativeAreaLevel4:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_4']''',
-                                          ).toString(),
-                                          administrativeAreaLevel5:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_5']''',
-                                          ).toString(),
-                                          administrativeAreaLevel6:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_6']''',
-                                          ).toString(),
-                                          administrativeAreaLevel7:
-                                              getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['administrative_area_level_7']''',
-                                          ).toString(),
-                                          country: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['country']''',
-                                          ).toString(),
-                                          postalCode: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['postal_code']''',
-                                          ).toString(),
-                                          postalCodePrefix: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['postal_code_prefix']''',
-                                          ).toString(),
-                                          postalTown: getJsonField(
-                                            FFAppState().tempOriginReversed,
-                                            r'''$['postal_town']''',
-                                          ).toString(),
-                                          latlng: FFAppState().tempOriginLatLng,
-                                          clearUnsetFields: false,
-                                          create: true,
-                                        ),
-                                        destinationReversedGeocoded:
-                                            createLatlngReverseGeocodingStruct(
-                                          neighborhood: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['neighborhood']''',
-                                          ).toString(),
-                                          locality: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['locality']''',
-                                          ).toString(),
-                                          sublocality: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality']''',
-                                          ).toString(),
-                                          sublocalityLevel1: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality_level_1']''',
-                                          ).toString(),
-                                          sublocalityLevel2: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality_level_2']''',
-                                          ).toString(),
-                                          sublocalityLevel3: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality_level_3']''',
-                                          ).toString(),
-                                          sublocalityLevel4: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality_level_4']''',
-                                          ).toString(),
-                                          sublocalityLevel5: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['sublocality_level_5']''',
-                                          ).toString(),
-                                          administrativeAreaLevel1:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_1']''',
-                                          ).toString(),
-                                          administrativeAreaLevel2:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_2']''',
-                                          ).toString(),
-                                          administrativeAreaLevel3:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_3']''',
-                                          ).toString(),
-                                          administrativeAreaLevel4:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_4']''',
-                                          ).toString(),
-                                          administrativeAreaLevel5:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_5']''',
-                                          ).toString(),
-                                          administrativeAreaLevel6:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_6']''',
-                                          ).toString(),
-                                          administrativeAreaLevel7:
-                                              getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['administrative_area_level_7']''',
-                                          ).toString(),
-                                          country: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['country']''',
-                                          ).toString(),
-                                          postalCode: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['postal_code']''',
-                                          ).toString(),
-                                          postalCodePrefix: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['postal_code_prefix']''',
-                                          ).toString(),
-                                          postalTown: getJsonField(
-                                            FFAppState()
-                                                .tempDestinationReversed,
-                                            r'''$['postal_town']''',
-                                          ).toString(),
-                                          latlng: FFAppState()
-                                              .tempDestinationLatLng,
-                                          clearUnsetFields: false,
-                                          create: true,
-                                        ),
-                                        createdDatetime: getCurrentTimestamp,
-                                      );
-                                      await CommutesRecord.collection
-                                          .doc()
-                                          .set(commutesCreateData);
-                                      logFirebaseEvent(
-                                          'Button_update_app_state');
-                                      FFAppState().chosenVehicle = null;
-                                      FFAppState().tempOriginReversed = null;
-                                      FFAppState().tempDestinationReversed =
-                                          null;
-                                      FFAppState().tempRequestType = '';
-                                      FFAppState().tempDepartureDateTime = null;
-                                      FFAppState().tempSeats = 0;
-                                      FFAppState().tempPrice = 0.0;
-                                      FFAppState().tempOriginLatLng = null;
-                                      FFAppState().tempDestinationLatLng = null;
-                                      FFAppState().tempChosenVehicleMaxSeats =
-                                          0;
-                                      FFAppState().tempProposingToDrive = false;
-                                      FFAppState().pickedCurrency = '';
-                                      logFirebaseEvent('Button_navigate_to');
-
-                                      context.goNamed('drives');
-
-                                      return;
-                                    } else {
-                                      logFirebaseEvent('Button_alert_dialog');
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Correct Seat Price'),
-                                            content: Text(
-                                                'Please correctly input the price per seat for your commute.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Continue'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                      return;
-                                    }
-                                  } else {
-                                    logFirebaseEvent('Button_alert_dialog');
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text(
-                                              'Missing Commute Seat Price'),
-                                          content: Text(
-                                              'Please input your price per seat on this commute.'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Continue'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    return;
-                                  }
-                                } else {
-                                  logFirebaseEvent('Button_alert_dialog');
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: Text('Correct Seat Number Info'),
-                                        content: Text(
-                                            'Please correctly input the number of passenger seats available for sale on your commute. '),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  return;
-                                }
-                              } else {
-                                logFirebaseEvent('Button_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title:
-                                          Text('Missing Commute Information'),
-                                      content: Text(
-                                          'Please input the number of available passenger seats for your commute.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Continue'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                return;
-                              }
-                            } else {
-                              logFirebaseEvent('Button_alert_dialog');
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Missing Commute Vehicle'),
-                                    content: Text(
-                                        'Please select a vehicle for your commute.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Continue'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                              return;
-                            }
-                          } else {
-                            logFirebaseEvent('Button_alert_dialog');
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Missing Commute Date and Time'),
-                                  content: Text(
-                                      'Please select your commute\'s daparture date and time'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Continue'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            return;
-                          }
-                        } else {
-                          logFirebaseEvent('Button_alert_dialog');
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: Text('Missing Commute Destination'),
-                                content: Text(
-                                    'Please select your commute\'s destination physical address.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Continue'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                          return;
-                        }
-                      } else {
-                        logFirebaseEvent('Button_alert_dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: Text('Missing Commute Origin'),
-                              content: Text(
-                                  'Please select your commute\'s origin physical address.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: Text('Continue'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        return;
-                      }
-                    } else {
+                    if (FFAppState().driverMode) {
                       if (FFAppState().tempProposingToDrive) {
                         if (FFAppState().chosenVehicle != null) {
                           if (FFAppState().tempSeats != null) {
@@ -1282,193 +981,369 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                         if (FFAppState().tempOriginReversed != null) {
                           if (FFAppState().tempDestinationReversed != null) {
                             if (FFAppState().tempDepartureDateTime != null) {
-                              logFirebaseEvent('Button_backend_call');
+                              if (FFAppState().chosenVehicle != null) {
+                                if (FFAppState().tempSeats != null) {
+                                  if (functions.isIntGreaterThanZero(
+                                      functions.stringNumbertoInt(
+                                          FFAppState().tempSeats.toString()))) {
+                                    if (FFAppState().tempPrice != null) {
+                                      if (functions.isDoubleGreaterThanZero(
+                                          functions.stringNumbertoDouble(
+                                              FFAppState()
+                                                  .tempPrice
+                                                  .toString()))) {
+                                        logFirebaseEvent('Button_backend_call');
 
-                              final passengersHailingCreateData =
-                                  createPassengersHailingRecordData(
-                                departureDatetime:
-                                    FFAppState().tempDepartureDateTime,
-                                archived: false,
-                                originReversedGeocoded:
-                                    createLatlngReverseGeocodingStruct(
-                                  neighborhood: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['neighborhood']''',
-                                  ).toString(),
-                                  locality: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['locality']''',
-                                  ).toString(),
-                                  sublocality: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality']''',
-                                  ).toString(),
-                                  sublocalityLevel1: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality_level_1']''',
-                                  ).toString(),
-                                  sublocalityLevel2: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality_level_2']''',
-                                  ).toString(),
-                                  sublocalityLevel3: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality_level_3']''',
-                                  ).toString(),
-                                  sublocalityLevel4: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality_level_4']''',
-                                  ).toString(),
-                                  sublocalityLevel5: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['sublocality_level_5']''',
-                                  ).toString(),
-                                  administrativeAreaLevel1: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_1']''',
-                                  ).toString(),
-                                  administrativeAreaLevel2: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_2']''',
-                                  ).toString(),
-                                  administrativeAreaLevel3: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_3']''',
-                                  ).toString(),
-                                  administrativeAreaLevel4: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_4']''',
-                                  ).toString(),
-                                  administrativeAreaLevel5: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_5']''',
-                                  ).toString(),
-                                  administrativeAreaLevel6: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_6']''',
-                                  ).toString(),
-                                  administrativeAreaLevel7: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['administrative_area_level_7']''',
-                                  ).toString(),
-                                  country: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['country']''',
-                                  ).toString(),
-                                  postalCode: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['postal_code']''',
-                                  ).toString(),
-                                  postalCodePrefix: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['postal_code_prefix']''',
-                                  ).toString(),
-                                  postalTown: getJsonField(
-                                    FFAppState().tempOriginReversed,
-                                    r'''$['postal_town']''',
-                                  ).toString(),
-                                  latlng: FFAppState().tempOriginLatLng,
-                                  clearUnsetFields: false,
-                                  create: true,
-                                ),
-                                destinationReversedGeocoded:
-                                    createLatlngReverseGeocodingStruct(
-                                  neighborhood: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['neighborhood']''',
-                                  ).toString(),
-                                  locality: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['locality']''',
-                                  ).toString(),
-                                  sublocality: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality']''',
-                                  ).toString(),
-                                  sublocalityLevel1: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality_level_1']''',
-                                  ).toString(),
-                                  sublocalityLevel2: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality_level_2']''',
-                                  ).toString(),
-                                  sublocalityLevel3: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality_level_3']''',
-                                  ).toString(),
-                                  sublocalityLevel4: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality_level_4']''',
-                                  ).toString(),
-                                  sublocalityLevel5: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['sublocality_level_5']''',
-                                  ).toString(),
-                                  administrativeAreaLevel1: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_1']''',
-                                  ).toString(),
-                                  administrativeAreaLevel2: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_2']''',
-                                  ).toString(),
-                                  administrativeAreaLevel3: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_3']''',
-                                  ).toString(),
-                                  administrativeAreaLevel4: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_4']''',
-                                  ).toString(),
-                                  administrativeAreaLevel5: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_5']''',
-                                  ).toString(),
-                                  administrativeAreaLevel6: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_6']''',
-                                  ).toString(),
-                                  administrativeAreaLevel7: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['administrative_area_level_7']''',
-                                  ).toString(),
-                                  country: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['country']''',
-                                  ).toString(),
-                                  postalCode: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['postal_code']''',
-                                  ).toString(),
-                                  postalCodePrefix: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['postal_code_prefix']''',
-                                  ).toString(),
-                                  postalTown: getJsonField(
-                                    FFAppState().tempDestinationReversed,
-                                    r'''$['postal_town']''',
-                                  ).toString(),
-                                  latlng: FFAppState().tempDestinationLatLng,
-                                  clearUnsetFields: false,
-                                  create: true,
-                                ),
-                                hailingPassenger: currentUserReference,
-                                createdDatetime: getCurrentTimestamp,
-                              );
-                              await PassengersHailingRecord.collection
-                                  .doc()
-                                  .set(passengersHailingCreateData);
-                              logFirebaseEvent('Button_update_app_state');
-                              FFAppState().seatsPageInitialIndex = 1;
-                              FFAppState().tempOriginReversed = null;
-                              FFAppState().tempDestinationReversed = null;
-                              FFAppState().tempDepartureDateTime = null;
-                              logFirebaseEvent('Button_navigate_to');
+                                        final commutesCreateData =
+                                            createCommutesRecordData(
+                                          availablePassengerSeats:
+                                              FFAppState().tempSeats,
+                                          pricePerSeat: FFAppState().tempPrice,
+                                          driver: currentUserReference,
+                                          vehicle: FFAppState().chosenVehicle,
+                                          departureDatetime: FFAppState()
+                                              .tempDepartureDateTime,
+                                          driversRating: valueOrDefault(
+                                              currentUserDocument?.rating, 0.0),
+                                          currency: FFAppState().pickedCurrency,
+                                          archived: false,
+                                          originReversedGeocoded:
+                                              createLatlngReverseGeocodingStruct(
+                                            neighborhood: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['neighborhood']''',
+                                            ).toString(),
+                                            locality: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['locality']''',
+                                            ).toString(),
+                                            sublocality: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality']''',
+                                            ).toString(),
+                                            sublocalityLevel1: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality_level_1']''',
+                                            ).toString(),
+                                            sublocalityLevel2: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality_level_2']''',
+                                            ).toString(),
+                                            sublocalityLevel3: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality_level_3']''',
+                                            ).toString(),
+                                            sublocalityLevel4: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality_level_4']''',
+                                            ).toString(),
+                                            sublocalityLevel5: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['sublocality_level_5']''',
+                                            ).toString(),
+                                            administrativeAreaLevel1:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_1']''',
+                                            ).toString(),
+                                            administrativeAreaLevel2:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_2']''',
+                                            ).toString(),
+                                            administrativeAreaLevel3:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_3']''',
+                                            ).toString(),
+                                            administrativeAreaLevel4:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_4']''',
+                                            ).toString(),
+                                            administrativeAreaLevel5:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_5']''',
+                                            ).toString(),
+                                            administrativeAreaLevel6:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_6']''',
+                                            ).toString(),
+                                            administrativeAreaLevel7:
+                                                getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['administrative_area_level_7']''',
+                                            ).toString(),
+                                            country: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['country']''',
+                                            ).toString(),
+                                            postalCode: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['postal_code']''',
+                                            ).toString(),
+                                            postalCodePrefix: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['postal_code_prefix']''',
+                                            ).toString(),
+                                            postalTown: getJsonField(
+                                              FFAppState().tempOriginReversed,
+                                              r'''$['postal_town']''',
+                                            ).toString(),
+                                            latlng:
+                                                FFAppState().tempOriginLatLng,
+                                            clearUnsetFields: false,
+                                            create: true,
+                                          ),
+                                          destinationReversedGeocoded:
+                                              createLatlngReverseGeocodingStruct(
+                                            neighborhood: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['neighborhood']''',
+                                            ).toString(),
+                                            locality: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['locality']''',
+                                            ).toString(),
+                                            sublocality: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality']''',
+                                            ).toString(),
+                                            sublocalityLevel1: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality_level_1']''',
+                                            ).toString(),
+                                            sublocalityLevel2: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality_level_2']''',
+                                            ).toString(),
+                                            sublocalityLevel3: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality_level_3']''',
+                                            ).toString(),
+                                            sublocalityLevel4: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality_level_4']''',
+                                            ).toString(),
+                                            sublocalityLevel5: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['sublocality_level_5']''',
+                                            ).toString(),
+                                            administrativeAreaLevel1:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_1']''',
+                                            ).toString(),
+                                            administrativeAreaLevel2:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_2']''',
+                                            ).toString(),
+                                            administrativeAreaLevel3:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_3']''',
+                                            ).toString(),
+                                            administrativeAreaLevel4:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_4']''',
+                                            ).toString(),
+                                            administrativeAreaLevel5:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_5']''',
+                                            ).toString(),
+                                            administrativeAreaLevel6:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_6']''',
+                                            ).toString(),
+                                            administrativeAreaLevel7:
+                                                getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['administrative_area_level_7']''',
+                                            ).toString(),
+                                            country: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['country']''',
+                                            ).toString(),
+                                            postalCode: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['postal_code']''',
+                                            ).toString(),
+                                            postalCodePrefix: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['postal_code_prefix']''',
+                                            ).toString(),
+                                            postalTown: getJsonField(
+                                              FFAppState()
+                                                  .tempDestinationReversed,
+                                              r'''$['postal_town']''',
+                                            ).toString(),
+                                            latlng: FFAppState()
+                                                .tempDestinationLatLng,
+                                            clearUnsetFields: false,
+                                            create: true,
+                                          ),
+                                          createdDatetime: getCurrentTimestamp,
+                                        );
+                                        await CommutesRecord.collection
+                                            .doc()
+                                            .set(commutesCreateData);
+                                        logFirebaseEvent(
+                                            'Button_update_app_state');
+                                        FFAppState().chosenVehicle = null;
+                                        FFAppState().tempOriginReversed = null;
+                                        FFAppState().tempDestinationReversed =
+                                            null;
+                                        FFAppState().tempRequestType = '';
+                                        FFAppState().tempDepartureDateTime =
+                                            null;
+                                        FFAppState().tempSeats = 0;
+                                        FFAppState().tempPrice = 0.0;
+                                        FFAppState().tempOriginLatLng = null;
+                                        FFAppState().tempDestinationLatLng =
+                                            null;
+                                        FFAppState().tempChosenVehicleMaxSeats =
+                                            0;
+                                        FFAppState().tempProposingToDrive =
+                                            false;
+                                        FFAppState().pickedCurrency = '';
+                                        logFirebaseEvent('Button_navigate_to');
 
-                              context.goNamed('seats');
+                                        context.goNamed('drives');
 
-                              return;
+                                        return;
+                                      } else {
+                                        logFirebaseEvent('Button_alert_dialog');
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Correct Seat Price'),
+                                              content: Text(
+                                                  'Please correctly input the price per seat for your commute.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Continue'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        return;
+                                      }
+                                    } else {
+                                      logFirebaseEvent('Button_alert_dialog');
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text(
+                                                'Missing Commute Seat Price'),
+                                            content: Text(
+                                                'Please input your price per seat on this commute.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Continue'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+                                  } else {
+                                    logFirebaseEvent('Button_alert_dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title:
+                                              Text('Correct Seat Number Info'),
+                                          content: Text(
+                                              'Please correctly input the number of passenger seats available for sale on your commute. '),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('Continue'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  }
+                                } else {
+                                  logFirebaseEvent('Button_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title:
+                                            Text('Missing Commute Information'),
+                                        content: Text(
+                                            'Please input the number of available passenger seats for your commute.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Continue'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                              } else {
+                                logFirebaseEvent('Button_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Missing Commute Vehicle'),
+                                      content: Text(
+                                          'Please select a vehicle for your commute.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Continue'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                return;
+                              }
                             } else {
                               logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
@@ -1533,6 +1408,260 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                           );
                           return;
                         }
+                      }
+                    } else {
+                      if (FFAppState().tempOriginReversed != null) {
+                        if (FFAppState().tempDestinationReversed != null) {
+                          if (FFAppState().tempDepartureDateTime != null) {
+                            logFirebaseEvent('Button_backend_call');
+
+                            final passengersHailingCreateData =
+                                createPassengersHailingRecordData(
+                              departureDatetime:
+                                  FFAppState().tempDepartureDateTime,
+                              archived: false,
+                              originReversedGeocoded:
+                                  createLatlngReverseGeocodingStruct(
+                                neighborhood: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['neighborhood']''',
+                                ).toString(),
+                                locality: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['locality']''',
+                                ).toString(),
+                                sublocality: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality']''',
+                                ).toString(),
+                                sublocalityLevel1: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality_level_1']''',
+                                ).toString(),
+                                sublocalityLevel2: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality_level_2']''',
+                                ).toString(),
+                                sublocalityLevel3: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality_level_3']''',
+                                ).toString(),
+                                sublocalityLevel4: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality_level_4']''',
+                                ).toString(),
+                                sublocalityLevel5: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['sublocality_level_5']''',
+                                ).toString(),
+                                administrativeAreaLevel1: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_1']''',
+                                ).toString(),
+                                administrativeAreaLevel2: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_2']''',
+                                ).toString(),
+                                administrativeAreaLevel3: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_3']''',
+                                ).toString(),
+                                administrativeAreaLevel4: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_4']''',
+                                ).toString(),
+                                administrativeAreaLevel5: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_5']''',
+                                ).toString(),
+                                administrativeAreaLevel6: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_6']''',
+                                ).toString(),
+                                administrativeAreaLevel7: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['administrative_area_level_7']''',
+                                ).toString(),
+                                country: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['country']''',
+                                ).toString(),
+                                postalCode: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['postal_code']''',
+                                ).toString(),
+                                postalCodePrefix: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['postal_code_prefix']''',
+                                ).toString(),
+                                postalTown: getJsonField(
+                                  FFAppState().tempOriginReversed,
+                                  r'''$['postal_town']''',
+                                ).toString(),
+                                latlng: FFAppState().tempOriginLatLng,
+                                clearUnsetFields: false,
+                                create: true,
+                              ),
+                              destinationReversedGeocoded:
+                                  createLatlngReverseGeocodingStruct(
+                                neighborhood: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['neighborhood']''',
+                                ).toString(),
+                                locality: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['locality']''',
+                                ).toString(),
+                                sublocality: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality']''',
+                                ).toString(),
+                                sublocalityLevel1: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality_level_1']''',
+                                ).toString(),
+                                sublocalityLevel2: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality_level_2']''',
+                                ).toString(),
+                                sublocalityLevel3: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality_level_3']''',
+                                ).toString(),
+                                sublocalityLevel4: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality_level_4']''',
+                                ).toString(),
+                                sublocalityLevel5: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['sublocality_level_5']''',
+                                ).toString(),
+                                administrativeAreaLevel1: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_1']''',
+                                ).toString(),
+                                administrativeAreaLevel2: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_2']''',
+                                ).toString(),
+                                administrativeAreaLevel3: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_3']''',
+                                ).toString(),
+                                administrativeAreaLevel4: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_4']''',
+                                ).toString(),
+                                administrativeAreaLevel5: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_5']''',
+                                ).toString(),
+                                administrativeAreaLevel6: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_6']''',
+                                ).toString(),
+                                administrativeAreaLevel7: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['administrative_area_level_7']''',
+                                ).toString(),
+                                country: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['country']''',
+                                ).toString(),
+                                postalCode: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['postal_code']''',
+                                ).toString(),
+                                postalCodePrefix: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['postal_code_prefix']''',
+                                ).toString(),
+                                postalTown: getJsonField(
+                                  FFAppState().tempDestinationReversed,
+                                  r'''$['postal_town']''',
+                                ).toString(),
+                                latlng: FFAppState().tempDestinationLatLng,
+                                clearUnsetFields: false,
+                                create: true,
+                              ),
+                              hailingPassenger: currentUserReference,
+                              createdDatetime: getCurrentTimestamp,
+                            );
+                            await PassengersHailingRecord.collection
+                                .doc()
+                                .set(passengersHailingCreateData);
+                            logFirebaseEvent('Button_update_app_state');
+                            FFAppState().seatsPageInitialIndex = 1;
+                            FFAppState().tempOriginReversed = null;
+                            FFAppState().tempDestinationReversed = null;
+                            FFAppState().tempDepartureDateTime = null;
+                            logFirebaseEvent('Button_navigate_to');
+
+                            context.goNamed('seats');
+
+                            return;
+                          } else {
+                            logFirebaseEvent('Button_alert_dialog');
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Missing Commute Date and Time'),
+                                  content: Text(
+                                      'Please select your commute\'s daparture date and time'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Continue'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            return;
+                          }
+                        } else {
+                          logFirebaseEvent('Button_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Missing Commute Destination'),
+                                content: Text(
+                                    'Please select your commute\'s destination physical address.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Continue'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          return;
+                        }
+                      } else {
+                        logFirebaseEvent('Button_alert_dialog');
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Missing Commute Origin'),
+                              content: Text(
+                                  'Please select your commute\'s origin physical address.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Continue'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
                       }
                     }
                   },

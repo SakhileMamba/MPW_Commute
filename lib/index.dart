@@ -7,8 +7,8 @@ export 'check_setup/check_setup_widget.dart' show CheckSetupWidget;
 export 'drivers/drivers_widget.dart' show DriversWidget;
 export 'passengers/passengers_widget.dart' show PassengersWidget;
 export 'drives/drives_widget.dart' show DrivesWidget;
-export 'seats/seats_widget.dart' show SeatsWidget;
 export 'account/account_widget.dart' show AccountWidget;
+export 'seats/seats_widget.dart' show SeatsWidget;
 export 'drive_details/drive_details_widget.dart' show DriveDetailsWidget;
 export 'driver_request_details/driver_request_details_widget.dart'
     show DriverRequestDetailsWidget;
@@ -28,7 +28,6 @@ export 'gender/gender_widget.dart' show GenderWidget;
 export 'birthdate/birthdate_widget.dart' show BirthdateWidget;
 export 'success_lottie/success_lottie_widget.dart' show SuccessLottieWidget;
 export 'begin_request/begin_request_widget.dart' show BeginRequestWidget;
-export 'request_type/request_type_widget.dart' show RequestTypeWidget;
 export 'origin_type/origin_type_widget.dart' show OriginTypeWidget;
 export 'origin/origin_widget.dart' show OriginWidget;
 export 'destination/destination_widget.dart' show DestinationWidget;
@@ -37,11 +36,8 @@ export 'departure_datetime/departure_datetime_widget.dart'
 export 'available_seats/available_seats_widget.dart' show AvailableSeatsWidget;
 export 'choose_vehicle/choose_vehicle_widget.dart' show ChooseVehicleWidget;
 export 'price/price_widget.dart' show PriceWidget;
-export 'announcements/announcements_widget.dart' show AnnouncementsWidget;
 export 'request_confirmation/request_confirmation_widget.dart'
     show RequestConfirmationWidget;
-export 'create_announcement/create_announcement_widget.dart'
-    show CreateAnnouncementWidget;
 export 'filter_origin_type/filter_origin_type_widget.dart'
     show FilterOriginTypeWidget;
 export 'filter_origin/filter_origin_widget.dart' show FilterOriginWidget;

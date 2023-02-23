@@ -37,7 +37,7 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phoneAuthentication'});
-    _model.phoneNumberTextFieldController = TextEditingController();
+    _model.phoneNumberTextFieldController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -128,7 +128,7 @@ class _PhoneAuthenticationWidgetState extends State<PhoneAuthenticationWidget> {
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.black,
+                                      color: Color(0x00000000),
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(8),

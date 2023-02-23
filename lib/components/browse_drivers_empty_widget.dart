@@ -35,7 +35,7 @@ class _BrowseDriversEmptyWidgetState extends State<BrowseDriversEmptyWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

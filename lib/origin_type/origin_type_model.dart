@@ -14,6 +14,8 @@ class OriginTypeModel extends FlutterFlowModel {
 
   // State field(s) for RadioButton widget.
   String? radioButtonValue;
+  // Stores action output result for [Custom Action - checkLocationServiceEnabled] action in Button widget.
+  bool? isLocationServiceEnabled;
   // Stores action output result for [Custom Action - reverseGeocode] action in Button widget.
   dynamic? currrentDeviceLocation;
 

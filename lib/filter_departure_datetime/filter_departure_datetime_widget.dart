@@ -207,6 +207,8 @@ class _FilterDepartureDatetimeWidgetState
                         FFAppState().filterCallingSource = '';
                         FFAppState().filterDepartureDatetime =
                             _model.datePicked;
+                        FFAppState().filterCurrentDateTime =
+                            getCurrentTimestamp;
                         logFirebaseEvent('Button_navigate_to');
 
                         context.goNamed('drivers');
@@ -217,6 +219,8 @@ class _FilterDepartureDatetimeWidgetState
                         FFAppState().filterCallingSource = '';
                         FFAppState().filterDepartureDatetime =
                             _model.datePicked;
+                        FFAppState().filterCurrentDateTime =
+                            getCurrentTimestamp;
                         logFirebaseEvent('Button_navigate_to');
 
                         context.goNamed('passengers');

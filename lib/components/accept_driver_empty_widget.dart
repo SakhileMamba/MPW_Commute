@@ -34,7 +34,7 @@ class _AcceptDriverEmptyWidgetState extends State<AcceptDriverEmptyWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

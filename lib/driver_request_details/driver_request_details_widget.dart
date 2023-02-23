@@ -148,7 +148,8 @@ class _DriverRequestDetailsWidgetState
           ),
           Visibility(
             visible:
-                currentUserReference != widget.hailingDoc!.hailingPassenger,
+                (currentUserReference != widget.hailingDoc!.hailingPassenger) &&
+                    FFAppState().driverMode,
             child: FutureBuilder<AppConstantsRecord>(
               future: AppConstantsRecord.getDocumentOnce(
                   FFAppState().appConstantFreeApp!),
@@ -187,7 +188,7 @@ class _DriverRequestDetailsWidgetState
                         context: context,
                         builder: (alertDialogContext) {
                           return AlertDialog(
-                            title: Text('Driver Request Expired '),
+                            title: Text('Request Expired '),
                             content: Text(
                                 'This request for a driver has expired. The passenger has either selected a different driver or has cancelled the commute.'),
                             actions: [
@@ -203,153 +204,78 @@ class _DriverRequestDetailsWidgetState
                       if (_shouldSetState) setState(() {});
                       return;
                     } else {
-                      if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
-                        if (functions.swaziNumberTest(currentPhoneNumber)) {
-                          if (valueOrDefault<bool>(
-                              currentUserDocument?.verifiedUser, false)) {
-                            if (valueOrDefault<bool>(
-                                currentUserDocument?.verifiedDriver, false)) {
-                              if (getCurrentTimestamp <
-                                  widget.hailingDoc!.departureDatetime!) {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_custom_action');
-                                _model.reverseGeocodeOriginOutput =
-                                    await actions.reverseGeocode(
-                                  widget.hailingDoc!.originReversedGeocoded
-                                      .latlng!,
-                                );
-                                _shouldSetState = true;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_custom_action');
-                                _model.reverseGeocodeDestinationOutput =
-                                    await actions.reverseGeocode(
-                                  widget.hailingDoc!.destinationReversedGeocoded
-                                      .latlng!,
-                                );
-                                _shouldSetState = true;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_update_app_state');
-                                FFAppState().tempProposingToDrive = true;
-                                FFAppState().tempPassengerHailingDriverRef =
-                                    widget.hailingDoc!.reference;
-                                FFAppState().tempHailingPassengerAccountRef =
-                                    widget.passenger!.reference;
-                                FFAppState().tempDestinationLatLng = widget
-                                    .hailingDoc!
-                                    .destinationReversedGeocoded
-                                    .latlng;
-                                FFAppState().tempOriginReversed =
-                                    _model.reverseGeocodeOriginOutput!;
-                                FFAppState().tempDestinationReversed =
-                                    _model.reverseGeocodeDestinationOutput!;
-                                FFAppState().tempDepartureDateTime =
-                                    widget.hailingDoc!.departureDatetime;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_navigate_to');
+                      logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
+                      var confirmDialogResponse = await showDialog<bool>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Send Proposal'),
+                                content: Text(
+                                    'Are your sure you want to respond to this request for drivers by proposing to pickup this passenger?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(
+                                        alertDialogContext, false),
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext, true),
+                                    child: Text('Confirm'),
+                                  ),
+                                ],
+                              );
+                            },
+                          ) ??
+                          false;
+                      if (confirmDialogResponse) {
+                        if (sendSeatRequestIconAppConstantsRecord.freeApp!) {
+                          if (!functions.swaziNumberTest(currentPhoneNumber)) {
+                            logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
+                            final isEntitled =
+                                await revenue_cat.isEntitled('Driver Access');
+                            if (isEntitled == null) {
+                              return;
+                            } else if (!isEntitled) {
+                              await revenue_cat.loadOfferings();
+                            }
 
-                                context.pushNamed('chooseVehicle');
-
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              } else {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Driver Request Expired'),
-                                      content: Text(
-                                          'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Continue'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              }
-                            } else {
+                            if (!isEntitled) {
                               logFirebaseEvent(
                                   'sendSeatRequestIcon_alert_dialog');
-                              var confirmDialogResponse =
-                                  await showDialog<bool>(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text(
-                                                'Driver\'s License Verification'),
-                                            content: Text(
-                                                'Please upload your driver\'s license and send a request to verify it.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, false),
-                                                child: Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, true),
-                                                child: Text('Verify'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ) ??
-                                      false;
+                              confirmDialogResponse = await showDialog<bool>(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('Driver Subscription'),
+                                        content: Text(
+                                            'To propose to drive passengers on your commute, please subscribe.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext, false),
+                                            child: Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext, true),
+                                            child: Text('Subscribe'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ) ??
+                                  false;
                               if (confirmDialogResponse) {
                                 logFirebaseEvent(
                                     'sendSeatRequestIcon_navigate_to');
 
-                                context.pushNamed('driversLicense');
-
-                                if (_shouldSetState) setState(() {});
-                                return;
+                                context.pushNamed('subscription');
                               } else {
                                 if (_shouldSetState) setState(() {});
                                 return;
                               }
-                            }
-                          } else {
-                            logFirebaseEvent(
-                                'sendSeatRequestIcon_alert_dialog');
-                            var confirmDialogResponse = await showDialog<bool>(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Account Verification'),
-                                      content:
-                                          Text('Your account is not verified.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, false),
-                                          child: Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(
-                                              alertDialogContext, true),
-                                          child: Text('Verify'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ) ??
-                                false;
-                            if (confirmDialogResponse) {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_navigate_to');
 
-                              context.pushNamed('account');
-
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            } else {
                               if (_shouldSetState) setState(() {});
                               return;
                             }
@@ -364,171 +290,16 @@ class _DriverRequestDetailsWidgetState
                             await revenue_cat.loadOfferings();
                           }
 
-                          if (isEntitled) {
-                            if (valueOrDefault<bool>(
-                                currentUserDocument?.verifiedUser, false)) {
-                              if (valueOrDefault<bool>(
-                                  currentUserDocument?.verifiedDriver, false)) {
-                                if (getCurrentTimestamp <
-                                    widget.hailingDoc!.departureDatetime!) {
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_custom_action');
-                                  _model.reverseGeocodeOriginOutput1 =
-                                      await actions.reverseGeocode(
-                                    widget.hailingDoc!.originReversedGeocoded
-                                        .latlng!,
-                                  );
-                                  _shouldSetState = true;
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_custom_action');
-                                  _model.reverseGeocodeDestinationOutput1 =
-                                      await actions.reverseGeocode(
-                                    widget.hailingDoc!
-                                        .destinationReversedGeocoded.latlng!,
-                                  );
-                                  _shouldSetState = true;
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_update_app_state');
-                                  FFAppState().tempProposingToDrive = true;
-                                  FFAppState().tempPassengerHailingDriverRef =
-                                      widget.hailingDoc!.reference;
-                                  FFAppState().tempHailingPassengerAccountRef =
-                                      widget.passenger!.reference;
-                                  FFAppState().tempDestinationLatLng = widget
-                                      .hailingDoc!
-                                      .destinationReversedGeocoded
-                                      .latlng;
-                                  FFAppState().tempOriginReversed =
-                                      _model.reverseGeocodeOriginOutput1!;
-                                  FFAppState().tempDestinationReversed =
-                                      _model.reverseGeocodeDestinationOutput1!;
-                                  FFAppState().tempDepartureDateTime =
-                                      widget.hailingDoc!.departureDatetime;
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_navigate_to');
-
-                                  context.pushNamed('chooseVehicle');
-
-                                  if (_shouldSetState) setState(() {});
-                                  return;
-                                } else {
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_alert_dialog');
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: Text('Driver Request Expired'),
-                                        content: Text(
-                                            'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Continue'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  if (_shouldSetState) setState(() {});
-                                  return;
-                                }
-                              } else {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_alert_dialog');
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  'Driver\'s License Verification'),
-                                              content: Text(
-                                                  'Please upload your driver\'s license and send a request to verify it.'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('Verify'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                if (confirmDialogResponse) {
-                                  logFirebaseEvent(
-                                      'sendSeatRequestIcon_navigate_to');
-
-                                  context.pushNamed('driversLicense');
-
-                                  if (_shouldSetState) setState(() {});
-                                  return;
-                                } else {
-                                  if (_shouldSetState) setState(() {});
-                                  return;
-                                }
-                              }
-                            } else {
-                              logFirebaseEvent(
-                                  'sendSeatRequestIcon_alert_dialog');
-                              var confirmDialogResponse =
-                                  await showDialog<bool>(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Account Verification'),
-                                            content: Text(
-                                                'Your account is not verified.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, false),
-                                                child: Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, true),
-                                                child: Text('Verify'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ) ??
-                                      false;
-                              if (confirmDialogResponse) {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_navigate_to');
-
-                                context.pushNamed('account');
-
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              } else {
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              }
-                            }
-                          } else {
+                          if (!isEntitled) {
                             logFirebaseEvent(
                                 'sendSeatRequestIcon_alert_dialog');
-                            var confirmDialogResponse = await showDialog<bool>(
+                            confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
                                       title: Text('Driver Subscription'),
                                       content: Text(
-                                          'To accept passengers into your commute, please subscribe.'),
+                                          'To propose to drive passengers on your commute, please subscribe.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () => Navigator.pop(
@@ -559,137 +330,87 @@ class _DriverRequestDetailsWidgetState
                             return;
                           }
                         }
-                      } else {
-                        logFirebaseEvent('sendSeatRequestIcon_revenue_cat');
-                        final isEntitled =
-                            await revenue_cat.isEntitled('Driver Access');
-                        if (isEntitled == null) {
-                          return;
-                        } else if (!isEntitled) {
-                          await revenue_cat.loadOfferings();
-                        }
 
-                        if (isEntitled) {
+                        if (valueOrDefault<bool>(
+                            currentUserDocument?.verifiedUser, false)) {
                           if (valueOrDefault<bool>(
-                              currentUserDocument?.verifiedUser, false)) {
-                            if (valueOrDefault<bool>(
-                                currentUserDocument?.verifiedDriver, false)) {
-                              if (getCurrentTimestamp <
-                                  widget.hailingDoc!.departureDatetime!) {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_custom_action');
-                                _model.reverseGeocodeOriginOutput2 =
-                                    await actions.reverseGeocode(
-                                  widget.hailingDoc!.originReversedGeocoded
-                                      .latlng!,
-                                );
-                                _shouldSetState = true;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_custom_action');
-                                _model.reverseGeocodeDestinationOutput2 =
-                                    await actions.reverseGeocode(
-                                  widget.hailingDoc!.destinationReversedGeocoded
-                                      .latlng!,
-                                );
-                                _shouldSetState = true;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_update_app_state');
-                                FFAppState().tempProposingToDrive = true;
-                                FFAppState().tempPassengerHailingDriverRef =
-                                    widget.hailingDoc!.reference;
-                                FFAppState().tempHailingPassengerAccountRef =
-                                    widget.passenger!.reference;
-                                FFAppState().tempDestinationLatLng = widget
-                                    .hailingDoc!
-                                    .destinationReversedGeocoded
-                                    .latlng;
-                                FFAppState().tempOriginReversed =
-                                    _model.reverseGeocodeOriginOutput2!;
-                                FFAppState().tempDestinationReversed =
-                                    _model.reverseGeocodeDestinationOutput2!;
-                                FFAppState().tempDepartureDateTime =
-                                    widget.hailingDoc!.departureDatetime;
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_navigate_to');
+                              currentUserDocument?.verifiedDriver, false)) {
+                            if (getCurrentTimestamp <
+                                widget.hailingDoc!.departureDatetime!) {
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_custom_action');
+                              _model.reverseGeocodeOriginOutput2 =
+                                  await actions.reverseGeocode(
+                                widget
+                                    .hailingDoc!.originReversedGeocoded.latlng!,
+                              );
+                              _shouldSetState = true;
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_custom_action');
+                              _model.reverseGeocodeDestinationOutput2 =
+                                  await actions.reverseGeocode(
+                                widget.hailingDoc!.destinationReversedGeocoded
+                                    .latlng!,
+                              );
+                              _shouldSetState = true;
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_update_app_state');
+                              FFAppState().tempProposingToDrive = true;
+                              FFAppState().tempPassengerHailingDriverRef =
+                                  widget.hailingDoc!.reference;
+                              FFAppState().tempHailingPassengerAccountRef =
+                                  widget.passenger!.reference;
+                              FFAppState().tempDestinationLatLng = widget
+                                  .hailingDoc!
+                                  .destinationReversedGeocoded
+                                  .latlng;
+                              FFAppState().tempOriginReversed =
+                                  _model.reverseGeocodeOriginOutput2!;
+                              FFAppState().tempDestinationReversed =
+                                  _model.reverseGeocodeDestinationOutput2!;
+                              FFAppState().tempDepartureDateTime =
+                                  widget.hailingDoc!.departureDatetime;
+                              logFirebaseEvent(
+                                  'sendSeatRequestIcon_navigate_to');
 
-                                context.pushNamed('chooseVehicle');
+                              context.pushNamed('chooseVehicle');
 
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              } else {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('Driver Request Expired'),
-                                      content: Text(
-                                          'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Continue'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              }
+                              if (_shouldSetState) setState(() {});
+                              return;
                             } else {
                               logFirebaseEvent(
                                   'sendSeatRequestIcon_alert_dialog');
-                              var confirmDialogResponse =
-                                  await showDialog<bool>(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text(
-                                                'Driver\'s License Verification'),
-                                            content: Text(
-                                                'Please upload your driver\'s license and send a request to verify it.'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, false),
-                                                child: Text('Cancel'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, true),
-                                                child: Text('Verify'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ) ??
-                                      false;
-                              if (confirmDialogResponse) {
-                                logFirebaseEvent(
-                                    'sendSeatRequestIcon_navigate_to');
-
-                                context.pushNamed('driversLicense');
-
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              } else {
-                                if (_shouldSetState) setState(() {});
-                                return;
-                              }
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Driver Request Expired'),
+                                    content: Text(
+                                        'Please note that you are unable to propose to drive this passenger. This proposal is past the scheduled depature time.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Continue'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              if (_shouldSetState) setState(() {});
+                              return;
                             }
                           } else {
                             logFirebaseEvent(
                                 'sendSeatRequestIcon_alert_dialog');
-                            var confirmDialogResponse = await showDialog<bool>(
+                            confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: Text('Account Verification'),
-                                      content:
-                                          Text('Your account is not verified.'),
+                                      title: Text(
+                                          'Driver\'s License Verification'),
+                                      content: Text(
+                                          'Please upload your driver\'s license and send a request to verify it.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () => Navigator.pop(
@@ -710,7 +431,7 @@ class _DriverRequestDetailsWidgetState
                               logFirebaseEvent(
                                   'sendSeatRequestIcon_navigate_to');
 
-                              context.pushNamed('account');
+                              context.pushNamed('driversLicense');
 
                               if (_shouldSetState) setState(() {});
                               return;
@@ -721,13 +442,13 @@ class _DriverRequestDetailsWidgetState
                           }
                         } else {
                           logFirebaseEvent('sendSeatRequestIcon_alert_dialog');
-                          var confirmDialogResponse = await showDialog<bool>(
+                          confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: Text('Driver Subscription'),
-                                    content: Text(
-                                        'To accept passengers into your commute, please subscribe.'),
+                                    title: Text('Account Verification'),
+                                    content:
+                                        Text('Your account is not verified.'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(
@@ -737,7 +458,7 @@ class _DriverRequestDetailsWidgetState
                                       TextButton(
                                         onPressed: () => Navigator.pop(
                                             alertDialogContext, true),
-                                        child: Text('Subscribe'),
+                                        child: Text('Verify'),
                                       ),
                                     ],
                                   );
@@ -747,15 +468,18 @@ class _DriverRequestDetailsWidgetState
                           if (confirmDialogResponse) {
                             logFirebaseEvent('sendSeatRequestIcon_navigate_to');
 
-                            context.pushNamed('subscription');
+                            context.pushNamed('account');
+
+                            if (_shouldSetState) setState(() {});
+                            return;
                           } else {
                             if (_shouldSetState) setState(() {});
                             return;
                           }
-
-                          if (_shouldSetState) setState(() {});
-                          return;
                         }
+                      } else {
+                        if (_shouldSetState) setState(() {});
+                        return;
                       }
                     }
 
