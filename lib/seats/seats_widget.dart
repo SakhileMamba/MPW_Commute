@@ -184,115 +184,101 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                     title: Text(
-                      'Send Request',
+                      FFAppState().driverMode
+                          ? 'Request Passengers'
+                          : 'Request Drivers',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                     tileColor: FlutterFlowTheme.of(context).primaryText,
                     dense: false,
                   ),
                 ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('SEATS_PAGE_ListTile_lbgje165_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('SEATS_PAGE_ListTile_lbgje165_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drivers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.commute_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drivers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.commute_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Drivers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Drivers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('SEATS_PAGE_ListTile_lyobqfai_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('SEATS_PAGE_ListTile_lyobqfai_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('passengers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.emoji_people,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('passengers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.emoji_people,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Hailers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Hailers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('SEATS_PAGE_ListTile_lhogkwoa_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('SEATS_PAGE_ListTile_lhogkwoa_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drives');
-                  },
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.road,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drives');
+                    },
+                    child: ListTile(
+                      leading: FaIcon(
+                        FontAwesomeIcons.road,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Drives',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Drives',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('SEATS_PAGE_ListTile_f14tz03w_ON_TAP');
-                    logFirebaseEvent('ListTile_drawer');
-                    if (scaffoldKey.currentState!.isDrawerOpen ||
-                        scaffoldKey.currentState!.isEndDrawerOpen) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.airline_seat_recline_normal_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent('SEATS_PAGE_ListTile_f14tz03w_ON_TAP');
+                      logFirebaseEvent('ListTile_drawer');
+                      if (scaffoldKey.currentState!.isDrawerOpen ||
+                          scaffoldKey.currentState!.isEndDrawerOpen) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.airline_seat_recline_normal_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Seats',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Seats',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('SEATS_PAGE_ListTile_3mcsgn99_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
-
-                    context.goNamed('announcements');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.announcement_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-                    title: Text(
-                      'Announcements',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
-                  ),
-                ),
                 InkWell(
                   onTap: () async {
                     logFirebaseEvent('SEATS_PAGE_ListTile_ygtuc6dp_ON_TAP');
@@ -438,925 +424,888 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                       );
                                     }
                                     final cardCommutesRecord = snapshot.data!;
-                                    return InkWell(
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'SEATS_PAGE_Card_63fif4w3_ON_TAP');
-                                        logFirebaseEvent('Card_navigate_to');
+                                    return Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                      elevation: 0,
+                                      child: FutureBuilder<UsersRecord>(
+                                        future: UsersRecord.getDocumentOnce(
+                                            cardCommutesRecord.driver!),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child: SpinKitChasingDots(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 50,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          final containerUsersRecord =
+                                              snapshot.data!;
+                                          return InkWell(
+                                            onTap: () async {
+                                              logFirebaseEvent(
+                                                  'SEATS_PAGE_Container_5qsqceys_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Container_navigate_to');
 
-                                        context.pushNamed(
-                                          'driveDetails',
-                                          queryParams: {
-                                            'commuteDoc': serializeParam(
-                                              cardCommutesRecord,
-                                              ParamType.Document,
-                                            ),
-                                            'notNotificationOpen':
-                                                serializeParam(
-                                              true,
-                                              ParamType.bool,
-                                            ),
-                                          }.withoutNulls,
-                                          extra: <String, dynamic>{
-                                            'commuteDoc': cardCommutesRecord,
-                                          },
-                                        );
-                                      },
-                                      child: Card(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBtnText,
-                                        elevation: 0,
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16, 16, 16, 16),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
+                                              context.pushNamed(
+                                                'driveDetails',
+                                                queryParams: {
+                                                  'commuteDoc': serializeParam(
+                                                    cardCommutesRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'notNotificationOpen':
+                                                      serializeParam(
+                                                    true,
+                                                    ParamType.bool,
+                                                  ),
+                                                  'driverDoc': serializeParam(
+                                                    containerUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'commuteDoc':
+                                                      cardCommutesRecord,
+                                                  'driverDoc':
+                                                      containerUsersRecord,
+                                                },
+                                              );
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                              ),
+                                              child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child:
-                                                    FutureBuilder<UsersRecord>(
-                                                  future: UsersRecord
-                                                      .getDocumentOnce(
-                                                          cardCommutesRecord
-                                                              .driver!),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                              SpinKitChasingDots(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            size: 50,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final nameRatingUsersRecord =
-                                                        snapshot.data!;
-                                                    return Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () async {
-                                                            logFirebaseEvent(
-                                                                'SEATS_PAGE_CircleImage_2aoju39o_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'CircleImage_expand_image');
-                                                            await Navigator
-                                                                .push(
-                                                              context,
-                                                              PageTransition(
-                                                                type:
-                                                                    PageTransitionType
-                                                                        .fade,
-                                                                child:
-                                                                    FlutterFlowExpandedImageView(
-                                                                  image:
-                                                                      CachedNetworkImage(
-                                                                    imageUrl:
-                                                                        nameRatingUsersRecord
-                                                                            .photoUrl!,
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                  ),
-                                                                  allowRotation:
-                                                                      false,
-                                                                  tag: nameRatingUsersRecord
-                                                                      .photoUrl!,
-                                                                  useHeroAnimation:
-                                                                      true,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                          child: Hero(
-                                                            tag:
-                                                                nameRatingUsersRecord
-                                                                    .photoUrl!,
-                                                            transitionOnUserGestures:
-                                                                true,
-                                                            child: Container(
-                                                              width: 50,
-                                                              height: 50,
-                                                              clipBehavior: Clip
-                                                                  .antiAlias,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                              ),
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                imageUrl:
-                                                                    nameRatingUsersRecord
+                                                    .fromSTEB(16, 16, 16, 16),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'SEATS_PAGE_CircleImage_2aoju39o_ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'CircleImage_expand_image');
+                                                              await Navigator
+                                                                  .push(
+                                                                context,
+                                                                PageTransition(
+                                                                  type:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  child:
+                                                                      FlutterFlowExpandedImageView(
+                                                                    image:
+                                                                        CachedNetworkImage(
+                                                                      imageUrl:
+                                                                          containerUsersRecord
+                                                                              .photoUrl!,
+                                                                      fit: BoxFit
+                                                                          .contain,
+                                                                    ),
+                                                                    allowRotation:
+                                                                        false,
+                                                                    tag: containerUsersRecord
                                                                         .photoUrl!,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                                    useHeroAnimation:
+                                                                        true,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Hero(
+                                                              tag: containerUsersRecord
+                                                                  .photoUrl!,
+                                                              transitionOnUserGestures:
+                                                                  true,
+                                                              child: Container(
+                                                                width: 50,
+                                                                height: 50,
+                                                                clipBehavior: Clip
+                                                                    .antiAlias,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                ),
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      containerUsersRecord
+                                                                          .photoUrl!,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
-                                                        ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          10,
+                                                                          0,
+                                                                          0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    '${containerUsersRecord.displayName} ${containerUsersRecord.displaySurname}',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                  Text(
+                                                                    containerUsersRecord
+                                                                        .gender!,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          if (containerUsersRecord
+                                                                  .rating! >
+                                                              0.0)
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          10,
+                                                                          0,
+                                                                          0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Text(
+                                                                    functions.twoDeci(
+                                                                        containerUsersRecord
+                                                                            .rating!),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .star_rounded,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    size: 18,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: FutureBuilder<
+                                                          VehiclesRecord>(
+                                                        future: VehiclesRecord
+                                                            .getDocumentOnce(
+                                                                cardCommutesRecord
+                                                                    .vehicle!),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 50,
+                                                                height: 50,
+                                                                child:
+                                                                    SpinKitChasingDots(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  size: 50,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          final imageVehiclesRecord =
+                                                              snapshot.data!;
+                                                          return InkWell(
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'SEATS_PAGE_Image_vw8ooa2q_ON_TAP');
+                                                              logFirebaseEvent(
+                                                                  'Image_expand_image');
+                                                              await Navigator
+                                                                  .push(
+                                                                context,
+                                                                PageTransition(
+                                                                  type:
+                                                                      PageTransitionType
+                                                                          .fade,
+                                                                  child:
+                                                                      FlutterFlowExpandedImageView(
+                                                                    image:
+                                                                        CachedNetworkImage(
+                                                                      imageUrl:
+                                                                          imageVehiclesRecord
+                                                                              .imageURL!,
+                                                                      fit: BoxFit
+                                                                          .contain,
+                                                                    ),
+                                                                    allowRotation:
+                                                                        false,
+                                                                    tag: imageVehiclesRecord
+                                                                        .imageURL!,
+                                                                    useHeroAnimation:
+                                                                        true,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: Hero(
+                                                              tag: imageVehiclesRecord
+                                                                  .imageURL!,
+                                                              transitionOnUserGestures:
+                                                                  true,
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  imageUrl:
+                                                                      imageVehiclesRecord
+                                                                          .imageURL!,
+                                                                  width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        4,
+                                                                        0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .trip_origin_rounded,
+                                                              color:
+                                                                  Colors.black,
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Container(
+                                                              width: 100,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    functions
+                                                                        .trimCommaEnd(
+                                                                            '${functions.nullTest(cardCommutesRecord.originReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalTown!)}'),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        4,
+                                                                        0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .location_pin,
+                                                              color:
+                                                                  Colors.black,
+                                                              size: 24,
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Container(
+                                                              width: 100,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    functions
+                                                                        .trimCommaEnd(
+                                                                            '${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalTown!)}'),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyText1,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          4,
+                                                                          0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground,
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              4,
+                                                                              0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .access_time_rounded,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          dateTimeFormat(
+                                                                            'jm',
+                                                                            cardCommutesRecord.departureDatetime!,
+                                                                            locale:
+                                                                                FFLocalizations.of(context).languageCode,
+                                                                          ),
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText1,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground,
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              4,
+                                                                              0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .date_range_rounded,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          dateTimeFormat(
+                                                                            'MMMEd',
+                                                                            cardCommutesRecord.departureDatetime!,
+                                                                            locale:
+                                                                                FFLocalizations.of(context).languageCode,
+                                                                          ),
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText1,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          0,
+                                                                          4,
+                                                                          0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground,
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              4,
+                                                                              0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .airline_seat_recline_normal_rounded,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            24,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          cardCommutesRecord
+                                                                              .availablePassengerSeats!
+                                                                              .toString(),
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText1,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryBackground,
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              4,
+                                                                              0),
+                                                                      child:
+                                                                          FaIcon(
+                                                                        FontAwesomeIcons
+                                                                            .moneyBillWaveAlt,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        size:
+                                                                            19,
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            100,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          '${functions.twoDeci(cardCommutesRecord.pricePerSeat!)} ${cardCommutesRecord.currency}',
+                                                                          style:
+                                                                              FlutterFlowTheme.of(context).bodyText1,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
                                                         Expanded(
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4,
-                                                                        10,
                                                                         0,
-                                                                        0),
-                                                            child: Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Text(
-                                                                  '${nameRatingUsersRecord.displayName} ${nameRatingUsersRecord.displaySurname}',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
-                                                                ),
-                                                                Text(
-                                                                  nameRatingUsersRecord
-                                                                      .gender!,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        if (nameRatingUsersRecord
-                                                                .rating! >
-                                                            0.0)
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        4,
-                                                                        10,
                                                                         0,
+                                                                        4,
                                                                         0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Text(
-                                                                  functions.twoDeci(
-                                                                      nameRatingUsersRecord
-                                                                          .rating!),
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .star_rounded,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  size: 18,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                      ],
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: FutureBuilder<
-                                                    VehiclesRecord>(
-                                                  future: VehiclesRecord
-                                                      .getDocumentOnce(
-                                                          cardCommutesRecord
-                                                              .vehicle!),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                              SpinKitChasingDots(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            size: 50,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final imageVehiclesRecord =
-                                                        snapshot.data!;
-                                                    return InkWell(
-                                                      onTap: () async {
-                                                        logFirebaseEvent(
-                                                            'SEATS_PAGE_Image_vw8ooa2q_ON_TAP');
-                                                        logFirebaseEvent(
-                                                            'Image_expand_image');
-                                                        await Navigator.push(
-                                                          context,
-                                                          PageTransition(
-                                                            type:
-                                                                PageTransitionType
-                                                                    .fade,
                                                             child:
-                                                                FlutterFlowExpandedImageView(
-                                                              image:
-                                                                  CachedNetworkImage(
-                                                                imageUrl:
-                                                                    imageVehiclesRecord
-                                                                        .imageURL!,
-                                                                fit: BoxFit
-                                                                    .contain,
-                                                              ),
-                                                              allowRotation:
-                                                                  false,
-                                                              tag: imageVehiclesRecord
-                                                                  .imageURL!,
-                                                              useHeroAnimation:
-                                                                  true,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: Hero(
-                                                        tag: imageVehiclesRecord
-                                                            .imageURL!,
-                                                        transitionOnUserGestures:
-                                                            true,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl:
-                                                                imageVehiclesRecord
-                                                                    .imageURL!,
-                                                            width:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 4, 0),
-                                                      child: Icon(
-                                                        Icons
-                                                            .trip_origin_rounded,
-                                                        color: Colors.black,
-                                                        size: 24,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Container(
-                                                        width: 100,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              functions
-                                                                  .trimCommaEnd(
-                                                                      '${functions.nullTest(cardCommutesRecord.originReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.originReversedGeocoded.postalTown!)}'),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 4, 0),
-                                                      child: Icon(
-                                                        Icons.location_pin,
-                                                        color: Colors.black,
-                                                        size: 24,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Container(
-                                                        width: 100,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBackground,
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              functions
-                                                                  .trimCommaEnd(
-                                                                      '${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalTown!)}'),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 4, 0),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            4,
-                                                                            0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .access_time_rounded,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                  ),
-                                                                  child: Text(
-                                                                    dateTimeFormat(
-                                                                      'jm',
-                                                                      cardCommutesRecord
-                                                                          .departureDatetime!,
-                                                                      locale: FFLocalizations.of(
-                                                                              context)
-                                                                          .languageCode,
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    4, 0, 0, 0),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            4,
-                                                                            0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .date_range_rounded,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                  ),
-                                                                  child: Text(
-                                                                    dateTimeFormat(
-                                                                      'MMMEd',
-                                                                      cardCommutesRecord
-                                                                          .departureDatetime!,
-                                                                      locale: FFLocalizations.of(
-                                                                              context)
-                                                                          .languageCode,
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 4, 0),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            4,
-                                                                            0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .airline_seat_recline_normal_rounded,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 24,
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                  ),
-                                                                  child: Text(
+                                                                FFButtonWidget(
+                                                              onPressed:
+                                                                  () async {
+                                                                logFirebaseEvent(
+                                                                    'SEATS_PAGE_ARCHIVE_BTN_ON_TAP');
+                                                                if (getCurrentTimestamp <
                                                                     cardCommutesRecord
-                                                                        .availablePassengerSeats!
-                                                                        .toString(),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    4, 0, 0, 0),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryBackground,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            4,
-                                                                            0),
-                                                                child: FaIcon(
-                                                                  FontAwesomeIcons
-                                                                      .moneyBillWaveAlt,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 19,
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  width: 100,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBackground,
-                                                                  ),
-                                                                  child: Text(
-                                                                    '${functions.twoDeci(cardCommutesRecord.pricePerSeat!)} ${cardCommutesRecord.currency}',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 4, 0),
-                                                      child: FFButtonWidget(
-                                                        onPressed: () async {
-                                                          logFirebaseEvent(
-                                                              'SEATS_PAGE_ARCHIVE_BTN_ON_TAP');
-                                                          if (getCurrentTimestamp <
-                                                              cardCommutesRecord
-                                                                  .departureDatetime!) {
-                                                            logFirebaseEvent(
-                                                                'Button_alert_dialog');
-                                                            var confirmDialogResponse =
-                                                                await showDialog<
-                                                                        bool>(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (alertDialogContext) {
-                                                                        return AlertDialog(
-                                                                          title:
-                                                                              Text('Cancel Commute'),
-                                                                          content:
-                                                                              Text('Are you sure you want to give up this seat?'),
-                                                                          actions: [
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                              child: Text('No'),
-                                                                            ),
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                              child: Text('Yes'),
-                                                                            ),
-                                                                          ],
-                                                                        );
-                                                                      },
-                                                                    ) ??
-                                                                    false;
-                                                            if (confirmDialogResponse) {
-                                                              logFirebaseEvent(
-                                                                  'Button_trigger_push_notification');
-                                                              triggerPushNotification(
-                                                                notificationTitle:
-                                                                    'Cancellation Notice',
-                                                                notificationText:
-                                                                    'A passenger on your commute to ${functions.trimCommaEnd('${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalTown!)}')} on ${dateTimeFormat(
-                                                                  'MMMMEEEEd',
-                                                                  cardCommutesRecord
-                                                                      .departureDatetime,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
-                                                                )}, ${dateTimeFormat(
-                                                                  'jm',
-                                                                  cardCommutesRecord
-                                                                      .departureDatetime,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
-                                                                )} has cancelled. The seat is now available for others to request.',
-                                                                notificationSound:
-                                                                    'default',
-                                                                userRefs: [
-                                                                  cardCommutesRecord
-                                                                      .driver!
-                                                                ],
-                                                                initialPageName:
-                                                                    'drives',
-                                                                parameterData: {},
-                                                              );
-                                                              logFirebaseEvent(
-                                                                  'Button_backend_call');
+                                                                        .departureDatetime!) {
+                                                                  logFirebaseEvent(
+                                                                      'Button_alert_dialog');
+                                                                  var confirmDialogResponse =
+                                                                      await showDialog<
+                                                                              bool>(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Cancel Commute'),
+                                                                                content: Text('Are you sure you want to give up this seat?'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                    child: Text('No'),
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                    child: Text('Yes'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          ) ??
+                                                                          false;
+                                                                  if (confirmDialogResponse) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_trigger_push_notification');
+                                                                    triggerPushNotification(
+                                                                      notificationTitle:
+                                                                          'Cancellation Notice',
+                                                                      notificationText:
+                                                                          'A passenger on your commute to ${functions.trimCommaEnd('${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.neighborhood!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.locality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocality!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.country!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCode!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalCodePrefix!)}${functions.nullTest(cardCommutesRecord.destinationReversedGeocoded.postalTown!)}')} on ${dateTimeFormat(
+                                                                        'MMMMEEEEd',
+                                                                        cardCommutesRecord
+                                                                            .departureDatetime,
+                                                                        locale:
+                                                                            FFLocalizations.of(context).languageCode,
+                                                                      )}, ${dateTimeFormat(
+                                                                        'jm',
+                                                                        cardCommutesRecord
+                                                                            .departureDatetime,
+                                                                        locale:
+                                                                            FFLocalizations.of(context).languageCode,
+                                                                      )} has cancelled. The seat is now available for others to request.',
+                                                                      notificationSound:
+                                                                          'default',
+                                                                      userRefs: [
+                                                                        cardCommutesRecord
+                                                                            .driver!
+                                                                      ],
+                                                                      initialPageName:
+                                                                          'drives',
+                                                                      parameterData: {},
+                                                                    );
+                                                                    logFirebaseEvent(
+                                                                        'Button_backend_call');
 
-                                                              final commutesUpdateData =
-                                                                  {
-                                                                'available_passenger_seats':
-                                                                    FieldValue
-                                                                        .increment(
-                                                                            1),
-                                                              };
-                                                              await cardCommutesRecord
-                                                                  .reference
-                                                                  .update(
-                                                                      commutesUpdateData);
-                                                              logFirebaseEvent(
-                                                                  'Button_backend_call');
+                                                                    final commutesUpdateData =
+                                                                        {
+                                                                      'available_passenger_seats':
+                                                                          FieldValue.increment(
+                                                                              1),
+                                                                    };
+                                                                    await cardCommutesRecord
+                                                                        .reference
+                                                                        .update(
+                                                                            commutesUpdateData);
+                                                                    logFirebaseEvent(
+                                                                        'Button_backend_call');
 
-                                                              final passengersUpdateData1 =
-                                                                  createPassengersRecordData(
-                                                                archived: true,
-                                                              );
-                                                              await listViewPassengersRecord
-                                                                  .reference
-                                                                  .update(
-                                                                      passengersUpdateData1);
-                                                              return;
-                                                            } else {
-                                                              return;
-                                                            }
-                                                          } else {
-                                                            logFirebaseEvent(
-                                                                'Button_backend_call');
+                                                                    final passengersUpdateData1 =
+                                                                        createPassengersRecordData(
+                                                                      archived:
+                                                                          true,
+                                                                    );
+                                                                    await listViewPassengersRecord
+                                                                        .reference
+                                                                        .update(
+                                                                            passengersUpdateData1);
+                                                                    return;
+                                                                  } else {
+                                                                    return;
+                                                                  }
+                                                                } else {
+                                                                  logFirebaseEvent(
+                                                                      'Button_backend_call');
 
-                                                            final passengersUpdateData2 =
-                                                                createPassengersRecordData(
-                                                              archived: true,
-                                                            );
-                                                            await listViewPassengersRecord
-                                                                .reference
-                                                                .update(
-                                                                    passengersUpdateData2);
-                                                            return;
-                                                          }
-                                                        },
-                                                        text: 'Archive',
-                                                        icon: Icon(
-                                                          Icons.archive_rounded,
-                                                          size: 15,
-                                                        ),
-                                                        options:
-                                                            FFButtonOptions(
-                                                          width: 130,
-                                                          height: 50,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryColor,
-                                                          textStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .secondaryText,
-                                                                  ),
-                                                          elevation: 8,
-                                                          borderSide:
-                                                              BorderSide(
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Builder(
-                                                      builder: (context) =>
-                                                          Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    4, 0, 0, 0),
-                                                        child: FFButtonWidget(
-                                                          onPressed: () async {
-                                                            logFirebaseEvent(
-                                                                'SEATS_PAGE_SECURE_BTN_ON_TAP');
-                                                            logFirebaseEvent(
-                                                                'Button_alert_dialog');
-                                                            var confirmDialogResponse =
-                                                                await showDialog<
-                                                                        bool>(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (alertDialogContext) {
-                                                                        return AlertDialog(
-                                                                          title:
-                                                                              Text('Share Commute Details'),
-                                                                          content:
-                                                                              Text('Are you sure you want to share this commute\'s identifier? It can be used by authorities to request this commute\'s data in the case of an emergency.'),
-                                                                          actions: [
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                              child: Text('Cancel'),
-                                                                            ),
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                              child: Text('Confirm'),
-                                                                            ),
-                                                                          ],
-                                                                        );
-                                                                      },
-                                                                    ) ??
-                                                                    false;
-                                                            if (confirmDialogResponse) {
-                                                              logFirebaseEvent(
-                                                                  'Button_share');
-                                                              await Share.share(
-                                                                '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} is a Commute passenger and has shared the commute identifier.  In the case of an emergency, share it with the police: ${functions.docRefToString(cardCommutesRecord.reference)}',
-                                                                sharePositionOrigin:
-                                                                    getWidgetBoundingBox(
-                                                                        context),
-                                                              );
-                                                              return;
-                                                            } else {
-                                                              return;
-                                                            }
-                                                          },
-                                                          text: 'Secure',
-                                                          icon: Icon(
-                                                            Icons
-                                                                .security_rounded,
-                                                            size: 15,
-                                                          ),
-                                                          options:
-                                                              FFButtonOptions(
-                                                            width:
-                                                                double.infinity,
-                                                            height: 50,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            textStyle:
-                                                                FlutterFlowTheme.of(
+                                                                  final passengersUpdateData2 =
+                                                                      createPassengersRecordData(
+                                                                    archived:
+                                                                        true,
+                                                                  );
+                                                                  await listViewPassengersRecord
+                                                                      .reference
+                                                                      .update(
+                                                                          passengersUpdateData2);
+                                                                  return;
+                                                                }
+                                                              },
+                                                              text: 'Archive',
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .archive_rounded,
+                                                                size: 15,
+                                                              ),
+                                                              options:
+                                                                  FFButtonOptions(
+                                                                width: 130,
+                                                                height: 50,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryColor,
+                                                                textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyText2
                                                                     .override(
@@ -1366,25 +1315,123 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                                                               context)
                                                                           .secondaryText,
                                                                     ),
-                                                            elevation: 8,
-                                                            borderSide:
-                                                                BorderSide(
-                                                              width: 1,
+                                                                elevation: 8,
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  width: 1,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
                                                             ),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
                                                           ),
                                                         ),
-                                                      ),
+                                                        Expanded(
+                                                          child: Builder(
+                                                            builder:
+                                                                (context) =>
+                                                                    Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                              child:
+                                                                  FFButtonWidget(
+                                                                onPressed:
+                                                                    () async {
+                                                                  logFirebaseEvent(
+                                                                      'SEATS_PAGE_SECURE_BTN_ON_TAP');
+                                                                  logFirebaseEvent(
+                                                                      'Button_alert_dialog');
+                                                                  var confirmDialogResponse =
+                                                                      await showDialog<
+                                                                              bool>(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                title: Text('Share Commute Details'),
+                                                                                content: Text('Are you sure you want to share this commute\'s identifier? It can be used by authorities to request this commute\'s data in the case of an emergency.'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                    child: Text('Cancel'),
+                                                                                  ),
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                    child: Text('Confirm'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          ) ??
+                                                                          false;
+                                                                  if (confirmDialogResponse) {
+                                                                    logFirebaseEvent(
+                                                                        'Button_share');
+                                                                    await Share
+                                                                        .share(
+                                                                      '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} is a Commute passenger and has shared the commute identifier.  In the case of an emergency, share it with the police: ${functions.docRefToString(cardCommutesRecord.reference)}',
+                                                                      sharePositionOrigin:
+                                                                          getWidgetBoundingBox(
+                                                                              context),
+                                                                    );
+                                                                    return;
+                                                                  } else {
+                                                                    return;
+                                                                  }
+                                                                },
+                                                                text: 'Secure',
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .security_rounded,
+                                                                  size: 15,
+                                                                ),
+                                                                options:
+                                                                    FFButtonOptions(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: 50,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                      ),
+                                                                  elevation: 8,
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    width: 1,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     );
                                   },
@@ -1773,9 +1820,9 @@ class _SeatsWidgetState extends State<SeatsWidget> {
                                                                         (alertDialogContext) {
                                                                       return AlertDialog(
                                                                         title: Text(
-                                                                            'Cancel Driver Request'),
+                                                                            'Cancel Drivers Request'),
                                                                         content:
-                                                                            Text('Are you sure you want to cancel this request for a driver?'),
+                                                                            Text('Are you sure you want to cancel this request for drivers?'),
                                                                         actions: [
                                                                           TextButton(
                                                                             onPressed: () =>

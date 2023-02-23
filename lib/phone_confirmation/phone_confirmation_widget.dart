@@ -31,7 +31,7 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'phoneConfirmation'});
-    _model.securityCodeTextFieldController = TextEditingController();
+    _model.securityCodeTextFieldController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -127,7 +127,7 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.black,
+                                  color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),

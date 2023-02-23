@@ -30,7 +30,7 @@ class _PriceWidgetState extends State<PriceWidget> {
     _model = createModel(context, () => PriceModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'price'});
-    _model.textController = TextEditingController();
+    _model.textController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -188,8 +188,7 @@ class _PriceWidgetState extends State<PriceWidget> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
+                                    color: Color(0x00000000),
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),

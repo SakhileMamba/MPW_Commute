@@ -34,7 +34,7 @@ class _NoDriverRequestingWidgetState extends State<NoDriverRequestingWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

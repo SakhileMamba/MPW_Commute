@@ -33,7 +33,7 @@ class _SeatsEmptyWidgetState extends State<SeatsEmptyWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

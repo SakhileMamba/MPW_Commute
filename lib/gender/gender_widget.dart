@@ -89,6 +89,8 @@ class _GenderWidgetState extends State<GenderWidget> {
                       child: AuthUserStreamWidget(
                         builder: (context) => FlutterFlowRadioButton(
                           options: ['Male', 'Female'].toList(),
+                          initialValue:
+                              valueOrDefault(currentUserDocument?.gender, ''),
                           onChanged: (val) =>
                               setState(() => _model.radioButtonValue = val),
                           optionHeight: 30,

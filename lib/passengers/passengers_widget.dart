@@ -181,120 +181,105 @@ class _PassengersWidgetState extends State<PassengersWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                     title: Text(
-                      'Send Request',
+                      FFAppState().driverMode
+                          ? 'Request Passengers'
+                          : 'Request Drivers',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                     tileColor: FlutterFlowTheme.of(context).primaryText,
                     dense: false,
                   ),
                 ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'PASSENGERS_PAGE_ListTile_44jdd1kc_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'PASSENGERS_PAGE_ListTile_44jdd1kc_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drivers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.commute_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drivers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.commute_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Drivers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Drivers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'PASSENGERS_PAGE_ListTile_fgdrtyq4_ON_TAP');
-                    logFirebaseEvent('ListTile_drawer');
-                    if (scaffoldKey.currentState!.isDrawerOpen ||
-                        scaffoldKey.currentState!.isEndDrawerOpen) {
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.emoji_people,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'PASSENGERS_PAGE_ListTile_fgdrtyq4_ON_TAP');
+                      logFirebaseEvent('ListTile_drawer');
+                      if (scaffoldKey.currentState!.isDrawerOpen ||
+                          scaffoldKey.currentState!.isEndDrawerOpen) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.emoji_people,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Hailers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Hailers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'PASSENGERS_PAGE_ListTile_aujwlhys_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'PASSENGERS_PAGE_ListTile_aujwlhys_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drives');
-                  },
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.road,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drives');
+                    },
+                    child: ListTile(
+                      leading: FaIcon(
+                        FontAwesomeIcons.road,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Drives',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Drives',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'PASSENGERS_PAGE_ListTile_yj09fyg5_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'PASSENGERS_PAGE_ListTile_yj09fyg5_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('seats');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.airline_seat_recline_normal_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('seats');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.airline_seat_recline_normal_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Seats',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Seats',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent(
-                        'PASSENGERS_PAGE_ListTile_tltjfsv8_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
-
-                    context.goNamed('announcements');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.announcement_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-                    title: Text(
-                      'Announcements',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
-                  ),
-                ),
                 InkWell(
                   onTap: () async {
                     logFirebaseEvent(

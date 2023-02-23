@@ -30,7 +30,7 @@ class _SurnameWidgetState extends State<SurnameWidget> {
     _model = createModel(context, () => SurnameModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'surname'});
-    _model.surnameController = TextEditingController(
+    _model.surnameController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.displaySurname, ''));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -103,7 +103,7 @@ class _SurnameWidgetState extends State<SurnameWidget> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Color(0x00000000),
                                 width: 1,
                               ),
                               borderRadius: BorderRadius.circular(8),

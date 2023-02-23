@@ -27,14 +27,6 @@ class DriverRequestDetailsModel extends FlutterFlowModel {
   CommutesRecord? createdCommute;
   String currentPageLink = '';
   // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
-  dynamic? reverseGeocodeOriginOutput;
-  // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
-  dynamic? reverseGeocodeDestinationOutput;
-  // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
-  dynamic? reverseGeocodeOriginOutput1;
-  // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
-  dynamic? reverseGeocodeDestinationOutput1;
-  // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
   dynamic? reverseGeocodeOriginOutput2;
   // Stores action output result for [Custom Action - reverseGeocode] action in sendSeatRequestIcon widget.
   dynamic? reverseGeocodeDestinationOutput2;

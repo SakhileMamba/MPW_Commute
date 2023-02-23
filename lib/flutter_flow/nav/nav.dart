@@ -124,16 +124,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => DrivesWidget(),
             ),
             FFRoute(
-              name: 'seats',
-              path: 'seats',
-              requireAuth: true,
-              builder: (context, params) => SeatsWidget(),
-            ),
-            FFRoute(
               name: 'account',
               path: 'account',
               requireAuth: true,
               builder: (context, params) => AccountWidget(),
+            ),
+            FFRoute(
+              name: 'seats',
+              path: 'seats',
+              requireAuth: true,
+              builder: (context, params) => SeatsWidget(),
             ),
             FFRoute(
               name: 'driveDetails',
@@ -257,12 +257,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => BeginRequestWidget(),
             ),
             FFRoute(
-              name: 'requestType',
-              path: 'requestType',
-              requireAuth: true,
-              builder: (context, params) => RequestTypeWidget(),
-            ),
-            FFRoute(
               name: 'originType',
               path: 'originType',
               requireAuth: true,
@@ -305,22 +299,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => PriceWidget(),
             ),
             FFRoute(
-              name: 'announcements',
-              path: 'announcements',
-              requireAuth: true,
-              builder: (context, params) => AnnouncementsWidget(),
-            ),
-            FFRoute(
               name: 'requestConfirmation',
               path: 'requestConfirmation',
               requireAuth: true,
               builder: (context, params) => RequestConfirmationWidget(),
-            ),
-            FFRoute(
-              name: 'createAnnouncement',
-              path: 'createAnnouncement',
-              requireAuth: true,
-              builder: (context, params) => CreateAnnouncementWidget(),
             ),
             FFRoute(
               name: 'filterOriginType',

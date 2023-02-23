@@ -210,113 +210,103 @@ class _BeginRequestWidgetState extends State<BeginRequestWidget> {
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
                     title: Text(
-                      'Send Request',
+                      FFAppState().driverMode
+                          ? 'Request Passengers'
+                          : 'Request Drivers',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                     tileColor: FlutterFlowTheme.of(context).primaryText,
                     dense: false,
                   ),
                 ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('BEGIN_REQUEST_ListTile_7axxhrki_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'BEGIN_REQUEST_ListTile_7axxhrki_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drivers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.commute_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drivers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.commute_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Drivers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Drivers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('BEGIN_REQUEST_ListTile_z30ejh90_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'BEGIN_REQUEST_ListTile_z30ejh90_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('passengers');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.emoji_people,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('passengers');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.emoji_people,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Browse Hailers',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Browse Hailers',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('BEGIN_REQUEST_ListTile_bieut4nu_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'BEGIN_REQUEST_ListTile_bieut4nu_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('drives');
-                  },
-                  child: ListTile(
-                    leading: FaIcon(
-                      FontAwesomeIcons.road,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('drives');
+                    },
+                    child: ListTile(
+                      leading: FaIcon(
+                        FontAwesomeIcons.road,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Drives',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Drives',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('BEGIN_REQUEST_ListTile_eyolh82l_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
+                if (!FFAppState().driverMode)
+                  InkWell(
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'BEGIN_REQUEST_ListTile_eyolh82l_ON_TAP');
+                      logFirebaseEvent('ListTile_navigate_to');
 
-                    context.goNamed('seats');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.airline_seat_recline_normal_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      context.goNamed('seats');
+                    },
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.airline_seat_recline_normal_rounded,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                      title: Text(
+                        'Manage Seats',
+                        style: FlutterFlowTheme.of(context).bodyText2,
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).primaryText,
+                      dense: false,
                     ),
-                    title: Text(
-                      'Manage Seats',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
                   ),
-                ),
-                InkWell(
-                  onTap: () async {
-                    logFirebaseEvent('BEGIN_REQUEST_ListTile_os7zfis9_ON_TAP');
-                    logFirebaseEvent('ListTile_navigate_to');
-
-                    context.goNamed('announcements');
-                  },
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.announcement_rounded,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                    ),
-                    title: Text(
-                      'Announcements',
-                      style: FlutterFlowTheme.of(context).bodyText2,
-                    ),
-                    tileColor: FlutterFlowTheme.of(context).primaryText,
-                    dense: false,
-                  ),
-                ),
                 InkWell(
                   onTap: () async {
                     logFirebaseEvent('BEGIN_REQUEST_ListTile_rlxte28l_ON_TAP');
@@ -382,20 +372,80 @@ class _BeginRequestWidgetState extends State<BeginRequestWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Do you have a journey soon? Send a request for drivers or passengers to rideshare!',
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
+                  if (FFAppState().driverMode)
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Text(
+                        'Request passengers to share your ride',
+                        textAlign: TextAlign.start,
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                  if (!FFAppState().driverMode)
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: Text(
+                        'Request drivers to pick you up',
+                        textAlign: TextAlign.start,
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('BEGIN_REQUEST_PAGE_BEGIN_BTN_ON_TAP');
                       if (valueOrDefault<bool>(
                           currentUserDocument?.verifiedUser, false)) {
-                        logFirebaseEvent('Button_navigate_to');
+                        if (FFAppState().driverMode) {
+                          if (valueOrDefault<bool>(
+                              currentUserDocument?.verifiedDriver, false)) {
+                            logFirebaseEvent('Button_navigate_to');
 
-                        context.pushNamed('requestType');
+                            context.pushNamed('originType');
 
-                        return;
+                            return;
+                          } else {
+                            logFirebaseEvent('Button_alert_dialog');
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text(
+                                          'Driver\'s License Verification'),
+                                      content: Text(
+                                          'Please upload your driver\'s license and send a request to verify it before you can request for passengers to rideshare with you.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: Text('Verify License'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              logFirebaseEvent('Button_navigate_to');
+
+                              context.pushNamed('driversLicense');
+
+                              return;
+                            } else {
+                              return;
+                            }
+                          }
+                        } else {
+                          logFirebaseEvent('Button_navigate_to');
+
+                          context.pushNamed('originType');
+
+                          return;
+                        }
                       } else {
                         logFirebaseEvent('Button_alert_dialog');
                         var confirmDialogResponse = await showDialog<bool>(

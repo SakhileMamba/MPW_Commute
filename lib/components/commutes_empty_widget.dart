@@ -33,7 +33,7 @@ class _CommutesEmptyWidgetState extends State<CommutesEmptyWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    _model.maybeDispose();
 
     super.dispose();
   }

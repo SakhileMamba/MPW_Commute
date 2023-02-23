@@ -41,6 +41,7 @@ class FFAppState extends ChangeNotifier {
         prefs.getBool('ff_isIdPicHintGiven') ?? _isIdPicHintGiven;
     _isLicenseHintPicGiven =
         prefs.getBool('ff_isLicenseHintPicGiven') ?? _isLicenseHintPicGiven;
+    _driverMode = prefs.getBool('ff_driverMode') ?? _driverMode;
   }
 
   void update(VoidCallback callback) {
@@ -321,6 +322,13 @@ class FFAppState extends ChangeNotifier {
   set isLicenseHintPicGiven(bool _value) {
     _isLicenseHintPicGiven = _value;
     prefs.setBool('ff_isLicenseHintPicGiven', _value);
+  }
+
+  bool _driverMode = false;
+  bool get driverMode => _driverMode;
+  set driverMode(bool _value) {
+    _driverMode = _value;
+    prefs.setBool('ff_driverMode', _value);
   }
 }
 
