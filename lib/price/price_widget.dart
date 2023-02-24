@@ -188,7 +188,8 @@ class _PriceWidgetState extends State<PriceWidget> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color(0x00000000),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),

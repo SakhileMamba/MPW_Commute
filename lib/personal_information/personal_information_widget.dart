@@ -194,11 +194,6 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                             currentUserDisplayName,
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
-                          ),
                           tileColor:
                               FlutterFlowTheme.of(context).primaryBackground,
                           dense: false,
@@ -273,11 +268,6 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                                 currentUserDocument?.displaySurname, ''),
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
-                          ),
                           tileColor:
                               FlutterFlowTheme.of(context).primaryBackground,
                           dense: false,
@@ -350,11 +340,6 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                           subtitle: Text(
                             valueOrDefault(currentUserDocument?.gender, ''),
                             style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
                           ),
                           tileColor:
                               FlutterFlowTheme.of(context).primaryBackground,
@@ -435,11 +420,6 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                               locale: FFLocalizations.of(context).languageCode,
                             ),
                             style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
                           ),
                           tileColor:
                               FlutterFlowTheme.of(context).primaryBackground,
@@ -529,11 +509,6 @@ class _PersonalInformationWidgetState extends State<PersonalInformationWidget> {
                                 ? 'Provided'
                                 : 'Not Provided',
                             style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
                           ),
                           tileColor:
                               FlutterFlowTheme.of(context).primaryBackground,

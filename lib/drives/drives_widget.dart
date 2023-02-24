@@ -802,9 +802,9 @@ class _DrivesWidgetState extends State<DrivesWidget> {
                                                                 (alertDialogContext) {
                                                               return AlertDialog(
                                                                 title: Text(
-                                                                    'Archive Commute'),
+                                                                    'Archive Drive'),
                                                                 content: Text(
-                                                                    'Are you sure you want to archive this commute?'),
+                                                                    'Are you sure you want to archive this drive?'),
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed: () =>
@@ -845,7 +845,7 @@ class _DrivesWidgetState extends State<DrivesWidget> {
                                                           'Button_trigger_push_notification');
                                                       triggerPushNotification(
                                                         notificationTitle:
-                                                            'Commute Cancelled',
+                                                            'Drive Cancelled',
                                                         notificationText:
                                                             'Your driver to ${functions.trimCommaEnd('${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.neighborhood!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.locality!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocality!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocalityLevel1!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocalityLevel2!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocalityLevel3!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocalityLevel4!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.sublocalityLevel5!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel1!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel2!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel3!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel4!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel5!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel6!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.administrativeAreaLevel7!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.country!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.postalCode!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.postalCodePrefix!)}${functions.nullTest(listViewCommutesRecord.destinationReversedGeocoded.postalTown!)}')} on ${dateTimeFormat(
                                                           'MMMMEEEEd',
@@ -958,9 +958,9 @@ class _DrivesWidgetState extends State<DrivesWidget> {
                                                               (alertDialogContext) {
                                                             return AlertDialog(
                                                               title: Text(
-                                                                  'Share Commute Details'),
+                                                                  'Share Drive Details'),
                                                               content: Text(
-                                                                  'Are you sure you want to share this commute\'s identifier? It can be used by authorities to request this commute\'s data in the case of an emergency.'),
+                                                                  'Are you sure you want to share this drive\'s identifier? It can be used by authorities to request helpful data in the case of an emergency.'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
@@ -987,7 +987,7 @@ class _DrivesWidgetState extends State<DrivesWidget> {
                                                   logFirebaseEvent(
                                                       'Button_share');
                                                   await Share.share(
-                                                    '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')}is a Commute driver and has shared the following commute identifier with you. In the case of an emergency, share it with the police:${functions.docRefToString(listViewCommutesRecord.reference)}',
+                                                    '${currentUserDisplayName} ${valueOrDefault(currentUserDocument?.displaySurname, '')} is a Commute Ridesharing driver and has shared the following drive identifier with you: ${functions.docRefToString(listViewCommutesRecord.reference)}. In the case of an emergency, share it with the police to identify his route, passengers, etc.',
                                                     sharePositionOrigin:
                                                         getWidgetBoundingBox(
                                                             context),
