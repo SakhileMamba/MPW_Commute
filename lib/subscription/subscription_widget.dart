@@ -139,7 +139,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
                           return FFButtonWidget(
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'SUBSCRIPTION_PAGE_SUBSCRIBE_BTN_ON_TAP');
+                                  'SUBSCRIPTION_\$9_99_MONTH_BTN_ON_TAP');
                               var _shouldSetState = false;
                               if (functions
                                   .swaziNumberTest(currentPhoneNumber)) {
@@ -186,7 +186,7 @@ class _SubscriptionWidgetState extends State<SubscriptionWidget> {
 
                               if (_shouldSetState) setState(() {});
                             },
-                            text: 'Subscribe',
+                            text: '\$9.99/Month',
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 50,

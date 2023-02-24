@@ -194,12 +194,7 @@ class _AvailableSeatsWidgetState extends State<AvailableSeatsWidget> {
                             ),
                             countBuilder: (count) => Text(
                               count.toString(),
-                              style: GoogleFonts.getFont(
-                                'Roboto',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                             count: _model.countControllerValue ??= 1,
                             updateCount: (count) => setState(

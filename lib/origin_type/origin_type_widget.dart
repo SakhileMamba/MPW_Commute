@@ -168,10 +168,11 @@ class _OriginTypeWidgetState extends State<OriginTypeWidget> {
                           'Current Device Location',
                           'Choose Different Location'
                         ].toList(),
+                        initialValue: 'Current Device Location',
                         onChanged: (val) =>
                             setState(() => _model.radioButtonValue = val),
                         optionHeight: 30,
-                        textStyle: FlutterFlowTheme.of(context).bodyText2,
+                        textStyle: FlutterFlowTheme.of(context).bodyText1,
                         buttonPosition: RadioButtonPosition.left,
                         direction: Axis.vertical,
                         radioButtonColor:

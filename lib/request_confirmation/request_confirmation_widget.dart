@@ -176,7 +176,7 @@ class _RequestConfirmationWidgetState extends State<RequestConfirmationWidget> {
                                 FFAppState().tempProposingToDrive) {
                               return 'Propose To Drive';
                             } else {
-                              return 'Request Paasengers';
+                              return 'Request Passengers';
                             }
                           }(),
                           style: FlutterFlowTheme.of(context).title3,

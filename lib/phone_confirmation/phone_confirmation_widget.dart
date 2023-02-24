@@ -127,7 +127,8 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Color(0x00000000),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
@@ -155,11 +156,7 @@ class _PhoneConfirmationWidgetState extends State<PhoneConfirmationWidget> {
                                 size: 24,
                               ),
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                             textAlign: TextAlign.start,
                             keyboardType: TextInputType.number,
                             validator: _model

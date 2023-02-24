@@ -94,7 +94,7 @@ class _GenderWidgetState extends State<GenderWidget> {
                           onChanged: (val) =>
                               setState(() => _model.radioButtonValue = val),
                           optionHeight: 30,
-                          textStyle: FlutterFlowTheme.of(context).bodyText2,
+                          textStyle: FlutterFlowTheme.of(context).bodyText1,
                           buttonPosition: RadioButtonPosition.left,
                           direction: Axis.vertical,
                           radioButtonColor:

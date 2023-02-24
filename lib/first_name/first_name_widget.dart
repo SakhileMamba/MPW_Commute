@@ -133,11 +133,7 @@ class _FirstNameWidgetState extends State<FirstNameWidget> {
                                 size: 24,
                               ),
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                             textAlign: TextAlign.start,
                             keyboardType: TextInputType.name,
                             validator: _model.firstNameControllerValidator
